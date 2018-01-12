@@ -10,9 +10,12 @@ import gui.components.AnimatedComponent;
  */
 public class Keystroke extends AnimatedComponent {
 
-	public Keystroke(int x, int y, int w, int h) {
-		super(x, y, w, h);
-		// TODO Auto-generated constructor stub
+	public Keystroke(int x, int y, String path) {
+		super(x, y, 65, 65);
+		addSequence(path, 100, x, y, 65, 65, 4);
+		Thread animation = new Thread(this);
+		animation.start();
+		update();
 	}
 	
 	@Override
