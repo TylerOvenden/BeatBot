@@ -1,18 +1,29 @@
 package shop;
 
 import gui.GUIApplication;
+import shop.ShopGUI;
 
 public class ShopGUI extends GUIApplication {
 
-	public ShopGUI(int width, int height) {
-		super(width, height);
-		// TODO Auto-generated constructor stub
+	
+	private ShopScreen shop;
+
+	public static void main(String[] args) 
+	{
+		ShopGUI s = new ShopGUI(1000,1300);
+		Thread runner = new Thread(s);
+		runner.start();
 	}
-
-	@Override
-	public void initScreen() {
-		// TODO Auto-generated method stub
-
+	
+	public ShopGUI(int width, int height) 
+	{
+		super(width, height);
+		setVisible(true);
+	}
+	public void initScreen() 
+	{
+		shop = new ShopScreen(getWidth(), getHeight());
+		setScreen(shop);
 	}
 
 }
