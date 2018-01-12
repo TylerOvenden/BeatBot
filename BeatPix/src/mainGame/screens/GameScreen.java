@@ -24,12 +24,15 @@ public class GameScreen extends FullFunctionScreen {
 		 * key.setY() will set the Y-Coordinate of the component
 		 * Changing the Y through this will automatically update the component
 		 * 
+		 * viewObjects.remove(object) removes the object 
+		 * 
+		 * - Create the lanes in the initAllObjects 
 		 * - Read the map file in this class
 		 * - Spawn the keystroke into the lanes in this class
 		*/
 		Keystroke key = new Keystroke(100, 100, "resources/arrows/darrow.png");
 		viewObjects.add(key);
-		
+	
 	}
 
 }
