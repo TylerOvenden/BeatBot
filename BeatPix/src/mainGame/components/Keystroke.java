@@ -28,8 +28,8 @@ import gui.components.AnimatedComponent;
 public class Keystroke extends AnimatedComponent {
 
 	/**
-	 * Create a stroke indicator at a specified location that is subject to change utilizing methods
-	 * This constructor will handle the animated image aspect of the indicator
+	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
+	 * This constructor will handle the animated image aspect of the indicator.
 	 * 
 	 * @author Justin Yau
 	 * 

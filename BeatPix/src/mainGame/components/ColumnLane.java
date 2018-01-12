@@ -17,9 +17,9 @@ import gui.components.Component;
  */
 
 /**
- * Visual Lane Component
- * It will be a lane where keystrokes will appear and go down through
- * There will be a keystroke indicator at the end
+ * Visual Lane Component - 
+ * It will be a lane where keystrokes will appear and go down through.
+ * There will be a keystroke indicator at the end.
  * @author Justin Yau
  *
  */
