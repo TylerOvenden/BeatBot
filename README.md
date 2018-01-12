@@ -35,7 +35,7 @@ Graphics: <br />
 
   For each map object, it will have a method that will read a certain text file for the moves. <br />
   Perhaps the text file will be formatted by like: <br />
-  "Song Name", BPM, Some integer for difficulty
+  "Song Name", BPM, Some integer for difficulty <br />
   "Column that the move will appear in", Some integer representing timeframe
   
   Example: <br />
