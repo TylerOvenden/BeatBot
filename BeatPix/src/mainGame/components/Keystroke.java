@@ -12,16 +12,10 @@ public class Keystroke extends AnimatedComponent {
 
 	public Keystroke(int x, int y, String path) {
 		super(x, y, 65, 65);
-		addSequence(path, 100, x, y, 65, 65, 4);
+		addSequence(path, 100, 0, 0, 64, 64, 4);
 		Thread animation = new Thread(this);
 		animation.start();
 		update();
-	}
-	
-	@Override
-	public void update(Graphics2D g) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.components.Keystroke;
 
 public class GameScreen extends FullFunctionScreen {
 
@@ -14,8 +15,8 @@ public class GameScreen extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		// TODO Auto-generated method stub
-
+		Keystroke key = new Keystroke(100, 100, "resources/arrows/darrow.png");
+		viewObjects.add(key);
 	}
 
 }
