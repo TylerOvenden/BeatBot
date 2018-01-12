@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
-import guiTeacher.interfaces.FileRequester;
+import gui.interfaces.FileRequester;
 
 
 

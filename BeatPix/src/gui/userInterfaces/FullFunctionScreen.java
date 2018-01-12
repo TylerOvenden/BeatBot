@@ -26,12 +26,12 @@ import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import guiTeacher.interfaces.Clickable;
-import guiTeacher.interfaces.Dragable;
-import guiTeacher.interfaces.FocusController;
-import guiTeacher.interfaces.KeyedComponent;
-import guiTeacher.interfaces.Scrollable;
-import guiTeacher.interfaces.Visible;
+import gui.interfaces.Clickable;
+import gui.interfaces.Dragable;
+import gui.interfaces.FocusController;
+import gui.interfaces.KeyedComponent;
+import gui.interfaces.Scrollable;
+import gui.interfaces.Visible;
 
 public abstract class FullFunctionScreen extends ClickableScreen implements KeyListener, FocusController, MouseWheelListener {
 

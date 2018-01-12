@@ -10,7 +10,6 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ComponentContainer;
 import gui.userInterfaces.Screen;
-import gui.CustomPane;
 
 public class Pane extends ComponentContainer implements Clickable {
 

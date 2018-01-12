@@ -28,7 +28,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import guiTeacher.interfaces.Visible;
+import gui.interfaces.Visible;
 
 /**
  * A Screen is a ComponentContainer that fills a Window. Screens do not listen for any events (MouseClicks, Typing, etc..) For a Screen that listens, use ClickableScreen of FullFunctionScreen. For a screen with a set size, override the resize method

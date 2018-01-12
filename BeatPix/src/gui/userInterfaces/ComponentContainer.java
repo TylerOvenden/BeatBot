@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import guiTeacher.interfaces.Visible;
+import gui.interfaces.Visible;
 
 public abstract class ComponentContainer extends JPanel{
 

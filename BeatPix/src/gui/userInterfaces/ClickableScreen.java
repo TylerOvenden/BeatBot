@@ -24,9 +24,9 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import guiTeacher.interfaces.Clickable;
-import guiTeacher.interfaces.Dragable;
-import guiTeacher.interfaces.Visible;
+import gui.interfaces.Clickable;
+import gui.interfaces.Dragable;
+import gui.interfaces.Visible;
 
 public abstract class ClickableScreen extends Screen implements MouseListener, MouseMotionListener {
 
