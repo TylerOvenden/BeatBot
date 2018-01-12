@@ -13,13 +13,14 @@ public class MainGUI extends GUIApplication {
 	private GameScreen game;
 
 	public static void main(String[] args) {
-		MainGUI s = new MainGUI(1000,1000);
+		MainGUI s = new MainGUI(960,540);
 		Thread runner = new Thread(s);
 		runner.start();
 	}
 	
 	public MainGUI(int width, int height) {
 		super(width, height);
+		setResizable(false);
 		setVisible(true);
 	}
 
