@@ -45,5 +45,7 @@ public class Keystroke extends AnimatedComponent {
 		animation.start();
 		update();
 	}
+	
+	
 
 }
