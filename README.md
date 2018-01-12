@@ -12,17 +12,6 @@ This repository will contain a Vertical Scrolling Rhythm Game that incorporates 
   Luckily, these robots allow their challengers to pick the beats, difficulty, and song, giving you the upperhand. <br />
   Don't let this advantage go to waste! You are one of the last hopes that humanity have to survive! 
 
-# Planning:
-
-  For each map object, it will have a method that will read a certain text file for the moves. <br />
-  Perhaps the text file will be formatted by like: <br />
-  "Song Name", BPM, Some integer for difficulty
-  "Column that the move will appear in", Some integer representing timeframe
-  
-  Example: <br />
-  "Counting Stars", 10, 1 - 1 for HARD <br />
-  "LEFT", 10 - 10 for ms <br />
-
 # Teams:
 
 Main Game: <br />
@@ -41,3 +30,14 @@ Graphics: <br />
   - Andrew Zhou <br />
   - Sunny Kwong <br />
   - Yonathan "Jeff" Ben-Reuven <br />
+
+# Planning:
+
+  For each map object, it will have a method that will read a certain text file for the moves. <br />
+  Perhaps the text file will be formatted by like: <br />
+  "Song Name", BPM, Some integer for difficulty
+  "Column that the move will appear in", Some integer representing timeframe
+  
+  Example: <br />
+  "Counting Stars", 10, 1 - 1 for HARD <br />
+  "LEFT", 10 - 10 for ms <br />
