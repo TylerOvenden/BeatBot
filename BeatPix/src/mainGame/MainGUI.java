@@ -1,7 +1,7 @@
 package mainGame;
 
 import gui.GUIApplication;
-import screens.GameScreen;
+import mainGame.screens.*;
 
 public class MainGUI extends GUIApplication {
 	
