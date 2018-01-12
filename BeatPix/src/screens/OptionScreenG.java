@@ -1,5 +1,21 @@
 package screens;
 
-public class OptionScreenG {
+import java.util.List;
+
+import gui.interfaces.Visible;
+import gui.userInterfaces.FullFunctionScreen;
+
+public class OptionScreenG extends FullFunctionScreen{
+
+	public OptionScreenG(int width, int height) {
+		super(width, height);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void initAllObjects(List<Visible> viewObjects) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
