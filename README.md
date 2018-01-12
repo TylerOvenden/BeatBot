@@ -3,7 +3,7 @@
 AP CSA Group Create A Application Project <br />
 This repository will contain a Vertical Scrolling Rhythm Game that incorporates fighting aspects <br />
 
-# Beat Pix:
+# BeatBot:
 
 # Planning:
 
