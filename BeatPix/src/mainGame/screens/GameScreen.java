@@ -26,6 +26,8 @@ public class GameScreen extends FullFunctionScreen {
 		 * 
 		 * viewObjects.remove(object) removes the object 
 		 * 
+		 * Use setAlpha(float int) to make the lanes transparent
+		 * 
 		 * - Create the lanes in the initAllObjects 
 		 * - Read the map file in this class
 		 * - Spawn the keystroke into the lanes in this class

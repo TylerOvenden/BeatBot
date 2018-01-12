@@ -1,6 +1,7 @@
 package mainGame.components;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import gui.components.AnimatedComponent;
 
@@ -45,7 +46,5 @@ public class Keystroke extends AnimatedComponent {
 		animation.start();
 		update();
 	}
-	
-	
 
 }
