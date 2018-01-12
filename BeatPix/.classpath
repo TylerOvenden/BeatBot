@@ -2,12 +2,5 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/itext-5/itextpdf-5.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/itext-5/itextpdf-5.2.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/itext-5/itextpdf-5.2.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/itext-5/itext-xtra-5.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/itext-5/itext-xtra-5.2.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/itext-5/itext-xtra-5.2.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/justi/git/orcmath/OrcMathGUI/lib/jLaTeXMath/jlatexmath-0.9.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
