@@ -2,11 +2,13 @@ package mainGame.components;
 
 import java.awt.Graphics2D;
 
+import javax.swing.ImageIcon;
+
 import gui.components.Component;
 
 public class Timing extends Component {
 	
-	public final String perfect="";
+	public final String perfect="resources/good.png";
 
 	public Timing(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -15,7 +17,12 @@ public class Timing extends Component {
 
 	@Override
 	public void update(Graphics2D g) {
-		// TODO Auto-generated method stub
+		try {
+			ImageIcon icon = new ImageIcon(perfect);
+			g.drawImage(icon.getImage(), 0, 0, null);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 
 	}
 
