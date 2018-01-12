@@ -10,7 +10,7 @@ public class ShopGUI extends GUIApplication {
 
 	public static void main(String[] args) 
 	{
-		ShopGUI s = new ShopGUI(1000,1300);
+		ShopGUI s = new ShopGUI(960,540);
 		Thread runner = new Thread(s);
 		runner.start();
 	}
