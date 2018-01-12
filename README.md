@@ -14,14 +14,14 @@ This repository will contain a Vertical Scrolling Rhythm Game that incorporates 
 
 # Planning:
 
-  - For each map object, it will have a method that will read a certain text file for the moves. <br />
-  - Perhaps the text file will be formatted by like: <br />
-  - "Song Name", BPM, Some integer for difficulty
-  - "Column that the move will appear in", Some integer representing timeframe
+  For each map object, it will have a method that will read a certain text file for the moves. <br />
+  Perhaps the text file will be formatted by like: <br />
+  "Song Name", BPM, Some integer for difficulty
+  "Column that the move will appear in", Some integer representing timeframe
   
-  - Example: <br />
-  - "Counting Stars", 10, 1 - 1 for HARD <br />
-  - "LEFT", 10 - 10 for ms <br />
+  Example: <br />
+  "Counting Stars", 10, 1 - 1 for HARD <br />
+  "LEFT", 10 - 10 for ms <br />
 
 # Teams:
 
