@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import gui.components.Component;
 
 public class Timing extends Component {
+	
+	public final String perfect="";
 
 	public Timing(int x, int y, int w, int h) {
 		super(x, y, w, h);
