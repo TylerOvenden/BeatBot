@@ -13,7 +13,7 @@ public class MainGUI extends GUIApplication {
 	private GameScreen game;
 
 	public static void main(String[] args) {
-		MainGUI s = new MainGUI(1600,900);
+		MainGUI s = new MainGUI(960,540);
 		Thread runner = new Thread(s);
 		runner.start();
 	}
