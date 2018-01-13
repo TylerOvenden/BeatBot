@@ -28,11 +28,12 @@ public class ColumnLane extends Component {
 	 */
 
 	/**
+	 * This constructor is to make a custom lane according to the dimensions
 	 * 
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
+	 * @param x - X coordinate of the lane
+	 * @param y - Y coordinate of the lane
+	 * @param w - Width of the column lane
+	 * @param h - Height of the column lane
 	 */
 	public ColumnLane(int x, int y, int w, int h) {
 		super(x, y, w, h);
