@@ -15,10 +15,12 @@ public class GameScreen extends ClickableScreen implements KeyListener {
 	 */
 	private static final long serialVersionUID = 8016038914105990793L;
 	
-	private int leftStroke;
-	private int leftCStroke;
-	private int rightCStroke;
-	private int rightStroke;
+	//Justin Yau
+	private int leftStroke; //Keystroke that the user presses for the left column
+	private int leftCStroke; //Keystroke that the user presses for the left center column
+	private int rightCStroke; //Keystroke that the user presses for the right center column
+	private int rightStroke; //Key stroke that the user presses for the right column
+	//Justin Yau
 	
 	public GameScreen(int width, int height) {
 		super(width, height);
@@ -45,8 +47,7 @@ public class GameScreen extends ClickableScreen implements KeyListener {
 		*/
 		Keystroke key = new Keystroke(100, 100, "resources/arrows/darrow.png");
 		viewObjects.add(key);
-	
-		updateKeyStrokes(KeyEvent.VK_A, KeyEvent.VK_B, KeyEvent.VK_C, KeyEvent.VK_D);
+		
 	}
 
 	/**
