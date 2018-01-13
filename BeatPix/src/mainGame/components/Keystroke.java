@@ -28,6 +28,8 @@ import mainGame.screens.GameScreen;
  */
 public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 
+	private int fallTime; //The speed at which the stroke falls down
+	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
 	 * This constructor will handle the animated image aspect of the indicator.
@@ -40,6 +42,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public Keystroke(int x, int y, String path) {
 		super(x, y, 65, 65);
+		fallTime = 10;
 		//Path should be inputted something like "resources/arrows/darrow.png"
 		addSequence(path, 100, 0, 0, 64, 64, 4);
 		//To make the component animated, we need to make a thread
@@ -49,7 +52,20 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	}
 
 	/**
-	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear
+	 * This method will update the sleep time that is called in each fall interval. <br>
+	 * Default Fall Time - 10 ms <br>
+	 * Decreasing this value will make the stroke fall faster. 
+	 * @param speed - Speed, in ms, that you want between each fall call.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void updateFallSpeed(int speed) {
+		fallTime = speed;
+	}
+	
+	/**
+	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
+	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
 	 * @author Justin Yau
 	 */
@@ -57,7 +73,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY))) {
 			setY(getY() + 1);
 			try {
-				Thread.sleep(10);
+				Thread.sleep(fallTime);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

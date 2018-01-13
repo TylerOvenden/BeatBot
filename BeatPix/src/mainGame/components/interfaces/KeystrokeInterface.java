@@ -23,4 +23,13 @@ public interface KeystrokeInterface {
 	 */
 	public boolean isBeyondGoal(int goal);
 	
+	/**
+	 * This method will update the sleep time that is called in each fall interval. <br>
+	 * Decreasing this value will make the stroke fall faster. 
+	 * @param speed - Speed, in ms, that you want between each fall call.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void updateFallSpeed(int speed);
+	
 }
