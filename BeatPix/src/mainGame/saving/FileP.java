@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import mainGame.saving.interfaces.FileProcessor;
 
@@ -56,11 +54,14 @@ public class FileP implements FileProcessor {
 		
 		*/
 		
+		/*
 		OSUconvert("osu.txt");
 		FileP p = new FileP();
 		
 		p.load("DreadnoughtMastermind(xi+nora2r).csv");
 		System.out.println(p.getArtist());
+		*/
+		
 	}
 	
 	/**
