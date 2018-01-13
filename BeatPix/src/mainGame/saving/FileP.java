@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import mainGame.saving.interfaces.FileProcessor;
 
@@ -36,8 +37,44 @@ public class FileP implements FileProcessor {
 		list = new ArrayList<int[]>(0);
 	}
 
-	@Override
-	public void save(String title, int BPM, String artist, int offSet, ArrayList<Integer[]> list) {
+	//Tester
+	public static void main(String[] args) { 
+		
+		/*
+		 
+		FileP p = new FileP();
+		ArrayList<int[]> arr = new ArrayList<int[]>(0);
+		int[] arr1 = new int[3];
+		arr1[0] = 0;
+		arr1[1] = 1;
+		arr1[2] = 2;
+		arr.add(arr1);
+		p.save("Hello", 165, "Justin", 0, arr);
+		p.load("HelloJustin.csv");
+		
+		System.out.println(Arrays.toString(p.getBeats().get(0)));
+		
+		*/
+		
+		OSUconvert("osu.txt");
+		FileP p = new FileP();
+		
+		p.load("DreadnoughtMastermind(xi+nora2r).csv");
+		System.out.println(p.getArtist());
+	}
+	
+	/**
+	 * This method will create a CSV file named after the title and artist.
+	 * 
+	 * @param title - Name of the map 
+	 * @param BPM - Beats per minute
+	 * @param artist - Arist that created the map
+	 * @param offSet - Offset 
+	 * @param list - Integer Array that will 
+	 * 
+	 * @author Justin Yau
+	 */
+	public static void save(String title, int BPM, String artist, int offSet, ArrayList<int[]> list) {
 		String fileName = title + artist + ".csv";
 		try{    
 			
@@ -48,7 +85,7 @@ public class FileP implements FileProcessor {
 			fw.write("Offset:" + offSet + "\n");
 			fw.write("\n");
 			
-			for(Integer[] arr: list) {
+			for(int[] arr: list) {
 				for(int num: arr) {
 					fw.write(num + ",");
 				}
@@ -56,7 +93,6 @@ public class FileP implements FileProcessor {
 			}
 
 			fw.close();    
-			System.out.println("Success! File \"" + fileName + "\" saved!");
 			
 		}catch(IOException e){
 			
@@ -69,7 +105,6 @@ public class FileP implements FileProcessor {
 	public boolean load(String fileName) {
 		try {
 			FileReader fileReader = new FileReader(new File(fileName));
-			LineNumberReader lineNum = new LineNumberReader(fileReader);
 			String line = "";
 			//A BufferedReader enables us to read the file one line at a time
 			BufferedReader br = new BufferedReader(fileReader);
@@ -100,6 +135,7 @@ public class FileP implements FileProcessor {
 
 				int[] beat = new int[3];
 				String[] param = line.split(",");
+				
 				beat[0] = Integer.parseInt(param[0]);
 				beat[1] = Integer.parseInt(param[1]);
 				beat[2] = Integer.parseInt(param[2]);
@@ -116,12 +152,80 @@ public class FileP implements FileProcessor {
 		}
 	}
 	
-	@Override
-	public void OSUconvert(String fileName) {
-		// TODO Auto-generated method stub
+	public static boolean OSUconvert(String fileName) {
 		
+		ArrayList<int[]> listerino = new ArrayList<int[]>(0);
+		String tempTitle = "";
+		String tempArtist = "";
+		
+		try {
+			FileReader fileReader = new FileReader(new File(fileName));
+			String line = "";
+			//A BufferedReader enables us to read the file one line at a time
+			BufferedReader br = new BufferedReader(fileReader);
+			
+			//Keep reading till it hit [MetaData]
+			while(!br.readLine().equalsIgnoreCase("[MetaData]")) {
+				
+			}
+			
+			//Retrieve title information
+			String titleLine = br.readLine(); 
+			String[] titleSplit = titleLine.split(":");
+			tempTitle = titleSplit[1];
+			
+			br.readLine(); //Skip other title information
+			
+			String artistLine = br.readLine();
+			String[] artistSplit = artistLine.split(":");
+			tempArtist = artistSplit[1];
+			
+			//Keep reading till it hits [HitObjects]
+			while(!br.readLine().equalsIgnoreCase("[HitObjects]")) {
+				
+			}
+			
+			while ((line = br.readLine()) != null) {
+
+				int[] beat = new int[3];
+				String[] param = line.split(",");
+				beat[0] = getColumn(param[0]);
+				beat[1] = Integer.parseInt(param[2]);
+				String[] param1 = param[5].split(":");
+				beat[2] = Integer.parseInt(param1[0]);
+				listerino.add(beat);
+
+			}
+			br.close();
+			
+			save(tempTitle, 0, tempArtist, 0, listerino);
+			
+			return true;
+			
+		}catch (IOException e) {
+			
+			return false;
+		}
 	}
 
+	/**
+	 * Based off the OSU format, this method will return the correct column number or lane that the beat appears in
+	 * 
+	 * @param num - The number provided by the OSU file
+	 * @return Number corresponding to the lane the beat appears in
+	 * @author Justin Yau
+	 */
+	public static int getColumn(String num) {
+		int[] arr = {64,192,320,448};
+		int theNum = Integer.parseInt(num);
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[0] == theNum) {
+				return i + 1;
+			}
+		}
+		return 0;
+	}
+	
 	@Override
 	public String getTitle() {
 		

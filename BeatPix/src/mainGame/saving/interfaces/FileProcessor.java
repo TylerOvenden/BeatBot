@@ -7,19 +7,6 @@ import java.util.ArrayList;
  * @author Justin Yau
  */
 public interface FileProcessor {
-
-	/**
-	 * This method will create a CSV file named after the title and artist.
-	 * 
-	 * @param title - Name of the map 
-	 * @param BPM - Beats per minute
-	 * @param artist - Arist that created the map
-	 * @param offSet - Offset 
-	 * @param list - Integer Array that will 
-	 * 
-	 * @author Justin Yau
-	 */
-	public void save(String title, int BPM, String artist, int offSet, ArrayList<Integer[]> list);
 	
 	/**
 	 * This method will load a CSV file and save it in a instance of File.
@@ -41,8 +28,6 @@ public interface FileProcessor {
 	 * @author Justin Yau
 	 */
 	public boolean load(String fileName);
-	
-	public void OSUconvert(String fileName);
 	
 	/**
 	 * This method will return the title of the beatmap from the file that you have loaded before.
