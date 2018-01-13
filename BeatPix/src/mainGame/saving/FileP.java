@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import mainGame.saving.interfaces.FileProcessor;
 
@@ -39,7 +40,6 @@ public class FileP implements FileProcessor {
 	public static void main(String[] args) { 
 		
 		/*
-		 
 		FileP p = new FileP();
 		ArrayList<int[]> arr = new ArrayList<int[]>(0);
 		int[] arr1 = new int[3];
@@ -47,11 +47,10 @@ public class FileP implements FileProcessor {
 		arr1[1] = 1;
 		arr1[2] = 2;
 		arr.add(arr1);
-		p.save("Hello", 165, "Justin", 0, arr);
+		save("Hello", 165, "Justin", 0, arr);
 		p.load("HelloJustin.csv");
 		
-		System.out.println(Arrays.toString(p.getBeats().get(0)));
-		
+		System.out.println(p.getOffSet());
 		*/
 		
 		/*
@@ -59,7 +58,7 @@ public class FileP implements FileProcessor {
 		FileP p = new FileP();
 		
 		p.load("DreadnoughtMastermind(xi+nora2r).csv");
-		System.out.println(p.getArtist());
+		System.out.println(p.getTitle());
 		*/
 		
 	}
@@ -102,6 +101,62 @@ public class FileP implements FileProcessor {
 		}
 	}
 
+	/**
+	 * This helper method will read the next line of the BufferedReader and split it by a colon as per our map file format. 
+	 * It will retrieve a piece of metadata and return it.
+	 * @param br - BufferedReader of the file you're trying to get metadata from
+	 * @return - Returns the metadata of the next line of the BufferedReader
+	 * @author - Justin Yau
+	 */
+	public String splitLine(BufferedReader br) {
+		try {
+			String line = br.readLine(); 
+			String[] lineSplit = line.split(":");
+			return lineSplit[1];
+		}catch (IOException e) {
+			
+			return "";
+		}
+	}
+	
+	/**
+	 * Static version of the splitLine method above. <br> 
+	 * This helper method will read the next line of the BufferedReader and split it by a colon as per our map file format. 
+	 * It will retrieve a piece of metadata and return it.
+	 * @param br - BufferedReader of the file you're trying to get metadata from
+	 * @return - Returns the metadata of the next line of the BufferedReader
+	 * @author - Justin Yau
+	 */
+	public static String sSplitLine(BufferedReader br) {
+		try {
+			String line = br.readLine(); 
+			String[] lineSplit = line.split(":");
+			return lineSplit[1];
+		}catch (IOException e) {
+			
+			return "";
+		}
+	}
+	
+	/**
+	 * This method will load a CSV file and save it in a instance of File.
+	 * DO NOT ATTEMPT TO LOAD A OSU FILE WITH THIS METHOD. <br> <br>
+	 * 
+	 * Sample Format: <br> <br>
+	 * 
+	 * Title: Hitorigio <br>
+	 * BPM: 165 <br>
+	 * Artist: Claris <br>
+	 * Offset: 0 <br>
+	 * <br>
+	 * 1(column),0(startTime),10(endTime)
+	 * 
+	 * @param fileName - The path of the file that you're looking to load
+	 * 
+	 * @return Returns whether the load was successful or not
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public boolean load(String fileName) {
 		try {
@@ -111,24 +166,16 @@ public class FileP implements FileProcessor {
 			BufferedReader br = new BufferedReader(fileReader);
 			
 			//Retrieve title information
-			String titleLine = br.readLine(); 
-			String[] titleSplit = titleLine.split(":");
-			title = titleSplit[1];
+			title = splitLine(br);
 			
 			//Retrieve beats per minute
-			String bpmLine = br.readLine();
-			String[] bpmSplit = bpmLine.split(":");
-			BPM = Integer.parseInt(bpmSplit[1]);
+			BPM = Integer.parseInt(splitLine(br));
 			
 			//Retrieve artist name
-			String artistLine = br.readLine();
-			String[] artistSplit = artistLine.split(":");
-			artist = artistSplit[1];
+			artist = splitLine(br);
 			
 			//Retrieve offset
-			String offSetLine = br.readLine();
-			String[] offSetSplit = offSetLine.split(":");
-			offSet = Integer.parseInt(offSetSplit[1]);
+			offSet = Integer.parseInt(splitLine(br));
 			
 			br.readLine(); //This compensates for the empty line after metaData 
 			
@@ -179,15 +226,12 @@ public class FileP implements FileProcessor {
 			}
 			
 			//Retrieve title information
-			String titleLine = br.readLine(); 
-			String[] titleSplit = titleLine.split(":");
-			tempTitle = titleSplit[1];
+			tempTitle = sSplitLine(br);
 			
 			br.readLine(); //Skip other title information
 			
-			String artistLine = br.readLine();
-			String[] artistSplit = artistLine.split(":");
-			tempArtist = artistSplit[1];
+			//Retrieve artist information
+			tempArtist = sSplitLine(br);
 			
 			//Keep reading till it hits [HitObjects]
 			while(!br.readLine().equalsIgnoreCase("[HitObjects]")) {
@@ -235,30 +279,70 @@ public class FileP implements FileProcessor {
 		return 0;
 	}
 	
+	/**
+	 * This method will return the title of the beatmap from the file that you have loaded before.
+	 * If you have not loaded a file prior to running this command it will return blank fields.
+	 * 
+	 * @return Returns the title of the beatmap from the file that it has loaded
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public String getTitle() {
 		
 		return title;
 	}
 
+	/**
+	 * This method will return the beats per minute of the beatmap from the file that you have loaded before.
+	 * If you have not loaded a file prior to running this command it will return blank fields.
+	 * 
+	 * @return Returns the BPM of the beatmap from the file that it has loaded
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public int getBPM() {
 		
 		return BPM;
 	}
 
+	/**
+	 * This method will return the artist of the beatmap from the file that you have loaded before.
+	 * If you have not loaded a file prior to running this command it will return blank fields.
+	 * 
+	 * @return Returns the artist of the beatmap from the file that it has loaded
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public String getArtist() {
 
 		return artist;
 	}
 
+	/**
+	 * This method will return the offSet of the beatmap from the file that you have loaded before.
+	 * If you have not loaded a file prior to running this command it will return blank fields.
+	 * 
+	 * @return Returns the offSet of the beatmap from the file that it has loaded
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public int getOffSet() {
 
 		return offSet;
 	}
 
+	/**
+	 * This method will return the beats of the beatmap from the file that you have loaded before.
+	 * If you have not loaded a file prior to running this command it will return blank fields.
+	 * 
+	 * @return Returns the beats of the beatmap from the file that it has loaded
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public ArrayList<int[]> getBeats() {
 
