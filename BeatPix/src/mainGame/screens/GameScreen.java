@@ -8,6 +8,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -62,6 +63,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		
+		updateKeyStrokes(KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_UP, KeyEvent.VK_RIGHT);
 		
 		Thread screen = new Thread(this);
 		screen.start();
@@ -180,10 +183,67 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
+		boolean correctStroke = false;
+		for(Keystroke stroke: strokesToCheck) {
+			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
+				//CALCULATE PERFECT/GREAT/ALRIGHT/MEH ACCURACY HERE PLACEHOLDER
+				
+				removeStroke(stroke); 
+				stroke.cancelFall();
+				correctStroke = true;
+				break;
+			} 
+		}
+		if(!correctStroke && strokes.size() > 0) {
+			//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
+			
+			Keystroke cStroke = strokes.get(0);
+			removeStroke(cStroke);
+			cStroke.cancelFall();
+
+		}
+	}
+	
+	/**
+	 * Crucial method to enable the program to register keyboard interactions
+	 * DO NOT REMOVE
+	 * @return
+	 */
+	@Override
+	public KeyListener getKeyListener(){
+		return this;
 	}
 
+	/**
+	 * This method is to retrieve the next stroke and any other strokes that is supposed to be pressed at the same time
+	 * @return - An array list of the next stroke and any strokes meant to be pressed at the same time
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Keystroke> strokesAtSameTime() {
+		ArrayList<Keystroke> list = new ArrayList<Keystroke>(0);
+		if(strokes.size() != 0) {
+			
+			list.add(strokes.get(0));
+			
+			int i = 1;
+			
+			while(i < 5) {
+				if(strokes.size() > i && strokes.get(i).getStartingTime() == list.get(0).getStartingTime()) {
+					list.add(strokes.get(i));
+				}
+				else {
+					break;
+				}
+				i++;
+			}
+			
+		}
+		return list;
+	}
+	
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -241,7 +301,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			else if(timePass() >= beats.get(0)[1]) {
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
-				Keystroke str = new Keystroke(arrowX[lane], columnY, "resources/arrows/darrow.png");
+				Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
 				addObject(str);
 				strokes.add(str);
 				Thread tr = new Thread(new Runnable() {

@@ -29,6 +29,8 @@ import mainGame.screens.GameScreen;
 public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 
 	private int fallTime; //The speed at which the stroke falls down
+	private int startTime; //The starting time in the map when this stroke spawned
+	private boolean cancel;
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -40,9 +42,10 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 * @param y - Y Coordinate of the indicator 
 	 * @param path - Image file path (Ex: "resources/arrows/darrow.png")
 	 */
-	public Keystroke(int x, int y, String path) {
+	public Keystroke(int x, int y, int stime, String path) {
 		super(x, y, 65, 65);
 		fallTime = 10;
+		startTime = stime;
 		//Path should be inputted something like "resources/arrows/darrow.png"
 		addSequence(path, 100, 0, 0, 64, 64, 4);
 		//To make the component animated, we need to make a thread
@@ -51,6 +54,21 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		update();
 	}
 
+	public int getStartingTime() {
+		return startTime;
+	}
+	
+	public int getColumnLane() {
+		int[] arr = {100, 170, 240, 310};
+		int xCoordinate = getX();
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i] == xCoordinate) {
+				return i + 1;
+			}
+		}
+		return 0;
+	}
+	
 	/**
 	 * This method will update the sleep time that is called in each fall interval. <br>
 	 * Default Fall Time - 10 ms <br>
@@ -64,13 +82,23 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	}
 	
 	/**
+	 * This method will make the stroke stop falling 
+	 * 
+	 * @author Justin Yau
+	 */
+	public void cancelFall() {
+		this.cancel = true;
+	}
+	
+	/**
 	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
 	 * @author Justin Yau
 	 */
 	public void keystrokeFall() {
-		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY))) {
+		cancel = false;
+		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
 			setY(getY() + 1);
 			try {
 				Thread.sleep(fallTime);
@@ -80,7 +108,9 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 			}
 			update();
 		}
-		GameScreen.game.removeStroke(this);
+		if(!cancel) {
+			GameScreen.game.removeStroke(this);
+		}
 		update();
 	}
 	
