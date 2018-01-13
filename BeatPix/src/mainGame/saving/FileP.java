@@ -219,7 +219,7 @@ public class FileP implements FileProcessor {
 		int[] arr = {64,192,320,448};
 		int theNum = Integer.parseInt(num);
 		for(int i = 0; i < arr.length; i++) {
-			if(arr[0] == theNum) {
+			if(arr[i] == theNum) {
 				return i + 1;
 			}
 		}
