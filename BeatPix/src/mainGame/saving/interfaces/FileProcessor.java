@@ -92,6 +92,6 @@ public interface FileProcessor {
 	 * 
 	 * @author Justin Yau
 	 */
-	public ArrayList<Integer[]> getBeats();
+	public ArrayList<int[]> getBeats();
 	
 }

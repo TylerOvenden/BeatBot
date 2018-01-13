@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 
 import mainGame.saving.interfaces.FileProcessor;
@@ -20,7 +21,7 @@ public class FileP implements FileProcessor {
 	private int BPM;
 	private String artist;
 	private int offSet;
-	private ArrayList<Integer[]> list;
+	private ArrayList<int[]> list;
 	
 	/**
 	 * Constructor sets the fields up to their normal settings 
@@ -32,7 +33,7 @@ public class FileP implements FileProcessor {
 		BPM = 0;
 		artist = "";
 		offSet = 0;
-		list = new ArrayList<Integer[]>(0);
+		list = new ArrayList<int[]>(0);
 	}
 
 	@Override
@@ -41,10 +42,10 @@ public class FileP implements FileProcessor {
 		try{    
 			
 			FileWriter fw=new FileWriter(fileName);
-			fw.write("Title: " + title + "\n");
-			fw.write("BPM: " + BPM + "\n");
-			fw.write("Artist: " + artist + "\n");
-			fw.write("Offset: " + offSet + "\n");
+			fw.write("Title:" + title + "\n");
+			fw.write("BPM:" + BPM + "\n");
+			fw.write("Artist:" + artist + "\n");
+			fw.write("Offset:" + offSet + "\n");
 			fw.write("\n");
 			
 			for(Integer[] arr: list) {
@@ -68,15 +69,41 @@ public class FileP implements FileProcessor {
 	public boolean load(String fileName) {
 		try {
 			FileReader fileReader = new FileReader(new File(fileName));
+			LineNumberReader lineNum = new LineNumberReader(fileReader);
 			String line = "";
-			//a BufferedReader enables us to read the file one line at a time
+			//A BufferedReader enables us to read the file one line at a time
 			BufferedReader br = new BufferedReader(fileReader);
+			
+			//Retrieve title information
+			String titleLine = br.readLine(); 
+			String[] titleSplit = titleLine.split(":");
+			title = titleSplit[1];
+			
+			//Retrieve beats per minute
+			String bpmLine = br.readLine();
+			String[] bpmSplit = bpmLine.split(":");
+			BPM = Integer.parseInt(bpmSplit[1]);
+			
+			//Retrieve artist name
+			String artistLine = br.readLine();
+			String[] artistSplit = artistLine.split(":");
+			artist = artistSplit[1];
+			
+			//Retrieve offset
+			String offSetLine = br.readLine();
+			String[] offSetSplit = offSetLine.split(":");
+			offSet = Integer.parseInt(offSetSplit[1]);
+			
+			br.readLine(); //This compensates for the empty line after metaData 
+			
 			while ((line = br.readLine()) != null) {
 
+				int[] beat = new int[3];
 				String[] param = line.split(",");
-				//add a new Book for each line in the save file
-
-
+				beat[0] = Integer.parseInt(param[0]);
+				beat[1] = Integer.parseInt(param[1]);
+				beat[2] = Integer.parseInt(param[2]);
+				list.add(beat);
 
 			}
 			br.close();
@@ -88,7 +115,7 @@ public class FileP implements FileProcessor {
 			return false;
 		}
 	}
-
+	
 	@Override
 	public void OSUconvert(String fileName) {
 		// TODO Auto-generated method stub
@@ -120,7 +147,7 @@ public class FileP implements FileProcessor {
 	}
 
 	@Override
-	public ArrayList<Integer[]> getBeats() {
+	public ArrayList<int[]> getBeats() {
 
 		return list;
 	}
