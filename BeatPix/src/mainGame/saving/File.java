@@ -42,6 +42,8 @@ public class File implements FileProcessor {
 			fw.write("BPM: " + BPM + "\n");
 			fw.write("Artist: " + artist + "\n");
 			fw.write("Offset: " + offSet + "\n");
+			fw.write("\n");
+			
 			for(Integer[] arr: list) {
 				for(int num: arr) {
 					fw.write(num + ",");

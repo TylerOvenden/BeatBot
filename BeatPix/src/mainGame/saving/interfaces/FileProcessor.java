@@ -23,7 +23,16 @@ public interface FileProcessor {
 	
 	/**
 	 * This method will load a CSV file and save it in a instance of File.
-	 * DO NOT ATTEMPT TO LOAD A OSU FILE WITH THIS METHOD.
+	 * DO NOT ATTEMPT TO LOAD A OSU FILE WITH THIS METHOD. <br> <br>
+	 * 
+	 * Sample Format: <br> <br>
+	 * 
+	 * Title: Hitorigio <br>
+	 * BPM: 165 <br>
+	 * Artist: Claris <br>
+	 * Offset: 0 <br>
+	 * <br>
+	 * 1(column),0(startTime),10(endTime)
 	 * 
 	 * @param fileName - The path of the file that you're looking to load
 	 * 
