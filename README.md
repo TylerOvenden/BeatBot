@@ -34,10 +34,21 @@ Graphics: <br />
 # Planning:
 
   For each map object, it will have a method that will read a certain text file for the moves. <br />
-  Perhaps the text file will be formatted by like: <br />
-  "Song Name", BPM, Some integer for difficulty
-  "Column that the move will appear in", Some integer representing timeframe
   
+  VERSION 1 <br />
+  "Song Name", BPM, Some integer for difficulty <br />
+  "Column that the move will appear in", Some integer representing timeframe <br />
+
   Example: <br />
   "Counting Stars", 10, 1 - 1 for HARD <br />
   "LEFT", 10 - 10 for ms <br />
+  
+  VERSION 2 AND THE FINAL VERSION <br />
+  
+  Title: Hitroigoto <br />
+  BPM: 165 <br />
+  Arist: ClariS <br />
+  Offset: 0 <br />
+
+  0,0,1 <br />
+  
