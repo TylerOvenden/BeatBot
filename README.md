@@ -43,12 +43,12 @@ Graphics: <br />
   "Counting Stars", 10, 1 - 1 for HARD <br />
   "LEFT", 10 - 10 for ms <br />
   
-  VERSION 2 <br />
+  VERSION 2 AND THE FINAL VERSION <br />
   
   Title: Hitroigoto <br />
   BPM: 165 <br />
   Arist: ClariS <br />
   Offset: 0 <br />
 
-  1,0,0,1 <br />
+  0,0,1 <br />
   
