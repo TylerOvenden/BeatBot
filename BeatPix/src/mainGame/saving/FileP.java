@@ -1,5 +1,8 @@
 package mainGame.saving;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +14,7 @@ import mainGame.saving.interfaces.FileProcessor;
  * @author Justin Yau
  *
  */
-public class File implements FileProcessor {
+public class FileP implements FileProcessor {
 
 	private String title;
 	private int BPM;
@@ -24,7 +27,7 @@ public class File implements FileProcessor {
 	 * 
 	 * @author Justin Yau
 	 */
-	public File() {
+	public FileP() {
 		title = "";
 		BPM = 0;
 		artist = "";
@@ -62,9 +65,28 @@ public class File implements FileProcessor {
 	}
 
 	@Override
-	public void load(String fileName) {
-		// TODO Auto-generated method stub
-		
+	public boolean load(String fileName) {
+		try {
+			FileReader fileReader = new FileReader(new File(fileName));
+			String line = "";
+			//a BufferedReader enables us to read the file one line at a time
+			BufferedReader br = new BufferedReader(fileReader);
+			while ((line = br.readLine()) != null) {
+
+				String[] param = line.split(",");
+				//add a new Book for each line in the save file
+
+
+
+			}
+			br.close();
+			
+			return true;
+			
+		}catch (IOException e) {
+			
+			return false;
+		}
 	}
 
 	@Override

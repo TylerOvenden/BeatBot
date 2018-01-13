@@ -36,9 +36,11 @@ public interface FileProcessor {
 	 * 
 	 * @param fileName - The path of the file that you're looking to load
 	 * 
+	 * @return Returns whether the load was successful or not
+	 * 
 	 * @author Justin Yau
 	 */
-	public void load(String fileName);
+	public boolean load(String fileName);
 	
 	public void OSUconvert(String fileName);
 	
