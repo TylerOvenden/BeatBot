@@ -5,7 +5,12 @@ This repository will contain a Vertical Scrolling Rhythm Game that incorporates 
 
 # BeatBot:
 
-# Planning:
+  Possible BackStory: <br />
+
+  In the distant future, the world has been taken over by dancing robots. You are one of the few humans left in the world <br />
+  that went into hiding following the robotic takeover. Your goal is to challenge these robots to fights and win.  <br />
+  Luckily, these robots allow their challengers to pick the beats, difficulty, and song, giving you the upperhand. <br />
+  Don't let this advantage go to waste! You are one of the last hopes that humanity have to survive! 
 
 # Teams:
 
@@ -25,3 +30,25 @@ Graphics: <br />
   - Andrew Zhou <br />
   - Sunny Kwong <br />
   - Yonathan "Jeff" Ben-Reuven <br />
+
+# Planning:
+
+  For each map object, it will have a method that will read a certain text file for the moves. <br />
+  
+  VERSION 1 <br />
+  "Song Name", BPM, Some integer for difficulty <br />
+  "Column that the move will appear in", Some integer representing timeframe <br />
+
+  Example: <br />
+  "Counting Stars", 10, 1 - 1 for HARD <br />
+  "LEFT", 10 - 10 for ms <br />
+  
+  VERSION 2 AND THE FINAL VERSION <br />
+  
+  Title: Hitroigoto <br />
+  BPM: 165 <br />
+  Arist: ClariS <br />
+  Offset: 0 <br />
+
+  0,0,1 <br />
+  
