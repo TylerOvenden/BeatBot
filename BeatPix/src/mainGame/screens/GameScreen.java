@@ -175,7 +175,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
-	 * Managed by Justin Yau. This function will run when the user presses a key.
+	 * This function will run when the user presses a key.
 	 * Use e.getKeyCode() and compare it to a key and it will match if the user pressed that key 
 	 */
 	@Override
@@ -206,16 +206,33 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		playMap();
 	}
 	
+	/**
+	 * This method will return the time, in milliseconds, that has ellapsed since the game has started running
+	 * 
+	 * @return - The time that has ellapsed since start of this particular game, in milliseconds.
+	 */
 	public static long timePass() {
 		return ((System.nanoTime() - startTime))/1000000;
 	}
 	
+	/**
+	 * This method will remove the given stroke from this arrayList and the visibleObjects
+	 * 
+	 * @param e - The stroke that you would like to remove
+	 * 
+	 * @author Justin Yau
+	 */
 	public void removeStroke(Keystroke e) {
 		strokes.remove(e);
 		remove(e);
 		remove(e); //Just in case it doesn't get removed the first time
 	}
 	
+	/**
+	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
+	 * 
+	 * @author Justin Yau
+	 */
 	public void playMap() {
 		while(playing) {
 			if(beats.size() == 0) {
