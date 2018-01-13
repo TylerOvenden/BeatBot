@@ -37,7 +37,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
 	
-	private int startTime; //The starting time in ms
+	private long startTime; //The starting time in ms
 	private boolean playing;
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
@@ -200,14 +200,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 
 	@Override
 	public void run() {
-		startTime = (int) (System.nanoTime());
+		startTime = (System.nanoTime());
 		playing = true;
 		strokes = new ArrayList<Keystroke>(0);
 		playMap();
 	}
 	
-	public int timePass() {
-		return ((int) (System.nanoTime() - startTime))/1000000;
+	public long timePass() {
+		return ((System.nanoTime() - startTime))/1000000;
 	}
 	
 	public void removeStroke(Keystroke e) {
@@ -231,7 +231,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 					@Override
 					public void run() {
 						str.keystrokeFall();
+						removeStroke(str);
 					}
+					
 				});
 				tr.start();
 				//strokes.add(str);

@@ -59,7 +59,6 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 			}
 			update();
 		}
-		GameScreen.game.removeStroke(this);
 	}
 	
 	public boolean isBeyondGoal(int goal) {
