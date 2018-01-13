@@ -1,6 +1,7 @@
 package mainGame;
 
 import gui.GUIApplication;
+import mainGame.components.Song;
 import mainGame.screens.*;
 
 public class MainGUI extends GUIApplication {
@@ -25,7 +26,8 @@ public class MainGUI extends GUIApplication {
 
 	@Override
 	public void initScreen() {
-		game = new GameScreen(getWidth(), getHeight());
+		Song song = new Song("song.txt");
+		game = new GameScreen(getWidth(), getHeight(), song);
 		setScreen(game);
 	}
 

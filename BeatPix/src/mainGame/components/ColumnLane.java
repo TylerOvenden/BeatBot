@@ -1,6 +1,8 @@
 package mainGame.components;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import gui.components.Component;
 
@@ -9,15 +11,8 @@ import gui.components.Component;
  * PERIOD 4 & 5 - AP Computer Science Java
  */
 
-/*
- * PLANNING:
- * This component will be a visual component
- * It will include a lane
- * Based on the input the lane will have a keystroke indicator at the end
- */
-
 /**
- * Visual Lane Component - 
+ * Visual Lane Component <br>
  * It will be a lane where keystrokes will appear and go down through.
  * There will be a keystroke indicator at the end.
  * @author Justin Yau
@@ -25,15 +20,40 @@ import gui.components.Component;
  */
 public class ColumnLane extends Component {
 
+	/*
+	 * PLANNING:
+	 * This component will be a visual component
+	 * It will include a lane
+	 * Based on the input the lane will have a keystroke indicator at the end
+	 */
+
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 */
 	public ColumnLane(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		// TODO Auto-generated constructor stub
+		update();
 	}
 
+	/**
+	 * Creates a gray lane with 2 red lines across the sides to indicate the border
+	 * 
+	 * @author Justin Yau
+	 */
 	@Override
 	public void update(Graphics2D g) {
-		// TODO Auto-generated method stub
-
+		super.clear();
+		Rectangle rect = new Rectangle(0,0,getWidth(),getHeight());
+		g.setColor(Color.LIGHT_GRAY);
+		g.draw(rect);
+		g.fill(rect);
+		g.setColor(Color.RED);
+		g.drawLine(0, 0, 0, getHeight());
+		g.drawLine(getWidth() - 1, 0, getWidth() - 1, getHeight());
 	}
 
 }

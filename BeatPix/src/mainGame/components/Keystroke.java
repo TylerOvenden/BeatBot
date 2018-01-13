@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import gui.components.AnimatedComponent;
+import mainGame.components.interfaces.KeystrokeInterface;
 
 /*
  * 
@@ -14,8 +15,7 @@ import gui.components.AnimatedComponent;
 /*
  * PLANNING: 
  * - Incorporate a method that will enable us to update y position
- * - MAYBE - Incorporate a method that will enable us to update y position
- * - Override the update method to update y position (i.e. downward scrolling)
+ * - MAYBE - Incorporate a method that will enable us to update x position
  * - Have another thread running that'll check the y position and remove the object upon passing the stroke location
  * - Connect this to Steven's class that'll handle the accuracy decider and whether the stroke was good, bad, or etc.
  */
@@ -25,7 +25,7 @@ import gui.components.AnimatedComponent;
  * Players will have to time their strokes such that it almost matches the time when this indicator passes through the stroke location
  * @author Justin Yau
  */
-public class Keystroke extends AnimatedComponent {
+public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
