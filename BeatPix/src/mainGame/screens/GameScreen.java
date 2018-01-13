@@ -79,9 +79,34 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		 * 
 		 * Place where they must hit keystroke - Y: 425
 		*/
-		
+	
 		//CREATE THE LANES
 		//THIS ALREADY MAKES THEM TRANSPARENT TO A SENSE
+		addColumnLanes(viewObjects);
+		
+		/*
+		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
+		viewObjects.add(leftKey);
+		
+		Keystroke leftCKey = new Keystroke(170, 75, "resources/arrows/darrow.png");
+		viewObjects.add(leftCKey);
+		
+		Keystroke rightCKey = new Keystroke(240, 75, "resources/arrows/darrow.png");
+		viewObjects.add(rightCKey);
+		
+		Keystroke rightKey = new Keystroke(310, 425, "resources/arrows/darrow.png");
+		viewObjects.add(rightKey);
+		*/
+	}
+	
+	/**
+	 * This method will add 4 visuals that will represent the lanes that the strokes will drop down through
+	 * 
+	 * @param viewObjects - The list of objects that will be visible by the display
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addColumnLanes(List<Visible> viewObjects) {
 		ColumnLane leftLane = new ColumnLane(arrowX[0] - 3,columnY - 5, columnWidth, columnY + columnHeight + 5);
 		leftLane.setAlpha((float)0.3);
 		viewObjects.add(leftLane);
@@ -98,20 +123,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		rightLane.setAlpha((float)0.3);
 		viewObjects.add(rightLane);
 		//CREATE THE LANES
-		
-		/*
-		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
-		viewObjects.add(leftKey);
-		
-		Keystroke leftCKey = new Keystroke(170, 75, "resources/arrows/darrow.png");
-		viewObjects.add(leftCKey);
-		
-		Keystroke rightCKey = new Keystroke(240, 75, "resources/arrows/darrow.png");
-		viewObjects.add(rightCKey);
-		
-		Keystroke rightKey = new Keystroke(310, 425, "resources/arrows/darrow.png");
-		viewObjects.add(rightKey);
-		*/
 	}
 	
 	/**
@@ -177,8 +188,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		
+		for(int[] arr: beats) {
+			int laneColumn = arr[0];
+			int startTime = arr[0];
+		}
 	}
 
 
