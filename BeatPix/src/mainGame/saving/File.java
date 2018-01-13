@@ -73,32 +73,32 @@ public class File implements FileProcessor {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return title;
 	}
 
 	@Override
 	public int getBPM() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return BPM;
 	}
 
 	@Override
 	public String getArtist() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return artist;
 	}
 
 	@Override
 	public int getOffSet() {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return offSet;
 	}
 
 	@Override
 	public ArrayList<Integer[]> getBeats() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return list;
 	}
 
 }
