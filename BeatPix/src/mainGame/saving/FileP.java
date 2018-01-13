@@ -152,6 +152,14 @@ public class FileP implements FileProcessor {
 		}
 	}
 	
+	/**
+	 * This method will be used to convert OSU Formatted Files into our own game files for personal use.
+	 * ONLY INPUT OSU FORMATTED FILES OR THERE WILL BE ERRORS.
+	 * 
+	 * @param fileName - The path of the file that you would like to convert
+	 * @return Whether the operation has been successfully made or not due to incorrect file path
+	 * @author Justin Yau
+	 */
 	public static boolean OSUconvert(String fileName) {
 		
 		ArrayList<int[]> listerino = new ArrayList<int[]>(0);
