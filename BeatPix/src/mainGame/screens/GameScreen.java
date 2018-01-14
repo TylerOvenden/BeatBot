@@ -191,6 +191,15 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		if(e.getKeyCode() == KeyEvent.VK_A) {
+			pauseGame();
+			return;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_B) {
+			resumeGame();
+			return;
+		}
+		
 		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 		ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 		boolean correctStroke = false;
@@ -204,7 +213,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				break;
 			} 
 		}
-		if(!correctStroke && strokes.size() > 0) {
+		if(!correctStroke && strokes.size() > 0 && madeLegalStroke(e)) {
 			//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
 			
 			Keystroke cStroke = strokes.get(0);
@@ -223,6 +232,24 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
 		*/
 		
+	}
+	
+	/**
+	 * This methods returns whether the user pressed one of the keys that represented a stroke. 
+	 * 
+	 * @param e - The KeyEvent that contains what key the user pressed
+	 * @return - Whether the key pressed was one of the keys that the user was suppose to press to remove a stroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean madeLegalStroke(KeyEvent e) {
+		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		for(int key: keys) {
+			if(e.getKeyCode() == key) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
