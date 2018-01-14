@@ -91,6 +91,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		 * - Left Center Column - X: 170 Y: 75
 		 * - Right Column - X: 240 Y: 75
 		 * - Right Center Column - X: 310 Y: 75
+		 * - NEED TO IMPLEMENT A PAUSE 
 		 * 
 		 * Place where they must hit keystroke - Y: 425
 		*/
@@ -183,6 +184,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
 		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 		ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 		boolean correctStroke = false;
@@ -204,6 +206,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			cStroke.cancelFall();
 
 		}
+		
 	}
 	
 	/**
