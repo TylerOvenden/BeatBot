@@ -39,7 +39,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
 	
 	public static long startTime; //The starting time in ms
-	private boolean playing;
+	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
 	
@@ -91,7 +91,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		 * - Left Center Column - X: 170 Y: 75
 		 * - Right Column - X: 240 Y: 75
 		 * - Right Center Column - X: 310 Y: 75
-		 * - NEED TO IMPLEMENT A PAUSE 
+		 * - NEED TO IMPLEMENT A PAUSE:
+		 * 
+		 * Possible way to make the game pause:
+		 * - Utilize wait/notify threads which seems complicated and the wrong application of the methods
+		 * - Attempt to have a boolean, pause, and have the threads check for the boolean and sleep when true
 		 * 
 		 * Place where they must hit keystroke - Y: 425
 		*/
