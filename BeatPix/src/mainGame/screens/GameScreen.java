@@ -42,6 +42,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
+	private boolean pause;
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
@@ -212,6 +213,16 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 
 		}
 		
+		/*
+		TEST CODE
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			pause = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			pause = false;
+		}
+		*/
+		
 	}
 	
 	/**
@@ -270,6 +281,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public void run() {
 		startTime = (System.nanoTime());
 		playing = true;
+		pause = false;
 		strokes = new ArrayList<Keystroke>(0);
 		playMap();
 	}
@@ -310,12 +322,58 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * This method will change a boolean that will halt all game operations
+	 * 
+	 * @author Justin Yau
+	 */
+	public void pauseGame() {
+		pause = true;
+	}
+	
+	/**
+	 * This method will change a boolean that will resume all game operations
+	 * 
+	 * @author Justin Yau
+	 */
+	public void resumeGame() {
+		pause = false;
+	}
+	
+	/**
+	 * This method will pause all operations until it is resumed by setting the pause boolean to false. <br>
+	 * All operations will continue running after things are resumed.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handlePause() {
+		long time = timePass();
+		for(Keystroke stroke: strokes) {
+			stroke.pauseFall();
+		}
+		while(pause) {
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for(Keystroke stroke: strokes) {
+			stroke.resumeFall();
+		}
+		recalculateStartTime(time);
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
 	 */
 	public void playMap() {
 		while(playing) {
+			if(pause) {
+				handlePause();
+			}
 			if(beats.size() == 0) {
 				playing = false;
 			}

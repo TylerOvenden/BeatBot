@@ -31,6 +31,20 @@ public interface KeystrokeInterface {
 	public void cancelFall();
 	
 	/**
+	 * This method will make the stroke stop falling
+	 * 
+	 * @author Justin Yau
+	 */
+	public void pauseFall();
+	
+	/**
+	 * This method will make the stroke continue falling
+	 * 
+	 * @author Jusitn Yau
+	 */
+	public void resumeFall();
+	
+	/**
 	 * This method will update the sleep time that is called in each fall interval. <br>
 	 * Decreasing this value will make the stroke fall faster. 
 	 * @param speed - Speed, in ms, that you want between each fall call.
