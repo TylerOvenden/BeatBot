@@ -42,7 +42,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
-	private boolean pause;
+	private boolean pause; 
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
@@ -387,7 +387,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 					
 					@Override
 					public void run() {
-						str.keystrokeFall();
+						
+						while(strokes.contains(str)) {
+							str.keystrokeFall();
+						}
+							
 					}
 					
 				});
