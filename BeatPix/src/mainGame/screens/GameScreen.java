@@ -92,7 +92,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		 * - Left Center Column - X: 170 Y: 75
 		 * - Right Column - X: 240 Y: 75
 		 * - Right Center Column - X: 310 Y: 75
-		 * - NEED TO IMPLEMENT A PAUSE:
+		 * - Pause
 		 * 
 		 * Possible way to make the game pause:
 		 * - Utilize wait/notify threads which seems complicated and the wrong application of the methods
