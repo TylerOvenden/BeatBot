@@ -31,6 +31,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private int fallTime; //The speed at which the stroke falls down
 	private int startTime; //The starting time in the map when this stroke spawned
 	private boolean cancel;
+	private boolean pause;
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -91,6 +92,24 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	}
 	
 	/**
+	 * This method will make the stroke stop falling
+	 * 
+	 * @author Justin Yau
+	 */
+	public void pauseFall() {
+		pause = true;
+	}
+	
+	/**
+	 * This method will make the stroke continue falling
+	 * 
+	 * @author Jusitn Yau
+	 */
+	public void resumeFall() {
+		pause = false;
+	}
+	
+	/**
 	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
@@ -98,7 +117,16 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public void keystrokeFall() {
 		cancel = false;
+		pause = false;
 		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
+			while(pause) {
+				try {
+					Thread.sleep(0);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			setY(getY() + 1);
 			try {
 				Thread.sleep(fallTime);

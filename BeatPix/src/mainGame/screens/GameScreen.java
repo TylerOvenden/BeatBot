@@ -39,9 +39,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
 	
 	public static long startTime; //The starting time in ms
-	private boolean playing;
+	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
+	private boolean pause; 
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
@@ -91,6 +92,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		 * - Left Center Column - X: 170 Y: 75
 		 * - Right Column - X: 240 Y: 75
 		 * - Right Center Column - X: 310 Y: 75
+		 * - Pause
+		 * 
+		 * Possible way to make the game pause:
+		 * - Utilize wait/notify threads which seems complicated and the wrong application of the methods
+		 * - Attempt to have a boolean, pause, and have the threads check for the boolean and sleep when true
 		 * 
 		 * Place where they must hit keystroke - Y: 425
 		*/
@@ -178,11 +184,22 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * Mainly overrided by Justin Yau
 	 * This function will run when the user presses a key.
 	 * Use e.getKeyCode() and compare it to a key and it will match if the user pressed that key 
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		if(e.getKeyCode() == KeyEvent.VK_A) {
+			pauseGame();
+			return;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_B) {
+			resumeGame();
+			return;
+		}
+		
 		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 		ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 		boolean correctStroke = false;
@@ -196,7 +213,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				break;
 			} 
 		}
-		if(!correctStroke && strokes.size() > 0) {
+		if(!correctStroke && strokes.size() > 0 && madeLegalStroke(e)) {
 			//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
 			
 			Keystroke cStroke = strokes.get(0);
@@ -204,6 +221,35 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			cStroke.cancelFall();
 
 		}
+		
+		/*
+		TEST CODE
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+			pause = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			pause = false;
+		}
+		*/
+		
+	}
+	
+	/**
+	 * This methods returns whether the user pressed one of the keys that represented a stroke. 
+	 * 
+	 * @param e - The KeyEvent that contains what key the user pressed
+	 * @return - Whether the key pressed was one of the keys that the user was suppose to press to remove a stroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean madeLegalStroke(KeyEvent e) {
+		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		for(int key: keys) {
+			if(e.getKeyCode() == key) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -262,6 +308,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public void run() {
 		startTime = (System.nanoTime());
 		playing = true;
+		pause = false;
 		strokes = new ArrayList<Keystroke>(0);
 		playMap();
 	}
@@ -270,9 +317,22 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * This method will return the time, in milliseconds, that has ellapsed since the game has started running
 	 * 
 	 * @return - The time that has ellapsed since start of this particular game, in milliseconds.
+	 * 
+	 * @author Justin Yau
 	 */
 	public static long timePass() {
 		return ((System.nanoTime() - startTime))/1000000;
+	}
+	
+	/**
+	 * This method will set the startTime to the appropriate amount of time that has elapsed. <br> 
+	 * To be called after resuming the game
+	 * 
+	 * @author Justin Yau
+	 */
+	public static void recalculateStartTime(long ellapsedTime) {
+		long timeEllapsedNano = ellapsedTime * 1000000;
+		startTime = System.nanoTime() - timeEllapsedNano;
 	}
 	
 	/**
@@ -289,12 +349,58 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * This method will change a boolean that will halt all game operations
+	 * 
+	 * @author Justin Yau
+	 */
+	public void pauseGame() {
+		pause = true;
+	}
+	
+	/**
+	 * This method will change a boolean that will resume all game operations
+	 * 
+	 * @author Justin Yau
+	 */
+	public void resumeGame() {
+		pause = false;
+	}
+	
+	/**
+	 * This method will pause all operations until it is resumed by setting the pause boolean to false. <br>
+	 * All operations will continue running after things are resumed.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handlePause() {
+		long time = timePass();
+		for(Keystroke stroke: strokes) {
+			stroke.pauseFall();
+		}
+		while(pause) {
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		for(Keystroke stroke: strokes) {
+			stroke.resumeFall();
+		}
+		recalculateStartTime(time);
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
 	 */
 	public void playMap() {
 		while(playing) {
+			if(pause) {
+				handlePause();
+			}
 			if(beats.size() == 0) {
 				playing = false;
 			}
@@ -308,7 +414,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 					
 					@Override
 					public void run() {
-						str.keystrokeFall();
+						
+						while(strokes.contains(str)) {
+							str.keystrokeFall();
+						}
+							
 					}
 					
 				});
