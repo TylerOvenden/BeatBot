@@ -183,6 +183,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * Mainly overrided by Justin Yau
 	 * This function will run when the user presses a key.
 	 * Use e.getKeyCode() and compare it to a key and it will match if the user pressed that key 
 	 */
@@ -277,9 +278,22 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * This method will return the time, in milliseconds, that has ellapsed since the game has started running
 	 * 
 	 * @return - The time that has ellapsed since start of this particular game, in milliseconds.
+	 * 
+	 * @author Justin Yau
 	 */
 	public static long timePass() {
 		return ((System.nanoTime() - startTime))/1000000;
+	}
+	
+	/**
+	 * This method will set the startTime to the appropriate amount of time that has elapsed. <br> 
+	 * To be called after resuming the game
+	 * 
+	 * @author Justin Yau
+	 */
+	public static void recalculateStartTime(long ellapsedTime) {
+		long timeEllapsedNano = ellapsedTime * 1000000;
+		startTime = System.nanoTime() - timeEllapsedNano;
 	}
 	
 	/**
