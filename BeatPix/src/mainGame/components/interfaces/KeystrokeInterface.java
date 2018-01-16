@@ -1,5 +1,7 @@
 package mainGame.components.interfaces;
 
+import mainGame.screens.GameScreen;
+
 /**
  * This interface will have all the must have methods for the Keystroke Class
  * @author Justin Yau
@@ -52,5 +54,19 @@ public interface KeystrokeInterface {
 	 * @author Justin Yau
 	 */
 	public void updateFallSpeed(int speed);
+	
+	/**
+	 * This method calculates the distance from the target optimal pressing area in Y 
+	 * @return Returns the distance from the target optimal pressing area in Y 
+	 * @author Justin Yau
+	 */
+	public int distanceFromGoal();
+	
+	/**
+	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getClickTime();
 	
 }
