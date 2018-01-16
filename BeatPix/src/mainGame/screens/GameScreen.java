@@ -122,8 +122,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		viewObjects.add(rightKey);
 		*/
 		
-		timing=new Timing(100, 100, 100, 100);
+		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
+		timing.update();
 		
 	}
 	
