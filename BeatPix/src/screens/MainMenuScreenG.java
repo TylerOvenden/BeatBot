@@ -34,14 +34,14 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	}
 
 	public void initAllObjects(List<Visible> viewObjects) {
-/**/	ImageIcon icon = new ImageIcon("D:\\Downloads\\!!!BeatBotArt\\Concept\\Backgrounds\\start.jpg");
-		background = new Graphic(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+(getWidth()*0.1)),"D:\\Downloads\\!!!BeatBotArt\\Concept\\Backgrounds\\start.jpg");
+/**/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
+/**/	background = new Graphic(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
 		background.setY(-background.getHeight()+getHeight());
 		
-/**/	icon = new ImageIcon("D:\\Downloads\\!!!BeatBotArt\\Concept\\UI\\Buttons\\buttonwithrivet.png");
+/**/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
-/**/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"D:\\Downloads\\!!!BeatBotArt\\Concept\\UI\\Buttons\\buttonwithrivet.png"));
+/**/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
 		buttons.get(0).setAction(new Action() {
 			public void act(){
@@ -68,13 +68,16 @@ public class MainMenuScreenG extends FullFunctionScreen {
 						b.setX(b.getX()-5);
 					}
 				}else {
-					for(ImageButton b: buttons) {
-						b.setEnabled(true);
-					}
-					this.cancel();
+					slideInButtonsEnd();
 				}
 			}
 		}, 0, 10);
+	}
+	public void slideInButtonsEnd() {
+		time.cancel();
+		for(ImageButton b: buttons) {
+			b.setEnabled(true);
+		}
 	}
 	
 }

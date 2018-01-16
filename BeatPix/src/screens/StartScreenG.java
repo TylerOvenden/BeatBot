@@ -1,5 +1,6 @@
 package screens;
 
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
@@ -28,6 +29,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 */
 	
 	private Timer time;
+	private int screenPhase;
 	
 	private Graphic background;
 	
@@ -38,10 +40,23 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
 	public StartScreenG(int width, int height) {
 		super(width, height);
+		screenPhase = 0;
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		if(!allowClick) {
+			if(screenPhase == 0) {
+				scrollInEnd();
+			}else if(screenPhase == 1) {
+				fadeInsEnd();
+			}else if(screenPhase == 2) {
+				fadeOutsEnd();
+			}else if(screenPhase == 3) {
+				scrollOutEnd();
+			}
+		}
 		if(allowClick) {
+			allowClick = false; GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			fadeOuts();
 		}
 	}
@@ -94,7 +109,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			x = background.getX(); y = background.getY();
 		}
 		w = getWidth();
-		h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+(getWidth()*0.1)); //makes the width of background always match the screen
+/*needs fixing*/h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
 		return new Graphic(x,y,w,h,path);
 	}
 	
@@ -117,10 +132,13 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	public void scrollInEnd() {
 		time.cancel();
 		fadeIns();
+		background.setY(-background.getHeight()/2+getHeight());
+		screenPhase = 1;
 	}
 	
 	public void fadeIns() {
 		
+		background.setY(-background.getHeight()/2+getHeight());
 		title.setAlpha(0.0f);start.setAlpha(0.0f);
 		
 		time = new Timer();
@@ -142,7 +160,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	}
 	public void fadeInsEnd() {
 		time.cancel();
-		allowClick = true;
+		allowClick = true; GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		title.setAlpha(1f);start.setAlpha(1f);
+		screenPhase = 2;
 	}
 	
 	public void fadeOuts() {
@@ -165,6 +185,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	public void fadeOutsEnd() {
 		time.cancel();
 		scrollOut();
+		start.setAlpha(0.0f);title.setAlpha(0.0f);
+		screenPhase = 3;
 	}
 	
 	public void scrollOut() {
@@ -185,7 +207,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		}, 0, 10); //100fps
 	}
 	public void scrollOutEnd() {
+		screenPhase = 4;
 		time.cancel();
+		background.setY(-background.getHeight() + getHeight());
 		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 	}
 	
