@@ -19,7 +19,7 @@ public class Timing extends Component {
 	public void update(Graphics2D g) {
 		try {
 			ImageIcon icon = new ImageIcon(perfect);
-			g.drawImage(icon.getImage(), 0, 0, null);
+			g.drawImage(icon.getImage(), 100, 100, null);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
