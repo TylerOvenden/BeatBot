@@ -32,7 +32,8 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private int startTime; //The starting time in the map when this stroke spawned
 	private boolean cancel; //This boolean is to keep track if the keystroke fall was canceled by the a key press
 	private boolean pause; //This boolean is to keep track if the game is currently pause
-	private int startFallTime;
+	private int clickTime; //This int is to track the time, in ms, the stroke should've been pressed since the game started 
+	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
 	 * This constructor will handle the animated image aspect of the indicator.
@@ -55,6 +56,15 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		update();
 	}
 
+	/**
+	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getClickTime() {
+		return startTime + (GameScreen.columnHeight * fallTime);
+	}
+	
 	/**
 	 * This method calculates the distance from the target optimal pressing area in Y 
 	 * @return Returns the distance from the target optimal pressing area in Y 
