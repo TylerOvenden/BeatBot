@@ -6,25 +6,21 @@ import java.io.IOException;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
  
 /**
  * This is an example program that demonstrates how to play back an audio file
- * using the Clip in Java Sound API.
+ * using the SourceDataLine in Java Sound API.
  * @author www.codejava.net
  *
  */
-public class PlaySong implements LineListener {
-     
-    /**
-     * this flag indicates whether the playback completes or not.
-     */
-    boolean playCompleted;
+public class PlaySong {
+ 
+    // size of the byte buffer used to read/write the audio stream
+    private static final int BUFFER_SIZE = 4096;
      
     /**
      * Play a given audio file.
@@ -32,32 +28,33 @@ public class PlaySong implements LineListener {
      */
     void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
- 
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
  
             AudioFormat format = audioStream.getFormat();
  
-            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
  
-            Clip audioClip = (Clip) AudioSystem.getLine(info);
+            SourceDataLine audioLine = (SourceDataLine) AudioSystem.getLine(info);
  
-            audioClip.addLineListener(this);
+            audioLine.open(format);
  
-            audioClip.open(audioStream);
+            audioLine.start();
              
-            audioClip.start();
+            System.out.println("Playback started.");
              
-            while (!playCompleted) {
-                // wait for the playback completes
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
+            byte[] bytesBuffer = new byte[BUFFER_SIZE];
+            int bytesRead = -1;
+ 
+            while ((bytesRead = audioStream.read(bytesBuffer)) != -1) {
+                audioLine.write(bytesBuffer, 0, bytesRead);
             }
              
-            audioClip.close();
+            audioLine.drain();
+            audioLine.close();
+            audioStream.close();
+             
+            System.out.println("Playback completed.");
              
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
@@ -68,27 +65,9 @@ public class PlaySong implements LineListener {
         } catch (IOException ex) {
             System.out.println("Error playing the audio file.");
             ex.printStackTrace();
-        }
-         
+        }      
     }
      
-    /**
-     * Listens to the START and STOP events of the audio line.
-     */
-    @Override
-    public void update(LineEvent event) {
-        LineEvent.Type type = event.getType();
-         
-        if (type == LineEvent.Type.START) {
-            System.out.println("Playback started.");
-             
-        } else if (type == LineEvent.Type.STOP) {
-            playCompleted = true;
-            System.out.println("Playback completed.");
-        }
- 
-    }
- 
     public static void main(String[] args) {
         String audioFilePath = "resources/test.wav";
         PlaySong player = new PlaySong();
