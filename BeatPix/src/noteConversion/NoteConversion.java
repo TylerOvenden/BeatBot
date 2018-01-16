@@ -32,7 +32,7 @@ public class NoteConversion implements SongInterface{
 	public int getOffSet() {
 		// TODO Auto-generated method stub
 		return offset;
-	}
+	} 
 
 	@Override
 	public ArrayList<int[]> getBeats() {
