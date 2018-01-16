@@ -69,4 +69,25 @@ public interface KeystrokeInterface {
 	 */
 	public int getClickTime();
 	
+	/**
+	 * This method returns the delay between each call to make the Keystroke fall
+	 * @return Returns the delay between each call to make the Keystroke fall
+	 * @author Justin Yau
+	 */
+	public int getFallSpeed();
+
+	/**
+	 * This method sets the boolean responsible for determining whether or not the keystroke is part of a hold or not
+	 * 
+	 * @param value - Whether you want to set it be a hold stroke or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setHold(boolean value);
+	
+	/**
+	 * This method returns whether or not this stroke is part of a hold stroke
+	 * @return Returns whether or not this stroke is part of a hold stroke
+	 */
+	public boolean getHold();
 }

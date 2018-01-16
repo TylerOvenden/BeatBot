@@ -33,6 +33,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private boolean cancel; //This boolean is to keep track if the keystroke fall was canceled by the a key press
 	private boolean pause; //This boolean is to keep track if the game is currently pause
 	private int clickTime; //This int is to track the time, in ms, the stroke should've been pressed since the game started 
+	private boolean isHold; //This boolean tracks whether or not the key press was a hold
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -46,6 +47,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public Keystroke(int x, int y, int stime, String path) {
 		super(x, y, 65, 65);
+		isHold = false;
 		fallTime = 10;
 		startTime = stime;
 		//Path should be inputted something like "resources/arrows/darrow.png"
@@ -56,6 +58,25 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		update();
 	}
 
+	/**
+	 * This method sets the boolean responsible for determining whether or not the keystroke is part of a hold or not
+	 * 
+	 * @param value - Whether you want to set it be a hold stroke or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setHold(boolean value) {
+		isHold = value;
+	}
+	
+	/**
+	 * This method returns whether or not this stroke is part of a hold stroke
+	 * @return Returns whether or not this stroke is part of a hold stroke
+	 */
+	public boolean getHold() {
+		return isHold;
+	}
+	
 	/**
 	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
 	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
@@ -140,6 +161,15 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	}
 	
 	/**
+	 * This method returns the delay between each call to make the Keystroke fall
+	 * @return Returns the delay between each call to make the Keystroke fall
+	 * @author Justin Yau
+	 */
+	public int getFallSpeed() {
+		return fallTime;
+	}
+	
+	/**
 	 * This method will make the stroke stop falling 
 	 * 
 	 * @author Justin Yau
@@ -195,6 +225,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		}
 		if(!cancel) {
 			GameScreen.game.removeStroke(this);
+			//Miss accuracy here
 		}
 		update();
 	}

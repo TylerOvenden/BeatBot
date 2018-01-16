@@ -18,7 +18,9 @@ import gui.components.TextArea;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.components.ColumnLane;
+import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
+import mainGame.components.Rectanglu;
 import mainGame.components.Song;
 import mainGame.components.Timing;
 
@@ -45,6 +47,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
+	private ArrayList<Rectanglu> rectangles;
 	private boolean pause; 
 	private int fallTime;
 	
@@ -443,8 +446,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("I ran");
 	}
 	
 	//We won't be using this
@@ -460,6 +462,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		playing = true;
 		pause = false;
 		strokes = new ArrayList<Keystroke>(0);
+		rectangles = new ArrayList<Rectanglu>(0);
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
@@ -497,6 +500,12 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		strokes.remove(e);
 		remove(e);
 		remove(e); //Just in case it doesn't get removed the first time
+	}
+	
+	public void removeRectangle(Rectanglu r) {
+		rectangles.remove(r);
+		remove(r);
+		remove(r); //Just in case it doesn't get removed the first time
 	}
 	
 	/**
@@ -563,8 +572,43 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
 		else {
 			fallTime = (int) (((float)1/BPM) * 800);
-			System.out.println(fallTime);
 		}
+	}
+	
+	public void handleKeystroke(Keystroke s) {
+		addObject(s);
+		strokes.add(s);
+		Thread tr = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				while(strokes.contains(s)) {
+					s.keystrokeFall();
+				}
+					
+			}
+			
+		});
+		tr.start();
+	}
+	
+	public void handleRectangle(Rectanglu rect) {
+		addObject(rect);
+		rectangles.add(rect);
+		Thread tr = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				while(rectangles.contains(rect)) {
+					rect.keystrokeFall();
+				}
+					
+			}
+			
+		});
+		tr.start();
 	}
 	
 	/**
@@ -583,23 +627,23 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			else if(timePass() >= beats.get(0)[1]) {
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
-				Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
-				str.updateFallSpeed(fallTime);
-				addObject(str);
-				strokes.add(str);
-				Thread tr = new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						
-						while(strokes.contains(str)) {
-							str.keystrokeFall();
+				if(beats.get(0)[2] != 0) {
+					int holdTime = beats.get(0)[2] - beats.get(0)[1];
+					Holdstroke str = new Holdstroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png", holdTime, fallTime);
+					for(Visible s: str.getStrokes()) {
+						if(s instanceof Keystroke) {
+							handleKeystroke((Keystroke) s);
 						}
-							
+						else {
+							handleRectangle((Rectanglu) s);
+						}
 					}
-					
-				});
-				tr.start();
+				}
+				else {
+					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
+					str.updateFallSpeed(fallTime);
+					handleKeystroke(str);
+				}
 				//strokes.add(str);
 			}
 		}
