@@ -23,7 +23,7 @@ public class Test extends GUIApplication {
 
 	@Override
 	public void initScreen() {
-		testScreen = new StartScreenG(getWidth(), getHeight());
+		testScreen = new LevelScreenG(getWidth(), getHeight());
 		setScreen(testScreen);
 	}
 
