@@ -14,7 +14,6 @@ public class SongBanner extends Component {
 	@Override
 	public void update(Graphics2D g) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
