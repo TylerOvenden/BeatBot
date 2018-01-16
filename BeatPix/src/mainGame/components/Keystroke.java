@@ -30,8 +30,8 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 
 	private int fallTime; //The speed at which the stroke falls down
 	private int startTime; //The starting time in the map when this stroke spawned
-	private boolean cancel;
-	private boolean pause;
+	private boolean cancel; //This boolean is to keep track if the keystroke fall was canceled by the a key press
+	private boolean pause; //This boolean is to keep track if the game is currently pause
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -55,10 +55,48 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		update();
 	}
 
+	/**
+	 * Overrides method to implement the pause feature. <br>
+	 * This method makes keystroke stop being animated. 
+	 * 
+	 * @author Justin Yau
+	 */
+	public void run(){
+		int posx= getX();
+		int posy= getY();
+		boolean running = true;
+		long moveTime = System.currentTimeMillis();
+		while(running){
+
+			try {
+				while(pause) {
+					Thread.sleep(0);
+				}
+				Thread.sleep(REFRESH_RATE);
+				checkBehaviors();
+				update();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
+	/**
+	 * This method Returns the time that this beat spawned into the map
+	 * @return  Returns the time that this beat spawned into the map
+	 * @author Justin Yau
+	 */
 	public int getStartingTime() {
 		return startTime;
 	}
 	
+	/**
+	 * This method converts the current x position and determines which "lane" the stroke is in
+	 * @return Which lane the stroke is in
+	 * @author Justin Yau
+	 */
 	public int getColumnLane() {
 		int[] arr = {100, 170, 240, 310};
 		int xCoordinate = getX();

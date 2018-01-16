@@ -11,16 +11,11 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
  
-/**
- * This is an example program that demonstrates how to play back an audio file
- * using the SourceDataLine in Java Sound API.
- * @author www.codejava.net
- *
- */
+
 public class PlaySong {
  
     // size of the byte buffer used to read/write the audio stream
-    private static final int BUFFER_SIZE = 4096;
+    private static final int BUFFER_SIZE = 4000;
      
     /**
      * Play a given audio file.
