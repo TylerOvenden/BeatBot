@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JSplitPane;
 
+import gui.components.TextArea;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.components.ColumnLane;
@@ -53,6 +54,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnHeight = 350; //This is the height of the lanes
 	
 	private Timing timing;
+	private TextArea visual;
 	
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
@@ -128,6 +130,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
+		visual=new TextArea(0, 425, 700, 10, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		viewObjects.add(visual);
 		
 	}
 	
@@ -211,7 +215,130 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			return;
 		}
 		
-		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		if(e.getKeyCode() == KeyEvent.VK_D) {
+			System.out.println(timePass());
+			System.out.println(strokes.get(0).getStartingTime());
+			for(int i=0;i<strokes.size();i++) {
+				if(strokes.get(i).getColumnLane()==1) {
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
+						timing.changeImg("resources/perfect.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
+						timing.changeImg("resources/great.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
+						timing.changeImg("resources/good.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
+						timing.changeImg("resources/ok.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
+						timing.changeImg("resources/bad.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
+						timing.changeImg("resources/miss.png");
+						break;
+					}
+				}
+			}
+		}
+		if(e.getKeyCode() == KeyEvent.VK_F) {
+			for(int i=0;i<strokes.size();i++) {
+				if(strokes.get(i).getColumnLane()==2) {
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
+						timing.changeImg("resources/perfect.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
+						timing.changeImg("resources/great.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
+						timing.changeImg("resources/good.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
+						timing.changeImg("resources/ok.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
+						timing.changeImg("resources/bad.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
+						timing.changeImg("resources/miss.png");
+						break;
+					}
+				}
+			}
+				
+		}
+		if(e.getKeyCode() == KeyEvent.VK_J) {
+			for(int i=0;i<strokes.size();i++) {
+				if(strokes.get(i).getColumnLane()==3) {
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
+						timing.changeImg("resources/perfect.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
+						timing.changeImg("resources/great.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
+						timing.changeImg("resources/good.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
+						timing.changeImg("resources/ok.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
+						timing.changeImg("resources/bad.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
+						timing.changeImg("resources/miss.png");
+						break;
+					}
+				}
+			}
+		}
+		if(e.getKeyCode() == KeyEvent.VK_K) {
+			for(int i=0;i<strokes.size();i++) {
+				if(strokes.get(i).getColumnLane()==4) {
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
+						timing.changeImg("resources/perfect.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
+						timing.changeImg("resources/great.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
+						timing.changeImg("resources/good.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
+						timing.changeImg("resources/ok.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
+						timing.changeImg("resources/bad.png");
+						break;
+					}
+					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
+						timing.changeImg("resources/miss.png");
+						break;
+					}
+				}
+			}
+		}
+		/*int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 		ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 		boolean correctStroke = false;
 		for(Keystroke stroke: strokesToCheck) {
@@ -252,7 +379,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			removeStroke(cStroke);
 			cStroke.cancelFall();
 
-		}
+		}*/
 		
 		/*
 		TEST CODE
@@ -263,6 +390,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			pause = false;
 		}
 		*/
+
+		
+		
 		
 	}
 	
