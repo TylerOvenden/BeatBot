@@ -1,4 +1,4 @@
-package mainGame;
+package mainGame.components;
 
 import java.io.File;
 import java.io.IOException;
