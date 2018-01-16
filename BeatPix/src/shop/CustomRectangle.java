@@ -5,12 +5,8 @@ import java.awt.Graphics2D;
 
 import gui.components.Component;
 
-public class CustomRectangle extends Component {
-
-	private int xCoord;
-	private int yCoord;
-	private int w;
-	private int h;
+public class CustomRectangle extends Component 
+{
 	
 	private Color color;
 	public CustomRectangle(int x, int y, int width, int height, Color color)
