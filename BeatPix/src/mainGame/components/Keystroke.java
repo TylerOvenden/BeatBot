@@ -32,7 +32,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private int startTime; //The starting time in the map when this stroke spawned
 	private boolean cancel; //This boolean is to keep track if the keystroke fall was canceled by the a key press
 	private boolean pause; //This boolean is to keep track if the game is currently pause
-	
+	private int startFallTime;
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
 	 * This constructor will handle the animated image aspect of the indicator.
