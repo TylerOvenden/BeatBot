@@ -11,7 +11,7 @@ import gui.components.Component;
 
 public class Timing extends Component {
 	
-	public final String good="resources/good.png";
+	private String img="";
 
 	public Timing(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -21,12 +21,17 @@ public class Timing extends Component {
 	@Override
 	public void update(Graphics2D g) {
 		try {
-			ImageIcon icon = new ImageIcon(good);
+			ImageIcon icon = new ImageIcon(img);
 			g.drawImage(icon.getImage(), 0, 0, null);
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void changeImg(String type) {
+		img=type;
+		update();
 	}
 }

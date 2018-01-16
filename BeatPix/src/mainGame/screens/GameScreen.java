@@ -213,7 +213,28 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		boolean correctStroke = false;
 		for(Keystroke stroke: strokesToCheck) {
 			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
-				//CALCULATE PERFECT/GREAT/ALRIGHT/MEH ACCURACY HERE PLACEHOLDER
+				for(int i = 0;i<beats.size();i++) {
+					for(int j=0;j<beats.get(i).length;j++) {
+						if(Math.abs(timePass()-beats.get(i)[j])<16) {
+							timing.changeImg("resources/perfect.png");
+						}
+						if(Math.abs(timePass()-beats.get(i)[j])<40) {
+							timing.changeImg("resources/great.png");
+						}
+						if(Math.abs(timePass()-beats.get(i)[j])<73) {
+							timing.changeImg("resources/good.png");
+						}
+						if(Math.abs(timePass()-beats.get(i)[j])<103) {
+							timing.changeImg("resources/ok.png");
+						}
+						if(Math.abs(timePass()-beats.get(i)[j])<127) {
+							timing.changeImg("resources/bad.png");
+						}
+						if(Math.abs(timePass()-beats.get(i)[j])>164) {
+							timing.changeImg("resources/miss.png");
+						}
+					}
+				}
 				
 				removeStroke(stroke); 
 				stroke.cancelFall();
