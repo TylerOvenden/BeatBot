@@ -20,7 +20,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	private static final long serialVersionUID = -6794226819818369625L;
 	/**Design:
 	 * -Background - will be a basic static image
-	 * -Title - will be an image component that
+	 * -Title - will be an image component that fades in
 	 * -StartButton - basic button to start the game
 	 * 
 	 * --Clicking start will scroll down the image to 
@@ -49,9 +49,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-/**/		background = updateBackground("\\BeatBot\\BeatPix\\resources\\backgrounds\\start.jpg");
-/**/		title = updateTitle("\\BeatBot\\BeatPix\\resources\\title.png");
-/**/		start = updateStart("\\BeatBot\\BeatPix\\resources\\ui\\buttons\\startbutton.png");
+/**/		background = updateBackground("resources\\backgrounds\\start.jpg");
+/**/		title = updateTitle("resources\\title.png");
+/**/		start = updateStart("resources\\ui\\buttons\\startbutton.png");
 		
 		title.setAlpha(0.0f);
 		start.setAlpha(0.0f);
@@ -109,12 +109,16 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 				if(background.getY() > -background.getHeight()/2+getHeight()) {
 					background.setY(background.getY() - 1);
 				}else {
-					fadeIns();
-					this.cancel();
+					scrollInEnd();
 				}
 			}
 		}, 0, 10); //100fps
 	}
+	public void scrollInEnd() {
+		time.cancel();
+		fadeIns();
+	}
+	
 	public void fadeIns() {
 		
 		title.setAlpha(0.0f);start.setAlpha(0.0f);
@@ -123,7 +127,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				if(title.getAlpha() > 0.7f) {
-					if(start.getAlpha() < 0.99f) {
+					if(start.getAlpha() < 0.99f) { //begins the fade in for startbutton
 						start.setAlpha(start.getAlpha() + 0.01f);
 					}
 				}
@@ -131,12 +135,16 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					title.setAlpha(title.getAlpha() + 0.01f);
 				}
 				if(title.getAlpha() >= 0.99f && start.getAlpha() >= 0.99f) {
-					this.cancel();
-					allowClick = true;
+					fadeInsEnd();
 				}
 			}
 		}, 0, 10); //100fps
 	}
+	public void fadeInsEnd() {
+		time.cancel();
+		allowClick = true;
+	}
+	
 	public void fadeOuts() {
 		
 		title.setAlpha(1f);start.setAlpha(1f);
@@ -146,8 +154,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				if(title.getAlpha() <= 0.01f && start.getAlpha() <= 0.01f) {
-					scrollOut();
-					this.cancel();
+					fadeOutsEnd();
 				}else {
 					start.setAlpha(start.getAlpha() - 0.01f);
 					title.setAlpha(title.getAlpha() - 0.01f);
@@ -155,6 +162,11 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			}
 		}, 0, 10); //100fps
 	}
+	public void fadeOutsEnd() {
+		time.cancel();
+		scrollOut();
+	}
+	
 	public void scrollOut() {
 		
 		title.setAlpha(0f);start.setAlpha(0f);
@@ -165,12 +177,18 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 				if(background.getY() > -background.getHeight() + getHeight()) {
 					background.setY(background.getY() - 1);
 				}else {
-/**/					Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
-					this.cancel();
+					scrollOutEnd();
+/**/					//Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+					//this.cancel();
 				}
 			}
 		}, 0, 10); //100fps
 	}
+	public void scrollOutEnd() {
+		time.cancel();
+		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+	}
+	
 	
 	//--Create setDimensions method which will resize/redraw the images based off window size changes--//
 }
