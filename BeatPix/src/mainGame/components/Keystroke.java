@@ -56,6 +56,15 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	}
 
 	/**
+	 * This method calculates the distance from the target optimal pressing area in Y 
+	 * @return Returns the distance from the target optimal pressing area in Y 
+	 * @author Justin Yau
+	 */
+	public int distanceFromGoal() {
+		return (GameScreen.columnHeight + GameScreen.columnY) -  getY();
+	}
+	
+	/**
 	 * Overrides method to implement the pause feature. <br>
 	 * This method makes keystroke stop being animated. 
 	 * 

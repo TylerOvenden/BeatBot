@@ -52,6 +52,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
+	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
 	
 	private Timing timing;
 	private TextArea visual;
@@ -215,6 +216,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			return;
 		}
 		
+		/*
 		if(e.getKeyCode() == KeyEvent.VK_D) {
 			System.out.println(timePass());
 			System.out.println(strokes.get(0).getStartingTime());
@@ -337,8 +339,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 					}
 				}
 			}
-		}
-		/*if(strokes.size() > 0 && strokes.get(0).distanceFromGoal() <= distanceG) {
+		} */
+		if(strokes.size() > 0 && strokes.get(0).distanceFromGoal() <= distanceG) {
 			int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 			boolean correctStroke = false;
@@ -364,7 +366,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				cStroke.cancelFall();
 
 			}
-		}*/
+		}
 		
 		/*
 		TEST CODE
