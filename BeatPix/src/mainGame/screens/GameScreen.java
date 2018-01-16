@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JSplitPane;
 
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
@@ -56,6 +57,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
 		
+		setFixedSize(false);
+		
 		game = this;
 		
 		//Retrieve metadata and beats from the song
@@ -85,14 +88,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		 * 
 		 * Use setAlpha(float int) to make the lanes transparent
 		 * 
-		 * - Create the lanes in the initAllObjects 
-		 * - Read the map file in this class
-		 * - Spawn the keystroke into the lanes in this class
+		 * - Create the lanes in the initAllObjects  - Completed
+		 * - Read the map file in this class - Completed
+		 * - Spawn the keystroke into the lanes in this class - Completed
 		 * - Left Column - X: 100 Y: 75
 		 * - Left Center Column - X: 170 Y: 75
 		 * - Right Column - X: 240 Y: 75
 		 * - Right Center Column - X: 310 Y: 75
-		 * - Pause
+		 * - Pause - Completed
 		 * 
 		 * Possible way to make the game pause:
 		 * - Utilize wait/notify threads which seems complicated and the wrong application of the methods
