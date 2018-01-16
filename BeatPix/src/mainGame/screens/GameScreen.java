@@ -19,6 +19,7 @@ import gui.userInterfaces.ClickableScreen;
 import mainGame.components.ColumnLane;
 import mainGame.components.Keystroke;
 import mainGame.components.Song;
+import mainGame.components.Timing;
 
 public class GameScreen extends ClickableScreen implements KeyListener, Runnable {
 
@@ -50,6 +51,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
+	
+	private Timing timing;
 	
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
@@ -121,6 +124,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		Keystroke rightKey = new Keystroke(310, 425, "resources/arrows/darrow.png");
 		viewObjects.add(rightKey);
 		*/
+		
+		timing=new Timing(175,300, 128, 128);
+		viewObjects.add(timing);
+		timing.update();
+		
 	}
 	
 	/**
