@@ -12,7 +12,7 @@ public class ShopScreen extends FullFunctionScreen
 	private Graphic background;	
 	private TextLabel currency;
 	private CustomRectangle songArea;
-	
+
 
 
 	public ShopScreen(int width, int height) 
@@ -24,16 +24,23 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 		background = new Graphic(0,0,getWidth(),getHeight(),"resources//sample_bg.gif");
-//		viewObjects.add(background);
+		viewObjects.add(background);
+		
+		//background for credits, make new component later
+		CustomRectangle creditBG = new CustomRectangle(185,60,90,33, Color.white);
+		viewObjects.add(creditBG);
 		
 		String credits = "Credits: "; // add method "getCredits()" later
 		currency = new TextLabel(200,60,200,200, credits);
-		currency.setForeground(Color.blue);
 		viewObjects.add(currency);
 		
-		songArea = new CustomRectangle(200, 80);
+		// where the new songs will be placed
+		songArea = new CustomRectangle(130, 150, 225, 350, Color.white);
 		viewObjects.add(songArea);
 		
+	//	songBanner = new TextLabel(130, 120, 200,200, "Songs");
+	//	ScrollablePane a = new ScrollablePane(null, null, 50, 50, 20, 30);
+	//	viewObjects.add(a);
 	}	
 
 }

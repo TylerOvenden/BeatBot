@@ -7,20 +7,25 @@ import gui.components.Component;
 
 public class CustomRectangle extends Component {
 
-	private int x;
-	private int y;
+	private int xCoord;
+	private int yCoord;
+	private int w;
+	private int h;
 	
-	public CustomRectangle(int x, int y)
+	private Color color;
+	public CustomRectangle(int x, int y, int width, int height, Color color)
 	{
-		super(x, y, 100, 300);
+		super(x, y, width, height);
+		update();
 	}
 
 	@Override
 	public void update(Graphics2D g) 
 	{
+		g.setColor(color);
+		g.drawRect(0, 0, getWidth(), getHeight());
+		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		g.drawRect(0, 0, 100, 300);
-
 	}
 
 }
