@@ -1,5 +1,6 @@
 package screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import gui.GUIApplication;
@@ -14,7 +15,10 @@ public class Test extends GUIApplication {
 	private static final long serialVersionUID = 6557376208612089301L;
 	
 	public static Test test;
-	public static Screen testScreen;
+	public static ArrayList<Screen> screens;
+	public static int START = 0;
+	public static int MENU = 1;
+	public static int CHARACTER = 1;
 	
 	public Test(int width, int height) {
 		super(width, height);
@@ -23,8 +27,8 @@ public class Test extends GUIApplication {
 
 	@Override
 	public void initScreen() {
-		testScreen = new LevelScreenG(getWidth(), getHeight());
-		setScreen(testScreen);
+		setScreen(new StartScreenG(getWidth(),getHeight()));
+		//setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 	}
 
 	public static void main(String[] args) {

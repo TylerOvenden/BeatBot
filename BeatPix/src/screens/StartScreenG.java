@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import gui.GUIApplication;
 import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
@@ -16,7 +17,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6794226819818369625L;
 	/**Design:
 	 * -Background - will be a basic static image
 	 * -Title - will be an image component that
@@ -27,7 +28,6 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 */
 	
 	private Timer time;
-	private int timeCounter;
 	
 	private Graphic background;
 	
@@ -49,9 +49,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-		background = updateBackground("D:\\Downloads\\!!!BeatBotArt\\Backgrounds\\start.jpg");
-		title = updateTitle("D:\\Downloads\\!!!BeatBotArt\\title.png");
-		start = updateStart("D:\\Downloads\\!!!BeatBotArt\\UI\\Buttons\\startbutton.png");
+/**/		background = updateBackground("\\BeatBot\\BeatPix\\resources\\backgrounds\\start.jpg");
+/**/		title = updateTitle("\\BeatBot\\BeatPix\\resources\\title.png");
+/**/		start = updateStart("\\BeatBot\\BeatPix\\resources\\ui\\buttons\\startbutton.png");
 		
 		title.setAlpha(0.0f);
 		start.setAlpha(0.0f);
@@ -100,25 +100,26 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	
 	//--Events--//
 	public void scrollIn() {
-		time = new Timer();
-		timeCounter = 100;
+		
 		background.setX(0); background.setY(0);
+		
+		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				if(timeCounter > 0) {
-					background.setY(background.getY() - 5); //will move up 5 for 100 times, moving 500 px
-					timeCounter--;
+				if(background.getY() > -background.getHeight()/2+getHeight()) {
+					background.setY(background.getY() - 1);
 				}else {
 					fadeIns();
 					this.cancel();
 				}
 			}
-		}, 0, 42); //24fps
+		}, 0, 10); //100fps
 	}
 	public void fadeIns() {
+		
+		title.setAlpha(0.0f);start.setAlpha(0.0f);
+		
 		time = new Timer();
-		title.setAlpha(0.0f);
-		start.setAlpha(0.0f);
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				if(title.getAlpha() > 0.7f) {
@@ -137,10 +138,11 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		}, 0, 10); //100fps
 	}
 	public void fadeOuts() {
-		time = new Timer();
-		title.setAlpha(1f);
-		start.setAlpha(1f);
+		
+		title.setAlpha(1f);start.setAlpha(1f);
 		allowClick = false;
+
+		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				if(title.getAlpha() <= 0.01f && start.getAlpha() <= 0.01f) {
@@ -154,17 +156,21 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		}, 0, 10); //100fps
 	}
 	public void scrollOut() {
+		
+		title.setAlpha(0f);start.setAlpha(0f);
+		
 		time = new Timer();
-		timeCounter = 100;
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				if(timeCounter > 0) {
-					background.setY(background.getY() - 5); //will move up 5 for 100 times, moving 500 px
-					timeCounter--;
+				if(background.getY() > -background.getHeight() + getHeight()) {
+					background.setY(background.getY() - 1);
 				}else {
+/**/					Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 					this.cancel();
 				}
 			}
-		}, 0, 42); //24fps
+		}, 0, 10); //100fps
 	}
+	
+	//--Create setDimensions method which will resize/redraw the images based off window size changes--//
 }
