@@ -17,8 +17,8 @@ public class CustomPaneG extends Pane{
 	 */
 	private static final long serialVersionUID = 6639314147762863597L;
 	
-	private static int paneLength = 420;
-	private static int paneHeight = 50;
+	private static int paneLength = 410;
+	private static int paneHeight = 40;
 	private int numberOfKeys = 4;
 	
 
@@ -29,6 +29,8 @@ public class CustomPaneG extends Pane{
 
 	public void update(Graphics2D g){
 		g.setStroke(new BasicStroke(5));
+		g.setColor(Color.white);
+		g.fillRect(5, 5, 400, 30);
 		g.setColor(Color.black);
 		for(int i = 0; i < numberOfKeys; i++)
 		{
