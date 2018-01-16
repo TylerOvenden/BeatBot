@@ -8,5 +8,5 @@ public class ScoreLabel extends TextArea{
 		super(x, y, w, h, text);
 		// TODO Auto-generated constructor stub
 	}
-
+ 
 }
