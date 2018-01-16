@@ -46,6 +46,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
 	private boolean pause; 
+	private int fallTime;
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
@@ -459,6 +460,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		playing = true;
 		pause = false;
 		strokes = new ArrayList<Keystroke>(0);
+		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
 	
@@ -541,6 +543,31 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * Calculates the total fall time based on column height and fall time. <br>
+	 * CALCULATE FALL TIME BEFORE CALLING THIS METHOD
+	 * @return Returns the total fall time based on column height and fall time
+	 * @author Justin Yau
+	 */
+	public int calculateTotalFallTime() {
+		return fallTime * columnHeight;
+	}
+	
+	/**
+	 * This method calculates the fall time from BPM and sets it to the fall time variable
+	 * 
+	 * @author Justin Yau
+	 */
+	public void calculateAndSetFallTimeFromBeats() {
+		if(BPM == 0 || BPM <= 45) {
+			fallTime = 10;
+		}
+		else {
+			fallTime = (int) (((float)1/BPM) * 800);
+			System.out.println(fallTime);
+		}
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
@@ -557,6 +584,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
 				Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
+				str.updateFallSpeed(fallTime);
 				addObject(str);
 				strokes.add(str);
 				Thread tr = new Thread(new Runnable() {

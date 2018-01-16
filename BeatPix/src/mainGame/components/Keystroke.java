@@ -117,7 +117,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 * @author Justin Yau
 	 */
 	public int getColumnLane() {
-		int[] arr = {100, 170, 240, 310};
+		int[] arr = GameScreen.arrowX;
 		int xCoordinate = getX();
 		for(int i = 0; i < arr.length; i++) {
 			if(arr[i] == xCoordinate) {
