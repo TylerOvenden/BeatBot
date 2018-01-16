@@ -27,7 +27,7 @@ public class NoteConversion implements SongInterface{
 		// TODO Auto-generated method stub
 		return artist;
 	}
-
+   
 	@Override
 	public int getOffSet() {
 		// TODO Auto-generated method stub
