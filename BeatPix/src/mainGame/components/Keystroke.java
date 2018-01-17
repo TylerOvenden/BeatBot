@@ -30,11 +30,13 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 
 	private int fallTime; //The speed at which the stroke falls down
 	private int startTime; //The starting time in the map when this stroke spawned
+	private int height; //The height from which this stroke is following another stroke FOR HOLDS ONLY
 	private boolean cancel; //This boolean is to keep track if the keystroke fall was canceled by the a key press
 	private boolean pause; //This boolean is to keep track if the game is currently pause
 	private int clickTime; //This int is to track the time, in ms, the stroke should've been pressed since the game started 
 	private boolean isHold; //This boolean tracks whether or not the key press was a hold
 	private boolean spawnedAnimation; //This boolean tracks whether the visible keystroke was spawned in
+	private boolean isCurrentHold; //This boolean will track whether the keystroke is currently being used to determine hold time
 	private String imgPath; //This string will store the path of image file for spawning in the keystroke later if needed
 	
 	/**
@@ -50,6 +52,42 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	public Keystroke(int x, int y, int stime, String path) {
 		super(x, y, 65, 65);
 		isHold = false;
+		isCurrentHold = false;
+		fallTime = 10;
+		startTime = stime;
+		imgPath = path;
+		height = 0;
+		spawnedAnimation = false;
+		//Path should be inputted something like "resources/arrows/darrow.png"
+		if(y >= GameScreen.columnY) {
+			addSequence(path, 100, 0, 0, 64, 64, 4);
+			spawnedAnimation = true;
+		}
+		//To make the component animated, we need to make a thread
+		Thread animation = new Thread(this);
+		animation.start();
+		update();
+	}
+	
+	/**
+	 * VERSION 2
+	 * ONLY FOR HOLD STROKES
+	 * Stores height for later use
+	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
+	 * This constructor will handle the animated image aspect of the indicator.
+	 * 
+	 * @author Justin Yau
+	 * 
+	 * @param x - X Coordinate of the indicator
+	 * @param y - Y Coordinate of the indicator 
+	 * @param path - Image file path (Ex: "resources/arrows/darrow.png")
+	 * @param h - Distance from the first arrow stroke
+	 */
+	public Keystroke(int x, int y, int stime, String path, int h) {
+		super(x, y, 65, 65);
+		isHold = false;
+		height = h;
+		isCurrentHold = false;
 		fallTime = 10;
 		startTime = stime;
 		imgPath = path;
@@ -65,6 +103,17 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		update();
 	}
 
+	/**
+	 * This method will allow the program to know that the keystroke is being used in a hold press at the moment
+	 * 
+	 * @param b - Whether the keystroke is being held down or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setCurrentHold(boolean b) {
+		isCurrentHold = b;
+	}
+	
 	/**
 	 * This method sets the boolean responsible for determining whether or not the keystroke is part of a hold or not
 	 * 
@@ -204,6 +253,26 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	}
 	
 	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean reachedBeyondHoldGoal(int goal) {
+		return (getY() + height) > goal;
+	}
+	
+	/**
 	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
@@ -214,29 +283,24 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		pause = false;
 		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
 			while(pause) {
-				try {
-					Thread.sleep(0);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleep(0);
 			}
 			setY(getY() + 1);
+			if(isHold && !isCurrentHold && reachedBeyondHoldGoal(GameScreen.columnHeight + GameScreen.columnY)) {
+				break;
+			}
 			if(getY() >= 75 && !spawnedAnimation) {
 				addSequence(imgPath, 100, 0, 0, 64, 64, 4);
 				spawnedAnimation = true;
 			}
-			try {
-				Thread.sleep(fallTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sleep(fallTime);
 			update();
 		}
 		if(!cancel) {
 			GameScreen.game.removeStroke(this);
-			//Miss accuracy here
+			if(height != 0) {
+				//Miss accuracy here
+			}
 		}
 		update();
 	}

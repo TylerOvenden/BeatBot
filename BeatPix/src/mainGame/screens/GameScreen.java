@@ -60,7 +60,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
-	public static final int distanceG = 900; //Distance from the goal before the user can make a press for a stroke
+	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
 	
 	private Timing timing;
 	private TextArea visual;
@@ -415,6 +415,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				removeStroke(stroke); 
 				stroke.cancelFall();
 				if(stroke.getHold()) {
+					((Keystroke)holdStroke.get(stroke)[1]).setCurrentHold(true);
+					((Rectanglu)holdStroke.get(stroke)[0]).setCurrentHold(true);
 					currentlyHoldingList.add(holdStroke.get(stroke));
 					currentHoldLanes[stroke.getColumnLane() - 1] = true;
 				}
@@ -638,6 +640,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
 		return list;
 	}
+	
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -811,6 +814,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * Makes the the rectangle start falling aswell.
 	 * 
 	 * @param s - The keystroke you would like to add to the game
+	 * @param add - Whether you would like to add to the arraylist or not
 	 * 
 	 * @author Justin Yau
 	 */
@@ -839,6 +843,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * Makes the the rectangle start falling aswell.
 	 * 
 	 * @param rect - The rectangle you would like to add to the game
+	 * @param add - Whether you would like to add to the arraylist or not
 	 * 
 	 * @author Justin Yau
 	 */

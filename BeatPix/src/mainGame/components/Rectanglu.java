@@ -18,6 +18,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 
 	private int fallTime; //The speed at which the rectangle falls down
 	private int rectHeight; //This int will be the value of the Rectangle's height
+	private boolean isCurrentHold; //This boolean will track whether the rectangle is currently being used to determine hold time
 	private boolean cancel; //This boolean will track whether the stroke was canceled by user interactions
 	private boolean pause; //This boolean will track whether the game was paused or not
 	private int yPos;
@@ -34,6 +35,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	 */
 	public Rectanglu(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		isCurrentHold = false;
 		yPos = y;
 		fallTime = 10;
 		rectHeight = h;
@@ -68,6 +70,33 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	}
 	
 	/**
+	 * This method will allow the program to know that the rectangle is being used in a hold press at the moment
+	 * 
+	 * @param b - Whether the rectangle is being held down or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setCurrentHold(boolean b) {
+		isCurrentHold = b;
+	}
+	
+	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * This method will make the rectangle gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
@@ -78,26 +107,27 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		pause = false;
 		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
 			while(pause) {
-				try {
-					Thread.sleep(0);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				sleep(0);
 			}
 			setY(getY() + 1);
-			try {
-				Thread.sleep(fallTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			sleep(fallTime);
 			update();
 		}
 		if(!cancel) {
 			GameScreen.game.removeRectangle(this);
 		}
 		update();
+	}
+	
+	/**
+	 * This method will check the current y position of the bottom side of the rectangle and see if it has made it past the target area
+	 * @param goal - The y coordinate of the goal 
+	 * @return - Whether or not the bottom side of rectangle has passed the goal
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean isBottomBeyondGoal(int goal) {
+		return ((getY() + rectHeight - 25)) > goal;
 	}
 	
 	/**
@@ -137,6 +167,48 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	}
 	
 	/**
+	 * This method determines the properties of the rectangle based on current Y position and game properties
+	 * 
+	 * @return - Returns rectangle with properties based on current Y position and game properties
+	 * 
+	 * @author Justin Yau
+	 */
+	public Rectangle determineRect() {
+		int totalHeight = (GameScreen.columnHeight + GameScreen.columnY);
+		int currentHeight = (getY() - GameScreen.columnY);
+		int bottomPos = ((getY() + rectHeight - 25));
+		int arrowYPos = ((yPos + rectHeight - 25)); //First arrow coords
+		int currentYPositionFromStart = (getY() * - 1) + GameScreen.columnY;
+		int currentBackHeight = (bottomPos - GameScreen.columnY);
+		
+		if(!isCurrentHold && isBottomBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) {
+			GameScreen.game.removeRectangle(this);
+			cancel = true;
+			return new Rectangle();
+		}
+		else if(currentBackHeight >= 0 && rectHeight >= currentBackHeight) {
+
+			if(currentBackHeight >= GameScreen.columnHeight) {
+				return rectanglueo(currentYPositionFromStart,GameScreen.columnHeight);
+			}
+			else {
+				return rectanglueo(currentYPositionFromStart,currentBackHeight + 25);
+			}
+			
+		}
+		else if(getY() >= (totalHeight - rectHeight)) {
+			
+			return rectanglueo(0,totalHeight - getY() + 40);
+
+		}
+		else {
+
+			return rectanglueo(0,rectHeight);
+			
+		}
+	}
+	
+	/**
 	 * This update decides on a custom rectangle based on current Y position such that <br>
 	 * it never goes out of the column lanes.
 	 * 
@@ -146,33 +218,8 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	public void update(Graphics2D g) {
 		super.clear();
 		Rectangle rect = new Rectangle();
-		int totalHeight = (GameScreen.columnHeight + GameScreen.columnY);
-		int currentHeight = (getY() - GameScreen.columnY);
-		int bottomPos = ((getY() + rectHeight - 25));
-		int arrowYPos = ((yPos + rectHeight - 25)); //First arrow coords
-		int currentYPositionFromStart = (getY() * - 1) + GameScreen.columnY;
-		int currentBackHeight = (bottomPos - GameScreen.columnY);
-
-		if(currentBackHeight >= 0 && rectHeight >= currentBackHeight) {
-
-			if(currentBackHeight >= GameScreen.columnHeight) {
-				rect = rectanglueo(currentYPositionFromStart,GameScreen.columnHeight);
-			}
-			else {
-				rect = rectanglueo(currentYPositionFromStart,currentBackHeight + 25);
-			}
-			
-		}
-		else if(getY() >= (totalHeight - rectHeight)) {
-
-			rect = rectanglueo(0,totalHeight - getY() + 40);
-
-		}
-		else {
-
-			rect = rectanglueo(0,rectHeight);
-			
-		}
+		
+		rect = determineRect();
 		
 		g.setColor(Color.YELLOW);
 		g.draw(rect);
