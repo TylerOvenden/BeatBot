@@ -2,6 +2,7 @@ package mainGame;
 
 import gui.GUIApplication;
 import screens.GameScreen;
+import screens.LevelScreenG;
 
 public class MainGUI extends GUIApplication {
 	
@@ -10,7 +11,7 @@ public class MainGUI extends GUIApplication {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private GameScreen game;
+	private LevelScreenG game;
 
 	public static void main(String[] args) {
 		MainGUI s = new MainGUI(960,540);
@@ -26,7 +27,7 @@ public class MainGUI extends GUIApplication {
 
 	@Override
 	public void initScreen() {
-		game = new GameScreen(getWidth(), getHeight());
+		game = new LevelScreenG(getWidth(), getHeight());
 		setScreen(game);
 	}
 
