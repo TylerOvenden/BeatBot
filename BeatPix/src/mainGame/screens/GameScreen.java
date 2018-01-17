@@ -17,6 +17,7 @@ import javax.swing.JSplitPane;
 import gui.components.TextArea;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import mainGame.components.Accuracy;
 import mainGame.components.ColumnLane;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
@@ -63,6 +64,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	
 	private Timing timing;
 	private TextArea visual;
+	private Accuracy accuracy;
 	
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
@@ -138,7 +140,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
+		accuracy=new Accuracy(600,30,400,400);
 		
+		viewObjects.add(accuracy);
+		accuracy.update();
 	}
 	
 	/**
