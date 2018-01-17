@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import gui.components.Component;
 import gui.components.MovingComponent;
 import mainGame.components.interfaces.RectangluInterface;
 import mainGame.screens.GameScreen;
@@ -69,7 +68,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	}
 	
 	/**
-	 * This method will make the keyrectangle gradually fall down the display till it hits the goal when it does, it will disappear. <br>
+	 * This method will make the rectangle gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
 	 * @author Justin Yau
@@ -124,11 +123,25 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		fallTime = speed;
 	}
 	
+	/**
+	 * Create a rectangle object on a fixed x coordinate and width
+	 * @param y - Y coordinate of the rectangle relative to the original y coordinate
+	 * @param height - Height of the rectangle 
+	 * @return - Returns a rectangle with the given properties
+	 * 
+	 * @author Justin Yau
+	 */
 	public Rectangle rectanglueo(int y, int height) {
 
 		return new Rectangle(2,y,getWidth()-5, height); 
 	}
 	
+	/**
+	 * This update decides on a custom rectangle based on current Y position such that <br>
+	 * it never goes out of the column lanes.
+	 * 
+	 * Custom update method created by Justin Yau
+	 */
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
