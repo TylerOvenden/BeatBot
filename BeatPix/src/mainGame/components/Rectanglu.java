@@ -11,12 +11,14 @@ import mainGame.screens.GameScreen;
 public class Rectanglu extends MovingComponent {
 
 	private int fallTime; //The speed at which the stroke falls down
+	private int rectHeight;
 	private boolean cancel;
 	private boolean pause;
 	
 	public Rectanglu(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		fallTime = 10;
+		rectHeight = h;
 		update();
 	}
 
@@ -109,19 +111,20 @@ public class Rectanglu extends MovingComponent {
 		Rectangle rect = new Rectangle();
 		int totalHeight = (GameScreen.columnHeight + GameScreen.columnY);
 		int currentHeight = (getY() - GameScreen.columnY);
-		if((getHeight() >= currentHeight)) {
+		int bottomHeight = ((getY() + rectHeight));
+		if(getY() >= (totalHeight - rectHeight)) {
 
-			rect = new Rectangle(2,0,getWidth()-5, currentHeight + GameScreen.columnY - 10);
-			
+			rect = new Rectangle(2,0,getWidth()-5, (totalHeight - getY())); //Extend over press point
+
 		}
-		else if(getY() >= (totalHeight - getHeight()) + GameScreen.columnY - 5) {
+		else if((bottomHeight >= GameScreen.columnY) && (rectHeight >= bottomHeight + GameScreen.columnY)) {
 
-			rect = new Rectangle(2,0,getWidth()-5, (totalHeight - getY()) + GameScreen.columnY - 10);
-
+			rect = new Rectangle(2,bottomHeight,getWidth()-5, currentHeight);
+			
 		}
 		else {
-			
-			rect = new Rectangle(2,0,getWidth()-5, getHeight());
+
+			rect = new Rectangle(2,0,getWidth()-5, rectHeight);
 			
 		}
 		g.setColor(Color.YELLOW);
