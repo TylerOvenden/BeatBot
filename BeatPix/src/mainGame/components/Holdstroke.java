@@ -42,9 +42,9 @@ public class Holdstroke implements HoldstrokeInterface {
 		backStroke.updateFallSpeed(fallSpeed);
 		Rectanglu rect = new Rectanglu(x, y-height+25, 65, height);
 		rect.updateFallSpeed(fallSpeed);
-		list.add(backStroke);
-		list.add(rect);
 		list.add(frontStroke);
+		list.add(rect);
+		list.add(backStroke);
 	}
 	
 	/**

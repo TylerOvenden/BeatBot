@@ -7,6 +7,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private ArrayList<Rectanglu> rectangles; //All the rectangles that are part of a hold stroke currently on the screen will appear here
 	private HashMap<Keystroke, Visible[]> holdStroke; //The whole hold stroke consisting of 3 components will be accessible by knowing the first stroke here
 	private ArrayList<Visible[]> currentlyHoldingList; //The end strokes that the user is currently holding will be here
+	private boolean[] currentHoldLanes; //The lanes currently being held down will be in this list
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -352,8 +354,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			}
 		} */
 		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
+		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		if(isCurrentlyHoldingLane(e, keys)) {
+			return;
+		}
 		if(strokes.size() > 0 && strokes.get(0).distanceFromGoal() <= distanceG) {
-			int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 			if(isNextStrokeHold(strokesToCheck)) {
 				handleHoldStroke(strokesToCheck, keys, e);
@@ -373,6 +378,15 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			pause = false;
 		}
 		*/		
+	}
+	
+	public boolean isCurrentlyHoldingLane(KeyEvent e, int[] keys) {
+		for(int i = 0; i < keys.length; i++) {
+			if(keys[i] == e.getKeyCode() && currentHoldLanes[i]) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
  	/**
@@ -402,21 +416,24 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				stroke.cancelFall();
 				if(stroke.getHold()) {
 					currentlyHoldingList.add(holdStroke.get(stroke));
+					currentHoldLanes[stroke.getColumnLane() - 1] = true;
 				}
 				correctStroke = true;
 				break;
 			} 
 		}
 		if(!correctStroke && madeLegalStroke(e)) {
-			//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
 			
 			Keystroke firstStroke = strokes.get(0);
-			if(firstStroke.getHold()) {
-				removeHoldStroke(firstStroke);
-			}
-			else {
-				removeStroke(firstStroke);
-				firstStroke.cancelFall();
+			if(holdStroke.get(firstStroke) != null) {
+				//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
+				if(firstStroke.getHold()) {
+					removeHoldStroke(firstStroke);
+				}
+				else {
+					removeStroke(firstStroke);
+					firstStroke.cancelFall();
+				}
 			}
 
 		}
@@ -461,7 +478,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		
 		for(Keystroke stroke: strokes) {
 			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
-
 				displayAcc(stroke);
 				
 				removeStroke(stroke); 
@@ -625,19 +641,22 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 		if(currentlyHoldingList.size() != 0) {
 			for(Visible[] stroke: currentlyHoldingList) {
-				int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
-				Keystroke theStroke = ((Keystroke)stroke[1]);
-				Rectanglu theRect = ((Rectanglu)stroke[0]);
-				if(e.getKeyCode() == keys[theStroke.getColumnLane() - 1]) {
-					currentlyHoldingList.remove(stroke);
-					removeStroke(theStroke);
-					theStroke.cancelFall();
-					removeRectangle(theRect);
-					theRect.cancelFall();
-					break;
-				}
+					if(stroke != null) {
+						Keystroke theStroke = ((Keystroke)stroke[1]);
+						Rectanglu theRect = ((Rectanglu)stroke[0]);
+						if(e.getKeyCode() == keys[theStroke.getColumnLane() - 1]) {
+							currentlyHoldingList.remove(stroke);
+							currentHoldLanes[theStroke.getColumnLane() - 1] = false;
+							removeStroke(theStroke);
+							theStroke.cancelFall();
+							removeRectangle(theRect);
+							theRect.cancelFall();
+							break;
+						}
+					}
 			}
 		}
 	}
@@ -658,6 +677,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		rectangles = new ArrayList<Rectanglu>(0);
 		holdStroke = new HashMap<Keystroke, Visible[]>(0);
 		currentlyHoldingList = new ArrayList<Visible[]>(0);
+		currentHoldLanes = new boolean[4];
+		for(int i = 0; i < currentHoldLanes.length; i++) {
+			currentHoldLanes[i] = false;
+		}
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
@@ -791,9 +814,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * 
 	 * @author Justin Yau
 	 */
-	public void handleKeystroke(Keystroke s) {
+	public void handleKeystroke(Keystroke s, boolean add) {
+		if(add) {
+			strokes.add(s);
+		}
 		addObject(s);
-		strokes.add(s);
 		Thread tr = new Thread(new Runnable() {
 			
 			@Override
@@ -817,9 +842,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * 
 	 * @author Justin Yau
 	 */
-	public void handleRectangle(Rectanglu rect) {
+	public void handleRectangle(Rectanglu rect, boolean add) {
+		if(add) {
+			rectangles.add(rect);
+		}
 		addObject(rect);
-		rectangles.add(rect);
 		Thread tr = new Thread(new Runnable() {
 			
 			@Override
@@ -833,6 +860,31 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			
 		});
 		tr.start();
+	}
+	
+	/**
+	 * This method handles the spawning of the hold stroke's visual components
+	 * 
+	 * @param stroke - The hold stroke's components
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnHoldStroke(ArrayList<Visible> stroke) {
+		//First stroke
+		strokes.add((Keystroke) stroke.get(0));
+		//Rectangle
+		rectangles.add((Rectanglu) stroke.get(1));
+		//End Stroke
+		strokes.add((Keystroke) stroke.get(2));
+		for(int i = stroke.size() - 1; i >= 0; i--) {
+			Visible str = stroke.get(i);
+			if(str instanceof Keystroke) {
+				handleKeystroke(((Keystroke) str), false);
+			}
+			else {
+				handleRectangle(((Rectanglu) str), false);
+			}
+		}
 	}
 	
 	/**
@@ -851,14 +903,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		tempStroke[0] = strokes.get(1);
 		tempStroke[1] = strokes.get(2);
 		holdStroke.put((Keystroke) strokes.get(0), tempStroke);
-		for(Visible s: str.getStrokes()) {
-			if(s instanceof Keystroke) {
-				handleKeystroke((Keystroke) s);
-			}
-			else {
-				handleRectangle((Rectanglu) s);
-			}
-		}
+		spawnHoldStroke(strokes);
 	}
 	
 	/**
@@ -883,7 +928,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				else {
 					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
 					str.updateFallSpeed(fallTime);
-					handleKeystroke(str);
+					handleKeystroke(str,true);
 				}
 				//strokes.add(str);
 			}
