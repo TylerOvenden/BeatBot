@@ -56,7 +56,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
-	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
+	public static final int distanceG = 150; //Distance from the goal before the user can make a press for a stroke
 	
 	private Timing timing;
 	private TextArea visual;
@@ -348,7 +348,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 			boolean correctStroke = false;
-
+			
 			for(Keystroke stroke: strokesToCheck) {
 				if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
 
