@@ -352,7 +352,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 			if(isNextStrokeHold(strokesToCheck)) {
-				System.out.println("I ran");
 				handleHoldStroke(strokesToCheck, keys, e);
 			}
 			else {
