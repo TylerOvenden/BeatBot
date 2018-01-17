@@ -138,8 +138,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		visual=new TextArea(0, 425, 700, 10, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		viewObjects.add(visual);
 		
 	}
 	
@@ -373,36 +371,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		
 		
 	}
-
- 	private void displayAcc(Keystroke stroke){
- 		System.out.println(timePass());
- 		System.out.println(stroke.getClickTime());
- 		System.out.println(Math.abs(timePass()-stroke.getClickTime()));
- 		if(Math.abs(timePass()-stroke.getClickTime())<16) {
- 			timing.changeImg("resources/perfect.png");
- 			return ;
- 		}
- 		if(Math.abs(timePass()-stroke.getClickTime())<40) {
- 			timing.changeImg("resources/great.png");
- 			return ;
- 		}
- 		if(Math.abs(timePass()-stroke.getClickTime())<73) {
- 			timing.changeImg("resources/good.png");
- 			return ;
- 		}
- 		if(Math.abs(timePass()-stroke.getClickTime())<103) {
- 			timing.changeImg("resources/ok.png");
- 			return ;
- 		}
- 		if(Math.abs(timePass()-stroke.getClickTime())<127) {
- 			timing.changeImg("resources/bad.png");
- 			return ;
- 		}
- 		if(Math.abs(timePass()-stroke.getClickTime())<164) {
- 			timing.changeImg("resources/miss.png");
- 			return ;
- 		}
- 	}
 	
  	/**
  	 * This method will handle the registering of hold strokes
@@ -530,6 +498,36 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		return false;
 	}
 	
+	private void displayAcc(Keystroke stroke) {
+		System.out.println(timePass());
+		System.out.println(stroke.getClickTime());
+		System.out.println(Math.abs(timePass()-stroke.getClickTime()));
+		if(Math.abs(timePass()-stroke.getClickTime())<16) {
+			timing.changeImg("resources/perfect.png");
+			return ;
+		}
+		if(Math.abs(timePass()-stroke.getClickTime())<40) {
+			timing.changeImg("resources/great.png");
+			return ;
+		}
+		if(Math.abs(timePass()-stroke.getClickTime())<73) {
+			timing.changeImg("resources/good.png");
+			return ;
+		}
+		if(Math.abs(timePass()-stroke.getClickTime())<103) {
+			timing.changeImg("resources/ok.png");
+			return ;
+		}
+		if(Math.abs(timePass()-stroke.getClickTime())<127) {
+			timing.changeImg("resources/bad.png");
+			return ;
+		}
+		if(Math.abs(timePass()-stroke.getClickTime())<164) {
+			timing.changeImg("resources/miss.png");
+			return ;
+		}
+	}
+
 	/**
 	 * This methods returns whether the user pressed one of the keys that represented a stroke. 
 	 * 
