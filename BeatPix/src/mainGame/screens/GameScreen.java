@@ -63,6 +63,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private Timing timing;
 	private TextArea visual;
 	private Accuracy accuracy;
+	private int totalAcc;
 	
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
@@ -82,6 +83,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		beats = song.getBeats();
 		
 		updateKeyStrokes(KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_UP, KeyEvent.VK_RIGHT);
+		
+		totalAcc=100;
 		
 		Thread screen = new Thread(this);
 		screen.start();
@@ -501,28 +504,43 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
 		if(Math.abs(timePass()-stroke.getClickTime())<16) {
 			timing.changeImg("resources/perfect.png");
+			calcAcc(1);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<40) {
 			timing.changeImg("resources/great.png");
+			calcAcc(.95);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<73) {
 			timing.changeImg("resources/good.png");
+			calcAcc(0);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<103) {
 			timing.changeImg("resources/ok.png");
+			calcAcc(0);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<127) {
 			timing.changeImg("resources/bad.png");
+			calcAcc(0);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<164) {
 			timing.changeImg("resources/miss.png");
+			calcAcc(0);
 			return ;
 		}
+	}
+	
+	public void calcAcc(double timing) {
+		int amtOfNotes=0;
+		for(int i=0;i<beats.size();i++) {
+			amtOfNotes+=beats.get(i).length;
+		}
+		double indAcc=totalAcc/amtOfNotes;
+		totalAcc-=(indAcc*(1-timing));
 	}
 
 	/**
