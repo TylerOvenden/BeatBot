@@ -410,7 +410,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
  		//If it isn't a hold stroke, then call the handle normal stroke
 		for(Keystroke stroke: strokes) {
 			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
-				displayAcc(stroke);
+
+
+				//CALCULTE FIRST HOLD ACCURACY HERE
 				
 				removeStroke(stroke); 
 				stroke.cancelFall();
