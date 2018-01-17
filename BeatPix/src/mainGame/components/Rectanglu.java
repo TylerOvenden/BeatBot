@@ -9,15 +9,33 @@ import gui.components.MovingComponent;
 import mainGame.components.interfaces.RectangluInterface;
 import mainGame.screens.GameScreen;
 
+/**
+ * This class will enable us to make the hold stroke for the game where the user holds down a button for x amount of time. 
+ * 
+ * @author Justin Yau
+ *
+ */
 public class Rectanglu extends MovingComponent implements RectangluInterface {
 
 	private int fallTime; //The speed at which the rectangle falls down
-	private int rectHeight;
-	private boolean cancel;
-	private boolean pause;
+	private int rectHeight; //This int will be the value of the Rectangle's height
+	private boolean cancel; //This boolean will track whether the stroke was canceled by user interactions
+	private boolean pause; //This boolean will track whether the game was paused or not
+	private int yPos;
 	
+	/**
+	 * Creates a generic rectangle that will render into the column lanes
+	 * 
+	 * @param x - x coordinate of the starting position
+	 * @param y - y coordinate of the starting position
+	 * @param w - width of the rectangle
+	 * @param h - height of the rectangle
+	 * 
+	 * @author Justin Yau
+	 */
 	public Rectanglu(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		yPos = y;
 		fallTime = 10;
 		rectHeight = h;
 		update();
@@ -117,16 +135,19 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		Rectangle rect = new Rectangle();
 		int totalHeight = (GameScreen.columnHeight + GameScreen.columnY);
 		int currentHeight = (getY() - GameScreen.columnY);
-		int bottomHeight = ((getY() + rectHeight));
+		int bottomPos = ((getY() + rectHeight - 25));
+		int arrowYPos = ((yPos + rectHeight - 25)); //First arrow coords
+		int currentYPositionFromStart = (getY() * - 1) + GameScreen.columnY;
+		int currentBackHeight = (bottomPos - GameScreen.columnY);
+
 		if(getY() >= (totalHeight - rectHeight)) {
 
 			rect = rectanglueo(0,totalHeight - getY() + 40);
 
 		}
-		//If the rectangle's bottom point reaches the target area, keep spawning a rectangle that gets bigger and bigger until it reaches height
-		else if((bottomHeight >= GameScreen.columnY) && (rectHeight >= bottomHeight - GameScreen.columnY)) {
+		else if(currentBackHeight >= 0 && rectHeight >= currentBackHeight) {
 
-			rect = rectanglueo(rectHeight - currentHeight,currentHeight);
+			rect = rectanglueo(currentYPositionFromStart,currentBackHeight + 25);
 			
 		}
 		else {
@@ -134,6 +155,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 			rect = rectanglueo(0,rectHeight);
 			
 		}
+		
 		g.setColor(Color.YELLOW);
 		g.draw(rect);
 		g.fill(rect);
