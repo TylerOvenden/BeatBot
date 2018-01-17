@@ -7,6 +7,7 @@ import java.util.List;
 
 
 import gui.components.*;
+import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 public class ShopScreen extends FullFunctionScreen
@@ -18,7 +19,7 @@ public class ShopScreen extends FullFunctionScreen
 	private TextLabel credit;
 	private Font bannerFont;
 	private Font creditFont;
-	private ArrayList songs;
+//	private ArrayList<Visible> songs;
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
@@ -34,7 +35,7 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(background);
 		
 		//background for credits, make new component later
-		CustomRectangle creditBG = new CustomRectangle(135,60,190,40, Color.white);
+		CustomRectangle creditBG = new CustomRectangle(135,60,190,40, Color.white,5);
 		viewObjects.add(creditBG);
 		
 		String credits = "Credits: "; // add method "getCredits()" later
@@ -44,16 +45,26 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(credit);
 		
 		// where the new songs will be placed
-		songArea = new CustomRectangle(130, 150, 225, 350, Color.gray);
+		songArea = new CustomRectangle(110, 150, 260, 350, Color.CYAN,25);
 		viewObjects.add(songArea);
 		
 		//area where "SONGS" will be displayed
-		banner = new TextLabel(160, 100,200,200, "Songs");
+		banner = new TextLabel(190,100,200,200, "Songs");
 		banner.setCustomTextColor(Color.white);
 		banner.setFont(bannerFont);
 		viewObjects.add(banner);
-	//	ScrollablePane a = new ScrollablePane(null, null, 50, 50, 20, 30);
-	//	viewObjects.add(a);
+
+		//scroll bar, contains the songs
+		ScrollablePane a = new ScrollablePane(this, 130,175,220,300);
+		a.setArrowColor(Color.yellow);
+		for(int i = 0; i < 10; i++) // change to i < array list later
+		{
+			
+			a.addObject(new Button(5,60*i,100,25,"Song "+(i+1), null)); // change to custom buttons that can access song
+		}
+		
+		a.update();
+		viewObjects.add(a);
 	}	
 
 }

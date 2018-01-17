@@ -10,23 +10,23 @@ public class CustomRectangle extends Component
 {
 	
 	private Color color;
-	public CustomRectangle(int x, int y, int width, int height, Color color)
+	private int thickness;
+	public CustomRectangle(int x, int y, int width, int height, Color color, int thickness)
 	{
 		super(x, y, width, height);
+		this.color = color;
+		this.thickness = thickness;
 		update();
 	}
 
 	@Override
 	public void update(Graphics2D g) 
 	{
-
-		int thickness = 10;
 		g.setStroke(new BasicStroke(thickness));
 		g.setColor(color);
 		g.drawRect(0, 0, getWidth(), getHeight());
 		g.setStroke(g.getStroke());
-		
-		
+				
 	}
 
 }
