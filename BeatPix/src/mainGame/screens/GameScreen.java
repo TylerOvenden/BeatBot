@@ -348,6 +348,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				}
 			}
 		} */
+		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
 		if(strokes.size() > 0 && strokes.get(0).distanceFromGoal() <= distanceG) {
 			int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
