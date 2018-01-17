@@ -12,7 +12,7 @@ public class Accuracy extends Component{
 
 	public Accuracy(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		acc=100;
+		acc=54;
 		update();
 	}
 
@@ -27,7 +27,7 @@ public class Accuracy extends Component{
 			img3="resources/score-0.png";
 		}else {
 			img1="resources/score-"+0+".png";
-			img2="resources/score-"+(acc-(acc%10))+".png";
+			img2="resources/score-"+((acc-(acc%10))/10)+".png";
 			img3="resources/score-"+(acc%10)+".png";
 		}
 		try {
