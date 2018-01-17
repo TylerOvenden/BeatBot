@@ -47,9 +47,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
-	private ArrayList<Rectanglu> rectangles;
-	private boolean pause; 
-	private int fallTime;
+	private ArrayList<Rectanglu> rectangles; //All the rectangles that are part of a hold stroke currently on the screen will appear here
+	private HashMap<Keystroke, Visible[]> holdStroke; //The whole hold stroke consisting of 3 components will be accessible by knowing the first stroke here
+	private boolean pause; //This boolean will be used to keep track if the game is paused or not
+	private int fallTime; //The single call fall time calculated from BPM will be stored here
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
@@ -388,6 +389,17 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * This method returns whether or not the next stroke is a hold stroke
+	 * @param strokes - The list of strokes that are to be clicked
+	 * @return - Returns whether or not the next stroke is a hold stroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean isNextStrokeHold(ArrayList<Keystroke> strokes) {
+		return strokes.get(0).getHold();
+	}
+	
+	/**
 	 * This methods returns whether the user pressed one of the keys that represented a stroke. 
 	 * 
 	 * @param e - The KeyEvent that contains what key the user pressed
@@ -463,6 +475,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		pause = false;
 		strokes = new ArrayList<Keystroke>(0);
 		rectangles = new ArrayList<Rectanglu>(0);
+		holdStroke = new HashMap<Keystroke, Visible[]>(0);
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
@@ -641,6 +654,32 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * This method handles the new creation of a Hold stroke and stores the components in the correct ArrayLists and HashMap. 
+	 * 
+	 * @param beat - The beat information that you would like this stroke to contain
+	 * @param lane - The lane that the hold stroke is supposed to appear in 
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handleHoldStroke(int[] beat, int lane) {
+		int holdTime = beat[2] - beat[1];
+		Holdstroke str = new Holdstroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png", holdTime, fallTime);
+		ArrayList<Visible> strokes = str.getStrokes();
+		Visible[] tempStroke = new Visible[2];
+		tempStroke[0] = strokes.get(1);
+		tempStroke[1] = strokes.get(2);
+		holdStroke.put((Keystroke) strokes.get(0), tempStroke);
+		for(Visible s: str.getStrokes()) {
+			if(s instanceof Keystroke) {
+				handleKeystroke((Keystroke) s);
+			}
+			else {
+				handleRectangle((Rectanglu) s);
+			}
+		}
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
@@ -657,16 +696,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
 				if(beat[2] != 0) {
-					int holdTime = beat[2] - beat[1];
-					Holdstroke str = new Holdstroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png", holdTime, fallTime);
-					for(Visible s: str.getStrokes()) {
-						if(s instanceof Keystroke) {
-							handleKeystroke((Keystroke) s);
-						}
-						else {
-							handleRectangle((Rectanglu) s);
-						}
-					}
+					handleHoldStroke(beat, lane);
 				}
 				else {
 					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
