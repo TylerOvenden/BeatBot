@@ -10,6 +10,7 @@ public class Score extends Component{
 
 	public Score(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		score=0;
 	}
 
 	@Override

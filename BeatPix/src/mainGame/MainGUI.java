@@ -1,7 +1,7 @@
 package mainGame;
 
 import gui.GUIApplication;
-import mainGame.components.Song;
+import mainGame.components.Accuracy;
 import mainGame.saving.FileP;
 import mainGame.screens.*;
 
@@ -27,7 +27,7 @@ public class MainGUI extends GUIApplication {
 
 	@Override
 	public void initScreen() {
-		Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
+		Accuracy song = new Accuracy("DreadnoughtMastermind(xi+nora2r).csv");
 		game = new GameScreen(getWidth(), getHeight(), song);
 		setScreen(game);
 	}

@@ -15,7 +15,7 @@ import mainGame.saving.FileP;
  * @author Justin Yau
  *
  */
-public class Song implements SongInterface {
+public class Accuracy implements SongInterface {
 
 	private String title;
 	private int BPM;
@@ -31,7 +31,7 @@ public class Song implements SongInterface {
 	 * 
 	 * @author Justin Yau
 	 */
-	public Song(String songPath) {
+	public Accuracy(String songPath) {
 		FileP map = new FileP();
 		map.load(songPath);
 		title = map.getTitle();
