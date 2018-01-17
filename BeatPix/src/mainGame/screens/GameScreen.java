@@ -368,11 +368,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			pause = false;
 		}
-		*/
-
-		
-		
-		
+		*/		
 	}
 	
  	/**
