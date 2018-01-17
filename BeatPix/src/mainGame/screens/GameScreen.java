@@ -21,7 +21,7 @@ import mainGame.components.ColumnLane;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.Rectanglu;
-import mainGame.components.Accuracy;
+import mainGame.components.Song;
 import mainGame.components.Timing;
 
 public class GameScreen extends ClickableScreen implements KeyListener, Runnable {
@@ -64,7 +64,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
 	
-	public GameScreen(int width, int height, Accuracy song) {
+	public GameScreen(int width, int height, Song song) {
 		super(width, height);
 		
 		setFixedSize(false);
