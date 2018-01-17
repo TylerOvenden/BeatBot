@@ -10,6 +10,7 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.components.Song;
 public class ShopScreen extends FullFunctionScreen
 {
 	private Graphic background;	
@@ -19,7 +20,7 @@ public class ShopScreen extends FullFunctionScreen
 	private TextLabel credit;
 	private Font bannerFont;
 	private Font creditFont;
-//	private ArrayList<Songs> songs;
+	private ArrayList<Song> songs;
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
