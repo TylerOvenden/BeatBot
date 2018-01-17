@@ -49,6 +49,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Rectanglu> rectangles; //All the rectangles that are part of a hold stroke currently on the screen will appear here
 	private HashMap<Keystroke, Visible[]> holdStroke; //The whole hold stroke consisting of 3 components will be accessible by knowing the first stroke here
+	private ArrayList<Keystroke> currentlyHoldingList; //The end strokes that the user is currently holding will be here
+	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
 	
@@ -348,30 +350,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		if(strokes.size() > 0 && strokes.get(0).distanceFromGoal() <= distanceG) {
 			int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
-			boolean correctStroke = false;
-			
-			for(Keystroke stroke: strokesToCheck) {
-				if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
-
-					//CALCULATE PERFECT/GREAT/ALRIGHT/MEH ACCURACY HERE PLACEHOLDER
-					
-					
-					removeStroke(stroke); 
-					stroke.cancelFall();
-					correctStroke = true;
-					break;
-				
-				} 
+			if(isNextStrokeHold(strokesToCheck)) {
+				handleHoldStroke(strokesToCheck, keys, e);
 			}
-			if(!correctStroke && madeLegalStroke(e)) {
-				//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
-				
-				Keystroke cStroke = strokes.get(0);
-				removeStroke(cStroke);
-				cStroke.cancelFall();
-
+			else {
+				handleNormalStroke(strokesToCheck, keys, e);
 			}
 		}
+		
 		
 		/*
 		TEST CODE
@@ -387,7 +373,147 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		
 		
 	}
+
+ 	private void displayAcc(Keystroke stroke){
+ 		System.out.println(timePass());
+ 		System.out.println(stroke.getClickTime());
+ 		System.out.println(Math.abs(timePass()-stroke.getClickTime()));
+ 		if(Math.abs(timePass()-stroke.getClickTime())<16) {
+ 			timing.changeImg("resources/perfect.png");
+ 			return ;
+ 		}
+ 		if(Math.abs(timePass()-stroke.getClickTime())<40) {
+ 			timing.changeImg("resources/great.png");
+ 			return ;
+ 		}
+ 		if(Math.abs(timePass()-stroke.getClickTime())<73) {
+ 			timing.changeImg("resources/good.png");
+ 			return ;
+ 		}
+ 		if(Math.abs(timePass()-stroke.getClickTime())<103) {
+ 			timing.changeImg("resources/ok.png");
+ 			return ;
+ 		}
+ 		if(Math.abs(timePass()-stroke.getClickTime())<127) {
+ 			timing.changeImg("resources/bad.png");
+ 			return ;
+ 		}
+ 		if(Math.abs(timePass()-stroke.getClickTime())<164) {
+ 			timing.changeImg("resources/miss.png");
+ 			return ;
+ 		}
+ 	}
 	
+ 	/**
+ 	 * This method will handle the registering of hold strokes
+ 	 * 
+ 	 * @param strokes - The list of strokes to check
+ 	 * @param keys - The legal key presses the user can make for the strokes
+ 	 * @param e - The key press event information
+ 	 * 
+ 	 * @author Justin Yau
+ 	 */
+ 	public void handleHoldStroke(ArrayList<Keystroke> strokes, int[] keys, KeyEvent e) {
+ 		boolean correctStroke = false;
+ 		
+ 		//We know the one of next strokes is a hold stroke
+ 		//Verify that the press was in the right column first
+ 		//If it correct, remove the first keystroke and add the keystroke to a hashmap with the end keystroke to be removed when the user releases
+ 		//Rectangle DOES NOT have to be removed, it will remove itself automatically
+ 		
+ 		//If there is a hold stroke with a NON HOLD STROKE at the same time, double check to make sure the stroke is a hold. 
+ 		//If it isn't a hold stroke, then call the handle normal stroke
+		for(Keystroke stroke: strokes) {
+			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
+				if(stroke.getHold()) {
+					displayAcc(stroke);
+					
+					removeStroke(stroke); 
+					stroke.cancelFall();
+					currentlyHoldingList.add((Keystroke) holdStroke.get(stroke)[1]);
+				}
+				else {
+					handleNormalStroke(strokes, keys, e);
+				}
+				correctStroke = true;
+				break;
+			} 
+		}
+		if(!correctStroke && madeLegalStroke(e)) {
+			//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
+			
+			Keystroke firstStroke = strokes.get(0);
+			if(firstStroke.getHold()) {
+				removeHoldStroke(firstStroke);
+			}
+			else {
+				removeStroke(firstStroke);
+				firstStroke.cancelFall();
+			}
+
+		}
+ 	}
+ 	
+ 	/**
+ 	 * This method removes the whole hold stroke and its 3 components if needed
+ 	 * 
+ 	 * @param firstStroke - The first component of the hold stroke
+ 	 * 
+ 	 * @author Justin Yau
+ 	 */
+ 	public void removeHoldStroke(Keystroke firstStroke) {
+ 		removeStroke(firstStroke);
+ 		firstStroke.cancelFall();
+ 		for(Visible obj: holdStroke.get(firstStroke)) {
+ 			if(obj instanceof Keystroke) {
+ 				
+ 				removeStroke((Keystroke) obj);
+ 				((Keystroke) obj).cancelFall();
+ 			}
+ 			else {
+ 				
+ 				removeRectangle((Rectanglu) obj);
+ 				((Rectanglu) obj).cancelFall();
+ 			}
+ 		}
+ 		holdStroke.remove(firstStroke);
+ 	}
+ 	
+ 	/**
+ 	 * This method will handle the registering of normal stroke
+ 	 * 
+ 	 * @param strokes - The list of strokes to check
+ 	 * @param keys - The legal key presses the user can make for the strokes
+ 	 * @param e - The key press event information
+ 	 * 
+ 	 * @author Justin Yau
+ 	 */
+ 	public void handleNormalStroke(ArrayList<Keystroke> strokes, int[] keys, KeyEvent e) {
+		boolean correctStroke = false;
+		
+		for(Keystroke stroke: strokes) {
+			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
+
+				displayAcc(stroke);
+				
+				removeStroke(stroke); 
+				stroke.cancelFall();
+				correctStroke = true;
+				break;
+			
+			} 
+		}
+		if(!correctStroke && madeLegalStroke(e)) {
+			//CALCULATE MISS ACCURACY HERE PLACEHOLDER 
+			
+			Keystroke cStroke = strokes.get(0);
+			removeStroke(cStroke);
+			cStroke.cancelFall();
+
+		}
+ 		
+ 	}
+ 	
 	/**
 	 * This method returns whether or not the next stroke is a hold stroke
 	 * @param strokes - The list of strokes that are to be clicked
@@ -396,7 +522,12 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * @author Justin Yau
 	 */
 	public boolean isNextStrokeHold(ArrayList<Keystroke> strokes) {
-		return strokes.get(0).getHold();
+		for(Keystroke stroke: strokes) {
+			if(stroke.getHold()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -458,7 +589,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
-
+		if(currentlyHoldingList.size() != 0) {
+			
+		}
 	}
 	
 	//We won't be using this
@@ -476,6 +609,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		strokes = new ArrayList<Keystroke>(0);
 		rectangles = new ArrayList<Rectanglu>(0);
 		holdStroke = new HashMap<Keystroke, Visible[]>(0);
+		currentlyHoldingList = new ArrayList<Keystroke>(0);
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
