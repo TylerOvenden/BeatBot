@@ -651,6 +651,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 						Keystroke theStroke = ((Keystroke)stroke[1]);
 						Rectanglu theRect = ((Rectanglu)stroke[0]);
 						if(e.getKeyCode() == keys[theStroke.getColumnLane() - 1]) {
+							//CALCULATE ACCURACY
 							currentlyHoldingList.remove(stroke);
 							currentHoldLanes[theStroke.getColumnLane() - 1] = false;
 							removeStroke(theStroke);
