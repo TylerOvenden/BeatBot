@@ -115,7 +115,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		int bottomHeight = ((getY() + rectHeight));
 		if(getY() >= (totalHeight - rectHeight)) {
 
-			rect = new Rectangle(2,0,getWidth()-5, (totalHeight - getY())); //Extend over press point
+			rect = new Rectangle(2,0,getWidth()-5, (totalHeight - getY() + 40)); 
 
 		}
 		else if((bottomHeight >= GameScreen.columnY) && (rectHeight >= bottomHeight + GameScreen.columnY)) {
