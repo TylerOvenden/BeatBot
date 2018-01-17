@@ -34,6 +34,8 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private boolean pause; //This boolean is to keep track if the game is currently pause
 	private int clickTime; //This int is to track the time, in ms, the stroke should've been pressed since the game started 
 	private boolean isHold; //This boolean tracks whether or not the key press was a hold
+	private boolean spawnedAnimation; //This boolean tracks whether the visible keystroke was spawned in
+	private String imgPath; //This string will store the path of image file for spawning in the keystroke later if needed
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -50,8 +52,13 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		isHold = false;
 		fallTime = 10;
 		startTime = stime;
+		imgPath = path;
+		spawnedAnimation = false;
 		//Path should be inputted something like "resources/arrows/darrow.png"
-		addSequence(path, 100, 0, 0, 64, 64, 4);
+		if(y >= GameScreen.columnY) {
+			addSequence(path, 100, 0, 0, 64, 64, 4);
+			spawnedAnimation = true;
+		}
 		//To make the component animated, we need to make a thread
 		Thread animation = new Thread(this);
 		animation.start();
@@ -215,6 +222,10 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 				}
 			}
 			setY(getY() + 1);
+			if(getY() >= 75 && !spawnedAnimation) {
+				addSequence(imgPath, 100, 0, 0, 64, 64, 4);
+				spawnedAnimation = true;
+			}
 			try {
 				Thread.sleep(fallTime);
 			} catch (InterruptedException e) {

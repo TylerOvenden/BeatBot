@@ -106,6 +106,11 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		fallTime = speed;
 	}
 	
+	public Rectangle rectanglueo(int y, int height) {
+
+		return new Rectangle(2,y,getWidth()-5, height); 
+	}
+	
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
@@ -115,17 +120,18 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		int bottomHeight = ((getY() + rectHeight));
 		if(getY() >= (totalHeight - rectHeight)) {
 
-			rect = new Rectangle(2,0,getWidth()-5, (totalHeight - getY() + 40)); 
+			rect = rectanglueo(0,totalHeight - getY() + 40);
 
 		}
-		else if((bottomHeight >= GameScreen.columnY) && (rectHeight >= bottomHeight + GameScreen.columnY)) {
+		//If the rectangle's bottom point reaches the target area, keep spawning a rectangle that gets bigger and bigger until it reaches height
+		else if((bottomHeight >= GameScreen.columnY) && (rectHeight >= bottomHeight - GameScreen.columnY)) {
 
-			rect = new Rectangle(2,bottomHeight,getWidth()-5, currentHeight);
+			rect = rectanglueo(rectHeight - currentHeight,currentHeight);
 			
 		}
 		else {
 
-			rect = new Rectangle(2,0,getWidth()-5, rectHeight);
+			rect = rectanglueo(0,rectHeight);
 			
 		}
 		g.setColor(Color.YELLOW);
