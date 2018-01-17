@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import gui.components.AnimatedComponent;
 import gui.interfaces.Visible;
+import mainGame.components.interfaces.HoldstrokeInterface;
 import mainGame.screens.GameScreen;
 
-public class Holdstroke {
+public class Holdstroke implements HoldstrokeInterface {
 	
 	private int fallSpeed;
 	private int holdTime;

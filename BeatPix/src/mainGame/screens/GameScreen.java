@@ -446,7 +446,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("I ran");
+
 	}
 	
 	//We won't be using this
@@ -502,6 +502,13 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		remove(e); //Just in case it doesn't get removed the first time
 	}
 	
+	/**
+	 * This method will remove the given rectangle from this arrayList and the visibleObjects
+	 * 
+	 * @param r - The rectangle that you would like to remove
+	 * 
+	 * @author Justin Yau
+	 */
 	public void removeRectangle(Rectanglu r) {
 		rectangles.remove(r);
 		remove(r);
@@ -537,6 +544,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		for(Keystroke stroke: strokes) {
 			stroke.pauseFall();
 		}
+		for(Rectanglu rect: rectangles) {
+			rect.pauseFall();
+		}
 		while(pause) {
 			try {
 				Thread.sleep(0);
@@ -547,6 +557,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
 		for(Keystroke stroke: strokes) {
 			stroke.resumeFall();
+		}
+		for(Rectanglu rect: rectangles) {
+			rect.resumeFall();
 		}
 		recalculateStartTime(time);
 	}
@@ -575,6 +588,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
 	}
 	
+	/**
+	 * This method handles the addition of a new keystroke to the gameboard. <br>
+	 * Makes the the rectangle start falling aswell.
+	 * 
+	 * @param s - The keystroke you would like to add to the game
+	 * 
+	 * @author Justin Yau
+	 */
 	public void handleKeystroke(Keystroke s) {
 		addObject(s);
 		strokes.add(s);
@@ -593,6 +614,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		tr.start();
 	}
 	
+	/**
+	 * This method handles the addition of a new rectangle to the gameboard. <br>
+	 * Makes the the rectangle start falling aswell.
+	 * 
+	 * @param rect - The rectangle you would like to add to the game
+	 * 
+	 * @author Justin Yau
+	 */
 	public void handleRectangle(Rectanglu rect) {
 		addObject(rect);
 		rectangles.add(rect);
@@ -602,7 +631,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			public void run() {
 				
 				while(rectangles.contains(rect)) {
-					rect.keystrokeFall();
+					rect.rectangleFall();
 				}
 					
 			}

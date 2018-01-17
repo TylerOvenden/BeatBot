@@ -6,11 +6,12 @@ import java.awt.Rectangle;
 
 import gui.components.Component;
 import gui.components.MovingComponent;
+import mainGame.components.interfaces.RectangluInterface;
 import mainGame.screens.GameScreen;
 
-public class Rectanglu extends MovingComponent {
+public class Rectanglu extends MovingComponent implements RectangluInterface {
 
-	private int fallTime; //The speed at which the stroke falls down
+	private int fallTime; //The speed at which the rectangle falls down
 	private int rectHeight;
 	private boolean cancel;
 	private boolean pause;
@@ -23,7 +24,7 @@ public class Rectanglu extends MovingComponent {
 	}
 
 	/**
-	 * This method will make the stroke stop falling 
+	 * This method will make the rectangle stop falling 
 	 * 
 	 * @author Justin Yau
 	 */
@@ -32,7 +33,7 @@ public class Rectanglu extends MovingComponent {
 	}
 	
 	/**
-	 * This method will make the stroke stop falling
+	 * This method will make the rectangle stop falling
 	 * 
 	 * @author Justin Yau
 	 */
@@ -41,7 +42,7 @@ public class Rectanglu extends MovingComponent {
 	}
 	
 	/**
-	 * This method will make the stroke continue falling
+	 * This method will make the rectangle continue falling
 	 * 
 	 * @author Jusitn Yau
 	 */
@@ -50,12 +51,12 @@ public class Rectanglu extends MovingComponent {
 	}
 	
 	/**
-	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
+	 * This method will make the keyrectangle gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
 	 * @author Justin Yau
 	 */
-	public void keystrokeFall() {
+	public void rectangleFall() {
 		cancel = false;
 		pause = false;
 		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
@@ -83,9 +84,9 @@ public class Rectanglu extends MovingComponent {
 	}
 	
 	/**
-	 * This method will check the current y position of the stroke and see if it has made it past the target area
+	 * This method will check the current y position of the rectangle and see if it has made it past the target area
 	 * @param goal - The y coordinate of the goal 
-	 * @return - Whether or not the stroke has passsed the goal
+	 * @return - Whether or not the rectangle has passed the goal
 	 * 
 	 * @author Justin Yau
 	 */
@@ -96,7 +97,7 @@ public class Rectanglu extends MovingComponent {
 	/**
 	 * This method will update the sleep time that is called in each fall interval. <br>
 	 * Default Fall Time - 10 ms <br>
-	 * Decreasing this value will make the stroke fall faster. 
+	 * Decreasing this value will make the rectangle fall faster. 
 	 * @param speed - Speed, in ms, that you want between each fall call.
 	 * 
 	 * @author Justin Yau
