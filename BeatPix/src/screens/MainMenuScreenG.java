@@ -8,11 +8,12 @@ import java.util.TimerTask;
 import javax.swing.ImageIcon;
 
 import gui.components.*;
+import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import screens.components.ImageButton;
 
-public class MainMenuScreenG extends FullFunctionScreen {
+public class MainMenuScreenG extends FullFunctionScreen implements FocusController {
 
 	/**
 	 * 
@@ -28,6 +29,9 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public static int CHARACTER_IDX = 1;
 	public static int UNLOCK_IDX = 2;
 	public static int OPTIONS_IDX = 3;
+	
+	public static Pane options;
+	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
 		super(width, height);
@@ -49,6 +53,17 @@ public class MainMenuScreenG extends FullFunctionScreen {
 /**/			Test.test.setScreen(new StartScreenG(getWidth(),getHeight()));
 			}
 		});
+		buttons.get(3).setAction(new Action() {
+			//Options pop up
+			public void act() {
+				if(true) {
+				viewObjects.add(new OptionsPopUp(null, 250, 250, getWidth()/2, getHeight()/2));
+				for(ImageButton b: buttons)
+					b.setEnabled(false);
+				}
+			}
+		});
+		
 		
 		slideInButtons();
 		

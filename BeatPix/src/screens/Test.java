@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gui.GUIApplication;
+import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.*;
 
@@ -20,9 +21,15 @@ public class Test extends GUIApplication {
 	public static int MENU = 1;
 	public static int CHARACTER = 1;
 	
+	public static int[] options;
+	//options [VOLUME,KEY1,KEY2,KEY3,KEY4]
+
+	public Visible optionScreen;
+	
 	public Test(int width, int height) {
 		super(width, height);
 		setVisible(true);
+		options = new int[5];
 	}
 
 	@Override
