@@ -627,8 +627,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			else if(timePass() >= beats.get(0)[1]) {
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
-				if(beats.get(0)[2] != 0) {
-					int holdTime = beats.get(0)[2] - beats.get(0)[1];
+				if(beat[2] != 0) {
+					int holdTime = beat[2] - beat[1];
 					Holdstroke str = new Holdstroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png", holdTime, fallTime);
 					for(Visible s: str.getStrokes()) {
 						if(s instanceof Keystroke) {

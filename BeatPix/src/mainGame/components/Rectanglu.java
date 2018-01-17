@@ -107,14 +107,16 @@ public class Rectanglu extends MovingComponent {
 	public void update(Graphics2D g) {
 		super.clear();
 		Rectangle rect = new Rectangle();
-		if((getHeight() >= getY())) {
-			
-			rect = new Rectangle(2,0,getWidth()-5, getY() - GameScreen.columnY);
+		int totalHeight = (GameScreen.columnHeight + GameScreen.columnY);
+		int currentHeight = (getY() - GameScreen.columnY);
+		if((getHeight() >= currentHeight)) {
+
+			rect = new Rectangle(2,0,getWidth()-5, currentHeight + GameScreen.columnY - 10);
 			
 		}
-		else if(getY() >= ((GameScreen.columnHeight + GameScreen.columnY) - getHeight()) + GameScreen.columnY - 5) {
+		else if(getY() >= (totalHeight - getHeight()) + GameScreen.columnY - 5) {
 
-			rect = new Rectangle(2,0,getWidth()-5, ((GameScreen.columnHeight + GameScreen.columnY) - getY()) + GameScreen.columnY - 10);
+			rect = new Rectangle(2,0,getWidth()-5, (totalHeight - getY()) + GameScreen.columnY - 10);
 
 		}
 		else {

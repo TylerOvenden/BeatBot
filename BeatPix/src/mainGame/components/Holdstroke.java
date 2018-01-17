@@ -24,7 +24,7 @@ public class Holdstroke {
 		Keystroke backStroke = new Keystroke(x, y - height, stime, path);
 		backStroke.setHold(true);
 		backStroke.updateFallSpeed(fallSpeed);
-		Rectanglu rect = new Rectanglu(x, y-(height/2)-50, 65, height);
+		Rectanglu rect = new Rectanglu(x, y-height+25, 65, height);
 		rect.updateFallSpeed(fallSpeed);
 		list.add(backStroke);
 		list.add(rect);
