@@ -1,7 +1,6 @@
 package mainGame.screens;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JSplitPane;
 
 import gui.components.TextArea;
 import gui.interfaces.Visible;
@@ -50,7 +48,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private ArrayList<Keystroke> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Rectanglu> rectangles; //All the rectangles that are part of a hold stroke currently on the screen will appear here
 	private HashMap<Keystroke, Visible[]> holdStroke; //The whole hold stroke consisting of 3 components will be accessible by knowing the first stroke here
-	private ArrayList<Keystroke> currentlyHoldingList; //The end strokes that the user is currently holding will be here
+	private ArrayList<Visible[]> currentlyHoldingList; //The end strokes that the user is currently holding will be here
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -60,7 +58,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
-	public static final int distanceG = 150; //Distance from the goal before the user can make a press for a stroke
+	public static final int distanceG = 900; //Distance from the goal before the user can make a press for a stroke
 	
 	private Timing timing;
 	private TextArea visual;
@@ -373,11 +371,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			pause = false;
 		}
-		*/
-
-		
-		
-		
+		*/		
 	}
 	
  	/**
@@ -401,15 +395,12 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
  		//If it isn't a hold stroke, then call the handle normal stroke
 		for(Keystroke stroke: strokes) {
 			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
+				displayAcc(stroke);
+				
+				removeStroke(stroke); 
+				stroke.cancelFall();
 				if(stroke.getHold()) {
-					displayAcc(stroke);
-					
-					removeStroke(stroke); 
-					stroke.cancelFall();
-					currentlyHoldingList.add((Keystroke) holdStroke.get(stroke)[1]);
-				}
-				else {
-					handleNormalStroke(strokes, keys, e);
+					currentlyHoldingList.add(holdStroke.get(stroke));
 				}
 				correctStroke = true;
 				break;
@@ -507,9 +498,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	private void displayAcc(Keystroke stroke) {
-		System.out.println(timePass());
-		System.out.println(stroke.getClickTime());
-		System.out.println(Math.abs(timePass()-stroke.getClickTime()));
+		//System.out.println(timePass());
+		//System.out.println(stroke.getClickTime());
+		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
 		if(Math.abs(timePass()-stroke.getClickTime())<16) {
 			timing.changeImg("resources/perfect.png");
 			calcAcc(1);
@@ -607,11 +598,46 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		return list;
 	}
 	
+	/**
+	 * This method is to retrieve the next hold stroke and any other hold strokes that is supposed to be pressed at the same time
+	 * @return - An array list of the next hold stroke and any hold strokes meant to be pressed at the same time
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Visible[]> holdStrokesAtSameTime() {
+		ArrayList<Visible[]> list = new ArrayList<Visible[]>(0);
+		if(currentlyHoldingList.size() == 0) {
+			
+			list.add(currentlyHoldingList.get(0));
+			for(Visible[] stroke: currentlyHoldingList) {
+				if(list.get(0) != stroke && ((Keystroke) stroke[1]).getStartingTime() == ((Keystroke)list.get(0)[1]).getStartingTime()) {
+					list.add(stroke);
+				}
+				else {
+					break;
+				}
+			}
+			
+		}
+		return list;
+	}
 	//We will use this if we want to have a long hold press for the strokes 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(currentlyHoldingList.size() != 0) {
-			
+			for(Visible[] stroke: currentlyHoldingList) {
+				int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+				Keystroke theStroke = ((Keystroke)stroke[1]);
+				Rectanglu theRect = ((Rectanglu)stroke[0]);
+				if(e.getKeyCode() == keys[theStroke.getColumnLane() - 1]) {
+					currentlyHoldingList.remove(stroke);
+					removeStroke(theStroke);
+					theStroke.cancelFall();
+					removeRectangle(theRect);
+					theRect.cancelFall();
+					break;
+				}
+			}
 		}
 	}
 	
@@ -630,7 +656,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		strokes = new ArrayList<Keystroke>(0);
 		rectangles = new ArrayList<Rectanglu>(0);
 		holdStroke = new HashMap<Keystroke, Visible[]>(0);
-		currentlyHoldingList = new ArrayList<Keystroke>(0);
+		currentlyHoldingList = new ArrayList<Visible[]>(0);
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
