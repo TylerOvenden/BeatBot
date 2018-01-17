@@ -49,7 +49,7 @@ public class FightPane extends FullFunctionPane{
 			atk.start();
 		}
 		else
-		{
+		{ 
 			
 		}
 	}
