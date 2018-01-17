@@ -140,15 +140,20 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 		int currentYPositionFromStart = (getY() * - 1) + GameScreen.columnY;
 		int currentBackHeight = (bottomPos - GameScreen.columnY);
 
-		if(getY() >= (totalHeight - rectHeight)) {
+		if(currentBackHeight >= 0 && rectHeight >= currentBackHeight) {
+
+			if(currentBackHeight >= GameScreen.columnHeight) {
+				rect = rectanglueo(currentYPositionFromStart,GameScreen.columnHeight);
+			}
+			else {
+				rect = rectanglueo(currentYPositionFromStart,currentBackHeight + 25);
+			}
+			
+		}
+		else if(getY() >= (totalHeight - rectHeight)) {
 
 			rect = rectanglueo(0,totalHeight - getY() + 40);
 
-		}
-		else if(currentBackHeight >= 0 && rectHeight >= currentBackHeight) {
-
-			rect = rectanglueo(currentYPositionFromStart,currentBackHeight + 25);
-			
 		}
 		else {
 
