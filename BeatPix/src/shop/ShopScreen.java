@@ -19,7 +19,7 @@ public class ShopScreen extends FullFunctionScreen
 	private TextLabel credit;
 	private Font bannerFont;
 	private Font creditFont;
-//	private ArrayList<Visible> songs;
+//	private ArrayList<Songs> songs;
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
