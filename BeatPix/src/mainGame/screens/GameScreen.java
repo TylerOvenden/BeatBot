@@ -86,7 +86,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		offSet = song.getOffSet();
 		beats = song.getBeats();
 		
-		updateKeyStrokes(KeyEvent.VK_LEFT, KeyEvent.VK_DOWN, KeyEvent.VK_UP, KeyEvent.VK_RIGHT);
+		updateKeyStrokes(KeyEvent.VK_D, KeyEvent.VK_F, KeyEvent.VK_J, KeyEvent.VK_Kd);
 		
 		totalAcc=100;
 		
@@ -541,7 +541,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 						Keystroke theStroke = ((Keystroke)stroke[1]);
 						Rectanglu theRect = ((Rectanglu)stroke[0]);
 						if(e.getKeyCode() == keys[theStroke.getColumnLane() - 1]) {
-							//2nd ACCURACY PLACEHOLDER
+							displayAcc(theStroke);
 							currentlyHoldingList.remove(stroke);
 							currentHoldLanes[theStroke.getColumnLane() - 1] = false;
 							removeStroke(theStroke);
