@@ -94,7 +94,7 @@ public class ShopScreen extends FullFunctionScreen
 					viewObjects.add(yes);
 					
 					Button no = new Button(360,125,200,200, "No", null);
-					viewObjects.add(no);
+					viewObjects.add(no); // 
 				}
 			})); // change to custom buttons that can access song
 		
