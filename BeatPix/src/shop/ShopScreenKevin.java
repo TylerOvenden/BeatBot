@@ -1,6 +1,7 @@
 package shop;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import gui.components.Action;
@@ -12,14 +13,17 @@ import gui.components.ScrollablePane;
 
 public class ShopScreenKevin extends FullFunctionScreen {
 
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1504601622695326879L;
-
+	
+	int counter;
 	public ShopScreenKevin(int width, int height) 
 	{
 		super(width, height);
+		
 	}
 
 	@Override
@@ -36,8 +40,17 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		ScrollablePane charScroll = new gui.components.ScrollablePane(this, 100, 100, 100, 100);
 		charScroll.setBorderWidth(3);
 		for(int i=0; i < 10; i++){
-			
-			charScroll.addObject(new TextLabel(5,30*i,100,25,"Label "+(i+1)));
+			counter = i;
+			charScroll.addObject(new Button(5, 30*1, 100, 25, "Button" +i, new Action() {
+				
+				@Override
+				public void act() {
+					charScroll.remove(counter);
+					
+				}
+			}));
+			i--;
+
 		}
 		charScroll.update();
 		
