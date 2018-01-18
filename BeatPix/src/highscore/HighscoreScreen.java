@@ -1,22 +1,21 @@
-package mainGame.screens;
+package highscore;
 
 import java.util.List;
 
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
-import mainGame.components.Holdstroke;
-import mainGame.components.Keystroke;
 
-public class MainScreen extends FullFunctionScreen {
+public class HighscoreScreen extends FullFunctionScreen {
 
-	public MainScreen(int width, int height) {
+	public HighscoreScreen(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-
+		// TODO Auto-generated method stub
+		
 	}
 
 }
