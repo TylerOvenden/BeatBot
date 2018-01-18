@@ -228,131 +228,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			resumeGame();
 			return;
 		}
-		
-		/*
-		if(e.getKeyCode() == KeyEvent.VK_D) {
-			System.out.println(timePass());
-			System.out.println(strokes.get(0).getStartingTime());
-			for(int i=0;i<strokes.size();i++) {
-				if(strokes.get(i).getColumnLane()==1) {
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
-						timing.changeImg("resources/perfect.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
-						timing.changeImg("resources/great.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
-						timing.changeImg("resources/good.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
-						timing.changeImg("resources/ok.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
-						timing.changeImg("resources/bad.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
-						timing.changeImg("resources/miss.png");
-						break;
-					}
-				}
-			}
-		}
-		if(e.getKeyCode() == KeyEvent.VK_F) {
-			for(int i=0;i<strokes.size();i++) {
-				if(strokes.get(i).getColumnLane()==2) {
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
-						timing.changeImg("resources/perfect.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
-						timing.changeImg("resources/great.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
-						timing.changeImg("resources/good.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
-						timing.changeImg("resources/ok.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
-						timing.changeImg("resources/bad.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
-						timing.changeImg("resources/miss.png");
-						break;
-					}
-				}
-			}
-				
-		}
-		if(e.getKeyCode() == KeyEvent.VK_J) {
-			for(int i=0;i<strokes.size();i++) {
-				if(strokes.get(i).getColumnLane()==3) {
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
-						timing.changeImg("resources/perfect.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
-						timing.changeImg("resources/great.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
-						timing.changeImg("resources/good.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
-						timing.changeImg("resources/ok.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
-						timing.changeImg("resources/bad.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
-						timing.changeImg("resources/miss.png");
-						break;
-					}
-				}
-			}
-		}
-		if(e.getKeyCode() == KeyEvent.VK_K) {
-			for(int i=0;i<strokes.size();i++) {
-				if(strokes.get(i).getColumnLane()==4) {
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<16) {
-						timing.changeImg("resources/perfect.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<40) {
-						timing.changeImg("resources/great.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<73) {
-						timing.changeImg("resources/good.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<103) {
-						timing.changeImg("resources/ok.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<127) {
-						timing.changeImg("resources/bad.png");
-						break;
-					}
-					if(Math.abs(timePass()-strokes.get(i).getStartingTime())<164) {
-						timing.changeImg("resources/miss.png");
-						break;
-					}
-				}
-			}
-		} */
+
 		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
 		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
 		if(isCurrentlyHoldingLane(e, keys)) {
@@ -410,8 +286,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
  		//If it isn't a hold stroke, then call the handle normal stroke
 		for(Keystroke stroke: strokes) {
 			if(e.getKeyCode() == keys[stroke.getColumnLane() - 1]) {
-
-
+				
 				//CALCULTE FIRST HOLD ACCURACY HERE
 				
 				removeStroke(stroke); 
@@ -653,7 +528,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 						Keystroke theStroke = ((Keystroke)stroke[1]);
 						Rectanglu theRect = ((Rectanglu)stroke[0]);
 						if(e.getKeyCode() == keys[theStroke.getColumnLane() - 1]) {
-							//CALCULATE ACCURACY
+							//2nd ACCURACY PLACEHOLDER
 							currentlyHoldingList.remove(stroke);
 							currentHoldLanes[theStroke.getColumnLane() - 1] = false;
 							removeStroke(theStroke);

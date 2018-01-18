@@ -298,8 +298,8 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		}
 		if(!cancel) {
 			GameScreen.game.removeStroke(this);
-			if(height != 0) {
-				//Miss accuracy here
+			if(height <= 0) {
+				//Miss Accuracy here
 			}
 		}
 		update();
