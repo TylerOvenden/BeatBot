@@ -81,19 +81,19 @@ public class ShopScreen extends FullFunctionScreen
 		//scroll bar, contains the songs
 		ScrollablePane a = new ScrollablePane(this, 130,175,220,300);		
 		
-			a.addObject(songButton1 = new Button(5,60,100,25,"Song                        Cost: 1000         ", new Action() {
+			a.addObject(songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", new Action() {
 				
 				@Override
 				public void act() {
-					TextArea a = new TextArea(370,175,200,200,
+					TextArea a = new TextArea(380,175,200,200,
 							"Do You Want to Buy This Song?"
 							);
 					viewObjects.add(a);
 					
-					Button yes = new Button(320,125,200,200, "Yes", null);
+					Button yes = new Button(350,115,200,200, "Yes", null);
 					viewObjects.add(yes);
 					
-					Button no = new Button(360,125,200,200, "No", null);
+					Button no = new Button(390,115,200,200, "No", null);
 					viewObjects.add(no); // 
 				}
 			})); // change to custom buttons that can access song
