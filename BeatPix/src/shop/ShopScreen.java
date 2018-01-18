@@ -2,6 +2,11 @@ package shop;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +19,7 @@ import mainGame.components.Song;
 public class ShopScreen extends FullFunctionScreen
 {
 	private Graphic background;	
+	private Graphic songBanner;
 	private TextLabel currency;
 	private CustomRectangle songArea;
 	private TextLabel banner;
@@ -21,6 +27,8 @@ public class ShopScreen extends FullFunctionScreen
 	private Font bannerFont;
 	private Font creditFont;
 	private ArrayList<Song> songs;
+	private Button songButton1;
+	
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
@@ -29,11 +37,26 @@ public class ShopScreen extends FullFunctionScreen
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
-	//	Font.createFont(1, "resources//slkscr.ttf");
-		bannerFont = new Font("Verdana", Font.ITALIC, 25);
+		
+		try 
+		{
+		     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources//Munro.ttf")));
+		}
+		catch (IOException|FontFormatException e)
+		{
+			
+		}
+				
+		
+		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
 		creditFont = new Font("Verdana", Font.BOLD, 20);
-		background = new Graphic(0,0,getWidth(),getHeight(),"resources//sample_bg.gif");
+		
+		//graphics
+		background = new Graphic(40,0,getWidth(),getHeight(),"resources//shop_bg.png");
 		viewObjects.add(background);
+		songBanner = new Graphic(170,100,120,120,"resources//SongsBanner.png");
+		viewObjects.add(songBanner);
 		
 		//background for credits, make new component later
 		CustomRectangle creditBG = new CustomRectangle(135,60,190,40, Color.white,5);
@@ -53,16 +76,28 @@ public class ShopScreen extends FullFunctionScreen
 		banner = new TextLabel(190,100,200,200, "Songs");
 		banner.setCustomTextColor(Color.white);
 		banner.setFont(bannerFont);
-		viewObjects.add(banner);
+	//	viewObjects.add(banner);
 
 		//scroll bar, contains the songs
-		ScrollablePane a = new ScrollablePane(this, 130,175,220,300);
-		a.setArrowColor(Color.yellow);
-		for(int i = 0; i < 10; i++) // change to i < array list later
-		{
-			
-			a.addObject(new Button(5,60*i,100,25,"Song "+(i+1), null)); // change to custom buttons that can access song
-		}
+		ScrollablePane a = new ScrollablePane(this, 130,175,220,300);		
+		
+			a.addObject(songButton1 = new Button(5,60,100,25,"Song                        Cost: 1000         ", new Action() {
+				
+				@Override
+				public void act() {
+					TextArea a = new TextArea(370,175,200,200,
+							"Do You Want to Buy This Song?"
+							);
+					viewObjects.add(a);
+					
+					Button yes = new Button(320,125,200,200, "Yes", null);
+					viewObjects.add(yes);
+					
+					Button no = new Button(360,125,200,200, "No", null);
+					viewObjects.add(no);
+				}
+			})); // change to custom buttons that can access song
+		
 		
 		a.update();
 		viewObjects.add(a);
