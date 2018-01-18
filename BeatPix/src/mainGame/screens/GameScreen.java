@@ -418,19 +418,19 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		if(Math.abs(timePass()-stroke.getClickTime())<73) {
 			timing.changeImg("resources/good.png");
 			combo.add();
-			calcAcc(0);
+			calcAcc(.66);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<103) {
 			timing.changeImg("resources/ok.png");
 			combo.add();
-			calcAcc(0);
+			calcAcc(.5);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<127) {
 			timing.changeImg("resources/bad.png");
 			combo.add();
-			calcAcc(0);
+			calcAcc(.33);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<164) {
@@ -446,8 +446,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		for(int i=0;i<beats.size();i++) {
 			amtOfNotes+=beats.get(i).length;
 		}
-		double indAcc=totalAcc/amtOfNotes;
+		double indAcc=100/amtOfNotes;
 		totalAcc-=(indAcc*(1-timing));
+		accuracy.setAcc(totalAcc);
 	}
 
 	/**

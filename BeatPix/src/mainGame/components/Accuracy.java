@@ -12,12 +12,13 @@ public class Accuracy extends Component{
 
 	public Accuracy(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		acc=55;
+		acc=100;
 		update();
 	}
 
 	@Override
 	public void update(Graphics2D g) {
+		super.clear();
 		String img1="";
 		String img2="";
 		String img3="";
