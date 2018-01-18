@@ -12,7 +12,7 @@ public class Accuracy extends Component{
 
 	public Accuracy(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		acc=54;
+		acc=55;
 		update();
 	}
 

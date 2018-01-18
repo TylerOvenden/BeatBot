@@ -18,6 +18,7 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.components.Accuracy;
 import mainGame.components.ColumnLane;
+import mainGame.components.Combo;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.Rectanglu;
@@ -66,6 +67,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private TextArea visual;
 	private Accuracy accuracy;
 	private int totalAcc;
+	private Combo combo;
 	
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
@@ -144,9 +146,13 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		viewObjects.add(timing);
 		timing.update();
 		accuracy=new Accuracy(600,30,400,400);
-		
 		viewObjects.add(accuracy);
 		accuracy.update();
+		combo=new Combo(275,300, 128, 128);
+		viewObjects.add(combo);
+		combo.update();
+		
+		
 	}
 	
 	/**
@@ -399,31 +405,37 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
 		if(Math.abs(timePass()-stroke.getClickTime())<16) {
 			timing.changeImg("resources/perfect.png");
+			combo.add();
 			calcAcc(1);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<40) {
 			timing.changeImg("resources/great.png");
+			combo.add();
 			calcAcc(.95);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<73) {
 			timing.changeImg("resources/good.png");
+			combo.add();
 			calcAcc(0);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<103) {
 			timing.changeImg("resources/ok.png");
+			combo.add();
 			calcAcc(0);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<127) {
 			timing.changeImg("resources/bad.png");
+			combo.add();
 			calcAcc(0);
 			return ;
 		}
 		if(Math.abs(timePass()-stroke.getClickTime())<164) {
 			timing.changeImg("resources/miss.png");
+			combo.set();
 			calcAcc(0);
 			return ;
 		}
@@ -816,5 +828,15 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				//strokes.add(str);
 			}
 		}
+	}
+
+	public Timing getTiming() {
+		// TODO Auto-generated method stub
+		return timing;
+	}
+
+	public Combo getCombo() {
+		// TODO Auto-generated method stub
+		return combo;
 	}
 }
