@@ -17,18 +17,4 @@ public interface KeystrokeIndicatorInterface {
 	 */
 	public void sleep(int time);
 	
-	/**
-	 * This method makes the stroke indicator play an animation to show that the key was hit
-	 * 
-	 * @author Justin Yau
-	 */
-	public void animate();
-	
-	/**
-	 * This method makes the stroke indicator resume as a normal indicator
-	 * 
-	 * @author Justin Yau
-	 */
-	public void normalize();
-	
 }

@@ -53,7 +53,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private HashMap<Keystroke, Visible[]> holdStroke; //The whole hold stroke consisting of 3 components will be accessible by knowing the first stroke here
 	private ArrayList<Visible[]> currentlyHoldingList; //The end strokes that the user is currently holding will be here
 	private boolean[] currentHoldLanes; //The lanes currently being held down will be in this list
-	private KeystrokeIndicator[] indicators; //The keystroke indicators will be in this array
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -64,7 +63,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 20; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -163,27 +162,13 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	public void addKeystrokeIndicator(List<Visible> viewObjects) {
-		indicators = new KeystrokeIndicator[4];
 		
-		KeystrokeIndicator left = new KeystrokeIndicator(arrowX[0] - 3, columnY + columnHeight, arrowPaths[0]);
-		left.setAlpha((float)0.3);
-		indicators[0] = left;
-		viewObjects.add(left);
+		for(int i = 0; i < arrowX.length; i++) {
+			KeystrokeIndicator indicator = new KeystrokeIndicator(arrowX[i], columnY + columnHeight, "resources/arrows/" + arrowPaths[i] + "ph.png");
+			indicator.setAlpha((float)0.3);
+			viewObjects.add(indicator);
+		}
 		
-		KeystrokeIndicator leftC = new KeystrokeIndicator(arrowX[1] - 3, columnY + columnHeight, arrowPaths[1]);
-		leftC.setAlpha((float)0.3);
-		indicators[1] = leftC;
-		viewObjects.add(leftC);
-		
-		KeystrokeIndicator rightC = new KeystrokeIndicator(arrowX[2] - 3, columnY + columnHeight, arrowPaths[2]);
-		rightC.setAlpha((float)0.3);
-		indicators[2] = rightC;
-		viewObjects.add(rightC);
-		
-		KeystrokeIndicator right = new KeystrokeIndicator(arrowX[3] - 3, columnY + columnHeight, arrowPaths[3]);
-		right.setAlpha((float)0.3);
-		indicators[3] = right;
-		viewObjects.add(right);
 	}
 	
 	/**
