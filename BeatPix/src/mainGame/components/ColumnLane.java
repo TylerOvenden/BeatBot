@@ -3,8 +3,14 @@ package mainGame.components;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import mainGame.screens.GameScreen;
 
 /*
  * This class will be mainly coded by Justin Yau
@@ -19,7 +25,7 @@ import gui.components.Component;
  *
  */
 public class ColumnLane extends Component {
-
+	
 	/*
 	 * PLANNING:
 	 * This component will be a visual component
@@ -41,6 +47,22 @@ public class ColumnLane extends Component {
 	}
 
 	/**
+	 * This method converts the current x position and determines which column lane this is
+	 * @return Returns the number of this column lane
+	 * @author Justin Yau
+	 */
+	public int getLane() {
+		int[] arr = GameScreen.arrowX;
+		int xCoordinate = getX();
+		for(int i = 0; i < arr.length; i++) {
+			if((arr[i] - 3) == xCoordinate) {
+				return i + 1;
+			}
+		}
+		return 0;
+	}
+	
+	/**
 	 * Creates a gray lane with 2 red lines across the sides to indicate the border
 	 * 
 	 * @author Justin Yau
@@ -48,6 +70,7 @@ public class ColumnLane extends Component {
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
+		ImageIcon icon = new ImageIcon("resources/arrows/" + GameScreen.arrowPaths + "ph.png");
 		Rectangle rect = new Rectangle(0,0,getWidth(),getHeight());
 		g.setColor(Color.LIGHT_GRAY);
 		g.draw(rect);
