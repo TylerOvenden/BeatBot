@@ -39,10 +39,11 @@ public class Scoring {
 	public void display(Graphics2D g) {
 		String scoreStr = String.valueOf(score);
 		for(int i = 0; i<scoreStr.length();i++) {
-			img = img + "resources/score-"+ scoreStr.substring(i, i+1)+ ".png";
+			img = img + "resources/score-"+ scoreStr.substring(i, i+1)+ ".png!";
 		}
 		ImageIcon icon = new ImageIcon(img);
 		g.drawImage(icon.getImage(), 0, 0, null);
+		String[] parts = img.split("!");
 		
 	}
 }
