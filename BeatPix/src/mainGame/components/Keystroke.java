@@ -33,11 +33,8 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private int height; //The height from which this stroke is following another stroke FOR HOLDS ONLY
 	private boolean cancel; //This boolean is to keep track if the keystroke fall was canceled by the a key press
 	private boolean pause; //This boolean is to keep track if the game is currently pause
-	private int clickTime; //This int is to track the time, in ms, the stroke should've been pressed since the game started 
-	private boolean isHold; //This boolean tracks whether or not the key press was a hold
 	private boolean spawnedAnimation; //This boolean tracks whether the visible keystroke was spawned in
-	private boolean isCurrentHold; //This boolean will track whether the keystroke is currently being used to determine hold time
-	private String imgPath; //This string will store the path of image file for spawning in the keystroke later if needed
+	private String imgPath; //This string will contain the path of the visual for the stroke
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -51,8 +48,6 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public Keystroke(int x, int y, int stime, String path) {
 		super(x, y, 65, 65);
-		isHold = false;
-		isCurrentHold = false;
 		fallTime = 10;
 		startTime = stime;
 		imgPath = path;
@@ -85,9 +80,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public Keystroke(int x, int y, int stime, String path, int h) {
 		super(x, y, 64, 64);
-		isHold = false;
 		height = h;
-		isCurrentHold = false;
 		fallTime = 10;
 		startTime = stime;
 		imgPath = path;
@@ -111,36 +104,6 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public int getBottomY() {
 		return getY() + getHeight();
-	}
-	
-	/**
-	 * This method will allow the program to know that the keystroke is being used in a hold press at the moment
-	 * 
-	 * @param b - Whether the keystroke is being held down or not
-	 * 
-	 * @author Justin Yau
-	 */
-	public void setCurrentHold(boolean b) {
-		isCurrentHold = b;
-	}
-	
-	/**
-	 * This method sets the boolean responsible for determining whether or not the keystroke is part of a hold or not
-	 * 
-	 * @param value - Whether you want to set it be a hold stroke or not
-	 * 
-	 * @author Justin Yau
-	 */
-	public void setHold(boolean value) {
-		isHold = value;
-	}
-	
-	/**
-	 * This method returns whether or not this stroke is part of a hold stroke
-	 * @return Returns whether or not this stroke is part of a hold stroke
-	 */
-	public boolean getHold() {
-		return isHold;
 	}
 	
 	/**
@@ -296,9 +259,6 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 				sleep(0);
 			}
 			setY(getY() + 1);
-			if(isHold && !isCurrentHold && reachedBeyondHoldGoal(GameScreen.columnHeight + GameScreen.columnY)) {
-				break;
-			}
 			if(getY() >= 75 && !spawnedAnimation) {
 				addSequence(imgPath, 100, 0, 0, 64, 64, 4);
 				spawnedAnimation = true;

@@ -75,30 +75,6 @@ public interface KeystrokeInterface {
 	 * @author Justin Yau
 	 */
 	public int getFallSpeed();
-
-	/**
-	 * This method sets the boolean responsible for determining whether or not the keystroke is part of a hold or not
-	 * 
-	 * @param value - Whether you want to set it be a hold stroke or not
-	 * 
-	 * @author Justin Yau
-	 */
-	public void setHold(boolean value);
-	
-	/**
-	 * This method returns whether or not this stroke is part of a hold stroke
-	 * @return Returns whether or not this stroke is part of a hold stroke
-	 */
-	public boolean getHold();
-	
-	/**
-	 * This method will allow the program to know that the keystroke is being used in a hold press at the moment
-	 * 
-	 * @param b - Whether the keystroke is being held down or not
-	 * 
-	 * @author Justin Yau
-	 */
-	public void setCurrentHold(boolean b);
 	
 	/**
 	 * This method makes the program sleep for the given amount of time
