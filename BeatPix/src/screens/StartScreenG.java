@@ -12,6 +12,7 @@ import gui.GUIApplication;
 import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
+import mainGame.MainGUI;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
@@ -210,7 +211,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 4;
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight());
-		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 	}
 	
 	

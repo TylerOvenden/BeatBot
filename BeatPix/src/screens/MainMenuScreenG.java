@@ -11,6 +11,9 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.MainGUI;
+import mainGame.components.Song;
+import mainGame.screens.GameScreen;
 import screens.components.ImageButton;
 
 public class MainMenuScreenG extends FullFunctionScreen{
@@ -52,8 +55,8 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		buttons.get(0).setAction(new Action() {
 			public void act(){
 				buttons.get(0).unhoverAction();
-				Test.test.changeDimensions();
-/**/			Test.test.setScreen(new StartScreenG(getWidth(),getHeight()));
+				Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
+/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song));
 			}
 		});
 		buttons.get(3).setAction(new Action() {

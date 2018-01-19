@@ -1,39 +1,54 @@
 package mainGame;
 
+import java.util.ArrayList;
+
 import gui.GUIApplication;
-import screens.GameScreen;
-import screens.LevelScreenG;
+import gui.interfaces.Visible;
+import gui.userInterfaces.Screen;
+import screens.*;
+import screens.StartScreenG;
+import screens.MainMenuScreenG;
+import screens.Test;
 import mainGame.components.Song;
 import mainGame.saving.FileP;
 import mainGame.screens.*;
 
 public class MainGUI extends GUIApplication {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 6557376208612089301L;
 	
-	private LevelScreenG game;
+	public static MainGUI test;
+	public static ArrayList<Screen> screens;
+	public static int START = 0;
+	public static int MENU = 1;
+	public static int CHARACTER = 1;
+	
+	
+	public static int[] options;
+	//options [VOLUME,KEY1,KEY2,KEY3,KEY4]
 
-	public static void main(String[] args) {
-		MainGUI s = new MainGUI(960,540);
-		Thread runner = new Thread(s);
-		runner.start();
-	}
+	public Visible optionScreen;
 	
 	public MainGUI(int width, int height) {
 		super(width, height);
-		setResizable(false);
 		setVisible(true);
+		options = new int[5];
 	}
 
 	@Override
 	public void initScreen() {
-		game = new LevelScreenG(getWidth(), getHeight());
-		Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
-		//game = new GameScreen(getWidth(), getHeight(), song);
-		setScreen(game);
+		setScreen(new StartScreenG(getWidth(),getHeight()));
+		//setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+	}
+
+	public static void main(String[] args) {
+		test = new MainGUI(960,540);
+		Thread s = new Thread(test);
+		s.run();
+	}
+	
+	public void changeScreen(Screen s) {
+		this.setScreen(s);
 	}
 
 }
