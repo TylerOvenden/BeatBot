@@ -31,6 +31,9 @@ public class ShopScreen extends FullFunctionScreen
 	private int credits;
 	private Font warningFont;
 	private boolean noPress;
+	private Button yes;
+	private Button no;
+	private TextArea text;
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -87,7 +90,7 @@ public class ShopScreen extends FullFunctionScreen
 		ScrollablePane scroll = new ScrollablePane(this, 130,175,220,300);		
 		
 		//when user clicks yes to buy song
-		Button yes = new Button(450,205,30,20, "Yes", new Action() 
+		yes = new Button(450,205,30,35, "Yes", new Action() 
 		{			
 			@Override
 			public void act() 
@@ -98,6 +101,9 @@ public class ShopScreen extends FullFunctionScreen
 					credits -= 1000;
 					credit.setText("Credits: "+ credits);
 					credit.update();
+					yes.setVisible(false);				
+					text.setVisible(false);
+					no.setVisible(false);
 					//add transfer of song later
 				}
 				else
@@ -114,6 +120,7 @@ public class ShopScreen extends FullFunctionScreen
 								viewObjects.add(warning);
 								Thread.sleep(1500);
 								warning.setVisible(false);
+				
 							}
 							catch (InterruptedException e) 
 							{
@@ -128,24 +135,20 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(yes);
 		yes.setVisible(false);
 		
-		TextArea text = new TextArea(380,175,200,200,"Do You Want to Buy This Song?");				
+		text = new TextArea(380,175,200,200,"Do You Want to Buy This Song?");				
 		viewObjects.add(text);	
 		text.setVisible(false);
-		Button no = new Button(490,205,20,20, "No", new Action()
+		no = new Button(490,205,20,35, "No", new Action()
 		{
-			
-			
-
 			@Override
 			public void act() 
 			{
 				yes.setVisible(false);				
 				text.setVisible(false);
-				noPress = true;
+				no.setVisible(false);
 			}
 		});
 		viewObjects.add(no);
-		
 		no.setVisible(false);
 		
 		scroll.addObject(songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", new Action()
