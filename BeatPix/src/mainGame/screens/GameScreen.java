@@ -63,14 +63,16 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
 	
+	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
+	//Justin Yau
+	
+	//Steven
 	private Timing timing;
 	private TextArea visual;
 	private Accuracy accuracy;
 	private int totalAcc;
 	private Combo combo;
-	
-	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
-	//Justin Yau
+	//Steven
 	
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
@@ -86,7 +88,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		offSet = song.getOffSet();
 		beats = song.getBeats();
 		
-		updateKeyStrokes(KeyEvent.VK_D, KeyEvent.VK_F, KeyEvent.VK_J, KeyEvent.VK_Kd);
+		updateKeyStrokes(KeyEvent.VK_D, KeyEvent.VK_F, KeyEvent.VK_J, KeyEvent.VK_K);
 		
 		totalAcc=100;
 		
