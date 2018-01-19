@@ -34,6 +34,7 @@ public class ShopScreen extends FullFunctionScreen
 	private Button yes;
 	private Button no;
 	private TextArea text;
+	private TextLabel purchased;
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -97,14 +98,33 @@ public class ShopScreen extends FullFunctionScreen
 			{
 				int x = (credits - 1000);
 				if (x >= 0)
-				{
-					credits -= 1000;
-					credit.setText("Credits: "+ credits);
-					credit.update();
-					yes.setVisible(false);				
-					text.setVisible(false);
-					no.setVisible(false);
-					//add transfer of song later
+				{	
+					new Thread()
+					{
+						public void run()
+						{
+							try
+							{
+								credits -= 1000;
+								credit.setText("Credits: "+ credits);
+								credit.update();
+								yes.setVisible(false);				
+								text.setVisible(false);
+								no.setVisible(false);
+								purchased = new TextLabel(350,60,450,200, "Song Purchased! Added to Your Library");
+								purchased.setFont(warningFont);
+								purchased.setCustomTextColor(Color.white);
+								viewObjects.add(purchased);
+								Thread.sleep(1500);
+								purchased.setVisible(false);
+							}
+							catch (InterruptedException e)
+							{
+								
+							}
+							//add transfer of song later
+						}
+					} .start();
 				}
 				else
 				{
