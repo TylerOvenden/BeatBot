@@ -165,7 +165,7 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(scroll);
 		
 		
-		//mycode________________________________________________________________________________________________________________
+		/*mycode________________________________________________________________________________________________________________
 		
 		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
 			
@@ -191,6 +191,8 @@ public class ShopScreen extends FullFunctionScreen
 		
 		viewObjects.add(backButton);
 		viewObjects.add(charScroll);
+		
+		*/
 	}	
 
 }
