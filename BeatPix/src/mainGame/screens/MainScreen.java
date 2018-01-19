@@ -4,6 +4,8 @@ import java.util.List;
 
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.components.Holdstroke;
+import mainGame.components.Keystroke;
 
 public class MainScreen extends FullFunctionScreen {
 
@@ -14,7 +16,6 @@ public class MainScreen extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		// TODO Auto-generated method stub
 
 	}
 

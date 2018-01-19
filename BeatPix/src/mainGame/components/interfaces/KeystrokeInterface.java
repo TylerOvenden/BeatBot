@@ -1,5 +1,7 @@
 package mainGame.components.interfaces;
 
+import mainGame.screens.GameScreen;
+
 /**
  * This interface will have all the must have methods for the Keystroke Class
  * @author Justin Yau
@@ -53,4 +55,57 @@ public interface KeystrokeInterface {
 	 */
 	public void updateFallSpeed(int speed);
 	
+	/**
+	 * This method calculates the distance from the target optimal pressing area in Y 
+	 * @return Returns the distance from the target optimal pressing area in Y 
+	 * @author Justin Yau
+	 */
+	public int distanceFromGoal();
+	
+	/**
+	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getClickTime();
+	
+	/**
+	 * This method returns the delay between each call to make the Keystroke fall
+	 * @return Returns the delay between each call to make the Keystroke fall
+	 * @author Justin Yau
+	 */
+	public int getFallSpeed();
+
+	/**
+	 * This method sets the boolean responsible for determining whether or not the keystroke is part of a hold or not
+	 * 
+	 * @param value - Whether you want to set it be a hold stroke or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setHold(boolean value);
+	
+	/**
+	 * This method returns whether or not this stroke is part of a hold stroke
+	 * @return Returns whether or not this stroke is part of a hold stroke
+	 */
+	public boolean getHold();
+	
+	/**
+	 * This method will allow the program to know that the keystroke is being used in a hold press at the moment
+	 * 
+	 * @param b - Whether the keystroke is being held down or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setCurrentHold(boolean b);
+	
+	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time);
 }
