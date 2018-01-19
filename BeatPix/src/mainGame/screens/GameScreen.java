@@ -294,6 +294,21 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
+	 * 
+	 * @param e
+	 * @param keys
+	 * @return
+	 */
+	public int determineLanePress(KeyEvent e, int[] keys) {
+		for(int i = 0; i < keys.length; i++) {
+			if(keys[i] == e.getKeyCode()) {
+				return i;
+			}
+		}
+		return 0;
+	}
+	
+	/**
 	 * This method determines whether the keystroke made was in a lane that the user is pressing for a hold stroke
 	 * 
 	 * @param e - The information about the keystroke
@@ -304,12 +319,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * @author Justin Yau
 	 */
 	public boolean isCurrentlyHoldingLane(KeyEvent e, int[] keys) {
-		for(int i = 0; i < keys.length; i++) {
-			if(keys[i] == e.getKeyCode() && currentHoldLanes[i]) {
-				return true;
-			}
-		}
-		return false;
+		return currentHoldLanes[determineLanePress(e, keys)];
 	}
 	
  	/**

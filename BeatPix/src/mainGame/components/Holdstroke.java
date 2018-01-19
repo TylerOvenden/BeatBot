@@ -40,7 +40,7 @@ public class Holdstroke implements HoldstrokeInterface {
 		Keystroke backStroke = new Keystroke(x, y - height, stime + holdTime, path, height);
 		backStroke.setHold(true);
 		backStroke.updateFallSpeed(fallSpeed);
-		Rectanglu rect = new Rectanglu(x, y-height+25, 65, height);
+		Rectanglu rect = new Rectanglu(x, y-height+30, 65, height);
 		rect.updateFallSpeed(fallSpeed);
 		list.add(frontStroke);
 		list.add(rect);

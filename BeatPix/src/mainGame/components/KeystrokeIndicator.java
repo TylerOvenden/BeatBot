@@ -22,10 +22,10 @@ public class KeystrokeIndicator extends AnimatedComponent {
 	 * 
 	 * @author Justin Yau
 	 */
-	public KeystrokeIndicator(int x, int y, String path) {
+	public KeystrokeIndicator(int x, int y, String p) {
 		super(x, y, 70, 70);
-		this.path = "resources/arrows/" + path + "ph.png";
-		this.animPath = "resources/arrows/" + path + "explosion.png";
+		path = "resources/arrows/" + p + "ph.png";
+		animPath = "resources/arrows/" + p + "explosion.png";
 		addSequence(this.path, 0, 0, 0, 64, 64, 1);
 		Thread animation = new Thread(this);
 		animation.start();

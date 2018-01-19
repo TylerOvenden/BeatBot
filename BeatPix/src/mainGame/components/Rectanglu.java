@@ -105,7 +105,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	public void rectangleFall() {
 		cancel = false;
 		pause = false;
-		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal)) && !cancel) {
+		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
 			while(pause) {
 				sleep(0);
 			}
@@ -127,7 +127,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	 * @author Justin Yau
 	 */
 	public boolean isBottomBeyondGoal(int goal) {
-		return ((getY() + rectHeight - 25)) > goal;
+		return ((getY() + rectHeight - 30)) > goal;
 	}
 	
 	/**
@@ -176,8 +176,8 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	public Rectangle determineRect() {
 		int totalHeight = (GameScreen.columnHeight + GameScreen.columnY);
 		int currentHeight = (getY() - GameScreen.columnY);
-		int bottomPos = ((getY() + rectHeight - 25));
-		int arrowYPos = ((yPos + rectHeight - 25)); //First arrow coords
+		int bottomPos = ((getY() + rectHeight - 30));
+		int arrowYPos = ((yPos + rectHeight - 30)); //First arrow coords
 		int currentYPositionFromStart = (getY() * - 1) + GameScreen.columnY;
 		int currentBackHeight = (bottomPos - GameScreen.columnY);
 		
@@ -192,7 +192,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 				return rectanglueo(currentYPositionFromStart,GameScreen.columnHeight);
 			}
 			else {
-				return rectanglueo(currentYPositionFromStart,currentBackHeight + 25);
+				return rectanglueo(currentYPositionFromStart,currentBackHeight + 30);
 			}
 			
 		}

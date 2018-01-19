@@ -296,7 +296,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 				sleep(0);
 			}
 			setY(getY() + 1);
-			if(isHold && !isCurrentHold && reachedBeyondHoldGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal)) {
+			if(isHold && !isCurrentHold && reachedBeyondHoldGoal(GameScreen.columnHeight + GameScreen.columnY)) {
 				break;
 			}
 			if(getY() >= 75 && !spawnedAnimation) {
