@@ -108,4 +108,13 @@ public interface KeystrokeInterface {
 	 * @author Justin Yau
 	 */
 	public void sleep(int time);
+	
+	/**
+	 * This method calculates the y coordinate of the bottom corner of the keystroke
+	 * @return - Returns the y coordinate of the bottom corner of the keystroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public int getBottomY();
+	
 }

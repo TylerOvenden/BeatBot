@@ -84,7 +84,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 * @param h - Distance from the first arrow stroke
 	 */
 	public Keystroke(int x, int y, int stime, String path, int h) {
-		super(x, y, 65, 65);
+		super(x, y, 64, 64);
 		isHold = false;
 		height = h;
 		isCurrentHold = false;
@@ -103,6 +103,16 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		update();
 	}
 
+	/**
+	 * This method calculates the y coordinate of the bottom corner of the keystroke
+	 * @return - Returns the y coordinate of the bottom corner of the keystroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public int getBottomY() {
+		return getY() + getHeight();
+	}
+	
 	/**
 	 * This method will allow the program to know that the keystroke is being used in a hold press at the moment
 	 * 
