@@ -3,6 +3,9 @@ package mainGame;
 import gui.GUIApplication;
 import screens.GameScreen;
 import screens.LevelScreenG;
+import mainGame.components.Song;
+import mainGame.saving.FileP;
+import mainGame.screens.*;
 
 public class MainGUI extends GUIApplication {
 	
@@ -28,6 +31,8 @@ public class MainGUI extends GUIApplication {
 	@Override
 	public void initScreen() {
 		game = new LevelScreenG(getWidth(), getHeight());
+		Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
+		//game = new GameScreen(getWidth(), getHeight(), song);
 		setScreen(game);
 	}
 
