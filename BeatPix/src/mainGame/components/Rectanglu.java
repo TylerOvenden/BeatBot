@@ -105,7 +105,7 @@ public class Rectanglu extends MovingComponent implements RectangluInterface {
 	public void rectangleFall() {
 		cancel = false;
 		pause = false;
-		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
+		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal)) && !cancel) {
 			while(pause) {
 				sleep(0);
 			}

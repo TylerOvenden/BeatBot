@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import mainGame.components.interfaces.ColumnLaneInterface;
 import mainGame.screens.GameScreen;
 
 /*
@@ -24,7 +25,7 @@ import mainGame.screens.GameScreen;
  * @author Justin Yau
  *
  */
-public class ColumnLane extends Component {
+public class ColumnLane extends Component implements ColumnLaneInterface {
 	
 	/*
 	 * PLANNING:
@@ -70,7 +71,6 @@ public class ColumnLane extends Component {
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
-		ImageIcon icon = new ImageIcon("resources/arrows/" + GameScreen.arrowPaths + "ph.png");
 		Rectangle rect = new Rectangle(0,0,getWidth(),getHeight());
 		g.setColor(Color.LIGHT_GRAY);
 		g.draw(rect);
