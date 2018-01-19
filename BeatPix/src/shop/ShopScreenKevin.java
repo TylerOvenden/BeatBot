@@ -13,7 +13,9 @@ import gui.components.ScrollablePane;
 
 public class ShopScreenKevin extends FullFunctionScreen {
 
-	
+	//things to do: create a text that visible and not visible
+	// yes or no button
+	// 
 	/**
 	 * 
 	 */
@@ -41,7 +43,8 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		ScrollablePane charScroll = new gui.components.ScrollablePane(this, 100, 100, 100, 100);
 		charScroll.setBorderWidth(3);
 		for(int i=0; i < 10; i++){
-			charScroll.addObject(new Button(5,30*i,100,25,"Label "+(i+1), new Action() {
+			//name change 
+			charScroll.addObject(new Button(5,30*i,100,25,"Button "+(i+1), new Action() {
 				
 				@Override
 				public void act() {
