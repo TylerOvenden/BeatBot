@@ -19,7 +19,8 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	 */
 	private static final long serialVersionUID = 1504601622695326879L;
 	
-	int counter;
+	private int counter;
+	private ArrayList<Button> buttons;
 	public ShopScreenKevin(int width, int height) 
 	{
 		super(width, height);
@@ -40,22 +41,20 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		ScrollablePane charScroll = new gui.components.ScrollablePane(this, 100, 100, 100, 100);
 		charScroll.setBorderWidth(3);
 		for(int i=0; i < 10; i++){
-			counter = i;
-			charScroll.addObject(new Button(5, 30*1, 100, 25, "Button" +i, new Action() {
+			charScroll.addObject(new Button(5,30*i,100,25,"Label "+(i+1), new Action() {
 				
 				@Override
 				public void act() {
-					charScroll.remove(counter);
+					// TODO Auto-generated method stub
 					
 				}
 			}));
-			i--;
-
 		}
 		charScroll.update();
 		
 		viewObjects.add(backButton);
 		viewObjects.add(charScroll);
 	}
+
 
 }

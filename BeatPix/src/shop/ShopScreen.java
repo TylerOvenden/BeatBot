@@ -160,6 +160,34 @@ public class ShopScreen extends FullFunctionScreen
 		}));		
 		scroll.update();
 		viewObjects.add(scroll);
+		
+		
+		//mycode________________________________________________________________________________________________________________
+		
+		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
+			
+			@Override
+			public void act() {
+				// go back to main screen
+				
+			}
+		});
+		ScrollablePane charScroll = new gui.components.ScrollablePane(this, 130,500,220,300);
+		charScroll.setBorderWidth(3);
+		for(int i=0; i < 10; i++){
+			charScroll.addObject(new Button(5,30*i,100,25,"Label "+(i+1), new Action() {
+				
+				@Override
+				public void act() {
+					// TODO Auto-generated method stub
+					
+				}
+			}));
+		}
+		charScroll.update();
+		
+		viewObjects.add(backButton);
+		viewObjects.add(charScroll);
 	}	
 
 }
