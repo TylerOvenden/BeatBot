@@ -257,6 +257,12 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	@Override
 	public void keyPressed(KeyEvent e) {
 		
+		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
+		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		if(isCurrentlyHoldingLane(e, keys)) {
+			return;
+		}
+		
 		if(e.getKeyCode() == KeyEvent.VK_A) {
 			pauseGame();
 			return;
@@ -265,12 +271,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			resumeGame();
 			return;
 		}
-
-		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
-		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
-		if(isCurrentlyHoldingLane(e, keys)) {
-			return;
-		}
+	
 		if(strokes.size() > 0 && strokes.get(0).distanceFromGoal() <= distanceG) {
 			ArrayList<Keystroke> strokesToCheck = strokesAtSameTime();
 			if(isNextStrokeHold(strokesToCheck)) {
