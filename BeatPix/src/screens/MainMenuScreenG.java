@@ -13,7 +13,7 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import screens.components.ImageButton;
 
-public class MainMenuScreenG extends FullFunctionScreen implements FocusController {
+public class MainMenuScreenG extends FullFunctionScreen{
 
 	/**
 	 * 
@@ -30,6 +30,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements FocusControll
 	public static int UNLOCK_IDX = 2;
 	public static int OPTIONS_IDX = 3;
 	
+	public AnimatedComponent idleCharacter;
+	
 	public static Pane options;
 	public boolean optionsOn;
 	
@@ -45,11 +47,12 @@ public class MainMenuScreenG extends FullFunctionScreen implements FocusControll
 /**/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
-/**/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"resources\\ui\\buttons\\buttonwithrivet.png"));
+/*need to change dimensions*/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
 		buttons.get(0).setAction(new Action() {
 			public void act(){
 				buttons.get(0).unhoverAction();
+				Test.test.changeDimensions();
 /**/			Test.test.setScreen(new StartScreenG(getWidth(),getHeight()));
 			}
 		});
@@ -64,6 +67,10 @@ public class MainMenuScreenG extends FullFunctionScreen implements FocusControll
 			}
 		});
 		
+/**/		idleCharacter = new AnimatedComponent(100, 200, 300, 300);
+/**/		idleCharacter.addSequence("resources/idle.png", 500, 0, 0, 39, 33, 2);
+		Thread run = new Thread(idleCharacter);
+		run.start();
 		
 		slideInButtons();
 		
@@ -71,7 +78,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements FocusControll
 		for(ImageButton b: buttons) {
 			viewObjects.add(b);
 		}
-		
+		viewObjects.add(idleCharacter);
 	}
 
 	public void slideInButtons() {

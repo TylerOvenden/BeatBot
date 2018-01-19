@@ -43,4 +43,10 @@ public class Test extends GUIApplication {
 		Thread s = new Thread(test);
 		s.run();
 	}
+	
+	//testing
+	public void changeDimensions() {
+		test = new Test(1920,1080);
+		setScreen(new StartScreenG(getWidth(),getHeight()));
+	}
 }
