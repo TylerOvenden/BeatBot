@@ -90,7 +90,7 @@ public class ShopScreen extends FullFunctionScreen
 		ScrollablePane scroll = new ScrollablePane(this, 130,175,220,300);		
 		
 		//when user clicks yes to buy song
-		yes = new Button(450,205,30,35, "Yes", new Action() 
+		yes = new Button(430,205,45,30, "Yes",Color.gray, new Action() 
 		{			
 			@Override
 			public void act() 
@@ -138,7 +138,9 @@ public class ShopScreen extends FullFunctionScreen
 		text = new TextArea(380,175,200,200,"Do You Want to Buy This Song?");				
 		viewObjects.add(text);	
 		text.setVisible(false);
-		no = new Button(490,205,20,35, "No", new Action()
+		
+		
+		no = new Button(480,205,45,30, "No", Color.gray, new Action()
 		{
 			@Override
 			public void act() 
