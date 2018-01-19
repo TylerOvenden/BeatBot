@@ -10,16 +10,16 @@ import gui.components.Pane;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 
-public class FightPane extends FullFunctionPane{
+public class FightPaneG extends FullFunctionPane{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6669770711157703541L;
 	AnimatedComponent robot;
-	boolean hit;
+	boolean hasHit;
 
-	public FightPane(FocusController focusController, int x, int y) {
+	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
 		// TODO Auto-generated constructor stub
 	}
@@ -39,19 +39,22 @@ public class FightPane extends FullFunctionPane{
 		super.drawObjects(g);
 	}
 	
-	public void robotHit(boolean hasHit)
+	public void robotHit(boolean hasHit, String keyPressed)
 	{
+		Thread atk = new Thread(robot);
 		if(hasHit)
 		{
 			robot.clear();
 			robot.addSequence("resources/spriteSheet.bmp", 250, 0, 35, 39, 26, 5);
-			Thread atk = new Thread(robot);
 			atk.start();
 		}
 		else
 		{ 
-			
+			robot.clear();
+			robot.addSequence("resources/spriteSheet.bmp", 250, 0, 100, 39, 26, 2);
+			atk.start();
 		}
+		atk.stop();
 	}
 	
 	
