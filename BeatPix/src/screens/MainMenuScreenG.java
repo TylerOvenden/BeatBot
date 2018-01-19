@@ -14,6 +14,7 @@ import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
+import mainGame.screens.ShopScreen;
 import screens.components.ImageButton;
 
 public class MainMenuScreenG extends FullFunctionScreen{
@@ -57,6 +58,12 @@ public class MainMenuScreenG extends FullFunctionScreen{
 				buttons.get(0).unhoverAction();
 				Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
 /**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song));
+			}
+		});
+		buttons.get(2).setAction(new Action() {
+			public void act(){
+				buttons.get(2).unhoverAction();
+/**/			MainGUI.test.setScreen(new ShopScreen(getWidth(),getHeight()));
 			}
 		});
 		buttons.get(3).setAction(new Action() {
