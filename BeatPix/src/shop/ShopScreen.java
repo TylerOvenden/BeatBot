@@ -28,6 +28,9 @@ public class ShopScreen extends FullFunctionScreen
 	private Font creditFont;
 	private ArrayList<Song> songs;
 	private Button songButton1;
+	private int credits;
+	private Font warningFont;
+	private boolean noPress;
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -38,6 +41,7 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 		
+		boolean clicked = false;
 		try 
 		{
 		     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -47,11 +51,12 @@ public class ShopScreen extends FullFunctionScreen
 		{
 			
 		}
-				
+		credits = 5000;
+
 		
 		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
 		creditFont = new Font("Verdana", Font.BOLD, 20);
-		
+		warningFont = new Font("Verdana", Font.BOLD, 18);
 		//graphics
 		background = new Graphic(40,0,getWidth(),getHeight(),"resources//shop_bg.png");
 		viewObjects.add(background);
@@ -62,8 +67,8 @@ public class ShopScreen extends FullFunctionScreen
 		CustomRectangle creditBG = new CustomRectangle(135,60,190,40, Color.white,5);
 		viewObjects.add(creditBG);
 		
-		String credits = "Credits: "; // add method "getCredits()" later
-		credit = new TextLabel(150,60,200,200, credits);
+		String s = "Credits: "+credits; // add method "getCredits()" later
+		credit = new TextLabel(150,60,200,200, s);
 		credit.setCustomTextColor(Color.white);
 		credit.setFont(creditFont);
 		viewObjects.add(credit);
@@ -79,28 +84,82 @@ public class ShopScreen extends FullFunctionScreen
 	//	viewObjects.add(banner);
 
 		//scroll bar, contains the songs
-		ScrollablePane a = new ScrollablePane(this, 130,175,220,300);		
+		ScrollablePane scroll = new ScrollablePane(this, 130,175,220,300);		
 		
-			a.addObject(songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", new Action() {
-				
-				@Override
-				public void act() {
-					TextArea a = new TextArea(380,175,200,200,
-							"Do You Want to Buy This Song?"
-							);
-					viewObjects.add(a);
-					
-					Button yes = new Button(350,115,200,200, "Yes", null);
-					viewObjects.add(yes);
-					
-					Button no = new Button(390,115,200,200, "No", null);
-					viewObjects.add(no); // 
+		//when user clicks yes to buy song
+		Button yes = new Button(450,205,30,20, "Yes", new Action() 
+		{			
+			@Override
+			public void act() 
+			{
+				int x = (credits - 1000);
+				if (x >= 0)
+				{
+					credits -= 1000;
+					credit.setText("Credits: "+ credits);
+					credit.update();
+					//add transfer of song later
 				}
-			})); // change to custom buttons that can access song
+				else
+				{
+					new Thread()
+					{
+						public void run()
+						{
+							try
+							{
+								TextLabel warning = new TextLabel(350,60,450,200, "You Do Not Have Enough Credits");
+								warning.setFont(warningFont);
+								warning.setCustomTextColor(Color.red);
+								viewObjects.add(warning);
+								Thread.sleep(1500);
+								warning.setVisible(false);
+							}
+							catch (InterruptedException e) 
+							{
+								e.printStackTrace();
+							}
+							
+						}
+					} .start();
+				}
+			}
+		});
+		viewObjects.add(yes);
+		yes.setVisible(false);
 		
+		TextArea text = new TextArea(380,175,200,200,"Do You Want to Buy This Song?");				
+		viewObjects.add(text);	
+		text.setVisible(false);
+		Button no = new Button(490,205,20,20, "No", new Action()
+		{
+			
+			
+
+			@Override
+			public void act() 
+			{
+				yes.setVisible(false);				
+				text.setVisible(false);
+				noPress = true;
+			}
+		});
+		viewObjects.add(no);
 		
-		a.update();
-		viewObjects.add(a);
+		no.setVisible(false);
+		
+		scroll.addObject(songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", new Action()
+		{		
+			@Override
+			public void act() 
+			{								
+				text.setVisible(true);
+				yes.setVisible(true);				
+				no.setVisible(true);
+			}				
+		}));		
+		scroll.update();
+		viewObjects.add(scroll);
 	}	
 
 }
