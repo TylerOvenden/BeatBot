@@ -264,6 +264,16 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		*/		
 	}
 	
+	/**
+	 * This method determines whether the keystroke made was in a lane that the user is pressing for a hold stroke
+	 * 
+	 * @param e - The information about the keystroke
+	 * @param keys - The key presses the user can make to clear the strokes
+	 * 
+	 * @return - Returns whether the keystroke made was in a lane that the user is pressing for a hold stroke
+	 * 
+	 * @author Justin Yau
+	 */
 	public boolean isCurrentlyHoldingLane(KeyEvent e, int[] keys) {
 		for(int i = 0; i < keys.length; i++) {
 			if(keys[i] == e.getKeyCode() && currentHoldLanes[i]) {
