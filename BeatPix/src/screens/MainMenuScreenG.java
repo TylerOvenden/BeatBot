@@ -14,7 +14,7 @@ import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
-import mainGame.screens.ShopScreen;
+import shop.ShopScreen;
 import screens.components.ImageButton;
 
 public class MainMenuScreenG extends FullFunctionScreen{
