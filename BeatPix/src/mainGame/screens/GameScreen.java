@@ -63,6 +63,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
 	
+	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
 	
@@ -805,7 +806,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 */
 	public void handleHoldStroke(int[] beat, int lane) {
 		int holdTime = beat[2] - beat[1];
-		Holdstroke str = new Holdstroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png", holdTime, fallTime);
+		Holdstroke str = new Holdstroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png", holdTime, fallTime);
 		ArrayList<Visible> strokes = str.getStrokes();
 		Visible[] tempStroke = new Visible[2];
 		tempStroke[0] = strokes.get(1);
@@ -834,7 +835,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 					handleHoldStroke(beat, lane);
 				}
 				else {
-					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/darrow.png");
+					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png");
 					str.updateFallSpeed(fallTime);
 					handleKeystroke(str,true);
 				}
