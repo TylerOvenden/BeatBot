@@ -33,7 +33,7 @@ import javax.imageio.ImageIO;
  */
 public class AnimatedComponent extends MovingComponent{
 
-	private ArrayList<BufferedImage> frame; //the images that can be displayed
+	public ArrayList<BufferedImage> frame; //the images that can be displayed
 	private ArrayList<Integer> times; //the time each image is displayed
 	private long displayTime; //the time when the last image switched
 	private int currentFrame; //the frame that is currently being displayed
@@ -112,8 +112,6 @@ public class AnimatedComponent extends MovingComponent{
 		frame.add(image);
 		this.times.add(time);
 	}
-
-
 
 	public void drawImage(Graphics2D g) {
 		long currentTime = System.currentTimeMillis();//gets time now
