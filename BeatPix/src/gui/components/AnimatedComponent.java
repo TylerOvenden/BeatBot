@@ -34,10 +34,10 @@ import javax.imageio.ImageIO;
 public class AnimatedComponent extends MovingComponent{
 
 	public ArrayList<BufferedImage> frame; //the images that can be displayed
-	private ArrayList<Integer> times; //the time each image is displayed
-	private long displayTime; //the time when the last image switched
-	private int currentFrame; //the frame that is currently being displayed
-	private boolean repeat;
+	public ArrayList<Integer> times; //the time each image is displayed
+	public long displayTime; //the time when the last image switched
+	public int currentFrame; //the frame that is currently being displayed
+	public boolean repeat;
 
 	public static final int REFRESH_RATE = 20;
 

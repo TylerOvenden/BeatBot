@@ -21,17 +21,20 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	private int fallSpeed; //The speed at which you would like the stroke to fall at
 	private int holdTime; //The time the user has to hold down a particular key for this stroke
 	private int height; //The height of the stroke for visuals
+	private int prevHeight; 
 	private boolean cancel;
 	private boolean pause;
-	private boolean switchFunc;
+	private boolean switchEnd;
 	private ArrayList<BufferedImage> frames;
 	private int fallTime;
 	private String path;
 
 	public Holdstroke(int x, int y, int h, int sTime, String path) {
 		super(x,y,64, h + 65);
+		switchEnd = false;
 		fallTime = 5;
 		height = h + 64;
+		prevHeight = 0;
 		this.path = path;
 		frames = new ArrayList<BufferedImage>(0);
 		addSequence(path, 100, 0, 420 - height, 64, height, 4);
@@ -47,25 +50,29 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		super.update();
 		setY(getY() + 1);
 		if(determineCurrentHeightFromY() == (height)) {
-			switchFunc = true;
+			switchEnd = true;
 		}
-		if(switchFunc) {
+		if(switchEnd) {
 			resizeFramesEnd(determineCurrentHeightFromY());
 		}
 		else {
 			resizeFramesStart(determineCurrentHeightFromY());
+			setY(GameScreen.columnY);
 		}
 	}
 	
 	public int determineCurrentHeightFromY() {
 		int bottomHeight = getY();
+		if(!switchEnd) {
+			bottomHeight = getY() + prevHeight;
+		}
 		int bottomHeightFromStart = bottomHeight - GameScreen.columnY;
 		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight - bottomHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
 		else if(height - 64 >= bottomHeightFromStart) {
-			if(height > GameScreen.columnHeight) {
+			if(height > GameScreen.columnHeight || switchEnd) {
 				return height;
 			}
 			return bottomHeightFromStart + 64;
@@ -91,15 +98,10 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			int h1 = fram.getHeight();
 			BufferedImage dest = fram.getSubimage(0, h1 - height, width, height);
 			BufferedImage nImg = new BufferedImage(width, this.height, dest.getType());
-			int horizontalOffset = 0;
-			int verticalOffset = height;
-			int widthToMove = width - horizontalOffset;
-			int heightToMove = nImg.getHeight() - verticalOffset;
-			int[] rgb = nImg.getRGB(0, 0, widthToMove, heightToMove, null, 0, widthToMove);
-			nImg.setRGB(horizontalOffset,verticalOffset,widthToMove, heightToMove,rgb, 0, widthToMove);
 			Graphics2D g2d = nImg.createGraphics();
 			g2d.drawImage(dest, 0, 0, width, height, null);
 			g2d.dispose();
+			prevHeight = height - 64;
 			this.frame.set(i, nImg);
 		}
 	}
