@@ -129,9 +129,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		addColumnLanes(viewObjects);
 		addKeystrokeIndicator(viewObjects);
 		
-		Holdstroke stroke = new Holdstroke(100,75,100, 100, "resources/arrows/darrowh.png");
-		viewObjects.add(stroke);
-		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
 		viewObjects.add(leftKey);
@@ -484,6 +481,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			if(stroke instanceof Keystroke) {
 				((Keystroke)stroke).pauseFall();
 			}
+			if(stroke instanceof Holdstroke) {
+				((Holdstroke)stroke).pauseFall();
+			}
 		}
 		while(pause) {
 			try {
@@ -496,6 +496,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		for(Visible stroke: strokes) {
 			if(stroke instanceof Keystroke) {
 				((Keystroke)stroke).resumeFall();
+			}
+			if(stroke instanceof Holdstroke) {
+				((Holdstroke)stroke).resumeFall();
 			}
 		}
 		recalculateStartTime(time);
@@ -534,10 +537,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * 
 	 * @author Justin Yau
 	 */
-	public void handleKeystroke(Keystroke s, boolean add) {
-		if(add) {
-			strokes.add(s);
-		}
+	public void handleKeystroke(Keystroke s) {
+		strokes.add(s);
 		addObject(s);
 		Thread tr = new Thread(new Runnable() {
 			
@@ -554,8 +555,22 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		tr.start();
 	}
 	
-	public void handleHoldStroke(int[] beat, int lane) {
-		
+	public void handleHoldstroke(Holdstroke s) {
+		strokes.add(s);
+		addObject(s);
+		Thread tr = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				while(strokes.contains(s)) {
+					s.holdstrokeFall();
+				}
+					
+			}
+			
+		});
+		tr.start();
 	}
 	
 	/**
@@ -575,12 +590,19 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
 				if(beat[2] != 0) {
-					//handleHoldStroke(beat, lane);
+					int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
+					if(height >= columnHeight) {
+						height = columnHeight;
+					}
+					Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
+							"resources/arrows/"+ arrowPaths[lane] + "h.png");
+					str.updateFallSpeed(fallTime);
+					handleHoldstroke(str);
 				}
 				else {
 					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png");
 					str.updateFallSpeed(fallTime);
-					handleKeystroke(str,true);
+					handleKeystroke(str);
 				}
 				//strokes.add(str);
 			}

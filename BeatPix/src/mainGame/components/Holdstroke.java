@@ -21,6 +21,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	private int fallSpeed; //The speed at which you would like the stroke to fall at
 	private int holdTime; //The time the user has to hold down a particular key for this stroke
 	private int height; //The height of the stroke for visuals
+	private boolean tooBig;
 	private int prevHeight; 
 	private boolean cancel;
 	private boolean pause;
@@ -32,33 +33,94 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public Holdstroke(int x, int y, int h, int sTime, String path) {
 		super(x,y,64, h + 65);
 		switchEnd = false;
-		fallTime = 5;
+		tooBig = false;
+		fallSpeed = 5;
 		height = h + 64;
 		prevHeight = 0;
 		this.path = path;
-		frames = new ArrayList<BufferedImage>(0);
-		addSequence(path, 100, 0, 420 - height, 64, height, 4);
-		for(BufferedImage img: this.frame) {
-			frames.add(img);
-		}
 		Thread animation = new Thread(this);
 		animation.start();
 		update();
 	}
 
+	/**
+	 * Overrides method to implement the pause feature. <br>
+	 * This method makes keystroke stop being animated. 
+	 * 
+	 * @author Justin Yau
+	 */
+	public void run(){
+		int posx= getX();
+		int posy= getY();
+		boolean running = true;
+		long moveTime = System.currentTimeMillis();
+		while(running){
+
+			try {
+				while(pause) {
+					Thread.sleep(0);
+				}
+				Thread.sleep(REFRESH_RATE);
+				checkBehaviors();
+				update();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
+	/**
+	 * This method will update the sleep time that is called in each fall interval. <br>
+	 * Default Fall Time - 10 ms <br>
+	 * Decreasing this value will make the stroke fall faster. 
+	 * @param speed - Speed, in ms, that you want between each fall call.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void updateFallSpeed(int speed) {
+		fallSpeed = speed;
+	}
+	
+	/**
+	 * This method returns the delay between each call to make the Keystroke fall
+	 * @return Returns the delay between each call to make the Keystroke fall
+	 * @author Justin Yau
+	 */
+	public int getFallSpeed() {
+		return fallSpeed;
+	}
+	
+	/**
+	 * This method will make the stroke stop falling 
+	 * 
+	 * @author Justin Yau
+	 */
+	public void cancelFall() {
+		this.cancel = true;
+	}
+	
+	/**
+	 * This method will make the stroke stop falling
+	 * 
+	 * @author Justin Yau
+	 */
+	public void pauseFall() {
+		pause = true;
+	}
+	
+	/**
+	 * This method will make the stroke continue falling
+	 * 
+	 * @author Jusitn Yau
+	 */
+	public void resumeFall() {
+		pause = false;
+	}
+	
 	public void update() {
 		super.update();
-		setY(getY() + 1);
-		if(determineCurrentHeightFromY() == (height)) {
-			switchEnd = true;
-		}
-		if(switchEnd) {
-			resizeFramesEnd(determineCurrentHeightFromY());
-		}
-		else {
-			resizeFramesStart(determineCurrentHeightFromY());
-			setY(GameScreen.columnY);
-		}
 	}
 	
 	public int determineCurrentHeightFromY() {
@@ -72,7 +134,11 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			return 1;
 		}
 		else if(height - 64 >= bottomHeightFromStart) {
-			if(height > GameScreen.columnHeight || switchEnd) {
+			if(height > GameScreen.columnHeight) {
+				tooBig = true;
+				return 64 + prevHeight ++;
+			}
+			if(switchEnd) {
 				return height;
 			}
 			return bottomHeightFromStart + 64;
@@ -80,6 +146,11 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		else if(height >= bottomHeightFromBottom + GameScreen.distanceAAfterGoal  ) {
 			if(bottomHeightFromBottom <= - GameScreen.distanceAAfterGoal ) {
 				GameScreen.game.removeHoldStroke(this);
+				//Place Scoring Here
+				GameScreen.game.getTiming().changeImg("resources/miss.png");
+				GameScreen.game.getCombo().set();
+				GameScreen.game.calcAcc(0);
+				//Place Scoring Here
 				cancel = true;
 				return 1;
 			}
@@ -138,6 +209,20 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		}
 	}
 	
+	public void moveOneDown() {
+		setY(getY() + 1);
+		if(determineCurrentHeightFromY() == (height) || (tooBig && prevHeight > GameScreen.columnHeight)) {
+			switchEnd = true;
+		}
+		if(switchEnd) {
+			resizeFramesEnd(determineCurrentHeightFromY());
+		}
+		else {
+			resizeFramesStart(determineCurrentHeightFromY());
+			setY(GameScreen.columnY);
+		}
+	}
+	
 	/**
 	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
@@ -145,25 +230,21 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public void holdstrokeFall() {
+		addSequence(path, 100, 0, 420 - height, 64, height, 4);
+		frames = new ArrayList<BufferedImage>(0);
+		for(BufferedImage img: this.frame) {
+			frames.add(img);
+		}
 		cancel = false;
 		pause = false;
-		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal)) && !cancel) {
+		while(!cancel) {
 			while(pause) {
 				sleep(0);
 			}
-			setY(getY() + 1);
-			sleep(fallTime);
+			moveOneDown();
+			sleep(fallSpeed);
 			update();
 		}
-		if(!cancel) {
-			GameScreen.game.removeHoldStroke(this);
-			//Place Scoring Here
-			GameScreen.game.getTiming().changeImg("resources/miss.png");
-			GameScreen.game.getCombo().set();
-			GameScreen.game.calcAcc(0);
-			//Place Scoring Here
-		}
-		update();
 	}
 	
 	public boolean isBeyondGoal(int goal) {
