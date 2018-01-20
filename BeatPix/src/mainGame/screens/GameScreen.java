@@ -36,7 +36,7 @@ import mainGame.components.KeystrokeIndicator;
 import mainGame.components.Song;
 import mainGame.components.Timing;
 
-public class GameScreen extends ClickableScreen implements KeyListener, Runnable {
+public class GameScreen extends ClickableScreen implements Runnable {
 
 	/**
 	 * 
@@ -108,6 +108,11 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		screen.start();
 	}
 
+	/**
+	 * This method sets up the default bindings for the game
+	 * 
+	 * @author Justin Yau
+	 */
 	public void setUpBindings() {
 		bindings = new String[4];
 		updateKeyStrokes("D", "F", "J", "K");
@@ -365,39 +370,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		image = scaleOp.filter(image,new BufferedImage(icon.getIconWidth(), newHeight, BufferedImage.TYPE_INT_ARGB));
 		return image;
 	}
-	
-	/**
-	 * Mainly overrided by Justin Yau
-	 * This function will run when the user presses a key.
-	 * Use e.getKeyCode() and compare it to a key and it will match if the user pressed that key 
-	 */
-	@Override
-	public void keyPressed(KeyEvent e) {
-		
-		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
-		/*
-		int[] keys = bindings;
-
-		if(e.getKeyCode() == KeyEvent.VK_A) {
-			pauseGame();
-			return;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_B) {
-			resumeGame();
-			return;
-		}
-		*/
-		
-		/*
-		TEST CODE
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			pause = true;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			pause = false;
-		}
-		*/		
-	}
  	
  	/**
  	 * This method will handle the registering of normal stroke
@@ -506,29 +478,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		return false;
 	}
 	*/
-	
-	/**
-	 * Crucial method to enable the program to register keyboard interactions
-	 * DO NOT REMOVE
-	 * @return
-	 */
-	@Override
-	public KeyListener getKeyListener(){
-		return this;
-	}
-	
-	//We will use this if we want to have a long hold press for the strokes 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		
-	}
-	
-	//We won't be using this
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void run() {

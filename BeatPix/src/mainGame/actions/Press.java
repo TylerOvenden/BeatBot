@@ -10,10 +10,25 @@ import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.screens.GameScreen;
 
+/**
+ * This class will be used to create "presses" that deals with the stroke calculations and removal for accuracy <br>
+ * when the configured key is press.
+ * 
+ * @author Justin Yau
+ *
+ */
 public class Press extends AbstractAction {
 
-	private int columnLane;
+	private int columnLane; //The lane the press is meant to be for
 	
+	/**
+	 * Constructor creates a "press" that deals with stroke calculations and removal for accuracy <br>
+	 * when the configured key is pressed.
+	 * 
+	 * @param column - The lane that the press is meant to be for
+	 * 
+	 * @author Justin Yau
+	 */
 	public Press(int column) {
 		columnLane = column;
 	}
@@ -36,6 +51,13 @@ public class Press extends AbstractAction {
 		}
 	}
 	
+	/**
+	 * This method handles the accuracy calculations and removal of the stroke
+	 * 
+	 * @param str - The stroke to do the calculations on
+	 * 
+	 * @author Justin Yau
+	 */
 	public void handleKeystroke(Keystroke str) {
 		if(str.distanceFromGoal() <= GameScreen.distanceG) {
 			if(str.getColumnLane() != columnLane) {
@@ -47,6 +69,13 @@ public class Press extends AbstractAction {
 		}
 	}
 	
+	/**
+	 * This method handles the accuracy calculations and removal of the stroke
+	 * 
+	 * @param str - The stroke to do the calculations on
+	 * 
+	 * @author Justin Yau
+	 */
 	public void handleHoldstroke(Holdstroke str) {
 		if(str.distanceFromGoal() <= GameScreen.distanceG) {
 			if(str.getColumnLane() != columnLane) {
