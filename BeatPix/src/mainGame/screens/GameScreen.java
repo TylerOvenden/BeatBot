@@ -441,12 +441,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 */
 	public void removeStroke(Keystroke e) {
 		strokes.remove(e);
+		e.cancelFall();
 		remove(e);
 		remove(e); //Just in case it doesn't get removed the first time
 	}
 	
 	public void removeHoldStroke(Holdstroke e) {
 		strokes.remove(e);
+		e.cancelFall();
 		remove(e);
 		remove(e);
 	}
@@ -591,8 +593,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 				int lane = beat[0] - 1;
 				if(beat[2] != 0) {
 					int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-					if(height >= columnHeight) {
-						height = columnHeight;
+					if(height >= columnHeight - 20) {
+						height = columnHeight - 20;
 					}
 					Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 							"resources/arrows/"+ arrowPaths[lane] + "h.png");

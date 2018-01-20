@@ -1,12 +1,10 @@
 package mainGame.components;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import gui.components.AnimatedComponent;
-import gui.interfaces.Visible;
 import mainGame.components.interfaces.HoldstrokeInterface;
 import mainGame.screens.GameScreen;
 
@@ -21,15 +19,25 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	private int fallSpeed; //The speed at which you would like the stroke to fall at
 	private int holdTime; //The time the user has to hold down a particular key for this stroke
 	private int height; //The height of the stroke for visuals
-	private boolean tooBig;
-	private int prevHeight; 
-	private boolean cancel;
-	private boolean pause;
-	private boolean switchEnd;
-	private ArrayList<BufferedImage> frames;
-	private int fallTime;
-	private String path;
+	private boolean tooBig; //This boolean will be utilized to track whether the stroke was too big or not
+	private int prevHeight; //This integer will store the value of the previous height from resizing the image
+	private boolean cancel; //This boolean will track whether or not the stroke was canceled by the screen
+	private boolean pause; //This boolean will track whether or not the game was paused
+	private boolean switchEnd; //This boolean will track whether or not the resize using the front or end methods
+	private ArrayList<BufferedImage> frames; //The frames of the animation image will be stored here for resizing purposes
+	private String path; //The image path file of the animation
 
+	/**
+	 * This constructor constructs a animated hold stroke that "should" render in and out of the game. 
+	 * 
+	 * @param x - The starting x coordinate of the stroke
+	 * @param y - The starting y coordinate of the stroke
+	 * @param h - The height of the hold stroke
+	 * @param sTime - The starting time in the song of the stroke
+	 * @param path - The image path file of the animated stroke
+	 * 
+	 * @author Justin Yau
+	 */
 	public Holdstroke(int x, int y, int h, int sTime, String path) {
 		super(x,y,64, h + 65);
 		switchEnd = false;
@@ -119,39 +127,30 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		pause = false;
 	}
 	
-	public void update() {
-		super.update();
-	}
-	
 	public int determineCurrentHeightFromY() {
-		int bottomHeight = getY();
+		int topHeight = getY();
 		if(!switchEnd) {
-			bottomHeight = getY() + prevHeight;
+			topHeight = getY() + prevHeight;
 		}
-		int bottomHeightFromStart = bottomHeight - GameScreen.columnY;
-		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight - bottomHeight;
+		int bottomHeightFromStart = topHeight - GameScreen.columnY;
+		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight - topHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
-		else if(height - 64 >= bottomHeightFromStart) {
+		else if(height - 64 >= bottomHeightFromStart && !switchEnd) {
 			if(height > GameScreen.columnHeight) {
 				tooBig = true;
-				return 64 + prevHeight ++;
+				return 64 + prevHeight++;
 			}
 			if(switchEnd) {
 				return height;
 			}
 			return bottomHeightFromStart + 64;
 		}
+		//Above works
 		else if(height >= bottomHeightFromBottom + GameScreen.distanceAAfterGoal  ) {
 			if(bottomHeightFromBottom <= - GameScreen.distanceAAfterGoal ) {
-				GameScreen.game.removeHoldStroke(this);
-				//Place Scoring Here
-				GameScreen.game.getTiming().changeImg("resources/miss.png");
-				GameScreen.game.getCombo().set();
-				GameScreen.game.calcAcc(0);
-				//Place Scoring Here
-				cancel = true;
+				handleRemove();
 				return 1;
 			}
 			return bottomHeightFromBottom + GameScreen.distanceAAfterGoal ;
@@ -159,6 +158,16 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		return height;
 	}
 
+	public void handleRemove() {
+		GameScreen.game.removeHoldStroke(this);
+		//Place Scoring Here
+		GameScreen.game.getTiming().changeImg("resources/miss.png");
+		GameScreen.game.getCombo().set();
+		GameScreen.game.calcAcc(0);
+		//Place Scoring Here
+		cancel = true;
+	}
+	
 	public void resizeFramesStart(int height) {
 		if(height == this.height) {
 			return;
@@ -209,9 +218,12 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		}
 	}
 	
+	/**
+	 * This method makes the stroke move down a y value and resizes the animated image accordingly
+	 */
 	public void moveOneDown() {
 		setY(getY() + 1);
-		if(determineCurrentHeightFromY() == (height) || (tooBig && prevHeight > GameScreen.columnHeight)) {
+		if(determineCurrentHeightFromY() == (height) || (tooBig && prevHeight >= (GameScreen.columnHeight - 64 + GameScreen.distanceAAfterGoal))) {
 			switchEnd = true;
 		}
 		if(switchEnd) {
@@ -247,6 +259,14 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		}
 	}
 	
+	/**
+	 * This method will be utilized to determine whether or not the stroke has made it past the goal
+	 * 
+	 * @param goal - The y coordinate of the goal 
+	 * @return - Whether or not the stroke has made it past the goal
+	 * 
+	 * @author Justin Yau
+	 */
 	public boolean isBeyondGoal(int goal) {
 		return getY() + height > goal;
 	}
