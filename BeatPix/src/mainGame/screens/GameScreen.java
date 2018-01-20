@@ -446,6 +446,13 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		remove(e); //Just in case it doesn't get removed the first time
 	}
 	
+	/**
+	 * This method will remove the given stroke from this arrayList and the visibleObjects
+	 * 
+	 * @param e - The stroke that you would like to remove
+	 * 
+	 * @author Justin Yau
+	 */
 	public void removeHoldStroke(Holdstroke e) {
 		strokes.remove(e);
 		e.cancelFall();
@@ -532,10 +539,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	
 	/**
 	 * This method handles the addition of a new keystroke to the gameboard. <br>
-	 * Makes the the rectangle start falling aswell.
+	 * Makes the the stroke start falling aswell.
 	 * 
 	 * @param s - The keystroke you would like to add to the game
-	 * @param add - Whether you would like to add to the arraylist or not
 	 * 
 	 * @author Justin Yau
 	 */
@@ -557,6 +563,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		tr.start();
 	}
 	
+	/**
+	 * This method handles the addition of a new holdstroke to the gameboard. <br>
+	 * Makes the the stroke start falling aswell.
+	 * 
+	 * @param s - The holdstroke you would like to add to the game
+	 * 
+	 * @author Justin Yau
+	 */
 	public void handleHoldstroke(Holdstroke s) {
 		strokes.add(s);
 		addObject(s);
