@@ -20,30 +20,41 @@ public class Press extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(GameScreen.game.currentlyHeldLanes().contains(columnLane)) {
+			return;
+		}
 		Visible stroke = GameScreen.game.getFirstInLane(columnLane);
 		if(stroke != null) {
 			if(stroke instanceof Keystroke) {
 				Keystroke str = ((Keystroke)stroke);
-				if(str.distanceFromGoal() <= GameScreen.distanceG) {
-					if(str.getColumnLane() != columnLane) {
-						GameScreen.game.removeStroke(str);
-						//Calculate Miss
-					}
-					GameScreen.game.removeStroke(str);
-					//Calculate Accuracy
-				}
+				handleKeystroke(str);
 			}
 			if(stroke instanceof Holdstroke) {
 				Holdstroke str = ((Holdstroke)stroke);
-				if(str.distanceFromGoal() <= GameScreen.distanceG) {
-					if(str.getColumnLane() != columnLane) {
-						GameScreen.game.removeHoldStroke(str);
-						//Calculate Miss
-					}
-					GameScreen.game.holds.add(str);
-					//Calculate First Stroke Accuracy
-				}
+				handleHoldstroke(str);
 			}
+		}
+	}
+	
+	public void handleKeystroke(Keystroke str) {
+		if(str.distanceFromGoal() <= GameScreen.distanceG) {
+			if(str.getColumnLane() != columnLane) {
+				GameScreen.game.removeStroke(str);
+				//Calculate Miss
+			}
+			GameScreen.game.removeStroke(str);
+			//Calculate Accuracy
+		}
+	}
+	
+	public void handleHoldstroke(Holdstroke str) {
+		if(str.distanceFromGoal() <= GameScreen.distanceG) {
+			if(str.getColumnLane() != columnLane) {
+				GameScreen.game.removeHoldStroke(str);
+				//Calculate Miss
+			}
+			GameScreen.game.holds.add(str);
+			//Calculate First Stroke Accuracy
 		}
 	}
 

@@ -25,6 +25,7 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.actions.Pause;
 import mainGame.actions.Press;
+import mainGame.actions.ReleasePress;
 import mainGame.actions.Resume;
 import mainGame.components.Accuracy;
 import mainGame.components.ColumnLane;
@@ -56,6 +57,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	
 	public ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	public ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
+	public ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -127,6 +129,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		imap.put(leftCKey, "Down Press");
 		imap.put(rightCKey, "Up Press");
 		imap.put(rightKey, "Right Press");
+		imap.put(releasedLeftKey, "Released Left Press");
+		imap.put(releasedLeftCKey, "Released Down Press");
+		imap.put(releasedRightCKey, "Released Up Press");
+		imap.put(releasedRightKey, "Released Right Press");
 		
 		this.requestFocus();
 	}
@@ -144,6 +150,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		amap.put("Down Press", new Press(2));
 		amap.put("Up Press", new Press(3));
 		amap.put("Right Press", new Press(4));
+		amap.put("Released Left Press", new ReleasePress(1));
+		amap.put("Released Down Press", new ReleasePress(2));
+		amap.put("Released Up Press", new ReleasePress(3));
+		amap.put("Released Right Press", new ReleasePress(4));
 	}
 	
 	/**
@@ -201,6 +211,21 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			return firstStroke;
 		}
 		return null;
+	}
+	
+	/**
+	 * This method returns the lanes currently being held
+	 * 
+	 * @return Return the lanes currently being held
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Integer> currentlyHeldLanes() {
+		ArrayList<Integer> list = new ArrayList<Integer>(0);
+		for(Holdstroke stroke: holds) {
+			list.add(stroke.getColumnLane());
+		}
+		return list;
 	}
 	
 	/**
@@ -512,6 +537,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		pause = false;
 		strokes = new ArrayList<Visible>(0);
 		holds = new ArrayList<Holdstroke>(0);
+		tooLongHolds = new ArrayList<Holdstroke>(0);
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}
@@ -561,6 +587,10 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 */
 	public void removeHoldStroke(Holdstroke e) {
 		strokes.remove(e);
+		if(holds.contains(e)) {
+			tooLongHolds.add(e);
+			holds.remove(e);
+		}
 		e.cancelFall();
 		remove(e);
 		remove(e);
