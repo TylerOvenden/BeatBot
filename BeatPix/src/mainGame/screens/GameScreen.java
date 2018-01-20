@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
 
 import gui.components.TextArea;
 import gui.interfaces.Visible;
@@ -33,10 +36,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	private static final long serialVersionUID = 8016038914105990793L;
 	
 	//Justin Yau
-	private int leftStroke; //Keystroke that the user presses for the left column
-	private int leftCStroke; //Keystroke that the user presses for the left center column
-	private int rightCStroke; //Keystroke that the user presses for the right center column
-	private int rightStroke; //Key stroke that the user presses for the right column
+	private String[] bindings; //The keystrokes that the user presses for the left column, left center column, right center column, and right column, respectively.
 	
 	private String title; //Title of the beatmap 
 	private int BPM; //Beats per minute from the beatmap
@@ -59,6 +59,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
 	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
+	
+    private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -86,7 +88,14 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		offSet = song.getOffSet();
 		beats = song.getBeats();
 		
-		updateKeyStrokes(KeyEvent.VK_D, KeyEvent.VK_F, KeyEvent.VK_J, KeyEvent.VK_K);
+		bindings = new String[4];
+		updateKeyStrokes("D", "F", "J", "K");
+		InputMap imap = getInputMap(IFW);
+		KeyStroke leftKey = KeyStroke.getKeyStroke(bindings[0]); 
+		KeyStroke leftCKey = KeyStroke.getKeyStroke(bindings[1]);
+		KeyStroke rightCKey = KeyStroke.getKeyStroke(bindings[2]);
+		KeyStroke rightKey = KeyStroke.getKeyStroke(bindings[3]);
+		//imap.put(leftKey, actionMapKey);
 		
 		totalAcc=100;
 		
@@ -220,11 +229,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * @param stroke4 - Key to be pressed for right stroke
 	 * @author Justin Yau 
 	 */
-	public void updateKeyStrokes(int stroke1, int stroke2, int stroke3, int stroke4) {
-		leftStroke = stroke1;
-		leftCStroke = stroke2;
-		rightCStroke = stroke3;
-		rightStroke = stroke4;
+	public void updateKeyStrokes(String stroke1, String stroke2, String stroke3, String stroke4) {
+		String[] temp = {stroke1, stroke2, stroke3, stroke4};
+		bindings = temp;
 	}
 	
 	/**
@@ -236,7 +243,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public void keyPressed(KeyEvent e) {
 		
 		//CHECK TO MAKE SURE THE KEY PRESS IS NOT IN A LANE WHERE WE ARE HOLDING
-		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		/*
+		int[] keys = bindings;
 
 		if(e.getKeyCode() == KeyEvent.VK_A) {
 			pauseGame();
@@ -246,6 +254,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			resumeGame();
 			return;
 		}
+		*/
 		
 		/*
 		TEST CODE
@@ -282,6 +291,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
  	 * 
  	 * @author Justin Yau
  	 */
+	/*
  	public void handleNormalStroke(ArrayList<Keystroke> strokes, int[] keys, KeyEvent e) {
 		boolean correctStroke = false;
 		
@@ -306,6 +316,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
  		
  	}
+ 	*/
 	
 	private void displayAcc(Keystroke stroke) {
 		//System.out.println(timePass());
@@ -367,8 +378,9 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	 * 
 	 * @author Justin Yau
 	 */
+	/*
 	public boolean madeLegalStroke(KeyEvent e) {
-		int[] keys = {leftStroke, leftCStroke, rightCStroke, rightStroke};
+		int[] keys = bindings;
 		for(int key: keys) {
 			if(e.getKeyCode() == key) {
 				return true;
@@ -376,6 +388,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		}
 		return false;
 	}
+	*/
 	
 	/**
 	 * Crucial method to enable the program to register keyboard interactions
