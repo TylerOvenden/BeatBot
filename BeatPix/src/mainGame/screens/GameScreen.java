@@ -1,24 +1,31 @@
 package mainGame.screens;
 
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import gui.components.Action;
 import gui.components.TextArea;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import mainGame.actions.Pause;
+import mainGame.actions.Press;
+import mainGame.actions.Resume;
 import mainGame.components.Accuracy;
 import mainGame.components.ColumnLane;
 import mainGame.components.Combo;
@@ -47,7 +54,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
-	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
+	public ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
+	public ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -61,6 +69,8 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
+    private InputMap imap;
+    private ActionMap amap;
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -88,14 +98,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		offSet = song.getOffSet();
 		beats = song.getBeats();
 		
-		bindings = new String[4];
-		updateKeyStrokes("D", "F", "J", "K");
-		InputMap imap = getInputMap(IFW);
-		KeyStroke leftKey = KeyStroke.getKeyStroke(bindings[0]); 
-		KeyStroke leftCKey = KeyStroke.getKeyStroke(bindings[1]);
-		KeyStroke rightCKey = KeyStroke.getKeyStroke(bindings[2]);
-		KeyStroke rightKey = KeyStroke.getKeyStroke(bindings[3]);
-		//imap.put(leftKey, actionMapKey);
+		setUpBindings();
 		
 		totalAcc=100;
 		
@@ -103,6 +106,123 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		screen.start();
 	}
 
+	public void setUpBindings() {
+		bindings = new String[4];
+		updateKeyStrokes("D", "F", "J", "K");
+		imap = getInputMap(IFW);
+		KeyStroke leftKey = KeyStroke.getKeyStroke(bindings[0]); 
+		KeyStroke releasedLeftKey = KeyStroke.getKeyStroke("released " + bindings[0]);
+		KeyStroke leftCKey = KeyStroke.getKeyStroke(bindings[1]);
+		KeyStroke releasedLeftCKey = KeyStroke.getKeyStroke("released " + bindings[1]);
+		KeyStroke rightCKey = KeyStroke.getKeyStroke(bindings[2]);
+		KeyStroke releasedRightCKey = KeyStroke.getKeyStroke("released " + bindings[2]);
+		KeyStroke rightKey = KeyStroke.getKeyStroke(bindings[3]);
+		KeyStroke releasedRightKey = KeyStroke.getKeyStroke("released " + bindings[3]);
+		//imap.put(leftKey, actionMapKey);
+		handleActions(); //Create action objects to bind keys to
+		
+		imap.put(KeyStroke.getKeyStroke("P"), "Pause");
+		imap.put(KeyStroke.getKeyStroke("O"), "Resume");
+		imap.put(leftKey, "Left Press");
+		imap.put(leftCKey, "Down Press");
+		imap.put(rightCKey, "Up Press");
+		imap.put(rightKey, "Right Press");
+		
+		this.requestFocus();
+	}
+	
+	/**
+	 * This method handles the initialization of the actions
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handleActions() {
+		amap = getActionMap();
+		amap.put("Pause", new Pause());
+		amap.put("Resume", new Resume());
+		amap.put("Left Press", new Press(1));
+		amap.put("Down Press", new Press(2));
+		amap.put("Up Press", new Press(3));
+		amap.put("Right Press", new Press(4));
+	}
+	
+	/**
+	 * Call this method to rebind one of the bindings 
+	 * @param newKey - The new key you would like to bind the action to
+	 * @param oldKey - The old key that you would like to change the action from
+	 * 
+	 * @author Justin Yau
+	 */
+	public void rebindKey(String newKey, String oldKey) {
+		getInputMap(IFW).put(KeyStroke.getKeyStroke(newKey), getInputMap(IFW).get(KeyStroke.getKeyStroke(oldKey)));
+		getInputMap(IFW).remove(KeyStroke.getKeyStroke(oldKey));
+	}
+	
+	/**
+	 * Method to update the buttons that the user has to press to make strokes
+	 * @param stroke1 - Key to be pressed for left stroke
+	 * @param stroke2 - Key to be pressed for left center stroke
+	 * @param stroke3 - Key to be pressed for right center stroke
+	 * @param stroke4 - Key to be pressed for right stroke
+	 * @author Justin Yau 
+	 */
+	public void updateKeyStrokes(String stroke1, String stroke2, String stroke3, String stroke4) {
+		String[] temp = {stroke1, stroke2, stroke3, stroke4};
+		bindings = temp;
+	}
+	
+	/**
+	 * This method returns the first stroke in the given lane IF the first stroke in the lane has the same starting time as the first stroke in the list. <br> 
+	 * Returns null if there are no strokes. 
+	 * 
+	 * @param lane - The lane you would like to find the first stroke to. 
+	 * @return - Returns the first stroke in the given lane. Null if there are no strokes.
+	 * 
+	 * @author Justin Yau
+	 */
+	public Visible getFirstInLane(int lane) {
+		int startingTime = getFirstStrokeStartingTime();
+		if(strokes.size() > 0 && startingTime >= 0) {
+			Visible firstStroke = strokes.get(0);
+			for(Visible stroke: strokes) {
+				if(stroke instanceof Keystroke) {
+					Keystroke str = ((Keystroke)stroke);
+					if(str.getColumnLane() == lane && str.getStartingTime() == startingTime) {
+						return stroke;
+					}
+				}
+				if(stroke instanceof Holdstroke) {
+					Holdstroke str = ((Holdstroke)stroke);
+					if(str.getColumnLane() == lane && str.getStartingTime() == startingTime) {
+						return stroke;
+					}
+				}
+			}
+			return firstStroke;
+		}
+		return null;
+	}
+	
+	/**
+	 * This method retrieves the starting time of the first stroke
+	 * 
+	 * @return Returns the starting time of the first stroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public int getFirstStrokeStartingTime() {
+		if(strokes.size() > 0) {
+			Visible firstStroke = strokes.get(0);
+			if(strokes.get(0) instanceof Keystroke) {
+				return ((Keystroke)firstStroke).getStartingTime(); 
+			}
+			if(strokes.get(0) instanceof Holdstroke) {
+				return ((Holdstroke)firstStroke).getStartingTime();
+			}
+		}
+		return -1;
+	}
+	
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
@@ -222,19 +342,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 	}
 	
 	/**
-	 * Method to update the buttons that the user has to press to make strokes
-	 * @param stroke1 - Key to be pressed for left stroke
-	 * @param stroke2 - Key to be pressed for left center stroke
-	 * @param stroke3 - Key to be pressed for right center stroke
-	 * @param stroke4 - Key to be pressed for right stroke
-	 * @author Justin Yau 
-	 */
-	public void updateKeyStrokes(String stroke1, String stroke2, String stroke3, String stroke4) {
-		String[] temp = {stroke1, stroke2, stroke3, stroke4};
-		bindings = temp;
-	}
-	
-	/**
 	 * Mainly overrided by Justin Yau
 	 * This function will run when the user presses a key.
 	 * Use e.getKeyCode() and compare it to a key and it will match if the user pressed that key 
@@ -265,21 +372,6 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 			pause = false;
 		}
 		*/		
-	}
-	
-	/**
-	 * 
-	 * @param e
-	 * @param keys
-	 * @return
-	 */
-	public int determineLanePress(KeyEvent e, int[] keys) {
-		for(int i = 0; i < keys.length; i++) {
-			if(keys[i] == e.getKeyCode()) {
-				return i;
-			}
-		}
-		return 0;
 	}
  	
  	/**
@@ -419,6 +511,7 @@ public class GameScreen extends ClickableScreen implements KeyListener, Runnable
 		playing = true;
 		pause = false;
 		strokes = new ArrayList<Visible>(0);
+		holds = new ArrayList<Holdstroke>(0);
 		calculateAndSetFallTimeFromBeats();
 		playMap();
 	}

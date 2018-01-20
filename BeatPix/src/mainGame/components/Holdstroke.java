@@ -19,11 +19,13 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	private int fallSpeed; //The speed at which you would like the stroke to fall at
 	private int holdTime; //The time the user has to hold down a particular key for this stroke
 	private int height; //The height of the stroke for visuals
+	private int currentHeight; //The current height of the stroke
 	private boolean tooBig; //This boolean will be utilized to track whether the stroke was too big or not
 	private int prevHeight; //This integer will store the value of the previous height from resizing the image
 	private boolean cancel; //This boolean will track whether or not the stroke was canceled by the screen
 	private boolean pause; //This boolean will track whether or not the game was paused
 	private boolean switchEnd; //This boolean will track whether or not the resize using the front or end methods
+	private int startingTime; //This int will track the time the stroke spawned in
 	private ArrayList<BufferedImage> frames; //The frames of the animation image will be stored here for resizing purposes
 	private String path; //The image path file of the animation
 
@@ -41,6 +43,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public Holdstroke(int x, int y, int h, int sTime, String path) {
 		super(x,y,64, h + 65);
 		switchEnd = false;
+		startingTime = sTime;
 		tooBig = false;
 		fallSpeed = 5;
 		height = h + 64;
@@ -80,6 +83,24 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
+	 * This method Returns the time that this beat spawned into the map
+	 * @return  Returns the time that this beat spawned into the map
+	 * @author Justin Yau
+	 */
+	public int getStartingTime() {
+		return startingTime;
+	}
+	
+	/**
+	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getClickTime() {
+		return startingTime + (GameScreen.columnY * fallSpeed);
+	}
+	
+	/**
 	 * This method will update the sleep time that is called in each fall interval. <br>
 	 * Default Fall Time - 10 ms <br>
 	 * Decreasing this value will make the stroke fall faster. 
@@ -107,6 +128,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 */
 	public void cancelFall() {
 		this.cancel = true;
+		update();
 	}
 	
 	/**
@@ -125,6 +147,32 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 */
 	public void resumeFall() {
 		pause = false;
+	}
+	
+	/**
+	 * This method returns the distance of the bottom part of the stroke from the goal
+	 * @return Returns the distance of the bottom part of the stroke from the goal
+	 * 
+	 * @author Justin Yau
+	 */
+	public int distanceFromGoal() {
+		return (GameScreen.columnHeight + GameScreen.columnY) - (getY() + currentHeight - 64) ;
+	}
+	
+	/**
+	 * This method converts the current x position and determines which "lane" the stroke is in
+	 * @return Which lane the stroke is in
+	 * @author Justin Yau
+	 */
+	public int getColumnLane() {
+		int[] arr = GameScreen.arrowX;
+		int xCoordinate = getX();
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i] == xCoordinate) {
+				return i + 1;
+			}
+		}
+		return 0;
 	}
 	
 	/**
@@ -254,11 +302,13 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		if(determineCurrentHeightFromY() == (height) || (tooBig && prevHeight >= (GameScreen.columnHeight - 64 + GameScreen.distanceAAfterGoal))) {
 			switchEnd = true;
 		}
+		int cHeight = determineCurrentHeightFromY();
+		currentHeight = cHeight;
 		if(switchEnd) {
-			resizeFramesEnd(determineCurrentHeightFromY());
+			resizeFramesEnd(cHeight);
 		}
 		else {
-			resizeFramesStart(determineCurrentHeightFromY());
+			resizeFramesStart(cHeight);
 			setY(GameScreen.columnY);
 		}
 	}

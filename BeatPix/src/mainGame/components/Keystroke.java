@@ -75,6 +75,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 * 
 	 * @param x - X Coordinate of the indicator
 	 * @param y - Y Coordinate of the indicator 
+	 * @param stime - Spawn time of the indicator
 	 * @param path - Image file path (Ex: "resources/arrows/darrow.png")
 	 * @param h - Distance from the first arrow stroke
 	 */

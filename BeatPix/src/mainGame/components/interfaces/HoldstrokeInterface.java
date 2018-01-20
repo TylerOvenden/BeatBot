@@ -118,4 +118,33 @@ public interface HoldstrokeInterface {
 	 */
 	public int determineCurrentHeightFromY();
 	
+	/**
+	 * This method returns the distance of the bottom part of the stroke from the goal
+	 * @return Returns the distance of the bottom part of the stroke from the goal
+	 * 
+	 * @author Justin Yau
+	 */
+	public int distanceFromGoal();
+	
+	/**
+	 * This method converts the current x position and determines which "lane" the stroke is in
+	 * @return Which lane the stroke is in
+	 * @author Justin Yau
+	 */
+	public int getColumnLane();
+	
+	/**
+	 * This method Returns the time that this beat spawned into the map
+	 * @return  Returns the time that this beat spawned into the map
+	 * @author Justin Yau
+	 */
+	public int getStartingTime();
+	
+	/**
+	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getClickTime();
+	
 }
