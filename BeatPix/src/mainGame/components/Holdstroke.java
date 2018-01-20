@@ -127,6 +127,13 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		pause = false;
 	}
 	
+	/**
+	 * This method calculates the new height value depending on the "current" y value of the stroke
+	 * 
+	 * @return Returns the new height value depending on the "current" y value of the stroke
+	 * 
+	 * @author Justin Yau
+	 */
 	public int determineCurrentHeightFromY() {
 		int topHeight = getY();
 		if(!switchEnd) {
@@ -158,6 +165,11 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		return height;
 	}
 
+	/**
+	 * This method handles the self removal of the stroke if needed
+	 * 
+	 * @author Justin Yau
+	 */
 	public void handleRemove() {
 		GameScreen.game.removeHoldStroke(this);
 		//Place Scoring Here
@@ -168,6 +180,14 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		cancel = true;
 	}
 	
+	/**
+	 * This method handles the start resizing of the stroke. <br> 
+	 * By end, I mean when the stroke starts to appear. Also works for resizing when the stroke is completely spawned.
+	 * 
+	 * @param height - New height of the image
+	 * 
+	 * @author Justin Yau
+	 */
 	public void resizeFramesStart(int height) {
 		if(height == this.height) {
 			return;
@@ -186,6 +206,14 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		}
 	}
 	
+	/**
+	 * This method handles the end resizing of the stroke. <br> 
+	 * By end, I mean when the stroke's head starts to disappear. 
+	 * 
+	 * @param height - New height of the image
+	 * 
+	 * @author Justin Yau
+	 */
 	public void resizeFramesEnd(int height) {
 		if(height == this.height) {
 			return;
