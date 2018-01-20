@@ -26,6 +26,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	private boolean pause; //This boolean will track whether or not the game was paused
 	private boolean switchEnd; //This boolean will track whether or not the resize using the front or end methods
 	private int startingTime; //This int will track the time the stroke spawned in
+	private boolean currentBeingHeld; //This boolean will track whether or not the holdstroke is being held or not
 	private ArrayList<BufferedImage> frames; //The frames of the animation image will be stored here for resizing purposes
 	private String path; //The image path file of the animation
 
@@ -314,6 +315,17 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
+	 * This method sets whether or not the stroke is being held or not
+	 * 
+	 * @param h - Whether or not the stroke is being held or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setHeld(boolean h) {
+		currentBeingHeld = h;
+	}
+	
+	/**
 	 * This method will make the keystroke gradually fall down the display till it hits the goal when it does, it will disappear. <br>
 	 * Default Time Between Each Fall Call: 10 ms 
 	 * 
@@ -326,13 +338,14 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			frames.add(img);
 		}
 		cancel = false;
+		currentBeingHeld = false;
 		pause = false;
 		while(!cancel) {
 			while(pause) {
 				sleep(0);
 			}
 			moveOneDown();
-			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + 64)) {
+			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + 64) && !currentBeingHeld) {
 				handleRemove();
 			}
 			sleep(fallSpeed);

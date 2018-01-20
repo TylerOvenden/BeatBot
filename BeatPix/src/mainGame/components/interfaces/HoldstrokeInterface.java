@@ -147,4 +147,13 @@ public interface HoldstrokeInterface {
 	 */
 	public int getClickTime();
 	
+	/**
+	 * This method sets whether or not the stroke is being held or not
+	 * 
+	 * @param h - Whether or not the stroke is being held or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setHeld(boolean h);
+	
 }

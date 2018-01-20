@@ -83,6 +83,7 @@ public class Press extends AbstractAction {
 				//Calculate Miss
 			}
 			GameScreen.game.holds.add(str);
+			str.setHeld(true);
 			//Calculate First Stroke Accuracy
 		}
 	}
