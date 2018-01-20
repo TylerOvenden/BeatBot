@@ -117,48 +117,23 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		bindings = new String[4];
 		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
-		KeyStroke leftKey = KeyStroke.getKeyStroke(bindings[0]); 
-		KeyStroke releasedLeftKey = KeyStroke.getKeyStroke("released " + bindings[0]);
-		KeyStroke leftCKey = KeyStroke.getKeyStroke(bindings[1]);
-		KeyStroke releasedLeftCKey = KeyStroke.getKeyStroke("released " + bindings[1]);
-		KeyStroke rightCKey = KeyStroke.getKeyStroke(bindings[2]);
-		KeyStroke releasedRightCKey = KeyStroke.getKeyStroke("released " + bindings[2]);
-		KeyStroke rightKey = KeyStroke.getKeyStroke(bindings[3]);
-		KeyStroke releasedRightKey = KeyStroke.getKeyStroke("released " + bindings[3]);
+		amap = getActionMap();
+		for(int i = 0; i < bindings.length; i++) {
+			KeyStroke key = KeyStroke.getKeyStroke(bindings[i]); 
+			KeyStroke releasedKey = KeyStroke.getKeyStroke("released " + bindings[i]);
+			amap.put(key, new Press(i+1));
+			amap.put(releasedKey, new ReleasePress(i+1));
+			imap.put(key, key);
+			imap.put(releasedKey, releasedKey);
+		}
 		//imap.put(leftKey, actionMapKey);
-		handleActions(); //Create action objects to bind keys to
+		amap.put("Pause", new Pause());
+		amap.put("Resume", new Resume()); 
 		
 		imap.put(KeyStroke.getKeyStroke("P"), "Pause");
 		imap.put(KeyStroke.getKeyStroke("O"), "Resume");
-		imap.put(leftKey, "Left Press");
-		imap.put(leftCKey, "Down Press");
-		imap.put(rightCKey, "Up Press");
-		imap.put(rightKey, "Right Press");
-		imap.put(releasedLeftKey, "Released Left Press");
-		imap.put(releasedLeftCKey, "Released Down Press");
-		imap.put(releasedRightCKey, "Released Up Press");
-		imap.put(releasedRightKey, "Released Right Press");
 		
 		this.requestFocus();
-	}
-	
-	/**
-	 * This method handles the initialization of the actions
-	 * 
-	 * @author Justin Yau
-	 */
-	public void handleActions() {
-		amap = getActionMap();
-		amap.put("Pause", new Pause());
-		amap.put("Resume", new Resume());
-		amap.put("Left Press", new Press(1));
-		amap.put("Down Press", new Press(2));
-		amap.put("Up Press", new Press(3));
-		amap.put("Right Press", new Press(4));
-		amap.put("Released Left Press", new ReleasePress(1));
-		amap.put("Released Down Press", new ReleasePress(2));
-		amap.put("Released Up Press", new ReleasePress(3));
-		amap.put("Released Right Press", new ReleasePress(4));
 	}
 	
 	/**
