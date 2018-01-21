@@ -35,6 +35,8 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	private boolean pause; //This boolean is to keep track if the game is currently pause
 	private boolean spawnedAnimation; //This boolean tracks whether the visible keystroke was spawned in
 	private String imgPath; //This string will contain the path of the visual for the stroke
+	private Thread animation; //This will contain the current thread of the stroke
+	private boolean running; //This boolean is to track whether or not the stroke's thread is running
 	
 	/**
 	 * Create a stroke indicator at a specified location that is subject to change utilizing methods.
@@ -52,6 +54,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		startTime = stime;
 		imgPath = path;
 		height = 0;
+		running = false;
 		spawnedAnimation = false;
 		//Path should be inputted something like "resources/arrows/darrow.png"
 		if(y >= GameScreen.columnY) {
@@ -59,8 +62,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 			spawnedAnimation = true;
 		}
 		//To make the component animated, we need to make a thread
-		Thread animation = new Thread(this);
-		animation.start();
+		start();
 		update();
 	}
 	
@@ -85,6 +87,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		fallTime = 10;
 		startTime = stime;
 		imgPath = path;
+		running = false;
 		spawnedAnimation = false;
 		//Path should be inputted something like "resources/arrows/darrow.png"
 		if(y >= GameScreen.columnY) {
@@ -92,11 +95,34 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 			spawnedAnimation = true;
 		}
 		//To make the component animated, we need to make a thread
-		Thread animation = new Thread(this);
-		animation.start();
+		start();
 		update();
 	}
 
+	/**
+	 * This method creates a new thread and starts it
+	 * 
+	 * @author Justin Yau
+	 */
+	public synchronized void start() {
+		if(!running) { return; }
+		animation = new Thread(this);
+		running = true;
+		animation.start();
+	}
+	
+	/**
+	 * This method stops the current thread 
+	 * 
+	 * @author Justin Yau
+	 */
+	public synchronized void stop() {
+		if(!running) { return; } 
+		running = false;
+		animation.interrupt();
+		this.frame.clear();
+	}
+	
 	/**
 	 * This method calculates the y coordinate of the bottom corner of the keystroke
 	 * @return - Returns the y coordinate of the bottom corner of the keystroke
@@ -277,6 +303,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 			}
 		}
 		update();
+		stop();
 	}
 	
 	/**
