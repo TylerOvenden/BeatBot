@@ -209,6 +209,21 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	}
 	
 	/**
+	 * This method returns the lanes that have been held too long
+	 * 
+	 * @return Returns the lanes that have been held too long
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Integer> currentTooLongLanes() {
+		ArrayList<Integer> list = new ArrayList<Integer>(0);
+		for(Holdstroke stroke: tooLongHolds) {
+			list.add(stroke.getColumnLane());
+		}
+		return list;
+	}
+	
+	/**
 	 * This method retrieves the starting time of the first stroke
 	 * 
 	 * @return Returns the starting time of the first stroke

@@ -42,6 +42,7 @@ public class ReleasePress extends AbstractAction {
 			}
 		}
 		if(retrieveFirstHoldInLane(columnLane, GameScreen.game.tooLongHolds) != null) {
+			GameScreen.game.tooLongHolds.remove(retrieveFirstHoldInLane(columnLane, GameScreen.game.tooLongHolds));
 			//Miss Accuracy
 		}
 	}
