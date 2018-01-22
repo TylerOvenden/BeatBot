@@ -33,6 +33,7 @@ import mainGame.components.Accuracy;
 import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
 import mainGame.components.Combo;
+import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
@@ -63,6 +64,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	public ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
 	
 	private ColoredRectangle pauseRect; //This rectangle will represent the rectangle spawned in when the escape button is pressed
+	private Gear escapeGear; //The gear the user can press to open the escape menu will be stored here
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -291,6 +293,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		//THIS ALREADY MAKES THEM TRANSPARENT TO A SENSE
 		addColumnLanes(viewObjects);
 		addKeystrokeIndicator(viewObjects);
+		setUpGearButton(viewObjects);
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -319,6 +322,11 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 	}
 	
+	public void setUpGearButton(List<Visible> viewObjects) {
+		escapeGear = new Gear(5, 25, 50, 50);
+		viewObjects.add(escapeGear);
+	}
+
 	/**
 	 * This method will create 4 visuals that indicate where the user will want to time their presses to
 	 * 
@@ -559,6 +567,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		ColoredRectangle rect = new ColoredRectangle(0,0, getWidth(), getHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
+		if(escapeGear != null) {
+			remove(escapeGear);
+		}
 	}
 	
 	/**
@@ -571,6 +582,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
+		}
+		if(escapeGear != null) {
+			addObject(escapeGear);
 		}
 	}
 	
