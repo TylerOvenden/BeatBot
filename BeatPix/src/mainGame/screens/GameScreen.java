@@ -759,6 +759,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				//strokes.add(str);
 			}
 		}
+		return;
 	}
 
 	public Timing getTiming() {
