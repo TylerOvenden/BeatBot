@@ -80,6 +80,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
     private ActionMap amap; //This action map enables us to put actions into bindings
+    
+    private Thread gameThread;
+    private boolean gameRunning;
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -111,10 +114,33 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 		totalAcc=100;
 		
-		Thread screen = new Thread(this);
-		screen.start();
+		gameRunning = false;
+		start();
 	}
 
+	/**
+	 * This method creates a new thread and starts it
+	 * 
+	 * @author Justin Yau
+	 */
+	public synchronized void start() {
+		if(gameRunning) { return; }
+		gameThread = new Thread(this);
+		gameRunning = true;
+		gameThread.start();
+	}
+	
+	/**
+	 * This method stops the current thread 
+	 * 
+	 * @author Justin Yau
+	 */
+	public synchronized void stop() {
+		if(!gameRunning) { return; } 
+		gameRunning = false;
+		playing = false;
+	}
+	
 	/**
 	 * This method sets up the default bindings for the game
 	 * 

@@ -29,8 +29,6 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	private boolean currentBeingHeld; //This boolean will track whether or not the holdstroke is being held or not
 	private ArrayList<BufferedImage> frames; //The frames of the animation image will be stored here for resizing purposes
 	private String path; //The image path file of the animation
-	private Thread animation; //This will contain the current thread of the stroke
-	private boolean running; //This boolean is to track whether or not the stroke's thread is running
 
 	/**
 	 * This constructor constructs a animated hold stroke that "should" render in and out of the game. 
@@ -51,9 +49,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		fallSpeed = 5;
 		height = h + 64;
 		prevHeight = 0;
-		running = false;
 		this.path = path;
-		start();
 		update();
 	}
 
@@ -83,30 +79,6 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			}
 
 		}
-	}
-	
-	/**
-	 * This method creates a new thread and starts it
-	 * 
-	 * @author Justin Yau
-	 */
-	public synchronized void start() {
-		if(!running) { return; }
-		animation = new Thread(this);
-		running = true;
-		animation.start();
-	}
-	
-	/**
-	 * This method stops the current thread 
-	 * 
-	 * @author Justin Yau
-	 */
-	public synchronized void stop() {
-		if(!running) { return; } 
-		running = false;
-		animation.interrupt();
-		this.frame.clear();
 	}
 	
 	/**
@@ -377,7 +349,6 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			sleep(fallSpeed);
 			update();
 		}
-		stop();
 	}
 	
 	/**
