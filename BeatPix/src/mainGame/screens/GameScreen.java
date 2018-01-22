@@ -1,5 +1,6 @@
 package mainGame.screens;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -29,6 +30,7 @@ import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
 import mainGame.actions.Resume;
 import mainGame.components.Accuracy;
+import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
 import mainGame.components.Combo;
 import mainGame.components.Holdstroke;
@@ -59,6 +61,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	public ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	public ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
 	public ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
+	
+	private ColoredRectangle pauseRect; //This rectangle will represent the rectangle spawned in when the escape button is pressed
 	
 	private boolean pause; //This boolean will be used to keep track if the game is paused or not
 	private int fallTime; //The single call fall time calculated from BPM will be stored here
@@ -552,6 +556,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
+		ColoredRectangle rect = new ColoredRectangle(0,0, getWidth(), getHeight(), ((float)0.3), Color.GRAY);
+		pauseRect = rect;
+		addObject(pauseRect);
 	}
 	
 	/**
@@ -561,6 +568,10 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 */
 	public void resumeGame() {
 		pause = false;
+		if(pauseRect != null) {
+			remove(pauseRect);
+			pauseRect = null;
+		}
 	}
 	
 	/**
