@@ -81,8 +81,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
     private InputMap imap; //This input map enables us to do bindings 
     private ActionMap amap; //This action map enables us to put actions into bindings
     
-    private Thread gameThread;
-    private boolean gameRunning;
+    private Thread gameThread; //This is the thread that will make the game spawn objects
+    private boolean gameRunning; //This boolean will tell us if the game is currently running or not
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
