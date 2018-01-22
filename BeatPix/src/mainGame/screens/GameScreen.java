@@ -23,6 +23,7 @@ import gui.components.Action;
 import gui.components.TextArea;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import mainGame.actions.Escape;
 import mainGame.actions.Pause;
 import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
@@ -70,9 +71,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
 	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
 	
-    private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
-    private InputMap imap;
-    private ActionMap amap;
+    private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
+    private InputMap imap; //This input map enables us to do bindings 
+    private ActionMap amap; //This action map enables us to put actions into bindings
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -127,13 +128,22 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			imap.put(releasedKey, releasedKey);
 		}
 		//imap.put(leftKey, actionMapKey);
-		amap.put("Pause", new Pause());
-		amap.put("Resume", new Resume()); 
+		amap.put("ESCAPE", new Escape());
 		
-		imap.put(KeyStroke.getKeyStroke("P"), "Pause");
-		imap.put(KeyStroke.getKeyStroke("O"), "Resume");
+		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "ESCAPE");
 		
 		this.requestFocus();
+	}
+	
+	/**
+	 * This method returns whether or not the current game is paused
+	 * 
+	 * @return Returns whether or not the current game is paused
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean getPause() {
+		return pause;
 	}
 	
 	/**
