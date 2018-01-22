@@ -550,7 +550,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	}
 	
 	/**
-	 * This method will change a boolean that will halt all game operations
+	 * This method will change a boolean that will halt all game operations and bring up the escape menu
 	 * 
 	 * @author Justin Yau
 	 */
@@ -562,7 +562,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	}
 	
 	/**
-	 * This method will change a boolean that will resume all game operations
+	 * This method will change a boolean that will resume all game operations and remove the escape menu
 	 * 
 	 * @author Justin Yau
 	 */
