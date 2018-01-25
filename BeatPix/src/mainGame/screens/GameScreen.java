@@ -59,9 +59,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	public static long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
-	public ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
-	public ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
-	public ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
+	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
+	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
+	private ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
 	
 	private ColoredRectangle pauseRect; //This rectangle will represent the rectangle spawned in when the escape button is pressed
 	private Gear escapeGear; //The gear the user can press to open the escape menu will be stored here
@@ -165,6 +165,56 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "ESCAPE");
 		
 		this.requestFocus();
+	}
+	
+	/**
+	 * This method removes the specified stroke from the arraylist of strokes
+	 * @param str - The stroke you would like to remove
+	 * 
+	 * @author Justin Yau
+	 */
+	public void removeFromStrokes(Visible str) {
+		strokes.remove(str);
+	}
+	
+	/**
+	 * This method removes the specified stroke from the array list of holds that were held too long
+	 * @param str - The hold stroke you would like to remove
+	 * 
+	 * @author Justin Yau
+	 */
+	public void removeFromTooLongHolds(Holdstroke str) {
+		tooLongHolds.remove(str);
+	}
+	
+	/**
+	 * This method returns an array list of the current holds
+	 * @return - Returns an array list of the current holds
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Holdstroke> getHolds() {
+		return holds;
+	}
+	
+	/**
+	 * This method returns an array list of holds that were held too long
+	 * @return - Returns an array list of holds that were held too long
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Holdstroke> getTooLongHolds() {
+		return tooLongHolds;
+	}
+	
+	/**
+	 * This method adds the specified hold stroke to the array list of hold strokes
+	 * @param str - The stroke you would like to add
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addHold(Holdstroke str) {
+		holds.add(str);
 	}
 	
 	/**

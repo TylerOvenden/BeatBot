@@ -35,14 +35,14 @@ public class ReleasePress extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(GameScreen.game.currentlyHeldLanes().contains(columnLane)) {
-			Holdstroke hold = retrieveFirstHoldInLane(columnLane, GameScreen.game.holds);
+			Holdstroke hold = retrieveFirstHoldInLane(columnLane, GameScreen.game.getHolds());
 			if(hold != null) {
 				GameScreen.game.removeHoldStroke(hold);
 				//Calculate Accuracy
 			}
 		}
-		if(retrieveFirstHoldInLane(columnLane, GameScreen.game.tooLongHolds) != null) {
-			GameScreen.game.tooLongHolds.remove(retrieveFirstHoldInLane(columnLane, GameScreen.game.tooLongHolds));
+		if(retrieveFirstHoldInLane(columnLane, GameScreen.game.getTooLongHolds()) != null) {
+			GameScreen.game.removeFromTooLongHolds(retrieveFirstHoldInLane(columnLane, GameScreen.game.getTooLongHolds()));
 			//Miss Accuracy
 		}
 	}
