@@ -63,6 +63,7 @@ public class Press extends AbstractAction {
 			if(str.getColumnLane() != columnLane) {
 				GameScreen.game.removeStroke(str);
 				//Calculate Miss
+				return;
 			}
 			GameScreen.game.removeStroke(str);
 			//Calculate Accuracy
@@ -81,6 +82,7 @@ public class Press extends AbstractAction {
 			if(str.getColumnLane() != columnLane) {
 				GameScreen.game.removeHoldStroke(str);
 				//Calculate Miss
+				return;
 			}
 			GameScreen.game.strokes.remove(str);
 			GameScreen.game.holds.add(str);
