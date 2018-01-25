@@ -33,7 +33,7 @@ import javax.imageio.ImageIO;
  */
 public class AnimatedComponent extends MovingComponent{
 
-	public ArrayList<BufferedImage> frame; //the images that can be displayed
+	private ArrayList<BufferedImage> frame; //the images that can be displayed
 	private ArrayList<Integer> times; //the time each image is displayed
 	private long displayTime; //the time when the last image switched
 	private int currentFrame; //the frame that is currently being displayed
@@ -63,6 +63,14 @@ public class AnimatedComponent extends MovingComponent{
 
 	public boolean isAnimated(){
 		return true;
+	}
+	
+	public ArrayList<BufferedImage> getFrames() {
+		return frame;
+	}
+	
+	public void frameSet(int pos, BufferedImage n) {
+		frame.set(pos, n);
 	}
 	
 	public void addSequence(String originalImgageAddress, ArrayList<Integer> times, int x, int y, int w, int h,

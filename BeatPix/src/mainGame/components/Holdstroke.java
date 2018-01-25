@@ -249,7 +249,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			g2d.drawImage(dest, 0, 0, width, height, null);
 			g2d.dispose();
 			prevHeight = height - 64;
-			this.frame.set(i, nImg);
+			frameSet(i, nImg);
 		}
 	}
 	
@@ -273,7 +273,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			Graphics2D g2d = nImg.createGraphics();
 			g2d.drawImage(dest, 0, 0, null);
 			g2d.dispose();
-			this.frame.set(i, nImg);
+			frameSet(i, nImg);
 		}
 	}
 	
@@ -332,7 +332,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public void holdstrokeFall() {
 		addSequence(path, 100, 0, 420 - height, 64, height, 4);
 		frames = new ArrayList<BufferedImage>(0);
-		for(BufferedImage img: this.frame) {
+		for(BufferedImage img: getFrames()) {
 			frames.add(img);
 		}
 		cancel = false;
