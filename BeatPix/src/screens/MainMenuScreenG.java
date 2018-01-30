@@ -81,6 +81,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		viewObjects.add(idleCharacter);
 	}
 
+//--EVENTS--//
 	public void slideInButtons() {
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {

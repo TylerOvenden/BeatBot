@@ -7,6 +7,7 @@ import java.util.List;
 import gui.components.Action;
 import gui.components.Button;
 import gui.components.Component;
+import gui.components.FullFunctionPane;
 import gui.components.Graphic;
 import gui.components.Pane;
 import gui.components.TextLabel;
@@ -15,7 +16,7 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import screens.components.ImageButton;
 
-public class OptionsPopUp extends Pane {
+public class OptionsPopUp extends FullFunctionPane {
 
 	/**
 	 * 
