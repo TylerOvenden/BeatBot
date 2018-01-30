@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import mainGame.components.interfaces.JustinTimingInterface;
 
-public class Timing extends Component {
+public class Timing extends Component implements JustinTimingInterface {
 	
 	private String img="";
 
@@ -33,5 +34,29 @@ public class Timing extends Component {
 	public void changeImg(String type) {
 		img=type;
 		update();
+	}
+
+	@Override
+	public void calculateAccuracy(Keystroke stroke) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calculateFirstAccuracy(Holdstroke stroke) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calculateEndAccuracy(Holdstroke stroke) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void missAccuracy() {
+		// TODO Auto-generated method stub
+		
 	}
 }
