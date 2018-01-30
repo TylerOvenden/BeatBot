@@ -1,9 +1,13 @@
 package mainGame.components;
 
+import java.awt.Graphics2D;
+
+import javax.swing.ImageIcon;
+
 public class Scoring {
-	int score = 0;
+	int score = 100;
 	int offset;
-	int health = 100;
+	String img;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
@@ -26,13 +30,20 @@ public class Scoring {
 		}
 		if(offset>103 && offset<127) {
 			score -= 200;
-			health -= 1;
 		}
 		if(offset>127) {
 			score -= 2000;
-			health -= 3;
 		}
 			
 	}
-
+	public void display(Graphics2D g) {
+		String scoreStr = String.valueOf(score);
+		for(int i = 0; i<scoreStr.length();i++) {
+			img = img + "resources/score-"+ scoreStr.substring(i, i+1)+ ".png!";
+		}
+		ImageIcon icon = new ImageIcon(img);
+		g.drawImage(icon.getImage(), 0, 0, null);
+		String[] parts = img.split("!");
+		
+	}
 }

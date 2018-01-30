@@ -69,7 +69,7 @@ public class PlaySong {
     }
      
     public static void main(String[] args) {
-        String audioFilePath = "resources/test.wav";
+        String audioFilePath = "resources/audio.wav";
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }

@@ -65,6 +65,14 @@ public class AnimatedComponent extends MovingComponent{
 		return true;
 	}
 	
+	public ArrayList<BufferedImage> getFrames() {
+		return frame;
+	}
+	
+	public void frameSet(int pos, BufferedImage n) {
+		frame.set(pos, n);
+	}
+	
 	public void addSequence(String originalImgageAddress, ArrayList<Integer> times, int x, int y, int w, int h,
 			int n) {
 		BufferedImage originalImgage;
@@ -112,8 +120,6 @@ public class AnimatedComponent extends MovingComponent{
 		frame.add(image);
 		this.times.add(time);
 	}
-
-
 
 	public void drawImage(Graphics2D g) {
 		long currentTime = System.currentTimeMillis();//gets time now
