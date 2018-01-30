@@ -139,6 +139,26 @@ public class FileP implements FileProcessor {
 	}
 	
 	/**
+	 * This method will attempt to use the bufferedReader to keep reading until it finds what was specified
+	 * @param br - The bufferedReader with the file information 
+	 * @param goal - The string you would like the reader to look for
+	 * 
+	 * @return - Whether the reader found the target line or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public static boolean keepReadingTillYouReach(BufferedReader br, String goal) {
+		try {
+			while(!br.readLine().contains(goal)) {
+				
+			}
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+	
+	/**
 	 * This method will load a CSV file and save it in a instance of File.
 	 * DO NOT ATTEMPT TO LOAD A OSU FILE WITH THIS METHOD. <br> <br>
 	 * 
@@ -221,9 +241,7 @@ public class FileP implements FileProcessor {
 			BufferedReader br = new BufferedReader(fileReader);
 			
 			//Keep reading till it hit [MetaData]
-			while(!br.readLine().equalsIgnoreCase("[MetaData]")) {
-				
-			}
+			if(!keepReadingTillYouReach(br, "[MetaData]")) { return false; }
 			
 			//Retrieve title information
 			tempTitle = sSplitLine(br);
@@ -234,9 +252,7 @@ public class FileP implements FileProcessor {
 			tempArtist = sSplitLine(br);
 			
 			//Keep reading till it hits [HitObjects]
-			while(!br.readLine().equalsIgnoreCase("[HitObjects]")) {
-				
-			}
+			if(!keepReadingTillYouReach(br, "[HitObjects]")) { return false; }
 			
 			while ((line = br.readLine()) != null) {
 
@@ -261,6 +277,97 @@ public class FileP implements FileProcessor {
 		}
 	}
 
+	/**
+	 * This method returns the given string without the last character
+	 * @param s - The string you would like to get rid the last character from
+	 * @return - The string without the last character
+	 * 
+	 * @author Justin Yau
+	 */
+	public static String withoutEnd(String s) {
+		return s.substring(0, s.length() - 1);
+	}
+	
+	/**
+	 * This method attempts to convert a step mania file (RENAMED TO .TXT) into our game format file
+	 * 
+	 * @param fileName - Path of the step mania formatted file
+	 * @return Whether the save was sucessful or not 
+	 * 
+	 * @author Justin Yau
+	 */
+	public static boolean stepConvert(String fileName) {
+		
+		ArrayList<int[]> listerino = new ArrayList<int[]>(0);
+		String tempTitle = "";
+		String tempArtist = "";
+		int tempBPM = 0;
+		int tempOffSet = 0;
+		int beatsEvery = 0;
+		int currentTime = 0;
+		
+		try {
+			FileReader fileReader = new FileReader(new File(fileName));
+			String line = "";
+			//A BufferedReader enables us to read the file one line at a time
+			BufferedReader br = new BufferedReader(fileReader);
+			
+			//Keep reading till it hit #Version
+			if(!keepReadingTillYouReach(br, "#VERSION")) { return false; }
+			
+			//Retrieve title information
+			tempTitle = withoutEnd(sSplitLine(br));
+			
+			br.readLine(); //Skip other title information
+			
+			//Retrieve artist information
+			tempArtist = withoutEnd(sSplitLine(br));
+			
+			//Keep reading till it hits the #MUSIC
+			if(!keepReadingTillYouReach(br, "#MUSIC")) { return false; }
+			
+			//Retrieve offset information
+			tempOffSet = (int) (Float.parseFloat(withoutEnd(sSplitLine(br))));
+			
+			//Keep reading till you reach #SELECTABLE
+			if(!keepReadingTillYouReach(br, "#SELECTABLE")) { return false; }
+			
+			//Retrieve BPM information
+			tempBPM = (int) (Float.parseFloat(withoutEnd(sSplitLine(br)).split("=")[1]));
+			beatsEvery = (int)(((double)60/tempBPM) * 750);
+			
+			//Keep reading till it hits #NOTES :
+			if(!keepReadingTillYouReach(br, "#NOTES")) { return false; }
+			
+			while ((line = br.readLine()) != null) {
+
+				if(!line.contains("// measure") && !line.contains(";")) {
+					for(int i = 0; i < line.length(); i++) {
+						int[] beat = new int[3];
+						String lane = line.substring(i, i+1);
+						if(lane.equals("1")) {
+							beat[0] = i + 1;
+							beat[1] = currentTime;
+							beat[2] = 0;
+							listerino.add(beat);
+						}
+					}
+					currentTime += beatsEvery;
+				}
+
+			}
+			br.close();
+			
+			save(tempTitle, tempBPM, tempArtist, tempOffSet, listerino);
+			
+			return true;
+			
+		}catch (IOException e) {
+			
+			return false;
+		}
+	}
+	
 	/**
 	 * Based off the OSU format, this method will return the correct column number or lane that the beat appears in
 	 * 

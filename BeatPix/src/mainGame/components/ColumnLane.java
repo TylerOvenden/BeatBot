@@ -3,8 +3,15 @@ package mainGame.components;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import mainGame.components.interfaces.ColumnLaneInterface;
+import mainGame.screens.GameScreen;
 
 /*
  * This class will be mainly coded by Justin Yau
@@ -18,8 +25,8 @@ import gui.components.Component;
  * @author Justin Yau
  *
  */
-public class ColumnLane extends Component {
-
+public class ColumnLane extends Component implements ColumnLaneInterface {
+	
 	/*
 	 * PLANNING:
 	 * This component will be a visual component
@@ -40,6 +47,22 @@ public class ColumnLane extends Component {
 		update();
 	}
 
+	/**
+	 * This method converts the current x position and determines which column lane this is
+	 * @return Returns the number of this column lane
+	 * @author Justin Yau
+	 */
+	public int getLane() {
+		int[] arr = GameScreen.arrowX;
+		int xCoordinate = getX();
+		for(int i = 0; i < arr.length; i++) {
+			if((arr[i] - 3) == xCoordinate) {
+				return i + 1;
+			}
+		}
+		return 0;
+	}
+	
 	/**
 	 * Creates a gray lane with 2 red lines across the sides to indicate the border
 	 * 
