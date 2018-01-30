@@ -50,13 +50,14 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		charScroll.setBorderWidth(3);
 		//change the 10, to the number of costumes, 10 is just a place holder
 		for(int i=0; i < 2; i++){ 
-
+			//got the index number
+			final int x = i;
 			charScroll.addObject(new Button(5,30*i,100,25,"Button "+(i+1), new Action() {
-				//int j = i;
+				int j = x;
 				@Override
 				public void act() {
 					border.setVisible(true);
-					text.get(0).setVisible(true);
+					text.get(j).setVisible(true);
 				}
 			}));
 		}
