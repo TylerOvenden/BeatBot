@@ -18,23 +18,33 @@ import gui.userInterfaces.FullFunctionScreen;
 import mainGame.components.Song;
 public class ShopScreen extends FullFunctionScreen
 {
+	private CustomRectangle songArea;
+	
 	private Graphic background;	
 	private Graphic songBanner;
-	private TextLabel currency;
-	private CustomRectangle songArea;
+	
+	private TextLabel currency;	
 	private TextLabel banner;
 	private TextLabel credit;
+	private TextLabel purchased;
+	
 	private Font bannerFont;
 	private Font creditFont;
-	private ArrayList<Song> songs;
-	private Button songButton1;
-	private int credits;
 	private Font warningFont;
-	private boolean noPress;
+
+	private ArrayList<Song> songs;
+	
+	private Button songButton1;
+	private Button songButton2;
+	private Button songButton3;
 	private Button yes;
 	private Button no;
+	
+	private int credits;
+	private int index;
+	
 	private TextArea text;
-	private TextLabel purchased;
+	
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -44,8 +54,12 @@ public class ShopScreen extends FullFunctionScreen
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
+		index = 0;
+		songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", songAction());
+		ArrayList<Button> buttons = new ArrayList<Button>();
+		buttons.add(songButton1);
 		
-		boolean clicked = false;
+		
 		try 
 		{
 		     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -117,6 +131,9 @@ public class ShopScreen extends FullFunctionScreen
 								viewObjects.add(purchased);
 								Thread.sleep(1500);
 								purchased.setVisible(false);
+								scroll.remove(buttons.get(index));
+								scroll.update();
+								
 							}
 							catch (InterruptedException e)
 							{
@@ -173,7 +190,16 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(no);
 		no.setVisible(false);
 		
-		scroll.addObject(songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", new Action()
+		scroll.addObject(songButton1);
+
+		scroll.update();
+		viewObjects.add(scroll);
+				
+	}	
+
+	public Action songAction()
+	{
+		Action a  = new Action() 
 		{		
 			@Override
 			public void act() 
@@ -181,40 +207,38 @@ public class ShopScreen extends FullFunctionScreen
 				text.setVisible(true);
 				yes.setVisible(true);				
 				no.setVisible(true);
-			}				
-		}));		
-		scroll.update();
-		viewObjects.add(scroll);
-		
-		
-		/*mycode________________________________________________________________________________________________________________
-		
-		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
-			
-			@Override
-			public void act() {
-				// go back to main screen
-				
-			}
-		});
-		ScrollablePane charScroll = new gui.components.ScrollablePane(this, 130,500,220,300);
-		charScroll.setBorderWidth(3);
-		for(int i=0; i < 10; i++){
-			charScroll.addObject(new Button(5,30*i,100,25,"Label "+(i+1), new Action() {
-				
-				@Override
-				public void act() {
-					// TODO Auto-generated method stub
-					
-				}
-			}));
-		}
-		charScroll.update();
-		
-		viewObjects.add(backButton);
-		viewObjects.add(charScroll);
-		
-		*/
-	}	
-
+			}						
+		};
+		return a;
+	}
 }
+
+
+/*KEVIN'S CODE________________________________________________________________________________________________________________
+
+Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
+	
+	@Override
+	public void act() {
+		// go back to main screen
+		
+	}
+});
+ScrollablePane charScroll = new gui.components.ScrollablePane(this, 130,500,220,300);
+charScroll.setBorderWidth(3);
+for(int i=0; i < 10; i++){
+	charScroll.addObject(new Button(5,30*i,100,25,"Label "+(i+1), new Action() {
+		
+		@Override
+		public void act() {
+			// TODO Auto-generated method stub
+			
+		}
+	}));
+}
+charScroll.update();
+
+viewObjects.add(backButton);
+viewObjects.add(charScroll);
+
+*/
