@@ -109,11 +109,12 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			x = background.getX(); y = background.getY();
 		}
 		w = getWidth();
+		//GUIApp scales the height last
 /*needs fixing*/h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
 		return new Graphic(x,y,w,h,path);
 	}
 	
-	//--Events--//
+//--Events--//
 	public void scrollIn() {
 		
 		background.setX(0); background.setY(0);

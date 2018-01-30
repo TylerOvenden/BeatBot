@@ -22,8 +22,6 @@ public class OptionsPopUp extends Pane {
 	 */
 	private ArrayList<Graphic> words;
 	
-	//private Graphic background;
-	//private Component background;
 	private ArrayList<TextLabel> labels;
 	private ArrayList<ImageButton> keySelect;
 	private ImageButton volumeToggle;
@@ -36,24 +34,14 @@ public class OptionsPopUp extends Pane {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void initObjects(List<Visible> viewObjects) {
-		initAllObjects(viewObjects);
-		clickables = new ArrayList<Clickable>();
-		for(Visible v: viewObjects){
-			if(v instanceof Clickable){
-				clickables.add((Clickable)v);
-			}
-		}
-	}
 	public void initAllObjects(List<Visible> viewObjects){
-		//background = new Button(0,0,100,100, "Test", null);
-		//background.setBackground(Color.GRAY);
+		
 		keySelect = new ArrayList<ImageButton>();
 		setBackground(Color.GRAY);
 		for(int i = 0; i < 4; i++) {
 			keySelect.add(new ImageButton(100*i+50, 50, 45, 45, "resources\\ui\\buttons\\buttonwithrivet.png"));
 			keySelect.get(i).setAction(new Action() {
-				
+	//Needs to create a method that interacts with settings that will be saved in GUIApplications			
 				@Override
 				public void act() {
 					Test.options[0] ++;
@@ -65,7 +53,5 @@ public class OptionsPopUp extends Pane {
 			System.out.println(keySelect.size());
 			viewObjects.add(keySelect.get(i));
 		}
-		
-		//viewObjects.add(background);
 	}
 }
