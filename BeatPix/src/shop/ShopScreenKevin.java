@@ -24,6 +24,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	
 	private int counter;
 	private ArrayList<TextLabel> text;
+	private ArrayList<Button> buttonList;
 	CustomRectangle border;
 	ScrollablePane charScroll;
 
@@ -36,6 +37,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	public void initAllObjects(List<Visible> viewObjects) 
 	{	
 		text = new ArrayList<TextLabel>();
+		buttonList = new ArrayList<Button>();
 		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
 			
 			@Override
