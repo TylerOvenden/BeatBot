@@ -665,13 +665,11 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	}
 	
 	/**
-	 * This method will pause all operations until it is resumed by setting the pause boolean to false. <br>
-	 * All operations will continue running after things are resumed.
+	 * This method pauses all the current strokes that are on the screen
 	 * 
 	 * @author Justin Yau
 	 */
-	public void handlePause() {
-		long time = timePass();
+	public void pauseFalls() {
 		for(Visible stroke: strokes) {
 			if(stroke instanceof Keystroke) {
 				((Keystroke)stroke).pauseFall();
@@ -680,14 +678,14 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				((Holdstroke)stroke).pauseFall();
 			}
 		}
-		while(pause) {
-			try {
-				Thread.sleep(0);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	}
+	
+	/**
+	 * This method resumes the fall of all the current strokes that are on the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void resumeFalls() {
 		for(Visible stroke: strokes) {
 			if(stroke instanceof Keystroke) {
 				((Keystroke)stroke).resumeFall();
@@ -696,6 +694,26 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				((Holdstroke)stroke).resumeFall();
 			}
 		}
+	}
+	
+	/**
+	 * This method will pause all operations until it is resumed by setting the pause boolean to false. <br>
+	 * All operations will continue running after things are resumed.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handlePause() {
+		long time = timePass();
+		pauseFalls();
+		while(pause) {
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		resumeFalls();
 		recalculateStartTime(time);
 	}
 	
