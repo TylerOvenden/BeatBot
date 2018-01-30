@@ -2,16 +2,10 @@ package mainGame.screens;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ActionMap;
@@ -20,15 +14,12 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import gui.components.Action;
 import gui.components.TextArea;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.actions.Escape;
-import mainGame.actions.Pause;
 import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
-import mainGame.actions.Resume;
 import mainGame.components.Accuracy;
 import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
