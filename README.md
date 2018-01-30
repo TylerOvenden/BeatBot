@@ -68,3 +68,7 @@ Graphics: <br />
   This method is called when the program already knows that the player missed without making the calculations in the other <br />
   accuracy method. Perform the calculations with the score and possibly update it on the screen. <br />
   
+  Resizable Game Planning: <br /> 
+
+  Make the constants private as the window properties may be subjected to change per game...? <br />
+  
