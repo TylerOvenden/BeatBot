@@ -52,7 +52,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		for(int i=0; i < 2; i++){ 
 
 			charScroll.addObject(new Button(5,30*i,100,25,"Button "+(i+1), new Action() {
-				
+				//int j = i;
 				@Override
 				public void act() {
 					border.setVisible(true);
@@ -73,6 +73,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		viewObjects.add(border);
 		viewObjects.add(text.get(0));
 		viewObjects.add(text.get(1));
+		charScroll.update();
 		viewObjects.add(charScroll);
 		
 	}
