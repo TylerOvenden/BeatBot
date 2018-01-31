@@ -35,7 +35,7 @@ public class LevelSelectG extends FullFunctionScreen{
 	
 	private Graphic updateBackground(String path) {
 		ImageIcon icon = new ImageIcon(path);
-		int w; int h; // 0 for either will use original image size/width
+		int w; int h; // 0 for either will use original image size/width 
 		int x = 0; int y = 0;
 		if(background != null) {
 			x = background.getX(); y = background.getY();
