@@ -1,7 +1,10 @@
 package mainGame.screens;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
@@ -17,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import gui.components.TextArea;
+import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.actions.Escape;
@@ -33,7 +37,7 @@ import mainGame.components.KeystrokeIndicator;
 import mainGame.components.Song;
 import mainGame.components.Timing;
 
-public class GameScreen extends ClickableScreen implements Runnable, ComponentListener {
+public class GameScreen extends ClickableScreen implements Runnable {
 
 	/**
 	 * 
@@ -84,8 +88,9 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 	//Steven
 	private Timing timing;
 	private TextArea visual;
-	private Accuracy accuracy;
-	private int totalAcc;
+	private Accuracy accDisplay;
+	private float[] totalAcc;
+	private double accuracy;
 	private Combo combo;
 	//Steven
 	
@@ -93,6 +98,7 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 		super(width, height);
 		
 		setFixedSize(false);
+		setPreferredSize(new Dimension(width, height));
 		
 		game = this;
 		
@@ -104,8 +110,14 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 		beats = song.getBeats();
 		
 		setUpBindings();
+		setUpComponentListener();
 		
-		totalAcc=100;
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+ 			totalAcc[i]=-1;
+		}
+ 		
+ 		accuracy=100;
 		
 		gameRunning = false;
 		start();
@@ -132,6 +144,26 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
+	}
+	
+	/**
+	 * This method adds a component listener just in case the user attempts to resize the default screen. <br> 
+	 * The main goal of this method is to have the components scale with how much the window was resized. <br>
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setUpComponentListener() {
+		addComponentListener(new ComponentAdapter() {
+			
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Component c = (Component)arg0.getSource();
+				int height = c.getHeight();
+				int width = c.getWidth();
+				setBounds(0, 0, width, height);
+			}
+			
+		});
 	}
 	
 	/**
@@ -381,9 +413,9 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accuracy=new Accuracy(600,30,400,400);
-		viewObjects.add(accuracy);
-		accuracy.update();
+		accDisplay=new Accuracy(600,30,400,400);
+		viewObjects.add(accDisplay);
+		accDisplay.update();
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
@@ -488,6 +520,7 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
  	}
  	*/
 	
+	/*
 	private void displayAcc(Keystroke stroke) {
 		//System.out.println(timePass());
 		//System.out.println(stroke.getClickTime());
@@ -528,16 +561,26 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 			calcAcc(0);
 			return ;
 		}
-	}
+	}*/
 	
 	public void calcAcc(double timing) {
-		int amtOfNotes=0;
-		for(int i=0;i<beats.size();i++) {
-			amtOfNotes+=beats.get(i).length;
-		}
-		double indAcc=100/amtOfNotes;
-		totalAcc-=(indAcc*(1-timing));
-		accuracy.setAcc(totalAcc);
+		int totalHit=0;
+ 		for(int i=0;i<totalAcc.length;i++) {
+ 			if(totalAcc[i]==-1) {
+ 				totalAcc[i]=(float) timing;
+ 				break;
+ 			}
+ 		}
+ 		double acc=0;
+ 		for(double a:totalAcc) {
+ 			if(a!=-1) {
+ 				totalHit++;
+ 				acc+=a;
+ 			}
+ 		}
+ 		acc=acc/totalHit;
+ 		accuracy=((float)Math.round(acc*100)/100);
+ 		System.out.println(accuracy);
 	}
 
 	/**
@@ -832,29 +875,5 @@ public class GameScreen extends ClickableScreen implements Runnable, ComponentLi
 		// TODO Auto-generated method stub
 		return combo;
 	}
-
-	@Override
-	public void componentHidden(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent arg0) {
-		// TODO Auto-generated method stubs
-		
-	}
-
-	@Override
-	public void componentResized(ComponentEvent arg0) {
-		int height = this.getHeight();
-		int width = this.getWidth();
-		System.out.println(height + " " + width);
-	}
-
-	@Override
-	public void componentShown(ComponentEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

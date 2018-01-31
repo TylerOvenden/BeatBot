@@ -141,11 +141,18 @@ public interface HoldstrokeInterface {
 	public int getStartingTime();
 	
 	/**
-	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
-	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * This method calculates the time, in ms, the first stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the first stroke should've been pressed since the game started 
 	 * @author Justin Yau
 	 */
-	public int getClickTime();
+	public int getFirstClickTime();
+	
+	/**
+	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getEndClickTime();
 	
 	/**
 	 * This method sets whether or not the stroke is being held or not
