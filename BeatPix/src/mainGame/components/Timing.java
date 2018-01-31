@@ -1,6 +1,7 @@
 package mainGame.components;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -8,10 +9,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import gui.interfaces.Visible;
 import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.screens.GameScreen;
 
-public class Timing extends Component implements JustinTimingInterface {
+public class Timing extends Component implements JustinTimingInterface,Runnable {
 	
 	private String img="";
 	private float lastTiming=0;
@@ -169,5 +171,11 @@ public class Timing extends Component implements JustinTimingInterface {
 		changeImg("resources/miss.png");
 		update();
 		GameScreen.game.calcAcc(0);
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 }
