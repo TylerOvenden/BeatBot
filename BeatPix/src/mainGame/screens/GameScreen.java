@@ -90,7 +90,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	private TextArea visual;
 	private Accuracy accDisplay;
 	private float[] totalAcc;
-	private double accuracy;
+	private float accuracy;
 	private Combo combo;
 	//Steven
 	
@@ -580,7 +580,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		}
 		
 		acc=acc/totalHit;
-		accuracy=((float)Math.round(acc*100)/100);
+		accuracy=((float)Math.round(acc*10000)/100);
 		System.out.println(accuracy);
 	}
 
