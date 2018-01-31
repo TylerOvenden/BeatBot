@@ -82,8 +82,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	//Steven
 	private Timing timing;
 	private TextArea visual;
-	private Accuracy accuracy;
-	private int totalAcc;
+	private Accuracy accDisplay;
+	private float[] totalAcc;
+	private double accuracy;
 	private Combo combo;
 	//Steven
 	
@@ -103,7 +104,13 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 		setUpBindings();
 		
-		totalAcc=100;
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+			totalAcc[i]=-1;
+		}
+		
+		accuracy=100;
+
 		
 		gameRunning = false;
 		start();
@@ -379,9 +386,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accuracy=new Accuracy(600,30,400,400);
-		viewObjects.add(accuracy);
-		accuracy.update();
+		accDisplay=new Accuracy(600,30,400,400);
+		viewObjects.add(accDisplay);
+		accDisplay.update();
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
@@ -486,7 +493,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
  	}
  	*/
 	
-	private void displayAcc(Keystroke stroke) {
+	/*private void displayAcc(Keystroke stroke) {
 		//System.out.println(timePass());
 		//System.out.println(stroke.getClickTime());
 		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
@@ -526,16 +533,27 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			calcAcc(0);
 			return ;
 		}
-	}
+	}*/
 	
 	public void calcAcc(double timing) {
-		int amtOfNotes=0;
-		for(int i=0;i<beats.size();i++) {
-			amtOfNotes+=beats.get(i).length;
+		int totalHit=0;
+		for(int i=0;i<totalAcc.length;i++) {
+			if(totalAcc[i]==-1) {
+				totalAcc[i]=(float) timing;
+				break;
+			}
 		}
-		double indAcc=100/amtOfNotes;
-		totalAcc-=(indAcc*(1-timing));
-		accuracy.setAcc(totalAcc);
+		double acc=0;
+		for(double a:totalAcc) {
+			if(a!=-1) {
+				totalHit++;
+				acc+=a;
+			}
+		}
+		
+		acc=acc/totalHit;
+		accuracy=((float)Math.round(acc*100)/100);
+		System.out.println(accuracy);
 	}
 
 	/**
