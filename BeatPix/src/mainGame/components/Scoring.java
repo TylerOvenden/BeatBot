@@ -4,12 +4,20 @@ import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
 
-public class Scoring {
-	int score = 1000;
+import gui.components.Component;
+
+public class Scoring extends Component {
+	int score;
 	int offset;
 	String img;
-	public static void main(String[] args) {
+	public Scoring(int x, int y, int w, int h) {
+		super(x, y, w, h);
+		score = 1000;
+		update();
+	}
 
+	public static void main(String[] args) {
+		
 
 	}
 	public void scoring() {
@@ -36,7 +44,10 @@ public class Scoring {
 		}
 			
 	}
-	public void display(Graphics2D g) {
+
+
+	@Override
+	public void update(Graphics2D g) {
 		String img1="";
 		String img2="";
 		String img3="";
@@ -44,9 +55,7 @@ public class Scoring {
 		String img5="";
 		String img6="";
 		String scoreStr = String.valueOf(score);
-		for(int i = 0; i<scoreStr.length();i++) {
-			img = img + "resources/score-"+ scoreStr.substring(i, i+1)+ ".png!";
-		}
+
 		if(scoreStr.length()==3) {
 			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
 			img2="resources/score-"+scoreStr.substring(1,0)+ ".png";
@@ -128,17 +137,14 @@ public class Scoring {
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			
+			 
 		}
 
-		ImageIcon icon = new ImageIcon(img);
-		String[] parts = img.split("!");
-		for(int j = 0; j<parts.length;j++) {
-			g.drawImage(icon.getImage(), 0, 0, null);
-			
+
+
+			   
 		}
 		
 		
 		
 	}
-}
