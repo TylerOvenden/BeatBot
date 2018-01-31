@@ -8,7 +8,7 @@ import gui.components.Component;
 
 public class Accuracy extends Component{
 	
-	private int acc;
+	private float acc;
 
 	public Accuracy(int x, int y, int w, int h) {
 		super(x, y, w, h);
