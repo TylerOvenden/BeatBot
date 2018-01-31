@@ -35,6 +35,7 @@ import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
+import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
 
@@ -90,6 +91,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	private Timing timing;
 	private TextArea visual;
 	private Accuracy accDisplay;
+	private Scoring gamescore;
 	private float[] totalAcc;
 	private float accuracy;
 	private Combo combo;
@@ -419,6 +421,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
+		/*	gamescore = new Scoring(500,40,400,400);
+		viewObjects.add(gamescore);
+		gamescore.update(); */
 		
 		
 	}
