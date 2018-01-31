@@ -84,37 +84,37 @@ public class Timing extends Component implements JustinTimingInterface {
 
 	@Override
 	public void calculateFirstAccuracy(Holdstroke stroke) {
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<16) {
+		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<16) {
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
+		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<40) {
 			changeImg("resources/great.png");
 			update();
 			GameScreen.game.calcAcc(.95);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
+		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<73) {
 			changeImg("resources/good.png");
 			update();
 			GameScreen.game.calcAcc(.66);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
+		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<103) {
 			changeImg("resources/ok.png");
 			update();
 			GameScreen.game.calcAcc(.5);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
+		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<127) {
 			changeImg("resources/bad.png");
 			update();
 			GameScreen.game.calcAcc(.33);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
+		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<164) {
 			changeImg("resources/miss.png");
 			update();
 			GameScreen.game.calcAcc(0);
@@ -125,37 +125,37 @@ public class Timing extends Component implements JustinTimingInterface {
 
 	@Override
 	public void calculateEndAccuracy(Holdstroke stroke) {
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<16) {
+		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<16) {
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
+		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<40) {
 			changeImg("resources/great.png");
 			update();
 			GameScreen.game.calcAcc(.95);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
+		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<73) {
 			changeImg("resources/good.png");
 			update();
 			GameScreen.game.calcAcc(.66);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
+		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<103) {
 			changeImg("resources/ok.png");
 			update();
 			GameScreen.game.calcAcc(.5);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
+		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<127) {
 			changeImg("resources/bad.png");
 			update();
 			GameScreen.game.calcAcc(.33);
 			return ;
 		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
+		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<164) {
 			changeImg("resources/miss.png");
 			update();
 			GameScreen.game.calcAcc(0);
