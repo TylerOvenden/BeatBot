@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 
 import gui.components.Component;
 import mainGame.components.interfaces.JustinTimingInterface;
+import mainGame.screens.GameScreen;
 
 public class Timing extends Component implements JustinTimingInterface {
 	
@@ -38,25 +39,111 @@ public class Timing extends Component implements JustinTimingInterface {
 
 	@Override
 	public void calculateAccuracy(Keystroke stroke) {
-		// TODO Auto-generated method stub
-		
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<16) {
+			changeImg("resources/perfect.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
+			changeImg("resources/great.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
+			changeImg("resources/good.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
+			changeImg("resources/ok.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
+			changeImg("resources/bad.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
+			changeImg("resources/miss.png");
+			update();
+			return ;
+		}
 	}
 
 	@Override
 	public void calculateFirstAccuracy(Holdstroke stroke) {
-		// TODO Auto-generated method stub
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<16) {
+			changeImg("resources/perfect.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
+			changeImg("resources/great.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
+			changeImg("resources/good.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
+			changeImg("resources/ok.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
+			changeImg("resources/bad.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
+			changeImg("resources/miss.png");
+			update();
+			return ;
+		}
 		
 	}
 
 	@Override
 	public void calculateEndAccuracy(Holdstroke stroke) {
-		// TODO Auto-generated method stub
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<16) {
+			changeImg("resources/perfect.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
+			changeImg("resources/great.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
+			changeImg("resources/good.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
+			changeImg("resources/ok.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
+			changeImg("resources/bad.png");
+			update();
+			return ;
+		}
+		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
+			changeImg("resources/miss.png");
+			update();
+			return ;
+		}
 		
 	}
 
 	@Override
 	public void missAccuracy() {
-		// TODO Auto-generated method stub
-		
+		changeImg("resources/miss.png");
+		update();
 	}
 }
