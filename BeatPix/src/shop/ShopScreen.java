@@ -33,18 +33,19 @@ public class ShopScreen extends FullFunctionScreen
 	private Font warningFont;
 
 	private ArrayList<Song> songs;
-	
 	private Button songButton1;
 	private Button songButton2;
 	private Button songButton3;
+	private Button songButton4;
+	private Button songButton5;
 	private Button yes;
 	private Button no;
 	
 	private int credits;
 	private int index;
+	private int price;
 	
 	private TextArea text;
-	
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -54,23 +55,21 @@ public class ShopScreen extends FullFunctionScreen
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
-		index = 0;
-		songButton1 = new Button(0,0,200,70,"Song | Cost: 1000", songAction());
+
+		credits = 25000;
+		
+		songButton1 = new Button(0,0,200,70,"1", songAction());
+		songButton2 = new Button(0,0,200,170,"2", songAction());
+		songButton3 = new Button(0,0,200,270,"3", songAction());
+		songButton4 = new Button(0,0,200,370,"4", songAction());
+		songButton5 = new Button(0,0,200,470,"5", songAction());
+				
 		ArrayList<Button> buttons = new ArrayList<Button>();
 		buttons.add(songButton1);
-		
-		
-		try 
-		{
-		     GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("resources//Munro.ttf")));
-		}
-		catch (IOException|FontFormatException e)
-		{
-			
-		}
-		credits = 5000;
-
+		buttons.add(songButton2);
+		buttons.add(songButton3);
+		buttons.add(songButton4);
+		buttons.add(songButton5);
 		
 		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
 		creditFont = new Font("Verdana", Font.BOLD, 20);
@@ -110,7 +109,7 @@ public class ShopScreen extends FullFunctionScreen
 			@Override
 			public void act() 
 			{
-				int x = (credits - 1000);
+				int x = (credits - 1500);
 				if (x >= 0)
 				{	
 					new Thread()
@@ -119,7 +118,7 @@ public class ShopScreen extends FullFunctionScreen
 						{
 							try
 							{
-								credits -= 1000;
+								credits -= 1500;
 								credit.setText("Credits: "+ credits);
 								credit.update();
 								yes.setVisible(false);				
@@ -131,8 +130,10 @@ public class ShopScreen extends FullFunctionScreen
 								viewObjects.add(purchased);
 								Thread.sleep(1500);
 								purchased.setVisible(false);
-								scroll.remove(buttons.get(index));
-								scroll.update();
+								
+								scroll.remove(buttons.get(index));					
+								buttons.remove(index);
+								scroll.update();							
 								
 							}
 							catch (InterruptedException e)
@@ -176,7 +177,6 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(text);	
 		text.setVisible(false);
 		
-		
 		no = new Button(480,205,45,30, "No", Color.gray, new Action()
 		{
 			@Override
@@ -190,7 +190,10 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(no);
 		no.setVisible(false);
 		
-		scroll.addObject(songButton1);
+		for (int i = 0; i < buttons.size(); i++)
+		{
+			scroll.addObject(buttons.get(i));
+		}
 
 		scroll.update();
 		viewObjects.add(scroll);
@@ -209,7 +212,10 @@ public class ShopScreen extends FullFunctionScreen
 				no.setVisible(true);
 			}						
 		};
+
 		return a;
+		
+		
 	}
 }
 
