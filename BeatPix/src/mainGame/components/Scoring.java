@@ -44,9 +44,7 @@ public class Scoring {
 		String img5="";
 		String img6="";
 		String scoreStr = String.valueOf(score);
-		for(int i = 0; i<scoreStr.length();i++) {
-			img = img + "resources/score-"+ scoreStr.substring(i, i+1)+ ".png!";
-		}
+
 		if(scoreStr.length()==3) {
 			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
 			img2="resources/score-"+scoreStr.substring(1,0)+ ".png";
@@ -131,14 +129,11 @@ public class Scoring {
 			
 		}
 
-		ImageIcon icon = new ImageIcon(img);
-		String[] parts = img.split("!");
-		for(int j = 0; j<parts.length;j++) {
-			g.drawImage(icon.getImage(), 0, 0, null);
+
+
 			
 		}
 		
 		
 		
 	}
-}
