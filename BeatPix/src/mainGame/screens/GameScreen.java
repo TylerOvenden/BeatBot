@@ -2,6 +2,8 @@ package mainGame.screens;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -31,7 +33,7 @@ import mainGame.components.KeystrokeIndicator;
 import mainGame.components.Song;
 import mainGame.components.Timing;
 
-public class GameScreen extends ClickableScreen implements Runnable {
+public class GameScreen extends ClickableScreen implements Runnable, ComponentListener {
 
 	/**
 	 * 
@@ -829,5 +831,30 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	public Combo getCombo() {
 		// TODO Auto-generated method stub
 		return combo;
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent arg0) {
+		// TODO Auto-generated method stubs
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent arg0) {
+		int height = this.getHeight();
+		int width = this.getWidth();
+		System.out.println(height + " " + width);
+	}
+
+	@Override
+	public void componentShown(ComponentEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
