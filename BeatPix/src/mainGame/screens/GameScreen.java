@@ -581,7 +581,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
-		System.out.println(accuracy);
+		//System.out.println(accuracy);
+		accDisplay.setAcc(accuracy);
 	}
 
 	/**
