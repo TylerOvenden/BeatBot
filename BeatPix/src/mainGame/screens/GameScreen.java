@@ -161,15 +161,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				Component c = (Component)arg0.getSource();
 				int height = c.getHeight();
 				int width = c.getWidth();
-				setBounds(0, 0, width, height);
-				update();
 			}
 			
 		});
-	}
-	
-	public void paint(Graphics g) {
-		
 	}
 	
 	/**
