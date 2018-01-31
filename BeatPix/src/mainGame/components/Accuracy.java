@@ -23,7 +23,7 @@ public class Accuracy extends Component{
 		String img2="";
 		String img3="";
 		if(acc==100) {
-			img1="resources/score-1.png";
+			img1="resources/Separated%20font/A_Transparent.gif";
 			img2="resources/score-0.png";
 			img3="resources/score-0.png";
 		}else {

@@ -114,10 +114,10 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 		totalAcc=new float[beats.size()];
 		for(int i=0;i<totalAcc.length;i++) {
- 			totalAcc[i]=-1;
+			totalAcc[i]=-1;
 		}
- 		
- 		accuracy=100;
+		
+		accuracy=100;
 		
 		gameRunning = false;
 		start();
@@ -520,8 +520,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
  	}
  	*/
 	
-	/*
-	private void displayAcc(Keystroke stroke) {
+
+	/*private void displayAcc(Keystroke stroke) {
 		//System.out.println(timePass());
 		//System.out.println(stroke.getClickTime());
 		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
@@ -565,22 +565,23 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	
 	public void calcAcc(double timing) {
 		int totalHit=0;
- 		for(int i=0;i<totalAcc.length;i++) {
- 			if(totalAcc[i]==-1) {
- 				totalAcc[i]=(float) timing;
- 				break;
- 			}
- 		}
- 		double acc=0;
- 		for(double a:totalAcc) {
- 			if(a!=-1) {
- 				totalHit++;
- 				acc+=a;
- 			}
- 		}
- 		acc=acc/totalHit;
- 		accuracy=((float)Math.round(acc*100)/100);
- 		System.out.println(accuracy);
+		for(int i=0;i<totalAcc.length;i++) {
+			if(totalAcc[i]==-1) {
+				totalAcc[i]=(float) timing;
+				break;
+			}
+		}
+		double acc=0;
+		for(double a:totalAcc) {
+			if(a!=-1) {
+				totalHit++;
+				acc+=a;
+			}
+		}
+		
+		acc=acc/totalHit;
+		accuracy=((float)Math.round(acc*100)/100);
+		System.out.println(accuracy);
 	}
 
 	/**
