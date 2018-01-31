@@ -4,12 +4,20 @@ import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
 
-public class Scoring {
-	int score = 1000;
+import gui.components.Component;
+
+public class Scoring extends Component {
+	int score;
 	int offset;
 	String img;
-	public static void main(String[] args) {
+	public Scoring(int x, int y, int w, int h) {
+		super(x, y, w, h);
+		score = 1000;
+		update();
+	}
 
+	public static void main(String[] args) {
+		
 
 	}
 	public void scoring() {
@@ -36,7 +44,10 @@ public class Scoring {
 		}
 			
 	}
-	public void display(Graphics2D g) {
+
+
+	@Override
+	public void update(Graphics2D g) {
 		String img1="";
 		String img2="";
 		String img3="";
