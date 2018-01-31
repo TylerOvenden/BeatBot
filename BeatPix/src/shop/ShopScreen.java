@@ -177,7 +177,6 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(text);	
 		text.setVisible(false);
 		
-		
 		no = new Button(480,205,45,30, "No", Color.gray, new Action()
 		{
 			@Override
@@ -213,7 +212,7 @@ public class ShopScreen extends FullFunctionScreen
 				no.setVisible(true);
 			}						
 		};
-		
+
 		return a;
 		
 		
