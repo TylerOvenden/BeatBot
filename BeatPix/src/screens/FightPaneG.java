@@ -16,8 +16,11 @@ public class FightPaneG extends FullFunctionPane{
 	 * 
 	 */
 	private static final long serialVersionUID = 6669770711157703541L;
-	AnimatedComponent robot;
-	AnimatedComponent robotHit;
+	AnimatedComponent robotIdle;
+	AnimatedComponent robotHit1;
+	AnimatedComponent robotHit3;
+	AnimatedComponent robotHit2;
+
 	boolean hasHit;
 	boolean animationRunning;
 	boolean miss;
@@ -28,15 +31,15 @@ public class FightPaneG extends FullFunctionPane{
 	}
 
 	public void initAllObjects(List<Visible> viewObjects){
-		robot = new AnimatedComponent(30, 100, 117, 84);
-		robot.addSequence("resources/spriteSheet.bmp", 250, 0, 0, 39, 28, 2);
-		Thread run = new Thread(robot);
+		robotIdle = new AnimatedComponent(30, 100, 117, 84);
+		robotIdle.addSequence("resources/spriteSheet.bmp", 250, 0, 0, 39, 28, 2);
+		Thread run = new Thread(robotIdle);
 		run.start();
 		addKeyListener(this);
 		setFocusable(true);
 		
-		viewObjects.add(robot);
-		robot.setVisible(true);
+		viewObjects.add(robotIdle);
+		robotIdle.setVisible(true);
 	}
 	
 	public void update(Graphics2D g){
@@ -48,16 +51,14 @@ public class FightPaneG extends FullFunctionPane{
 	public void runAtkAnimation() 
 	{
 		if(animationRunning) {
-			robot.clear();
 			//robot.addSequence("resources/spriteSheet.bmp", 250, 0, 34, 39, 27, 5);
-			robot.addSequence("resources/spriteSheet.bmp", 250, 0, 105, 39, 28, 4);
+			robotHit1.addSequence("resources/spriteSheet.bmp", 250, 0, 105, 39, 28, 4);
 
 			animationRunning = false;
 		}
 		else
 		{
-			robot.clear();
-			robot.addSequence("resources/spriteSheet.bmp", 250, 0, 0, 39, 28, 2);
+			robotHit1.addSequence("resources/spriteSheet.bmp", 250, 0, 0, 39, 28, 2);
 			animationRunning = true;
 		}
 	}
@@ -65,7 +66,6 @@ public class FightPaneG extends FullFunctionPane{
 	public void keyPressed(KeyEvent e)
 	{
 		miss = true;
-		robot.clear();
 		if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K)
 		{
 			if(!miss)
