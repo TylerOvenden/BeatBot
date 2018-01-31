@@ -108,7 +108,7 @@ public class Scoring extends Component {
 				g.drawImage(icon.getImage(), 164, 100, null);
 				icon = new ImageIcon(img5);
 				g.drawImage(icon.getImage(), 224, 100, null);
-				
+				 
 			}catch(Exception e){
 				e.printStackTrace();
 			}
