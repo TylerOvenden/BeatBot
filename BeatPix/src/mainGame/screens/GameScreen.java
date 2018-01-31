@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -35,6 +36,7 @@ import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
+import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
 
@@ -90,6 +92,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	private Timing timing;
 	private TextArea visual;
 	private Accuracy accDisplay;
+	private Scoring gamescore;
 	private float[] totalAcc;
 	private float accuracy;
 	private Combo combo;
@@ -164,6 +167,18 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			}
 			
 		});
+	}
+	
+	public void update(Graphics2D g){
+		BufferedImage buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = buffer.createGraphics();
+		g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
+	             RenderingHints.VALUE_ANTIALIAS_ON);
+		drawBackground(g2);
+		g2.setColor(Color.black);
+		g2.scale(2, 2);
+		drawObjects(g2);
+		g.drawImage(buffer, 0, 0, null);
 	}
 	
 	/**
@@ -419,6 +434,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
+		/*	gamescore = new Scoring(500,40,400,400);
+		 	viewObjects.add(gamescore);
+			gamescore.update(); */
 		
 		
 	}
