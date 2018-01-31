@@ -62,11 +62,11 @@ public class Scoring extends Component {
 			img3="resources/score-"+scoreStr.substring(2)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), 0, 0, null);
+				g.drawImage(icon.getImage(), -10, 100, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 100, 0, null);
+				g.drawImage(icon.getImage(), 44, 100, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 200, 0, null);
+				g.drawImage(icon.getImage(), 104, 100, null);
 				
 			}catch(Exception e){
 				e.printStackTrace();
@@ -79,13 +79,13 @@ public class Scoring extends Component {
 			img4="resources/score-"+scoreStr.substring(3)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), 0, 0, null);
+				g.drawImage(icon.getImage(), -10, 100, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 100, 0, null);
+				g.drawImage(icon.getImage(), 44, 100, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 200, 0, null);			
+				g.drawImage(icon.getImage(), 104, 100, null);
 				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 300, 0, null);
+				g.drawImage(icon.getImage(), 164, 100, null);
 				
 			}catch(Exception e){
 				e.printStackTrace();
@@ -99,16 +99,16 @@ public class Scoring extends Component {
 			img5="resources/score-"+scoreStr.substring(4)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), 0, 0, null);
+				g.drawImage(icon.getImage(), -10, 100, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 100, 0, null);
+				g.drawImage(icon.getImage(), 44, 100, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 200, 0, null);			
+				g.drawImage(icon.getImage(), 104, 100, null);
 				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 300, 0, null);
+				g.drawImage(icon.getImage(), 164, 100, null);
 				icon = new ImageIcon(img5);
-				g.drawImage(icon.getImage(), 400, 0, null);
-				
+				g.drawImage(icon.getImage(), 224, 100, null);
+				 
 			}catch(Exception e){
 				e.printStackTrace();
 			}
@@ -122,17 +122,17 @@ public class Scoring extends Component {
 			img6="resources/score-"+scoreStr.substring(5)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), 0, 0, null);
+				g.drawImage(icon.getImage(), -10, 100, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 100, 0, null);
+				g.drawImage(icon.getImage(), 44, 100, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 200, 0, null);			
+				g.drawImage(icon.getImage(), 104, 100, null);
 				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 300, 0, null);
+				g.drawImage(icon.getImage(), 164, 100, null);
 				icon = new ImageIcon(img5);
-				g.drawImage(icon.getImage(), 400, 0, null);
+				g.drawImage(icon.getImage(), 224, 100, null);
 				icon = new ImageIcon(img6);
-				g.drawImage(icon.getImage(), 500, 0, null);
+				g.drawImage(icon.getImage(), 284, 0, null);
 				
 			}catch(Exception e){
 				e.printStackTrace();
