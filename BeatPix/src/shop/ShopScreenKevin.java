@@ -28,6 +28,9 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private ScrollablePane charScroll;
 	private Button noButton;
 	private ArrayList<Button> yesButton;
+	private int numChars;
+	private TextLabel unlock;
+	
 
 	public ShopScreenKevin(int width, int height) 
 	{
@@ -39,6 +42,8 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	{	
 		buttonList = new ArrayList<Button>();
 		yesButton = new ArrayList<Button>();
+		//the ten should be number chars that the player should unlock
+		numChars = 10;
 		//create the back button
 		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
 			
@@ -50,7 +55,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		});
 		
 		//create arrayList of YesButtons
-		for(int k = 0; k < 2; k++) {
+		for(int k = 0; k < numChars; k++) {
 			yesButton.add(new Button(300, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
 
 				@Override
@@ -64,8 +69,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		//create the panel, and the buttons in it
 		charScroll = new ScrollablePane(this, 650, 100, 250, 400);
 		charScroll.setBorderWidth(3);
-		//change the 10, to the number of costumes, 10 is just a place holder
-		for(int i=0; i < 2; i++){ 
+		for(int i=0; i < numChars; i++){ 
 			//got the index number
 			final int x = i;
 			charScroll.addObject(new Button(5,30*i,100,25,"Button "+i, new Action() {
@@ -82,6 +86,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		 //create all the things 
 		 border = new CustomRectangle(280, 180, 220, 120, Color.BLACK, 3);
 		 text = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
+		 //unlock = new TextLabel(300, 100, 200, 400, "Congratz");
 		 
 		 noButton = new Button(400, 250, 50, 50, "no", Color.RED, new Action() {
 			
@@ -104,8 +109,9 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		charScroll.update();
 		viewObjects.add(charScroll);
 		viewObjects.add(noButton);
-		viewObjects.add(yesButton.get(0));
-		viewObjects.add(yesButton.get(1));
+		for(int a = 0; a < numChars; a++) {
+			viewObjects.add(yesButton.get(a));
+		}
 		
 	}
 	//helper methods
