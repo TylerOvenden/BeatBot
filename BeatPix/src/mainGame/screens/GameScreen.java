@@ -3,6 +3,7 @@ package mainGame.screens;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -161,9 +162,14 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				int height = c.getHeight();
 				int width = c.getWidth();
 				setBounds(0, 0, width, height);
+				update();
 			}
 			
 		});
+	}
+	
+	public void paint(Graphics g) {
+		
 	}
 	
 	/**
