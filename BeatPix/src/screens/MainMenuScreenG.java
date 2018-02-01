@@ -65,6 +65,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		
 		buttons.get(LEVEL_IDX).setAction(new Action() {
 			public void act(){
+				System.out.println("Hello");
 				buttons.get(LEVEL_IDX).unhoverAction();
 			}
 		});
@@ -92,8 +93,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 			viewObjects.add(b);
 		}
 		viewObjects.add(idleCharacter);
-
-		//viewObjects.add(new CustomText(0, 0, 300, 300, "AB"));
 	}
 
 //--EVENTS--//
