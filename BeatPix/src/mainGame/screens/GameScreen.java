@@ -1,17 +1,18 @@
 package mainGame.screens;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.RenderingHints;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ActionMap;
@@ -20,15 +21,13 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import gui.components.Action;
 import gui.components.TextArea;
+import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.actions.Escape;
-import mainGame.actions.Pause;
 import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
-import mainGame.actions.Resume;
 import mainGame.components.Accuracy;
 import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
@@ -37,10 +36,12 @@ import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
+import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
+import mainGame.screens.interfaces.ResizableScreen;
 
-public class GameScreen extends ClickableScreen implements Runnable {
+public class GameScreen extends ResizableScreen implements Runnable {
 
 	/**
 	 * 
@@ -91,8 +92,10 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	//Steven
 	private Timing timing;
 	private TextArea visual;
-	private Accuracy accuracy;
-	private int totalAcc;
+	private Accuracy accDisplay;
+	private Scoring gamescore;
+	private float[] totalAcc;
+	private float accuracy;
 	private Combo combo;
 	//Steven
 	
@@ -100,6 +103,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		super(width, height);
 		
 		setFixedSize(false);
+		setPreferredSize(new Dimension(width, height));
 		
 		game = this;
 		
@@ -112,7 +116,12 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 		setUpBindings();
 		
-		totalAcc=100;
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+			totalAcc[i]=-1;
+		}
+		
+		accuracy=100;
 		
 		gameRunning = false;
 		start();
@@ -388,12 +397,15 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accuracy=new Accuracy(600,30,400,400);
-		viewObjects.add(accuracy);
-		accuracy.update();
+		accDisplay=new Accuracy(600,30,400,400);
+		viewObjects.add(accDisplay);
+		accDisplay.update();
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
+		/*	gamescore = new Scoring(500,40,400,400);
+		viewObjects.add(gamescore);
+		gamescore.update(); */
 		
 		
 	}
@@ -495,7 +507,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
  	}
  	*/
 	
-	private void displayAcc(Keystroke stroke) {
+
+	/*private void displayAcc(Keystroke stroke) {
 		//System.out.println(timePass());
 		//System.out.println(stroke.getClickTime());
 		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
@@ -535,16 +548,28 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			calcAcc(0);
 			return ;
 		}
-	}
+	}*/
 	
 	public void calcAcc(double timing) {
-		int amtOfNotes=0;
-		for(int i=0;i<beats.size();i++) {
-			amtOfNotes+=beats.get(i).length;
+		int totalHit=0;
+		for(int i=0;i<totalAcc.length;i++) {
+			if(totalAcc[i]==-1) {
+				totalAcc[i]=(float) timing;
+				break;
+			}
 		}
-		double indAcc=100/amtOfNotes;
-		totalAcc-=(indAcc*(1-timing));
-		accuracy.setAcc(totalAcc);
+		double acc=0;
+		for(double a:totalAcc) {
+			if(a!=-1) {
+				totalHit++;
+				acc+=a;
+			}
+		}
+		
+		acc=acc/totalHit;
+		accuracy=((float)Math.round(acc*10000)/100);
+		//System.out.println(accuracy);
+		accDisplay.setAcc(accuracy);
 	}
 
 	/**
@@ -665,13 +690,11 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	}
 	
 	/**
-	 * This method will pause all operations until it is resumed by setting the pause boolean to false. <br>
-	 * All operations will continue running after things are resumed.
+	 * This method pauses all the current strokes that are on the screen
 	 * 
 	 * @author Justin Yau
 	 */
-	public void handlePause() {
-		long time = timePass();
+	public void pauseFalls() {
 		for(Visible stroke: strokes) {
 			if(stroke instanceof Keystroke) {
 				((Keystroke)stroke).pauseFall();
@@ -680,14 +703,14 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				((Holdstroke)stroke).pauseFall();
 			}
 		}
-		while(pause) {
-			try {
-				Thread.sleep(0);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	}
+	
+	/**
+	 * This method resumes the fall of all the current strokes that are on the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void resumeFalls() {
 		for(Visible stroke: strokes) {
 			if(stroke instanceof Keystroke) {
 				((Keystroke)stroke).resumeFall();
@@ -696,6 +719,26 @@ public class GameScreen extends ClickableScreen implements Runnable {
 				((Holdstroke)stroke).resumeFall();
 			}
 		}
+	}
+	
+	/**
+	 * This method will pause all operations until it is resumed by setting the pause boolean to false. <br>
+	 * All operations will continue running after things are resumed.
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handlePause() {
+		long time = timePass();
+		pauseFalls();
+		while(pause) {
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		resumeFalls();
 		recalculateStartTime(time);
 	}
 	
@@ -821,4 +864,5 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		// TODO Auto-generated method stub
 		return combo;
 	}
+	
 }

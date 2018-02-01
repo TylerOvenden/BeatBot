@@ -36,8 +36,6 @@ import gui.interfaces.Visible;
  *
  */
 public abstract class Screen extends ComponentContainer{
-
-	
 	
 	public Screen(int width, int height) {
 		super(width, height);

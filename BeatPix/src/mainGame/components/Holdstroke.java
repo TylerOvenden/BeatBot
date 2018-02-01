@@ -91,12 +91,21 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
-	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
-	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * This method calculates the time, in ms, the first stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the first stroke should've been pressed since the game started 
 	 * @author Justin Yau
 	 */
-	public int getClickTime() {
+	public int getFirstClickTime() {
 		return startingTime + (GameScreen.columnY * fallSpeed);
+	}
+	
+	/**
+	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getEndClickTime() {
+		return startingTime + ((GameScreen.columnY + height) * fallSpeed);
 	}
 	
 	/**

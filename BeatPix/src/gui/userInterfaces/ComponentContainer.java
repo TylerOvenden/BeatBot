@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
@@ -33,6 +34,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import gui.interfaces.Visible;
+import mainGame.screens.GameScreen;
 
 public abstract class ComponentContainer extends JPanel{
 
@@ -47,6 +49,9 @@ public abstract class ComponentContainer extends JPanel{
 	private int borderWidth;
 	private Color borderColor;
 	private Color backgroundColor;
+	
+	private int width;
+	private int height;
 
 	//used for animating transitions
 	private float alpha;
@@ -64,6 +69,8 @@ public abstract class ComponentContainer extends JPanel{
 		heightScreen = height;
 		backgroundColor = Color.white;
 		startingObjects = new ArrayList<Visible>();
+		width = 1500;
+		height = 1500;
 		create();
 	}
 

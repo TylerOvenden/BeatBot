@@ -8,7 +8,7 @@ import gui.components.Component;
 
 public class Accuracy extends Component{
 	
-	private int acc;
+	private float acc;
 
 	public Accuracy(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -22,14 +22,16 @@ public class Accuracy extends Component{
 		String img1="";
 		String img2="";
 		String img3="";
+		acc=Math.round(acc);
 		if(acc==100) {
 			img1="resources/score-1.png";
 			img2="resources/score-0.png";
 			img3="resources/score-0.png";
 		}else {
 			img1="resources/score-"+0+".png";
-			img2="resources/score-"+((acc-(acc%10))/10)+".png";
-			img3="resources/score-"+(acc%10)+".png";
+			//System.out.print((acc-(acc%10))/10);
+			img2="resources/score-"+(int)((acc-(acc%10))/10)+".png";
+			img3="resources/score-"+(int)(acc%10)+".png";
 		}
 		try {
 			ImageIcon icon = new ImageIcon(img1);
@@ -45,8 +47,8 @@ public class Accuracy extends Component{
 		
 	}
 	
-	public void setAcc(int acc) {
-		this.acc=acc;
+	public void setAcc(float accuracy) {
+		this.acc=accuracy;
 		update();
 	}
 
