@@ -197,7 +197,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				if(background.getY() > -background.getHeight() + getHeight()) {
+				if(background.getY() > -background.getHeight() + getHeight()*2) {
 					background.setY(background.getY() - 1);
 				}else {
 					scrollOutEnd();
@@ -210,7 +210,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	public void scrollOutEnd() {
 		screenPhase = 4;
 		time.cancel();
-		background.setY(-background.getHeight() + getHeight());
+		background.setY(-background.getHeight()*2 + getHeight());
 		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 	}
 	

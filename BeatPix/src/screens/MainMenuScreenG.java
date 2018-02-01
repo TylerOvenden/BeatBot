@@ -32,7 +32,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 	
 	public AnimatedComponent idleCharacter;
 	
-	public static Pane options;
+	public static FullFunctionPane options;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -40,10 +40,12 @@ public class MainMenuScreenG extends FullFunctionScreen{
 	}
 
 	public void initAllObjects(List<Visible> viewObjects) {
+		//--BACKGROUND
 /**/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
 /**/	background = new Graphic(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
-		background.setY(-background.getHeight()+getHeight());
+		background.setY(-background.getHeight()+getHeight()*2);
 		
+		//--BUTTONS
 /**/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
@@ -67,12 +69,14 @@ public class MainMenuScreenG extends FullFunctionScreen{
 			}
 		});
 		
-/**/		idleCharacter = new AnimatedComponent(100, 200, 300, 300);
+		//--IDLE CHARACTER ANIMATION
+/**/		idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 300, 300);
 /**/		idleCharacter.addSequence("resources/idle.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
 		
-		slideInButtons();
+		scrollDown();
+		//slideInButtons();
 		
 		viewObjects.add(background);
 		for(ImageButton b: buttons) {
@@ -82,6 +86,25 @@ public class MainMenuScreenG extends FullFunctionScreen{
 	}
 
 //--EVENTS--//
+	public void scrollDown() {
+		time = new Timer();
+		time.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				if(background.getY() > -background.getHeight()+getHeight() && idleCharacter.getY() > 200) {
+					background.setY(background.getY() - 1);
+					idleCharacter.setY(idleCharacter.getY() - 1);
+				}else {
+					scrollDownEnd();
+				}
+			}
+		}, 0, 10);
+	}
+	public void scrollDownEnd() {
+		time.cancel();
+		slideInButtons();
+		background.setY(-background.getHeight()+getHeight());
+		idleCharacter.setY(200);
+	}
 	public void slideInButtons() {
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
