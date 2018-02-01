@@ -40,8 +40,9 @@ import mainGame.components.KeystrokeIndicator;
 import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
+import mainGame.screens.interfaces.ResizableScreen;
 
-public class GameScreen extends ClickableScreen implements Runnable {
+public class GameScreen extends ResizableScreen implements Runnable {
 
 	/**
 	 * 
@@ -116,7 +117,6 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		beats = song.getBeats();
 		
 		setUpBindings();
-		setUpComponentListener();
 		
 		totalAcc=new float[beats.size()];
 		for(int i=0;i<totalAcc.length;i++) {
@@ -150,37 +150,6 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
-	}
-	
-	/**
-	 * This method adds a component listener just in case the user attempts to resize the default screen. <br> 
-	 * The main goal of this method is to have the components scale with how much the window was resized. <br>
-	 * 
-	 * @author Justin Yau
-	 */
-	public void setUpComponentListener() {
-		addComponentListener(new ComponentAdapter() {
-			
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				Component c = (Component)arg0.getSource();
-				int height = c.getHeight();
-				int width = c.getWidth();
-			}
-			
-		});
-	}
-	
-	public void update(Graphics2D g){
-		BufferedImage buffer = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g2 = buffer.createGraphics();
-		g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-	             RenderingHints.VALUE_ANTIALIAS_ON);
-		drawBackground(g2);
-		g2.setColor(Color.black);
-		g2.scale(2, 2);
-		drawObjects(g2);
-		g.drawImage(buffer, 0, 0, null);
 	}
 	
 	/**
@@ -436,12 +405,16 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
+
 		ctext=new CustomText(600,130,300,300,"a000");
 		viewObjects.add(ctext);
 		ctext.update();
-		/*	gamescore = new Scoring(500,40,400,400);
+			gamescore = new Scoring(500,40,400,400);
+
+		gamescore = new Scoring(500,40,400,400);
+
 		viewObjects.add(gamescore);
-		gamescore.update(); */
+		gamescore.update();  
 		
 		
 	}
@@ -458,6 +431,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
+	
 	public void addKeystrokeIndicator(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
