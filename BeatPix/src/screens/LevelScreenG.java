@@ -16,8 +16,7 @@ public class LevelScreenG extends FullFunctionScreen{
 	private static final long serialVersionUID = -6292718307842016425L;
 	private ArrayList columns;
 	AnimatedComponent robot;
-	private CustomPaneG keyIndicators;
-	private FightPane scene;
+	FightPaneG scene;
 	
 	public LevelScreenG(int width, int height) {
 		super(width, height);
@@ -28,14 +27,10 @@ public class LevelScreenG extends FullFunctionScreen{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		// TODO Auto-generated method stub
-		keyIndicators = new CustomPaneG(this, 20, 450);
-		keyIndicators.update();
-		viewObjects.add(keyIndicators);
 		
-		scene = new FightPane(this, 500, 200);
+		scene = new FightPaneG(this, 500, 200);
 		scene.update();
 		scene.setVisible(true);
-		scene.robotHit(true);
 		viewObjects.add(scene);
 	}
 

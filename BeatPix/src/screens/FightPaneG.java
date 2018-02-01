@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gui.components.AnimatedComponent;
 import gui.components.FullFunctionPane;
@@ -31,6 +33,7 @@ public class FightPaneG extends FullFunctionPane{
 	boolean hasHit;
 	boolean animationRunning;
 	boolean miss;
+	int pastRand;
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
@@ -39,18 +42,19 @@ public class FightPaneG extends FullFunctionPane{
 
 	public void initAllObjects(List<Visible> viewObjects){
 		robotIdle = new AnimatedComponent(30, 100, 117, 84);
-		robotIdle.addSequence("resources/spriteSheet.bmp", 250, 0, 0, 39, 28, 2);
+		robotIdle.addSequence("resources/spriteSheet.bmp", 200, 0, 0, 39, 28, 2);
 		robotHit1 = new AnimatedComponent(30,100,117,84);
-		robotHit1.addSequence("resources/spriteSheet.bmp", 250, 0, 105, 39, 28, 4);
+		robotHit1.addSequence("resources/spriteSheet.bmp", 200, 0, 105, 39, 28, 4);
 		robotHit1.setAlpha(0);
 		robotHit2 = new AnimatedComponent(30,100,117,84);
-		robotHit2.addSequence("resources/spriteSheet.bmp", 250, 0, 34, 39, 27, 5);
+		robotHit2.addSequence("resources/spriteSheet.bmp", 200, 0, 34, 39, 27, 5);
 		robotHit2.setAlpha(0);
 		robotHit3 = new AnimatedComponent(30,100,117,84);
-		//robotHit3.addSequence("resources/spriteSheet.bmp", 250, 0, y, w, h, n);
+		robotHit3.addSequence("resources/spriteSheet.bmp", 200, 0, 70, 39, 27, 3);
 		robotHit3.setAlpha(0);
 		robotMiss = new AnimatedComponent(30,100,117,84);
-		//robotMis.addSequence
+		robotMiss.addSequence("resources/spriteSheet.bmp", 200, 0, 146, 39, 27, 2);
+		
 		robotMiss.setAlpha(0);
 		
 		
@@ -59,6 +63,11 @@ public class FightPaneG extends FullFunctionPane{
 		hit3Thread = new Thread(robotHit3);
 		missThread = new Thread(robotMiss);
 		idleThread = new Thread(robotIdle);
+		
+		missThread.start();
+		hit1Thread.start();
+		hit2Thread.start();
+		hit3Thread.start();
 		idleThread.start();
 		
 		addKeyListener(this);
@@ -80,64 +89,62 @@ public class FightPaneG extends FullFunctionPane{
 		super.drawObjects(g);
 	}
 	
-	public void runAtkAnimation() 
-	{
-		if(animationRunning) {
-			//robot.addSequence("resources/spriteSheet.bmp", 250, 0, 34, 39, 27, 5);
-			robotHit1.addSequence("resources/spriteSheet.bmp", 250, 0, 105, 39, 28, 4);
-
-			animationRunning = false;
-		}
-		else
-		{
-			robotHit1.addSequence("resources/spriteSheet.bmp", 250, 0, 0, 39, 28, 2);
-			animationRunning = true;
-		}
-	}
-	
 	public void keyPressed(KeyEvent e)
-	{
-		/*miss = true;
-		if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K)
-		{
-			if(!miss)
-			{
-				runAtkAnimation();
-				try {
-					idleThread.sleep(1000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			else
-			{
-				//robotIdle.setA
-				//robotIdle.addSequence("resources/spriteSheet.bmp", 250, 0, 144, 39, 29, 2);
-			}
-		}*/
-		
-		if(e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) {
-			try {
-				Thread.sleep(250);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
-			int rand = (int) (Math.random());
-			if(rand == 0) {
-				hit1Thread.start();
-				robotHit1.setAlpha(1);
-			}
+	{	
+		System.out.print(animationRunning);
+		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) & !animationRunning) {
+			
+			robotIdle.setAlpha(0);
+			robotHit1.setAlpha(0);
+			robotHit2.setAlpha(0);
+			robotHit3.setAlpha(0);
+			robotMiss.setAlpha(0);
+			animationRunning = true;
+			
+			int rand = (int) (Math.random()*3);
+			pastRand = rand;
+			while(rand == pastRand)
+				rand = (int) (Math.random()*3);
 			if(rand == 1) {
-				hit2Thread.start();
-				robotHit2.setAlpha(1);
+				robotHit1.setAlpha(1);
+				Timer time = new Timer();
+					time.schedule(new TimerTask() {
+						@Override
+						public void run() {
+							// TODO Auto-generated method stub
+							robotIdle.setAlpha(1);
+							robotHit1.setAlpha(0);
+						}
+					}, 800);
 			}
 			if(rand == 2) {
-				hit3Thread.start();
 				robotHit2.setAlpha(1);
+				Timer time = new Timer();
+				time.schedule(new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						robotIdle.setAlpha(1);
+						robotHit2.setAlpha(0);
+					}
+				}, 1000);
+			}
+			if(rand == 3) {
+				robotHit3.setAlpha(1);
+				Timer time = new Timer();
+				time.schedule(new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						robotIdle.setAlpha(1);
+						robotHit3.setAlpha(0);
+					}
+				}, 600);
 			}
 		}
+		animationRunning = false;
 	}
 	
 	
