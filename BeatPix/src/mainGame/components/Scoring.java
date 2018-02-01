@@ -12,7 +12,7 @@ public class Scoring extends Component {
 	String img;
 	public Scoring(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		score = 000001;
+		score = 1009;
  		update();
 	}
 	public void scoring() {
