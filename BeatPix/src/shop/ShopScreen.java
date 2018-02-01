@@ -47,30 +47,91 @@ public class ShopScreen extends FullFunctionScreen
 	
 	private TextArea text;
 	
+	private boolean clicked;
+	
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
 	}
-
+	
+	
+	
+	
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 
 		credits = 25000;
+		clicked = false;
 		
-		songButton1 = new Button(0,0,200,70,"1", songAction());
-		songButton2 = new Button(0,0,200,170,"2", songAction());
-		songButton3 = new Button(0,0,200,270,"3", songAction());
-		songButton4 = new Button(0,0,200,370,"4", songAction());
-		songButton5 = new Button(0,0,200,470,"5", songAction());
-				
 		ArrayList<Button> buttons = new ArrayList<Button>();
+
+		songButton1 = new Button(0,0,200,70,"Song 1 | 1500 Credits", new Action() {
+			
+			@Override
+			public void act() {
+				index = buttons.indexOf(songButton1);
+				text.setVisible(true);
+				yes.setVisible(true);				
+				no.setVisible(true);
+				
+			}
+		});
+		
+		songButton2 = new Button(0,0,200,170,"Song 2 | 1500 Credits", new Action() {
+			
+			@Override
+			public void act() {
+				index = buttons.indexOf(songButton2);
+				text.setVisible(true);
+				yes.setVisible(true);				
+				no.setVisible(true);
+				
+			}
+		});
+
+		songButton3 = new Button(0,0,200,270,"Song 3 | 1500 Credits", new Action() {
+			
+			@Override
+			public void act() {
+				index = buttons.indexOf(songButton3);	
+				text.setVisible(true);
+				yes.setVisible(true);				
+				no.setVisible(true);
+				
+			}
+		});
+		songButton4 = new Button(0,0,200,370,"Song 4 | 1500 Credits", new Action() {
+			
+			@Override
+			public void act() {
+				index = buttons.indexOf(songButton4);
+				text.setVisible(true);
+				yes.setVisible(true);				
+				no.setVisible(true);
+				
+			}
+		});
+		songButton5 = new Button(0,0,200,470,"Song 5 | 1500 Credits", new Action() {
+			
+			@Override
+			public void act() {
+				index = buttons.indexOf(songButton5);
+				System.out.println(index);
+				text.setVisible(true);
+				yes.setVisible(true);				
+				no.setVisible(true);
+				
+			}
+		});
+		 
+		
 		buttons.add(songButton1);
 		buttons.add(songButton2);
 		buttons.add(songButton3);
 		buttons.add(songButton4);
 		buttons.add(songButton5);
-		
+				
 		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
 		creditFont = new Font("Verdana", Font.BOLD, 20);
 		warningFont = new Font("Verdana", Font.BOLD, 18);
@@ -131,10 +192,9 @@ public class ShopScreen extends FullFunctionScreen
 								Thread.sleep(1500);
 								purchased.setVisible(false);
 								
-								scroll.remove(buttons.get(index));					
+								scroll.remove(buttons.get((index)));		
 								buttons.remove(index);
 								scroll.update();							
-								
 							}
 							catch (InterruptedException e)
 							{
@@ -157,8 +217,7 @@ public class ShopScreen extends FullFunctionScreen
 								warning.setCustomTextColor(Color.red);
 								viewObjects.add(warning);
 								Thread.sleep(1500);
-								warning.setVisible(false);
-				
+								warning.setVisible(false);			
 							}
 							catch (InterruptedException e) 
 							{
@@ -214,7 +273,6 @@ public class ShopScreen extends FullFunctionScreen
 		};
 
 		return a;
-		
 		
 	}
 }
