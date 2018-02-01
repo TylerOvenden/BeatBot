@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import gui.components.Action;
 import gui.components.Graphic;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
@@ -17,9 +18,6 @@ import screens.components.ImageButton;
 
 public class LevelSelectG extends FullFunctionScreen{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6265786684466337399L;
 	public ArrayList<ImageButton> buttons;
 	private Graphic background;
@@ -30,7 +28,30 @@ public class LevelSelectG extends FullFunctionScreen{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		background = updateBackground("resources\\backgrounds\\start.jpg");
-		viewObjects.add(background);
+		//viewObjects.add(background);
+		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
+		buttons = new ArrayList<ImageButton>();
+		for(int i=0; i<4; i++) {
+/*P D*/		buttons.add(new ImageButton( 150*(-i-1)+getWidth()-200,100*(i+1) + getHeight()-600,icon.getIconWidth(),100,"resources\\tester.jpg"));
+		}
+		buttons.get(0).setAction(new Action() {
+			public void act(){
+				buttons.get(0).unhoverAction();
+			}
+		});
+		buttons.get(3).setAction(new Action() {
+			//Options pop up
+			public void act() {
+				if(true) {
+				viewObjects.add(new OptionsPopUp(null, 250, 250, getWidth()/2, getHeight()/2));
+				for(ImageButton b: buttons)
+					b.setEnabled(false);
+				}
+			}
+		});
+		for(ImageButton b: buttons) {
+			viewObjects.add(b);
+		}
 	}
 	
 	private Graphic updateBackground(String path) {
