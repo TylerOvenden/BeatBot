@@ -12,7 +12,7 @@ public class Scoring extends Component {
 	String img;
 	public Scoring(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		score = 100021;
+		score = 000001;
  		update();
 	}
 	public void scoring() {
@@ -57,11 +57,11 @@ public class Scoring extends Component {
 			img3="resources/score-"+scoreStr.substring(2)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), -10, 300, null);
+				g.drawImage(icon.getImage(), 0, 300, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 44, 300, null);
+				g.drawImage(icon.getImage(), 60, 300, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 104, 300, null);
+				g.drawImage(icon.getImage(), 120, 300, null);
 				
 			}catch(Exception e){
 				e.printStackTrace();
@@ -74,13 +74,13 @@ public class Scoring extends Component {
 			img4="resources/score-"+scoreStr.substring(3)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), -10, 300, null);
+				g.drawImage(icon.getImage(), 0, 300, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 44, 300, null);
+				g.drawImage(icon.getImage(), 60, 300, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 104, 300, null);
+				g.drawImage(icon.getImage(), 120, 300, null);
 				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 164, 300, null);
+				g.drawImage(icon.getImage(), 180, 300, null);
 				
 			}catch(Exception e){
 				e.printStackTrace();
@@ -94,15 +94,15 @@ public class Scoring extends Component {
 			img5="resources/score-"+scoreStr.substring(4)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), -10, 300, null);
+				g.drawImage(icon.getImage(), 0, 300, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 44, 300, null);
+				g.drawImage(icon.getImage(), 60, 300, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 104, 300, null);
+				g.drawImage(icon.getImage(), 120, 300, null);
 				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 164, 300, null);
+				g.drawImage(icon.getImage(), 180, 300, null);
 				icon = new ImageIcon(img5);
-				g.drawImage(icon.getImage(), 224, 300, null);
+				g.drawImage(icon.getImage(), 240, 300, null);
 				 
 			}catch(Exception e){
 				e.printStackTrace();
@@ -117,22 +117,58 @@ public class Scoring extends Component {
 			img6="resources/score-"+scoreStr.substring(5)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), -10, 300, null);
+				g.drawImage(icon.getImage(), 0, 300, null);
 				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 44, 300, null);
+				g.drawImage(icon.getImage(), 60, 300, null);
 				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 104, 300, null);
+				g.drawImage(icon.getImage(), 120, 300, null);
 				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 164, 300, null);
+				g.drawImage(icon.getImage(), 180, 300, null);
 				icon = new ImageIcon(img5);
-				g.drawImage(icon.getImage(), 224, 300, null);
+				g.drawImage(icon.getImage(), 240, 300, null);
 				icon = new ImageIcon(img6);
-				g.drawImage(icon.getImage(), 284, 300, null);
+				g.drawImage(icon.getImage(), 300, 300, null);
 				}
 			catch(Exception e){
 				e.printStackTrace();
 					}			
 			}	   
-		} 
+		}
+	/*public void update(Graphics2D g) {
+		String img1="";
+		String img2="";
+		String img3="";
+		String img4="";
+		String img5="";
+		String img6="";
+		String scoreStr = String.valueOf(score);
+
+		System.out.println(scoreStr);
+
+			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
+			img2="resources/score-"+scoreStr.substring(1,2)+ ".png";
+			img3="resources/score-"+scoreStr.substring(2,3)+ ".png";
+			img4="resources/score-"+scoreStr.substring(3,4)+ ".png";
+			img5="resources/score-"+scoreStr.substring(4,5)+ ".png";
+			img6="resources/score-"+scoreStr.substring(5)+ ".png";
+			try {
+				ImageIcon icon = new ImageIcon(img1);
+				g.drawImage(icon.getImage(), 0, 300, null);
+				icon = new ImageIcon(img2);
+				g.drawImage(icon.getImage(), 60, 300, null);
+				icon = new ImageIcon(img3);
+				g.drawImage(icon.getImage(), 120, 300, null);
+				icon = new ImageIcon(img4);
+				g.drawImage(icon.getImage(), 180, 300, null);
+				icon = new ImageIcon(img5);
+				g.drawImage(icon.getImage(), 240, 300, null);
+				icon = new ImageIcon(img6);
+				g.drawImage(icon.getImage(), 300, 300, null);
+				}
+			catch(Exception e){
+				e.printStackTrace();
+					}			
+			}	*/   
+		
 
 	}
