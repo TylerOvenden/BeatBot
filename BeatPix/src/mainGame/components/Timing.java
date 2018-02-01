@@ -46,36 +46,42 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
 			changeImg("resources/great.png");
 			update();
 			GameScreen.game.calcAcc(.95);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
 			changeImg("resources/good.png");
 			update();
 			GameScreen.game.calcAcc(.66);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
 			changeImg("resources/ok.png");
 			update();
 			GameScreen.game.calcAcc(.5);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
 			changeImg("resources/bad.png");
 			update();
 			GameScreen.game.calcAcc(.33);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
 			changeImg("resources/miss.png");
 			update();
 			GameScreen.game.calcAcc(0);
+			GameScreen.game.calcCombo(true);
 			return ;
 		}
 	}
@@ -90,36 +96,42 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<40) {
 			changeImg("resources/great.png");
 			update();
 			GameScreen.game.calcAcc(.95);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<73) {
 			changeImg("resources/good.png");
 			update();
 			GameScreen.game.calcAcc(.66);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<103) {
 			changeImg("resources/ok.png");
 			update();
 			GameScreen.game.calcAcc(.5);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<127) {
 			changeImg("resources/bad.png");
 			update();
 			GameScreen.game.calcAcc(.33);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<164) {
 			changeImg("resources/miss.png");
 			update();
 			GameScreen.game.calcAcc(0);
+			GameScreen.game.calcCombo(true);
 			return ;
 		}
 		
@@ -131,36 +143,42 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<40) {
 			changeImg("resources/great.png");
 			update();
 			GameScreen.game.calcAcc(.95);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<73) {
 			changeImg("resources/good.png");
 			update();
 			GameScreen.game.calcAcc(.66);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<103) {
 			changeImg("resources/ok.png");
 			update();
 			GameScreen.game.calcAcc(.5);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<127) {
 			changeImg("resources/bad.png");
 			update();
 			GameScreen.game.calcAcc(.33);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
 		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<164) {
 			changeImg("resources/miss.png");
 			update();
 			GameScreen.game.calcAcc(0);
+			GameScreen.game.calcCombo(true);
 			return ;
 		}
 		
@@ -171,6 +189,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 		changeImg("resources/miss.png");
 		update();
 		GameScreen.game.calcAcc(0);
+		GameScreen.game.calcCombo(true);
 	}
 
 	@Override
