@@ -42,7 +42,7 @@ public class ReleasePress extends AbstractAction {
 				GameScreen.game.getTiming().calculateEndAccuracy(hold);
 			}
 		}
-		if(retrieveFirstHoldInLane(columnLane, GameScreen.game.getTooLongHolds()) != null) {
+		else if(retrieveFirstHoldInLane(columnLane, GameScreen.game.getTooLongHolds()) != null) {
 			GameScreen.game.removeFromTooLongHolds(retrieveFirstHoldInLane(columnLane, GameScreen.game.getTooLongHolds()));
 			//Miss Accuracy
 			GameScreen.game.getTiming().missAccuracy();

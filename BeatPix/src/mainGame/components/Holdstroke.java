@@ -196,7 +196,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			topHeight = getY() + prevHeight;
 		}
 		int bottomHeightFromStart = topHeight - GameScreen.columnY;
-		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight - topHeight;
+		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + GameScreen.distanceAAfterGoal - topHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
@@ -212,7 +212,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		}
 		//Above works
 		else if(height >= bottomHeightFromBottom) {
-			if(bottomHeightFromBottom + GameScreen.distanceAAfterGoal <= 0 ) {
+			if(bottomHeightFromBottom <= -1 * GameScreen.distanceAAfterGoal ) {
 				handleRemove();
 				return 1;
 			}
