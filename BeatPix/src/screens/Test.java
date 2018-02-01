@@ -45,8 +45,4 @@ public class Test extends GUIApplication {
 	}
 	
 	//testing
-	public void changeDimensions() {
-		test = new Test(1920,1080);
-		setScreen(new StartScreenG(getWidth(),getHeight()));
-	}
 }

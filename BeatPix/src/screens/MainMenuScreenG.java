@@ -41,21 +41,19 @@ public class MainMenuScreenG extends FullFunctionScreen{
 
 	public void initAllObjects(List<Visible> viewObjects) {
 		//--BACKGROUND
-/**/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
-/**/	background = new Graphic(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
+/*P*/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
+/*P D*/	background = new Graphic(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
 		background.setY(-background.getHeight()+getHeight()*2);
 		
 		//--BUTTONS
-/**/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
+/*P*/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
-/*need to change dimensions*/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"resources\\ui\\buttons\\buttonwithrivet.png"));
+/*P D*/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
 		buttons.get(0).setAction(new Action() {
 			public void act(){
 				buttons.get(0).unhoverAction();
-				Test.test.changeDimensions();
-/**/			Test.test.setScreen(new StartScreenG(getWidth(),getHeight()));
 			}
 		});
 		buttons.get(3).setAction(new Action() {
@@ -70,8 +68,8 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		});
 		
 		//--IDLE CHARACTER ANIMATION
-/**/		idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 300, 300);
-/**/		idleCharacter.addSequence("resources/idle.png", 500, 0, 0, 39, 33, 2);
+/*D*/		idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 300, 300);
+/*P*/		idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
 		
@@ -90,7 +88,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				if(background.getY() > -background.getHeight()+getHeight() && idleCharacter.getY() > 200) {
+/*D*/				if(background.getY() > -background.getHeight()+getHeight() && idleCharacter.getY() > 200) {
 					background.setY(background.getY() - 1);
 					idleCharacter.setY(idleCharacter.getY() - 1);
 				}else {
@@ -103,7 +101,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		time.cancel();
 		slideInButtons();
 		background.setY(-background.getHeight()+getHeight());
-		idleCharacter.setY(200);
+/*D*/		idleCharacter.setY(200);
 	}
 	public void slideInButtons() {
 		time = new Timer();
@@ -123,6 +121,10 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		time.cancel();
 		for(ImageButton b: buttons) {
 			b.setEnabled(true);
+		}
+		for(int i = 0; i < buttons.size(); i++) {
+/*D*/		buttons.get(i).setY(i);
+/*D*/		buttons.get(i).setX(i);
 		}
 	}
 	

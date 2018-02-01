@@ -201,7 +201,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					background.setY(background.getY() - 1);
 				}else {
 					scrollOutEnd();
-/**/					//Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+/**/				//Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 					//this.cancel();
 				}
 			}
