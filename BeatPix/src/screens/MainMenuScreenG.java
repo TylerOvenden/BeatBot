@@ -49,7 +49,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 /*P*/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
-/*P D*/		buttons.add(new ImageButton(getWidth()+100,(i*100)+50,icon.getIconWidth(),icon.getIconHeight(),"resources\\ui\\buttons\\buttonwithrivet.png"));
+/*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),100*(i+1) + getHeight(),icon.getIconWidth(),100,"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
 		buttons.get(0).setAction(new Action() {
 			public void act(){
@@ -67,8 +67,8 @@ public class MainMenuScreenG extends FullFunctionScreen{
 			}
 		});
 		
-		//--IDLE CHARACTER ANIMATION
-/*D*/		idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 300, 300);
+		//--IDLE CHARACTER ANIMATION  --Ds are important for the movement animations
+/*D*/		idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
 /*P*/		idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
@@ -88,20 +88,58 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-/*D*/				if(background.getY() > -background.getHeight()+getHeight() && idleCharacter.getY() > 200) {
-					background.setY(background.getY() - 1);
-					idleCharacter.setY(idleCharacter.getY() - 1);
+					//-- SCROLL BACKGROUND UP
+					moveBackground();
+					//-- SCROLL IDLE CHRACTER UP
+/*D*/				moveIdleCharacter();
+					
+					//will begin sliding in buttons from left once the background reaches point where the button is visible
+					moveButtonsY();
+					if(background.getY() > -background.getHeight()) {
+						moveButtonsX();
 				}else {
 					scrollDownEnd();
 				}
 			}
 		}, 0, 10);
 	}
+	//--SCROLL DOWN METHODS
+	public void moveBackground() {
+		if(background.getY() > -background.getHeight()+getHeight()) {
+			background.setY(background.getY() - 1);
+		}
+	}
+	public void moveIdleCharacter() {
+/*D*/		if(idleCharacter.getY() > 200) {
+			idleCharacter.setY(idleCharacter.getY() - 1);
+		}
+	}
+	public void moveButtonsX() {
+		if(buttons.get(0).getX() > getWidth()*5/10) {
+			for(int i = 0; i < buttons.size(); i++) {
+	/*D*/		buttons.get(i).setX(buttons.get(i).getX()-1);
+			}
+		}
+	}
+	public void moveButtonsY() {
+		if(buttons.get(0).getY() > 100) {
+			for(int i = 0; i < buttons.size(); i++) {
+	/*D*/		buttons.get(i).setY(buttons.get(i).getY()-1);
+			}
+		}
+	}
 	public void scrollDownEnd() {
 		time.cancel();
-		slideInButtons();
+		//slideInButtons();
 		background.setY(-background.getHeight()+getHeight());
 /*D*/		idleCharacter.setY(200);
+		for(ImageButton b: buttons) {
+			b.setEnabled(true);
+		}
+		for(int i = 0; i < buttons.size(); i++) {
+		/*D*/		buttons.get(i).setY(100);
+		/*D*/		buttons.get(i).setX(getWidth()/2 + getWidth()/2*(1/10));
+		}
 	}
 	public void slideInButtons() {
 		time = new Timer();
