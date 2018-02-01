@@ -34,7 +34,7 @@ public class Test extends GUIApplication {
 
 	@Override
 	public void initScreen() {
-		setScreen(new StartScreenG(getWidth(),getHeight()));
+		setScreen(new LevelScreenG(getWidth(),getHeight()));
 		//setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 	}
 
