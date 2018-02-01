@@ -32,6 +32,7 @@ import mainGame.components.Accuracy;
 import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
 import mainGame.components.Combo;
+import mainGame.components.CustomText;
 import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
@@ -96,6 +97,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	private float[] totalAcc;
 	private float accuracy;
 	private Combo combo;
+	private CustomText ctext;
 	//Steven
 	
 	public GameScreen(int width, int height, Song song) {
@@ -434,6 +436,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
+		ctext=new CustomText(600,130,300,300,"a000");
+		viewObjects.add(ctext);
+		ctext.update();
 		/*	gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
 		gamescore.update(); */
