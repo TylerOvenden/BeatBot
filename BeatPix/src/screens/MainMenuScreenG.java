@@ -1,5 +1,7 @@
 package screens;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -11,9 +13,10 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import screens.components.CustomText;
 import screens.components.ImageButton;
 
-public class MainMenuScreenG extends FullFunctionScreen{
+public class MainMenuScreenG extends FullFunctionScreen implements MouseListener{
 
 	/**
 	 * 
@@ -21,6 +24,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 	private static final long serialVersionUID = -7197187517418245951L;
 
 	public Timer time;
+	private int screenPhase;
 	
 	public Graphic background;
 	
@@ -37,8 +41,15 @@ public class MainMenuScreenG extends FullFunctionScreen{
 	
 	public MainMenuScreenG(int width, int height) {
 		super(width, height);
+		screenPhase = 0;
 	}
 
+	public void mouseClicked(MouseEvent e) {
+		if(screenPhase == 0) {
+			scrollDownEnd();
+		}
+	}
+	
 	public void initAllObjects(List<Visible> viewObjects) {
 		//--BACKGROUND
 /*P*/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
@@ -51,25 +62,25 @@ public class MainMenuScreenG extends FullFunctionScreen{
 		for(int i=0; i<4; i++) {
 /*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),100*(i+1) + getHeight(),icon.getIconWidth(),100,"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
-		buttons.get(0).setAction(new Action() {
+		
+		buttons.get(LEVEL_IDX).setAction(new Action() {
 			public void act(){
-				buttons.get(0).unhoverAction();
+				buttons.get(LEVEL_IDX).unhoverAction();
 			}
 		});
-		buttons.get(3).setAction(new Action() {
+		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			//Options pop up
 			public void act() {
-				if(true) {
+				buttons.get(OPTIONS_IDX).unhoverAction();
 				viewObjects.add(new OptionsPopUp(null, 250, 250, getWidth()/2, getHeight()/2));
 				for(ImageButton b: buttons)
 					b.setEnabled(false);
 				}
-			}
 		});
 		
-		//--IDLE CHARACTER ANIMATION  --Ds are important for the movement animations
-/*D*/		idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
-/*P*/		idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
+		//--IDLE CHARACTER ANIMATION  /*D*/ Indicates dimensions have to be scaled (*required for animations*)
+/*D*/	idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
+/*P*/	idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
 		
@@ -81,6 +92,8 @@ public class MainMenuScreenG extends FullFunctionScreen{
 			viewObjects.add(b);
 		}
 		viewObjects.add(idleCharacter);
+
+		//viewObjects.add(new CustomText(0, 0, 300, 300, "AB"));
 	}
 
 //--EVENTS--//
@@ -137,10 +150,14 @@ public class MainMenuScreenG extends FullFunctionScreen{
 			b.setEnabled(true);
 		}
 		for(int i = 0; i < buttons.size(); i++) {
-		/*D*/		buttons.get(i).setY(100);
-		/*D*/		buttons.get(i).setX(getWidth()/2 + getWidth()/2*(1/10));
+/*D*/		buttons.get(i).setY(100*(i+1));
+/*D*/		buttons.get(i).setX(getWidth()/2 + getWidth()/2*(1/10));
 		}
+		
+		screenPhase = 1;
 	}
+	
+	//--IGNORE
 	public void slideInButtons() {
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {

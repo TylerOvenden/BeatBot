@@ -64,9 +64,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-/**/		background = updateBackground("resources\\backgrounds\\start.jpg");
-/**/		title = updateTitle("resources\\title.png");
-/**/		start = updateStart("resources\\ui\\buttons\\startbutton.png");
+		background = updateBackground("resources\\backgrounds\\start.jpg");
+		title = updateTitle("resources\\title.png");
+		start = updateStart("resources\\ui\\buttons\\startbutton.png");
 		
 		title.setAlpha(0.0f);
 		start.setAlpha(0.0f);
@@ -89,7 +89,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		return new Graphic(x,y,w,h,path);
 	}
 	
-//--Title (BEATBOT)--//
+//--TITLE (BEATBOT)--//
 	private Graphic updateTitle(String path) {
 		ImageIcon icon = new ImageIcon(path);
 		int w; int h; int x; int y;
@@ -100,7 +100,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		return new Graphic(x,y,w,h,path);
 	}
 	
-//--Background (background)--//
+//--BACKGROUND (background)--//
 	private Graphic updateBackground(String path) {
 		ImageIcon icon = new ImageIcon(path);
 		int w; int h; // 0 for either will use original image size/width
@@ -114,7 +114,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		return new Graphic(x,y,w,h,path);
 	}
 	
-//--Events--//
+//--EVENTS--//
 	public void scrollIn() {
 		
 		background.setX(0); background.setY(0);
