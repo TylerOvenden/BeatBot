@@ -105,7 +105,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getEndClickTime() {
-		return startingTime + ((GameScreen.columnHeight + height - GameScreen.distanceAAfterGoal) * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + height - (GameScreen.distanceAAfterGoal * 2)) * fallSpeed) - 50;
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			topHeight = getY() + prevHeight;
 		}
 		int bottomHeightFromStart = topHeight - GameScreen.columnY;
-		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + GameScreen.distanceAAfterGoal - topHeight;
+		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight - topHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
@@ -212,12 +212,11 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		}
 		//Above works
 		else if(height >= bottomHeightFromBottom) {
-			if(bottomHeightFromBottom <= (GameScreen.distanceAAfterGoal) ) {
-				System.out.println(true);
+			if(bottomHeightFromBottom + GameScreen.distanceAAfterGoal <= 0 ) {
 				handleRemove();
 				return 1;
 			}
-			return bottomHeightFromBottom;
+			return bottomHeightFromBottom - GameScreen.distanceAAfterGoal;
 		}
 		return height;
 	}
@@ -272,6 +271,9 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public void resizeFramesEnd(int height) {
 		if(height == this.height) {
 			return;
+		}
+		if(height <= 0) {
+			height = 1;
 		}
 		for(int i = 0; i < frames.size(); i++) {
 			BufferedImage fram = frames.get(i);
