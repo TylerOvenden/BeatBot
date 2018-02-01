@@ -399,16 +399,16 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accDisplay=new Accuracy(600,30,400,400);
+		/*accDisplay=new Accuracy(600,30,400,400);
 		viewObjects.add(accDisplay);
 		accDisplay.update();
+		*/
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
 
-		ctext=new CustomText(600,130,300,300,"a000");
+		ctext=new CustomText(600,130,300,300,"");
 		viewObjects.add(ctext);
-		ctext.update();
 			gamescore = new Scoring(500,40,400,400);
 
 		gamescore = new Scoring(500,40,400,400);
@@ -579,7 +579,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
-		accDisplay.setAcc(accuracy);
+		ctext.setText(accuracy+"");
 	}
 
 	/**
