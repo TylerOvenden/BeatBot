@@ -434,9 +434,9 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
-		/*	gamescore = new Scoring(500,40,400,400);
+		gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
-		gamescore.update(); */
+		gamescore.update(); 
 		
 		
 	}

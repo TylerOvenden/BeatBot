@@ -12,13 +12,8 @@ public class Scoring extends Component {
 	String img;
 	public Scoring(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		score = 1000;
+		score = 100021;
 		update();
-	}
-
-	public static void main(String[] args) {
-		
-
 	}
 	public void scoring() {
 		if(offset<16) {
@@ -58,7 +53,7 @@ public class Scoring extends Component {
 
 		if(scoreStr.length()==3) {
 			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
-			img2="resources/score-"+scoreStr.substring(1,0)+ ".png";
+			img2="resources/score-"+scoreStr.substring(1,2)+ ".png";
 			img3="resources/score-"+scoreStr.substring(2)+ ".png";
 			try {
 				ImageIcon icon = new ImageIcon(img1);
@@ -74,7 +69,7 @@ public class Scoring extends Component {
 		}
 		if(scoreStr.length()==4) {
 			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
-			img2="resources/score-"+scoreStr.substring(1,0)+ ".png";
+			img2="resources/score-"+scoreStr.substring(1,2)+ ".png";
 			img3="resources/score-"+scoreStr.substring(2,3)+ ".png";
 			img4="resources/score-"+scoreStr.substring(3)+ ".png";
 			try {
@@ -93,7 +88,7 @@ public class Scoring extends Component {
 		}
 		if(scoreStr.length()==5) {
 			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
-			img2="resources/score-"+scoreStr.substring(1,0)+ ".png";
+			img2="resources/score-"+scoreStr.substring(1,2)+ ".png";
 			img3="resources/score-"+scoreStr.substring(2,3)+ ".png";
 			img4="resources/score-"+scoreStr.substring(3,4)+ ".png";
 			img5="resources/score-"+scoreStr.substring(4)+ ".png";
@@ -115,7 +110,7 @@ public class Scoring extends Component {
 		}	
 		if(scoreStr.length()==6) {
 			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
-			img2="resources/score-"+scoreStr.substring(1,0)+ ".png";
+			img2="resources/score-"+scoreStr.substring(1,2)+ ".png";
 			img3="resources/score-"+scoreStr.substring(2,3)+ ".png";
 			img4="resources/score-"+scoreStr.substring(3,4)+ ".png";
 			img5="resources/score-"+scoreStr.substring(4,5)+ ".png";
@@ -133,18 +128,11 @@ public class Scoring extends Component {
 				g.drawImage(icon.getImage(), 224, 300, null);
 				icon = new ImageIcon(img6);
 				g.drawImage(icon.getImage(), 284, 300, null);
-				
-			}catch(Exception e){
+				}
+			catch(Exception e){
 				e.printStackTrace();
-			}
-			 
-		}
+					}			
+			}	   
+		} 
 
-
-
-			   
-		}
-		
-		
-		
 	}
