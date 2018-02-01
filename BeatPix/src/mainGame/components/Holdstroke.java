@@ -96,7 +96,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getFirstClickTime() {
-		return startingTime + (GameScreen.columnY * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight - height) * fallSpeed);
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getEndClickTime() {
-		return startingTime + ((GameScreen.columnY + height) * fallSpeed);
+		return startingTime + (GameScreen.columnHeight * fallSpeed);
 	}
 	
 	/**
@@ -229,9 +229,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public void handleRemove() {
 		GameScreen.game.removeHoldStroke(this);
 		//Place Scoring Here
-		GameScreen.game.getTiming().changeImg("resources/miss.png");
-		GameScreen.game.getCombo().set();
-		GameScreen.game.calcAcc(0);
+		GameScreen.game.getTiming().missAccuracy();
 		//Place Scoring Here
 		cancel = true;
 	}
