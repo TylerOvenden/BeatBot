@@ -32,6 +32,7 @@ import mainGame.components.Accuracy;
 import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
 import mainGame.components.Combo;
+import mainGame.components.CustomText;
 import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
@@ -97,6 +98,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private float[] totalAcc;
 	private float accuracy;
 	private Combo combo;
+	private CustomText ctext;
 	//Steven
 	
 	public GameScreen(int width, int height, Song song) {
@@ -397,13 +399,20 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accDisplay=new Accuracy(600,30,400,400);
+		/*accDisplay=new Accuracy(600,30,400,400);
 		viewObjects.add(accDisplay);
 		accDisplay.update();
+		*/
 		combo=new Combo(275,300, 128, 128);
 		viewObjects.add(combo);
 		combo.update();
+
+		ctext=new CustomText(600,130,300,300,"");
+		viewObjects.add(ctext);
+			gamescore = new Scoring(500,40,400,400);
+
 		gamescore = new Scoring(500,40,400,400);
+
 		viewObjects.add(gamescore);
 		gamescore.update();  
 		
@@ -422,6 +431,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
+	
 	public void addKeystrokeIndicator(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
@@ -569,7 +579,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
-		accDisplay.setAcc(accuracy);
+		ctext.setText(accuracy+"");
 	}
 
 	/**
