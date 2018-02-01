@@ -13,7 +13,7 @@ public class Scoring extends Component {
 	public Scoring(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		score = 100021;
-		update();
+ 		update();
 	}
 	public void scoring() {
 		if(offset<16) {
