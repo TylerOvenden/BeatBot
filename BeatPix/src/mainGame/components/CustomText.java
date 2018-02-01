@@ -30,6 +30,38 @@ public class CustomText extends Component {
 		this.keepScale=keepScale;
 	}
 
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public int getW() {
+		return w;
+	}
+
+	public void setW(int w) {
+		this.w = w;
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public void setH(int h) {
+		this.h = h;
+	}
+
+	public boolean isKeepScale() {
+		return keepScale;
+	}
+
+	public void setKeepScale(boolean keepScale) {
+		this.keepScale = keepScale;
+	}
+
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
