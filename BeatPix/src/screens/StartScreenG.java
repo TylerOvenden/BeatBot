@@ -128,7 +128,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					scrollInEnd();
 				}
 			}
-		}, 0, 10); //100fps
+		}, 0, 1); //100fps
 	}
 	public void scrollInEnd() {
 		time.cancel();
@@ -205,7 +205,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					//this.cancel();
 				}
 			}
-		}, 0, 10); //100fps
+		}, 0, 1); //100fps
 	}
 	public void scrollOutEnd() {
 		screenPhase = 4;
