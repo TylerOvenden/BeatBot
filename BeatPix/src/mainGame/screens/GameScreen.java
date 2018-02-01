@@ -97,8 +97,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private Scoring gamescore;
 	private float[] totalAcc;
 	private float accuracy;
-	private Combo combo;
+	private CustomText combo;
 	private CustomText ctext;
+	private int comboCount;
 	//Steven
 	
 	public GameScreen(int width, int height, Song song) {
@@ -403,11 +404,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(accDisplay);
 		accDisplay.update();
 		*/
-		combo=new Combo(275,300, 128, 128);
+		combo=new CustomText(275,300, 128, 128,"0");
 		viewObjects.add(combo);
-		combo.update();
 
-		ctext=new CustomText(600,130,300,300,"");
+		ctext=new CustomText(600,130,300,300,"100");
 		viewObjects.add(ctext);
 			gamescore = new Scoring(500,40,400,400);
 
@@ -580,6 +580,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
 		ctext.setText(accuracy+"");
+	}
+	
+	public void calcCombo(boolean isMiss) {
+		if(isMiss) {
+			comboCount=0;
+		}else {
+			comboCount++;
+		}
+		combo.setText(comboCount+"");
 	}
 
 	/**
@@ -870,9 +879,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		return timing;
 	}
 
-	public Combo getCombo() {
+	public int getCombo() {
 		// TODO Auto-generated method stub
-		return combo;
+		return comboCount;
 	}
 	
 }
