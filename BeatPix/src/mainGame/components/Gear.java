@@ -12,8 +12,18 @@ import gui.components.Action;
 import gui.components.Button;
 import mainGame.screens.GameScreen;
 
+/**
+ * This button will be used to allow the player to pause from the game and enter the escape menu
+ * @author Justin Yau
+ *
+ */
 public class Gear extends Button {
 	
+	/**
+	 * Creates a button that can be used to allow the player to pause from the game and enter the escape menu
+	 * @author Justin Yau
+	 *
+	 */
 	public Gear(int x, int y, int w, int h) {
 		super(x, y, w, h, " ", null, new Action() {
 			

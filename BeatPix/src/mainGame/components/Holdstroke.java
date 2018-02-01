@@ -96,7 +96,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getFirstClickTime() {
-		return startingTime + ((GameScreen.columnHeight - height) * fallSpeed);
+		return startingTime + (GameScreen.columnHeight * fallSpeed);
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getEndClickTime() {
-		return startingTime + (GameScreen.columnHeight * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + height - GameScreen.distanceAAfterGoal) * fallSpeed);
 	}
 	
 	/**
@@ -213,6 +213,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 		//Above works
 		else if(height >= bottomHeightFromBottom) {
 			if(bottomHeightFromBottom <= (GameScreen.distanceAAfterGoal) ) {
+				System.out.println(true);
 				handleRemove();
 				return 1;
 			}
@@ -350,7 +351,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 				sleep(0);
 			}
 			moveOneDown();
-			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + 64 + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
+			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
 				handleRemove();
 			}
 			sleep(fallSpeed);
@@ -367,7 +368,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public boolean isBeyondGoal(int goal) {
-		return getY() + height > goal;
+		return (getY() + height - 64) > goal;
 	}
 
 	/**

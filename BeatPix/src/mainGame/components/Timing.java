@@ -139,6 +139,8 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 
 	@Override
 	public void calculateEndAccuracy(Holdstroke stroke) {
+		System.out.println((Math.abs(GameScreen.timePass())));
+		System.out.println((Math.abs(stroke.getEndClickTime())));
 		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<16) {
 			changeImg("resources/perfect.png");
 			update();
