@@ -1,6 +1,10 @@
 package mainGame.components;
 
 import java.awt.Graphics2D;
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import javax.swing.ImageIcon;
 
@@ -10,9 +14,14 @@ public class Scoring extends Component {
 	int score;
 	int offset;
 	String img;
+	public int[] ints = {0, 0, 3, 1, 2, 3};
+	
 	public Scoring(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		score = 1009;
+		score = 1000;
+
+
+
  		update();
 	}
 	public void scoring() {
@@ -133,42 +142,17 @@ public class Scoring extends Component {
 				e.printStackTrace();
 					}			
 			}	   
+		} 
+/*	public void update(Graphics2D g) {
+		ArrayList<Integer> intList = new ArrayList<Integer>();
+		for (int i : ints)
+		{
+		    intList.add(i);
+		   
 		}
-	/*public void update(Graphics2D g) {
-		String img1="";
-		String img2="";
-		String img3="";
-		String img4="";
-		String img5="";
-		String img6="";
-		String scoreStr = String.valueOf(score);
-
-		System.out.println(scoreStr);
-
-			img1="resources/score-"+scoreStr.substring(0,1)+ ".png";
-			img2="resources/score-"+scoreStr.substring(1,2)+ ".png";
-			img3="resources/score-"+scoreStr.substring(2,3)+ ".png";
-			img4="resources/score-"+scoreStr.substring(3,4)+ ".png";
-			img5="resources/score-"+scoreStr.substring(4,5)+ ".png";
-			img6="resources/score-"+scoreStr.substring(5)+ ".png";
-			try {
-				ImageIcon icon = new ImageIcon(img1);
-				g.drawImage(icon.getImage(), 0, 300, null);
-				icon = new ImageIcon(img2);
-				g.drawImage(icon.getImage(), 60, 300, null);
-				icon = new ImageIcon(img3);
-				g.drawImage(icon.getImage(), 120, 300, null);
-				icon = new ImageIcon(img4);
-				g.drawImage(icon.getImage(), 180, 300, null);
-				icon = new ImageIcon(img5);
-				g.drawImage(icon.getImage(), 240, 300, null);
-				icon = new ImageIcon(img6);
-				g.drawImage(icon.getImage(), 300, 300, null);
-				}
-			catch(Exception e){
-				e.printStackTrace();
-					}			
-			}	*/   
-		
+	
+	
+			}	
+	*/	
 
 	}
