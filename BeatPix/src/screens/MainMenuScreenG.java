@@ -152,6 +152,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		}
 		for(ImageButton b: buttons) {
 			b.setEnabled(true);
+			System.out.println("Works");
 		}
 		screenPhase = 1;
 	}
