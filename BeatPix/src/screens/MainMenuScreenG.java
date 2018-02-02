@@ -66,7 +66,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 /*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),100*(i+1) + getHeight(),icon.getIconWidth(),100,"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
 		
-		buttons.get(0).setAction(new Action() {
+		/*buttons.get(0).setAction(new Action() {
 			public void act(){
 				System.out.println("Hello");
 				buttons.get(0).unhoverAction();
@@ -81,7 +81,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 				for(ImageButton b: buttons)
 					b.setEnabled(false);
 				}
-		});
+		});*/
 		
 		//--IDLE CHARACTER ANIMATION  /*D*/ Indicates dimensions have to be scaled (*required for animations*)
 /*D*/	idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
