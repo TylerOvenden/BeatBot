@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import gui.interfaces.Stroke;
 import gui.interfaces.Visible;
 import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.screens.GameScreen;
@@ -42,48 +43,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 
 	@Override
 	public void calculateAccuracy(Keystroke stroke) {
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<16) {
-			changeImg("resources/perfect.png");
-			update();
-			GameScreen.game.calcAcc(1);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<40) {
-			changeImg("resources/great.png");
-			update();
-			GameScreen.game.calcAcc(.95);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<73) {
-			changeImg("resources/good.png");
-			update();
-			GameScreen.game.calcAcc(.66);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<103) {
-			changeImg("resources/ok.png");
-			update();
-			GameScreen.game.calcAcc(.5);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<127) {
-			changeImg("resources/bad.png");
-			update();
-			GameScreen.game.calcAcc(.33);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getClickTime())<164) {
-			changeImg("resources/miss.png");
-			update();
-			GameScreen.game.calcAcc(0);
-			GameScreen.game.calcCombo(true);
-			return ;
-		}
+		checkAcc((Stroke) stroke,true);
 	}
 
 	public float getLastTiming() {
@@ -92,98 +52,104 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 
 	@Override
 	public void calculateFirstAccuracy(Holdstroke stroke) {
-		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<16) {
-			changeImg("resources/perfect.png");
-			update();
-			GameScreen.game.calcAcc(1);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<40) {
-			changeImg("resources/great.png");
-			update();
-			GameScreen.game.calcAcc(.95);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<73) {
-			changeImg("resources/good.png");
-			update();
-			GameScreen.game.calcAcc(.66);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<103) {
-			changeImg("resources/ok.png");
-			update();
-			GameScreen.game.calcAcc(.5);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<127) {
-			changeImg("resources/bad.png");
-			update();
-			GameScreen.game.calcAcc(.33);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<164) {
-			changeImg("resources/miss.png");
-			update();
-			GameScreen.game.calcAcc(0);
-			GameScreen.game.calcCombo(true);
-			return ;
-		}
+		checkAcc((Stroke) stroke,true);
 		
 	}
 
 	@Override
 	public void calculateEndAccuracy(Holdstroke stroke) {
-		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<16) {
-			changeImg("resources/perfect.png");
-			update();
-			GameScreen.game.calcAcc(1);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<40) {
-			changeImg("resources/great.png");
-			update();
-			GameScreen.game.calcAcc(.95);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<73) {
-			changeImg("resources/good.png");
-			update();
-			GameScreen.game.calcAcc(.66);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<103) {
-			changeImg("resources/ok.png");
-			update();
-			GameScreen.game.calcAcc(.5);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<127) {
-			changeImg("resources/bad.png");
-			update();
-			GameScreen.game.calcAcc(.33);
-			GameScreen.game.calcCombo(false);
-			return ;
-		}
-		if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<164) {
-			changeImg("resources/miss.png");
-			update();
-			GameScreen.game.calcAcc(0);
-			GameScreen.game.calcCombo(true);
-			return ;
-		}
+		checkAcc((Stroke) stroke,false);
 		
 	}
-	
+	public void checkAcc(Stroke stroke, boolean start) {
+		if(start) {
+			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<16) {
+				changeImg("resources/perfect.png");
+				update();
+				GameScreen.game.calcAcc(1);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<40) {
+				changeImg("resources/great.png");
+				update();
+				GameScreen.game.calcAcc(.95);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<73) {
+				changeImg("resources/good.png");
+				update();
+				GameScreen.game.calcAcc(.66);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<103) {
+				changeImg("resources/ok.png");
+				update();
+				GameScreen.game.calcAcc(.5);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<127) {
+				changeImg("resources/bad.png");
+				update();
+				GameScreen.game.calcAcc(.33);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<164) {
+				changeImg("resources/miss.png");
+				update();
+				GameScreen.game.calcAcc(0);
+				GameScreen.game.calcCombo(true);
+				return ;
+			}
+		}else {
+			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<16) {
+				changeImg("resources/perfect.png");
+				update();
+				GameScreen.game.calcAcc(1);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<40) {
+				changeImg("resources/great.png");
+				update();
+				GameScreen.game.calcAcc(.95);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<73) {
+				changeImg("resources/good.png");
+				update();
+				GameScreen.game.calcAcc(.66);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<103) {
+				changeImg("resources/ok.png");
+				update();
+				GameScreen.game.calcAcc(.5);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<127) {
+				changeImg("resources/bad.png");
+				update();
+				GameScreen.game.calcAcc(.33);
+				GameScreen.game.calcCombo(false);
+				return ;
+			}
+			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<164) {
+				changeImg("resources/miss.png");
+				update();
+				GameScreen.game.calcAcc(0);
+				GameScreen.game.calcCombo(true);
+				return ;
+			}
+		}
+	}
 	
 	@Override
 	public void missAccuracy() {
