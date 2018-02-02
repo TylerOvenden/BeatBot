@@ -18,7 +18,10 @@ import screens.components.ImageButton;
 
 public class MainMenuScreenG extends FullFunctionScreen implements MouseListener{
 
-	/**
+	/**Design:
+	 * 	-Background - based off where StartScreen left its background
+	 * 				- scroll down similarly to startscreen
+	 * 	-Idle Character - will be at the left side of screen
 	 * 
 	 */
 	private static final long serialVersionUID = -7197187517418245951L;
