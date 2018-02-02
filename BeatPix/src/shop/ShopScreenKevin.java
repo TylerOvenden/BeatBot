@@ -16,22 +16,25 @@ public class ShopScreenKevin extends FullFunctionScreen {
 
 	//things to do: create a text that visible and not visible
 	// yes or no button
-	// 
+	//the letters used as local variable in initAllObjects - k, l, z, i, x, j, a 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1504601622695326879L;
 	
 	private TextLabel text;
+	private TextLabel unlock;
+	
 	private ArrayList<Button> buttonList;
+	private ArrayList <Button> confirmButton;
+	private ArrayList<Button> yesButton;
+	
 	private CustomRectangle border; //for the text
 	private CustomRectangle border2; //for the unlock
+	
 	private ScrollablePane charScroll;
 	private Button noButton;
-	private ArrayList<Button> yesButton;
 	private int numChars;
-	private TextLabel unlock;
-	private ArrayList <Button> confirmButton;
 	
 
 	public ShopScreenKevin(int width, int height) 
@@ -57,6 +60,26 @@ public class ShopScreenKevin extends FullFunctionScreen {
 			}
 		});
 		
+		//create the panel 
+		charScroll = new ScrollablePane(this, 650, 100, 250, 400);
+		charScroll.setBorderWidth(3);
+		
+		//create the list of Buttons and add it to panel
+		for(int i=0; i < numChars; i++){ 
+			//got the index number
+			final int x = i;
+			buttonList.add(new Button(5,30*i,100,25,"Button "+i, new Action() {
+				int j = x;
+				@Override
+				public void act() {
+					
+					setThings1VisTrue();
+					setYesButVisExceptThis(j);
+				}
+			}));
+			charScroll.addObject(buttonList.get(i));
+		}
+		
 		//create arrayList of YesButtons
 		for(int k = 0; k < numChars; k++) {
 			final int z = k;
@@ -76,29 +99,20 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		}
 		//create arrayList of confirmButtons
 		for(int l = 0; l < numChars; l ++) {
+			final int y = l;
 			confirmButton.add(new Button(370, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
-				
+				int a = y;
 				@Override
 				public void act() {
 					setThings2VisFalse();
 					setAllConfButVisFalse();
+					charScroll.remove(buttonList.get(a));
+					buttonList.remove(a);
+					yesButton.remove(a);
+					confirmButton.remove(a);
+					charScroll.update();
 					
-				}
-			}));
-		}
-		//create the panel, and the buttons in it
-		charScroll = new ScrollablePane(this, 650, 100, 250, 400);
-		charScroll.setBorderWidth(3);
-		for(int i=0; i < numChars; i++){ 
-			//got the index number
-			final int x = i;
-			charScroll.addObject(new Button(5,30*i,100,25,"Button "+i, new Action() {
-				int j = x;
-				@Override
-				public void act() {
 					
-					setThings1VisTrue();
-					setYesButVisExceptThis(j);
 				}
 			}));
 		}
