@@ -67,8 +67,6 @@ public class Gear extends Button {
 	}
 	
 	public boolean isOnButton(int x, int y) {
-		System.out.println(x>getX() && x<getX()+scaledWidth 
-				&& y > getY() && y<getY()+scaledHeight);
 		return x>getX() && x<getX()+scaledWidth 
 		&& y > getY() && y<getY()+scaledHeight;
 	}
