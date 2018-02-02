@@ -14,7 +14,7 @@ public class Scoring extends Component {
 	int score;
 	int offset;
 	String img;
-	public int[] ints = {0, 0, 0, 1, 0, 0};
+	public int[] ints = {1, 2, 3, 4, 5, 6};
 	
 	public Scoring(int x, int y, int w, int h) {
 		super(x, y, w, h);
