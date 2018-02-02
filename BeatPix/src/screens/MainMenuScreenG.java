@@ -41,7 +41,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	
 	public AnimatedComponent idleCharacter;
 	
-	public static FullFunctionPane options;
+	public static OptionsPopUp options;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -63,6 +63,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 				}
 			}
 		});
+		//
 		
 		//--BUTTONS
 /*P*/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
@@ -80,28 +81,53 @@ public class MainMenuScreenG extends FullFunctionScreen {
 				}
 			});
 		}
+		//
+		
 		// Set button actions
-		buttons.get(0).setAction(new Action() {
+		buttons.get(LEVEL_IDX).setAction(new Action() {
 			public void act(){
-				System.out.println("Hello");
-				buttons.get(0).unhoverAction();
+				System.out.println("Select Level Screen Clicked");
+				buttons.get(LEVEL_IDX).unhoverAction();
 			}
 		});
+		buttons.get(CHARACTER_IDX).setAction(new Action() {
+			public void act(){
+				System.out.println("Select Character Screen Clicked");
+				buttons.get(CHARACTER_IDX).unhoverAction();
+			}
+		});
+		buttons.get(UNLOCK_IDX).setAction(new Action() {
+			public void act(){
+				System.out.println("Select Unlocks Screen Clicked");
+				buttons.get(UNLOCK_IDX).unhoverAction();
+			}
+		});
+		options = new OptionsPopUp(this, getWidth()/10, getHeight()/10, getWidth(), getHeight());
+		buttons.get(OPTIONS_IDX).setAction(new Action() {
+			public void act(){
+				System.out.println("Select Options Screen Clicked");
+				buttons.get(OPTIONS_IDX).unhoverAction();
+				
+				viewObjects.add(options);
+			}
+		});
+		//
 		
 		//--IDLE CHARACTER ANIMATION  /*D*/ Indicates dimensions have to be scaled (*required for animations*)
 /*D*/	idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
 /*P*/	idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
+		//
 		
-		scrollDown();
-		
+		//add all objects tp viewObjects
 		viewObjects.add(background);
 		for(ImageButton b: buttons) {
 			viewObjects.add(b);
-			viewObjects.add(new CustomText(getWidth()/2 + getWidth()/2*(1/10), 100*5+50, 400, 100, "OPTIONS"));
 		}
 		viewObjects.add(idleCharacter);
+		
+		scrollDown();
 	}
 
 //--EVENTS--//

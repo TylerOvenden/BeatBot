@@ -37,8 +37,12 @@ public class OptionsPopUp extends ScrollablePane {
 	}
 	
 	public void update(Graphics2D g) {
+		g.setColor(Color.BLACK);
+		g.drawRect(0,0,getWidth()*8/10,getHeight()*8/10);
+		g.fillRect(0,0,getWidth()*8/10,getHeight()*8/10);
 		g.setColor(Color.GRAY);
-		g.drawRect(0,0,100,100);
+		g.drawRect(10,10,getWidth()*7/10,getHeight()*7/10);
+		g.fillRect(10,10,getWidth()*7/10,getHeight()*7/10);
 		
 	}
 	
