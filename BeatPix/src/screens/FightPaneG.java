@@ -91,8 +91,7 @@ public class FightPaneG extends FullFunctionPane{
 	
 	public void keyPressed(KeyEvent e)
 	{	
-		System.out.print(animationRunning);
-		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && !animationRunning) {
+		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false)) {
 			
 			robotIdle.setAlpha(0);
 			robotHit1.setAlpha(0);
@@ -120,7 +119,7 @@ public class FightPaneG extends FullFunctionPane{
 					}
 				}, 800);
 			} 
-			if(rand == 1) {
+			else if(rand == 1) {
 				robotHit2.setAlpha(1);
 				Timer time = new Timer();
 				time.schedule(new TimerTask() {
@@ -133,7 +132,7 @@ public class FightPaneG extends FullFunctionPane{
 					}
 				}, 1000);
 			}
-			if(rand == 2) {
+			else if(rand == 2) {
 				robotHit3.setAlpha(1);
 				Timer time = new Timer();
 				time.schedule(new TimerTask() {
