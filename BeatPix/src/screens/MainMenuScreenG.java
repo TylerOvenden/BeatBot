@@ -65,23 +65,13 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		for(int i=0; i<4; i++) {
 /*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),100*(i+1) + getHeight(),icon.getIconWidth(),100,"resources\\ui\\buttons\\buttonwithrivet.png"));
 		}
-		
-		/*buttons.get(0).setAction(new Action() {
+		// Set button actions
+		buttons.get(0).setAction(new Action() {
 			public void act(){
 				System.out.println("Hello");
 				buttons.get(0).unhoverAction();
 			}
 		});
-		buttons.get(OPTIONS_IDX).setAction(new Action() {
-			//Options pop up
-			public void act() {
-				System.out.println("else");
-				buttons.get(OPTIONS_IDX).unhoverAction();
-				viewObjects.add(new OptionsPopUp(null, 250, 250, getWidth()/2, getHeight()/2));
-				for(ImageButton b: buttons)
-					b.setEnabled(false);
-				}
-		});*/
 		
 		//--IDLE CHARACTER ANIMATION  /*D*/ Indicates dimensions have to be scaled (*required for animations*)
 /*D*/	idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
@@ -118,7 +108,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 					scrollDownEnd();
 				}
 			}
-		}, 0, 1);
+		}, 0, 2);
 	}
 	//--SCROLL DOWN METHODS
 	public void moveBackground() {
@@ -156,7 +146,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		}
 		for(ImageButton b: buttons) {
 			b.setEnabled(true);
-			System.out.println("Works");
 		}
 		screenPhase = 1;
 	}

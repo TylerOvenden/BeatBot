@@ -7,11 +7,12 @@ import java.util.ArrayList;
 import gui.components.Component;
 import gui.components.FullFunctionPane;
 import gui.components.Graphic;
+import gui.components.ScrollablePane;
 import gui.components.TextLabel;
 import gui.interfaces.FocusController;
 import screens.components.ImageButton;
 
-public class OptionsPopUp extends FullFunctionPane {
+public class OptionsPopUp extends ScrollablePane {
 
 
 	/**
