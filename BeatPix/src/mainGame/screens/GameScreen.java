@@ -405,12 +405,12 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(accDisplay);
 		accDisplay.update();
 		*/
-		combo=new CustomText(275,300, 128, 128,"0");
+		combo=new CustomText(215,100, 50, 50,"0");
 		viewObjects.add(combo);
 
-		ctext=new CustomText(600,130,300,300,"100");
+		ctext=new CustomText(600,130,300,300,"100%");
 		viewObjects.add(ctext);
-			gamescore = new Scoring(500,40,400,400);
+		gamescore = new Scoring(500,40,400,400);
 
 		gamescore = new Scoring(500,40,400,400);
 
@@ -579,7 +579,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
-		ctext.setText(accuracy+"");
+		ctext.setText(accuracy+"%");
 	}
 	
 	public void calcCombo(boolean isMiss) {
