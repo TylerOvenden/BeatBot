@@ -22,7 +22,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 	 * 
 	 */
 	private static final long serialVersionUID = -7197187517418245951L;
-
+	
 	public Timer time;
 	private int screenPhase;
 	
@@ -72,6 +72,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			//Options pop up
 			public void act() {
+				System.out.println("else");
 				buttons.get(OPTIONS_IDX).unhoverAction();
 				viewObjects.add(new OptionsPopUp(null, 250, 250, getWidth()/2, getHeight()/2));
 				for(ImageButton b: buttons)
@@ -86,7 +87,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		run.start();
 		
 		scrollDown();
-		//slideInButtons();
 		
 		viewObjects.add(background);
 		for(ImageButton b: buttons) {
@@ -103,11 +103,12 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 					//-- SCROLL BACKGROUND UP
 					moveBackground();
 					//-- SCROLL IDLE CHRACTER UP
-/*D*/				moveIdleCharacter();
+					moveIdleCharacter();
 					
-					//will begin sliding in buttons from left once the background reaches point where the button is visible
+					//-- SCROLL BUTTONS UP
 					moveButtonsY();
-					if(background.getY() > -background.getHeight()) {
+					//will begin sliding in buttons from left once the background reaches point where the button is visible
+					if(background.getY() > -background.getHeight() && buttons.get(0).getX() > getWidth()*5/10) {
 						moveButtonsX();
 				}else {
 					scrollDownEnd();
@@ -129,22 +130,21 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 	public void moveButtonsX() {
 		if(buttons.get(0).getX() > getWidth()*5/10) {
 			for(int i = 0; i < buttons.size(); i++) {
-	/*D*/		buttons.get(i).setX(buttons.get(i).getX()-1);
+/*D*/			buttons.get(i).setX(buttons.get(i).getX()-1);
 			}
 		}
 	}
 	public void moveButtonsY() {
 		if(buttons.get(0).getY() > 100) {
 			for(int i = 0; i < buttons.size(); i++) {
-	/*D*/		buttons.get(i).setY(buttons.get(i).getY()-1);
+/*D*/			buttons.get(i).setY(buttons.get(i).getY()-1);
 			}
 		}
 	}
 	public void scrollDownEnd() {
 		time.cancel();
-		//slideInButtons();
 		background.setY(-background.getHeight()+getHeight());
-/*D*/		idleCharacter.setY(200);
+/*D*/	idleCharacter.setY(200);
 
 		for(int i = 0; i < buttons.size(); i++) {
 /*D*/		buttons.get(i).setY(100*(i+1));
@@ -153,7 +153,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		for(ImageButton b: buttons) {
 			b.setEnabled(true);
 		}
-		System.out.println("Hello");
 		screenPhase = 1;
 	}
 	
