@@ -1,5 +1,6 @@
 package mainGame.components;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
@@ -9,9 +10,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 import gui.components.Component;
-import gui.interfaces.Stroke;
+
 import gui.interfaces.Visible;
 import mainGame.components.interfaces.JustinTimingInterface;
+import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
 
 public class Timing extends Component implements JustinTimingInterface,Runnable {
@@ -161,7 +163,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
