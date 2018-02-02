@@ -102,7 +102,8 @@ public class MainMenuScreenG extends FullFunctionScreen {
 				buttons.get(UNLOCK_IDX).unhoverAction();
 			}
 		});
-		options = new OptionsPopUp(this, getWidth()/10, getHeight()/10, getWidth(), getHeight());
+		
+		options = new OptionsPopUp(this, getWidth()/10, getHeight()/10, 100, 100);
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
