@@ -183,7 +183,8 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 		}
 		
 	}
-
+	
+	
 	@Override
 	public void missAccuracy() {
 		changeImg("resources/miss.png");
