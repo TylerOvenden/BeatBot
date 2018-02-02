@@ -31,7 +31,7 @@ public class FightPaneG extends FullFunctionPane{
 	private Thread missThread;
 	
 	boolean hasHit;
-	boolean animationRunning;
+	boolean animationRunning = false;
 	boolean miss;
 	int pastRand;
 
@@ -92,7 +92,7 @@ public class FightPaneG extends FullFunctionPane{
 	public void keyPressed(KeyEvent e)
 	{	
 		System.out.print(animationRunning);
-		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) & !animationRunning) {
+		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && !animationRunning) {
 			
 			robotIdle.setAlpha(0);
 			robotHit1.setAlpha(0);
@@ -101,50 +101,52 @@ public class FightPaneG extends FullFunctionPane{
 			robotMiss.setAlpha(0);
 			animationRunning = true;
 			
+			
 			int rand = (int) (Math.random()*3);
-			pastRand = rand;
 			while(rand == pastRand)
 				rand = (int) (Math.random()*3);
-			if(rand == 1) {
+			pastRand = rand;
+			
+			if(rand == 0) {
 				robotHit1.setAlpha(1);
 				Timer time = new Timer();
-					time.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							robotIdle.setAlpha(1);
-							robotHit1.setAlpha(0);
-						}
-					}, 800);
+				time.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						robotIdle.setAlpha(1);
+						robotHit1.setAlpha(0);
+						animationRunning = false;
+					}
+				}, 800);
 			} 
-			if(rand == 2) {
+			if(rand == 1) {
 				robotHit2.setAlpha(1);
 				Timer time = new Timer();
 				time.schedule(new TimerTask() {
-					
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
 						robotIdle.setAlpha(1);
 						robotHit2.setAlpha(0);
+						animationRunning = false;
 					}
 				}, 1000);
 			}
-			if(rand == 3) {
+			if(rand == 2) {
 				robotHit3.setAlpha(1);
 				Timer time = new Timer();
 				time.schedule(new TimerTask() {
-					
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
 						robotIdle.setAlpha(1);
 						robotHit3.setAlpha(0);
+						animationRunning = false;
 					}
 				}, 600);
 			}
 		}
-		animationRunning = false;
 	}
 	
 	
