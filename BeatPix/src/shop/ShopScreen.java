@@ -33,6 +33,8 @@ public class ShopScreen extends FullFunctionScreen
 	private Font warningFont;
 
 	private ArrayList<Song> songs;
+	private ArrayList<Button> buttons;
+	
 	private Button songButton1;
 	private Button songButton2;
 	private Button songButton3;
@@ -40,9 +42,10 @@ public class ShopScreen extends FullFunctionScreen
 	private Button songButton5;
 	private Button yes;
 	private Button no;
+	private Button clickedButton;
 	
 	private int credits;
-	private int index;
+//	private int index;
 	private int price;
 	
 	private TextArea text;
@@ -64,9 +67,10 @@ public class ShopScreen extends FullFunctionScreen
 		credits = 25000;
 		clicked = false;
 		
-		ArrayList<Button> buttons = new ArrayList<Button>();
+		buttons = new ArrayList<Button>();
 
-		songButton1 = new Button(0,0,200,70,"Song 1 | 1500 Credits", new Action() {
+		/*
+		songButton1 = new Button(0,0,100,70,"Song 1 | 1500 Credits", new Action() {
 			
 			@Override
 			public void act() {
@@ -78,7 +82,7 @@ public class ShopScreen extends FullFunctionScreen
 			}
 		});
 		
-		songButton2 = new Button(0,0,200,170,"Song 2 | 1500 Credits", new Action() {
+		songButton2 = new Button(0,50,100,70,"Song 2 | 1500 Credits", new Action() {
 			
 			@Override
 			public void act() {
@@ -90,7 +94,7 @@ public class ShopScreen extends FullFunctionScreen
 			}
 		});
 
-		songButton3 = new Button(0,0,200,270,"Song 3 | 1500 Credits", new Action() {
+		songButton3 = new Button(0,100,100,70,"Song 3 | 1500 Credits", new Action() {
 			
 			@Override
 			public void act() {
@@ -101,7 +105,7 @@ public class ShopScreen extends FullFunctionScreen
 				
 			}
 		});
-		songButton4 = new Button(0,0,200,370,"Song 4 | 1500 Credits", new Action() {
+		songButton4 = new Button(0,150,100,70,"Song 4 | 1500 Credits", new Action() {
 			
 			@Override
 			public void act() {
@@ -112,7 +116,7 @@ public class ShopScreen extends FullFunctionScreen
 				
 			}
 		});
-		songButton5 = new Button(0,0,200,470,"Song 5 | 1500 Credits", new Action() {
+		songButton5 = new Button(0,200,100,70,"Song 5 | 1500 Credits", new Action() {
 			
 			@Override
 			public void act() {
@@ -124,7 +128,8 @@ public class ShopScreen extends FullFunctionScreen
 				
 			}
 		});
-		 
+		
+		
 		
 		buttons.add(songButton1);
 		buttons.add(songButton2);
@@ -132,6 +137,8 @@ public class ShopScreen extends FullFunctionScreen
 		buttons.add(songButton4);
 		buttons.add(songButton5);
 				
+		
+		*/
 		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
 		creditFont = new Font("Verdana", Font.BOLD, 20);
 		warningFont = new Font("Verdana", Font.BOLD, 18);
@@ -192,8 +199,9 @@ public class ShopScreen extends FullFunctionScreen
 								Thread.sleep(1500);
 								purchased.setVisible(false);
 								
-								scroll.remove(buttons.get((index)));		
-								buttons.remove(index);
+								scroll.remove(clickedButton);		
+								buttons.remove(clickedButton);
+
 								scroll.update();							
 							}
 							catch (InterruptedException e)
@@ -248,12 +256,31 @@ public class ShopScreen extends FullFunctionScreen
 		});
 		viewObjects.add(no);
 		no.setVisible(false);
+			
+		for(int i = 0; i < 5; i++)
+		{ 
+			final int z = i;
+			Button b = new Button(5,30*i,100,25,i+"",null);
+			b.setAction(new Action() 
+			{
+				
+				@Override
+				public void act() 
+				{
+					clickedButton = b;				
+					text.setVisible(true);
+					yes.setVisible(true);				
+					no.setVisible(true);				
+				}
+			});
+			buttons.add(b);
+		}
 		
 		for (int i = 0; i < buttons.size(); i++)
 		{
 			scroll.addObject(buttons.get(i));
 		}
-
+		
 		scroll.update();
 		viewObjects.add(scroll);
 				
@@ -265,7 +292,8 @@ public class ShopScreen extends FullFunctionScreen
 		{		
 			@Override
 			public void act() 
-			{								
+			{	
+				
 				text.setVisible(true);
 				yes.setVisible(true);				
 				no.setVisible(true);
