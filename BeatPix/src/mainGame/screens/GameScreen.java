@@ -40,6 +40,7 @@ import mainGame.components.KeystrokeIndicator;
 import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
+import mainGame.components.Timing2;
 import mainGame.screens.interfaces.ResizableScreen;
 
 public class GameScreen extends ResizableScreen implements Runnable {
@@ -99,6 +100,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private CustomText combo;
 	private CustomText ctext;
 	private int comboCount;
+	private ArrayList<Timing2> timings;
 	//Steven
 	//tyler
 	private Scoring gamescore;
