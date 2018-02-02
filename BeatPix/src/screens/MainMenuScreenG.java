@@ -17,6 +17,7 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
+import screens.components.ScalablePixelBack;
 
 public class MainMenuScreenG extends FullFunctionScreen {
 
@@ -106,7 +107,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
-				
+				viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
 				viewObjects.add(options);
 			}
 		});
@@ -126,6 +127,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		}
 		viewObjects.add(idleCharacter);
 		
+		//viewObjects.add(new ScalableButtonBackGroundThingIDunno(50,50,getWidth()*8/10,getHeight()*8/10));
 		scrollDown();
 	}
 
