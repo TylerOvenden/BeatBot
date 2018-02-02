@@ -59,7 +59,6 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act() {
 				if(screenPhase == 0) {
 					scrollDownEnd();
-					background.setEnabled(false);
 				}
 			}
 		});
@@ -179,6 +178,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public void scrollDownEnd() {
 		time.cancel();
 		background.setY(-background.getHeight()+getHeight());
+		background.setEnabled(false);
 /*D*/	idleCharacter.setY(200);
 
 		for(int i = 0; i < buttons.size(); i++) {
