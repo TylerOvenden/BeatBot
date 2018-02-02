@@ -27,6 +27,8 @@ public class Accuracy extends Component{
 			img1="resources/score-1.png";
 			img2="resources/score-0.png";
 			img3="resources/score-0.png";
+			System.out.println("3");
+			
 		}else {
 			img1="resources/score-"+0+".png";
 			//System.out.print((acc-(acc%10))/10);
