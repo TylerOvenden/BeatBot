@@ -228,8 +228,7 @@ public class Button extends TextLabel implements Clickable{
 	 *@param y - the y coordinate of the mouse, relative to this ComponentContainer
 	 */
 	public boolean isHovered(int x, int y) {
-		boolean b = x>getX() && x<getX()+getWidth() 
-		&& y > getY() && y<getY()+getHeight();
+		boolean b = isOnButton(x,y);
 //		if(b != hovered){
 //			
 //		}
@@ -240,6 +239,11 @@ public class Button extends TextLabel implements Clickable{
 			unhoverAction();
 		}
 		return hovered;
+	}
+	
+	public boolean isOnButton(int x, int y) {
+		return x>getX() && x<getX()+getWidth() 
+		&& y > getY() && y<getY()+getHeight();
 	}
 	
 	/**

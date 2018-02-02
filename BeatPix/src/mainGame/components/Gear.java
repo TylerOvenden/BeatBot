@@ -18,6 +18,12 @@ import mainGame.screens.GameScreen;
  *
  */
 public class Gear extends Button {
+
+	private int oHeight; //The original height will be stored here
+	private int oWidth; //The original width will be stored here
+	private int scaledWidth;
+	private int scaledHeight;
+	private int oY;
 	
 	/**
 	 * Creates a button that can be used to allow the player to pause from the game and enter the escape menu
@@ -35,7 +41,36 @@ public class Gear extends Button {
 			}
 			
 		});
+		oY = y;
+		oHeight = h;
+		oWidth = w;
+		scaledWidth = w;
+		scaledHeight = h;
 		update();
+	}
+	
+	public int getOY() {
+		return oY;
+	}
+	
+	public int getOHeight() {
+		return oHeight;
+	}
+	
+	public int getOWidth() {
+		return oWidth;
+	}
+	
+	public void updateScales(double xScale, double yScale) {
+		scaledWidth = (int) (oWidth * xScale);
+		scaledHeight = (int) (oHeight * yScale);
+	}
+	
+	public boolean isOnButton(int x, int y) {
+		System.out.println(x>getX() && x<getX()+scaledWidth 
+				&& y > getY() && y<getY()+scaledHeight);
+		return x>getX() && x<getX()+scaledWidth 
+		&& y > getY() && y<getY()+scaledHeight;
 	}
 	
 	public void drawButton(Graphics2D g, boolean hover) {

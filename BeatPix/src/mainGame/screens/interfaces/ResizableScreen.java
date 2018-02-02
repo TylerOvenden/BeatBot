@@ -54,7 +54,11 @@ public abstract class ResizableScreen extends ClickableScreen {
 	 * @author Justin Yau
 	 */
 	public void setUpComponentListener() {
-		addComponentListener(new ComponentAdapter() {
+		addComponentListener(getComponentAdapter());
+	}
+	
+	public ComponentAdapter getComponentAdapter() {
+		return new ComponentAdapter() {
 			
 			@Override
 			public void componentResized(ComponentEvent arg0) {
@@ -65,7 +69,43 @@ public abstract class ResizableScreen extends ClickableScreen {
 				yScale = ((double) height)/originalHeight;
 			}
 			
-		});
+		};
+	}
+	
+	public int getOWidth() {
+		return originalWidth;
+	}
+	
+	public int getOHeight() {
+		return originalHeight;
+	}
+	
+	public void setXScale(double x) {
+		xScale = x;
+	}
+	
+	public void setYScale(double y) {
+		yScale = y;
+	}
+	
+	/**
+	 * This method returns the current x scale of the screen
+	 * @return - The current x scale of the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public double getXScale() {
+		return xScale;
+	}
+	
+	/**
+	 * This method returns the current y scale of the screen
+	 * 
+	 * @return - The current y scale of the screen
+	 * @author Justin Yau
+	 */
+	public double getYScale() {
+		return yScale;
 	}
 	
 	public void update(Graphics2D g){

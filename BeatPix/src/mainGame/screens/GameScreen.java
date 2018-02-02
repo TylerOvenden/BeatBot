@@ -153,6 +153,23 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		playing = false;
 	}
 	
+	public ComponentAdapter getComponentAdapter() {
+		return new ComponentAdapter() {
+			
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Component c = (Component)arg0.getSource();
+				int height = c.getHeight();
+				int width = c.getWidth();
+				setXScale(((double) width)/getOWidth());
+				setYScale(((double) height)/getOHeight());
+				escapeGear.setY((int) (escapeGear.getOY() - (6 * getYScale())));
+				escapeGear.updateScales(getXScale(), getYScale());
+			}
+			
+		};
+	}
+	
 	/**
 	 * This method sets up the default bindings for the game
 	 * 
@@ -420,7 +437,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	public void setUpGearButton(List<Visible> viewObjects) {
-		escapeGear = new Gear(5, 25, 50, 50);
+		escapeGear = new Gear(2, 25, 50, 50);
 		viewObjects.add(escapeGear);
 	}
 
@@ -684,7 +701,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
-		ColoredRectangle rect = new ColoredRectangle(0,0, getWidth(), getHeight(), ((float)0.3), Color.GRAY);
+		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
 		if(escapeGear != null) {
