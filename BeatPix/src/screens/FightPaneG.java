@@ -30,7 +30,6 @@ public class FightPaneG extends FullFunctionPane{
 	private Thread hit3Thread;
 	private Thread missThread;
 	
-	boolean hasHit;
 	boolean animationRunning = false;
 	boolean miss;
 	int pastRand;
