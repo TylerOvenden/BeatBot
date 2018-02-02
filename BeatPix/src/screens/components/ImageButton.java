@@ -16,7 +16,16 @@ import gui.interfaces.Clickable;
 
 public class ImageButton extends Graphic implements Clickable{
 
+	/* 
+	 * Basically a CustomButton, but the user can set the hover actions
+	 * as they want as well as easier implementation of images
+	 * */
+	
 	Action action;
+	
+	Action hoverAction;
+	
+	Action unhoverAction;
 	
 	private boolean hovered;
 	
@@ -26,6 +35,8 @@ public class ImageButton extends Graphic implements Clickable{
 	
 	public ImageButton(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
+		hoverAction = null;
+		unhoverAction = null;
 	}
 
 
@@ -54,12 +65,20 @@ public class ImageButton extends Graphic implements Clickable{
 		return hovered;
 	}
 	public void hoverAction(){
-		GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		if(hoverAction != null)
+			hoverAction.act();
 		setLeft(false);
+	}
+	public void setHoverAction(Action a) {
+		hoverAction = a;
 	}
 	public void unhoverAction(){
 		setLeft(true);
-		GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		if(unhoverAction != null)
+			unhoverAction.act();
+	}
+	public void setUnhoverAction(Action a) {
+		unhoverAction = a;
 	}
 	public boolean isEnabled() {
 		return enabled;

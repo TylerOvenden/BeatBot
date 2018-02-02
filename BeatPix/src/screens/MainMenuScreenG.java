@@ -1,5 +1,6 @@
 package screens;
 
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 
+import gui.GUIApplication;
 import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
@@ -16,7 +18,7 @@ import gui.userInterfaces.FullFunctionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 
-public class MainMenuScreenG extends FullFunctionScreen implements MouseListener{
+public class MainMenuScreenG extends FullFunctionScreen {
 
 	/**Design:
 	 * 	-Background - based off where StartScreen left its background
@@ -29,7 +31,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 	public Timer time;
 	private int screenPhase;
 	
-	public Graphic background;
+	public ImageButton background;
 	
 	public ArrayList<ImageButton> buttons;
 	public static int LEVEL_IDX = 0;
@@ -46,24 +48,37 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		super(width, height);
 		screenPhase = 0;
 	}
-
-	public void mouseClicked(MouseEvent e) {
-		if(screenPhase == 0) {
-			scrollDownEnd();
-		}
-	}
 	
 	public void initAllObjects(List<Visible> viewObjects) {
 		//--BACKGROUND
 /*P*/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
-/*P D*/	background = new Graphic(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
+/*P D*/	background = new ImageButton(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
+		background.setEnabled(true);
 		background.setY(-background.getHeight()+getHeight()*2);
+		background.setAction(new Action() {
+			public void act() {
+				if(screenPhase == 0) {
+					scrollDownEnd();
+					background.setEnabled(false);
+				}
+			}
+		});
 		
 		//--BUTTONS
 /*P*/	icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
 /*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),100*(i+1) + getHeight(),icon.getIconWidth(),100,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			buttons.get(i).setUnhoverAction(new Action() {
+				public void act() {
+					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+			});
+			buttons.get(i).setHoverAction(new Action() {
+				public void act() {
+					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+			});
 		}
 		// Set button actions
 		buttons.get(0).setAction(new Action() {
