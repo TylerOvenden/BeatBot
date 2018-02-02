@@ -91,6 +91,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements MouseListener
 		viewObjects.add(background);
 		for(ImageButton b: buttons) {
 			viewObjects.add(b);
+			viewObjects.add(new CustomText(getWidth()/2 + getWidth()/2*(1/10), 100*5+50, 400, 100, "OPTIONS"));
 		}
 		viewObjects.add(idleCharacter);
 	}

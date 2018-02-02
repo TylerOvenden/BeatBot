@@ -1,72 +1,121 @@
 package screens.components;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 
 import gui.components.Component;
-import gui.components.Graphic;
-import gui.interfaces.Visible;
-import gui.userInterfaces.ComponentContainer;
 
-public class CustomText extends ComponentContainer implements Visible {
+/**
+ * Creates Custom Text that scales with size
+ * 
+ * @author Steven
+ *
+ */
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1615091844335828099L;
-	/**
-	 * 
-	 */
-	private String text;
+public class CustomText extends Component {
 	
+	String text;
+	int w;
+	int h;
+	boolean keepScale;
+
+	/**
+	 * 
+	 * @param x - x
+	 * @param y - y
+	 * @param w - w
+	 * @param h - h
+	 * @param text - Text
+	 */
 	public CustomText(int x, int y, int w, int h, String text) {
-		super(x, y);
-		this.text = text;
+		super(x, y, w, h);
+		this.text=text.toUpperCase();
+		this.w=w;
+		this.h=h;
+		keepScale=true;
+		update();
 	}
 	
-	public String letterImageLocation(String letter) {
-		return "resources\\text\\"+letter+".png";
+	/**
+	 * 
+	 * @param x - x
+	 * @param y - y
+	 * @param w - w
+	 * @param h - h
+	 * @param text - Text
+	 * @param keepScale - Keep height scale or not
+	 */
+	public CustomText(int x, int y, int w, int h, String text,boolean keepScale) {
+		super(x, y, w, h);
+		this.text=text.toUpperCase();
+		this.w=w;
+		this.h=h;
+		this.keepScale=keepScale;
+		update();
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+		update();
+	}
+
+	public int getW() {
+		return w;
+	}
+
+	public void setW(int w) {
+		this.w = w;
+		update();
+	}
+
+	public int getH() {
+		return h;
+	}
+
+	public void setH(int h) {
+		this.h = h;
+		update();
+	}
+
+	public boolean isKeepScale() {
+		return keepScale;
+	}
+
+	public void setKeepScale(boolean keepScale) {
+		this.keepScale = keepScale;
+		update();
 	}
 
 	@Override
-	public void initObjects(List<Visible> viewObjects) {
-		text = "AB";
-		for(int i = 0; i < text.length(); i++) {
-			//letterImageLocation(text.substring(i, i+1)), i*100, 100
-			viewObjects.add(new Graphic(100*i,0,letterImageLocation(text.substring(i, i+1))));
-			System.out.println("Sunnnny");
+	public void update(Graphics2D g) {
+		super.clear();
+		for(int i=0;i<text.length();i++) {
+			try {
+				ImageIcon icon = new ImageIcon("resources/text/"+text.substring(i,i+1)+".png");
+				//System.out.println("resources/text/"+text.substring(i,i+1)+".png");
+				Image img = icon.getImage();
+				Image newimg;
+				int newW=w-(text.length()*5);
+				if(keepScale) {
+					newimg = img.getScaledInstance(newW/text.length(),h/text.length(),java.awt.Image.SCALE_SMOOTH);
+				}else {
+					newimg = img.getScaledInstance(newW/text.length(),h,java.awt.Image.SCALE_SMOOTH);
+				}
+				ImageIcon newIcon = new ImageIcon(newimg);
+				g.drawImage(newIcon.getImage(), i*w/text.length(), 0, null);
+					
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
 		}
-	}
-
-	@Override
-	public void setX(int x) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setY(int y) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean isAnimated() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void unhoverAction() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hoverAction() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
