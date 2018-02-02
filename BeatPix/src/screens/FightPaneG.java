@@ -131,7 +131,7 @@ public class FightPaneG extends FullFunctionPane{
 						animationRunning = false;
 					}
 				}, 1000);
-			}
+			} 
 			else if(rand == 2) {
 				robotHit3.setAlpha(1);
 				Timer time = new Timer();
