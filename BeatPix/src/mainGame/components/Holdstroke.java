@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import gui.components.AnimatedComponent;
 import mainGame.components.interfaces.HoldstrokeInterface;
+import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
 
 /**
@@ -14,7 +15,7 @@ import mainGame.screens.GameScreen;
  * @author Justin Yau
  *
  */
-public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface {
+public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface, Stroke {
 	
 	private int fallSpeed; //The speed at which you would like the stroke to fall at
 	private int holdTime; //The time the user has to hold down a particular key for this stroke
