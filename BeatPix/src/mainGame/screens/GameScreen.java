@@ -156,6 +156,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		playing = false;
 	}
 	
+	/**
+	 * Overrides component adapter such that the gear click area is bigger
+	 * 
+	 * @author Justin Yau
+	 */
 	public ComponentAdapter getComponentAdapter() {
 		return new ComponentAdapter() {
 			
