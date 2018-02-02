@@ -90,7 +90,7 @@ public class ImageButton extends Graphic implements Clickable{
 	//--Text Label--//
 	public boolean hasLeft() {
 		return left;
-	}
+	} 
 	public void setLeft(boolean left) {
 		this.left = left;
 	}

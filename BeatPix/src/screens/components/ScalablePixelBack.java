@@ -1,6 +1,7 @@
 package screens.components;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -9,7 +10,7 @@ import javax.swing.ImageIcon;
 
 import gui.components.Component;
 
-public class ScalableButtonBackGroundThingIDunno extends Component {
+public class ScalablePixelBack extends Component {
 
 	/**
 	 * HELLO PEOPLE
@@ -23,25 +24,26 @@ public class ScalableButtonBackGroundThingIDunno extends Component {
 	 * CORNERS WILL BE EASY
 	 * SIDES WILL BE ADDED WHEN REQUIRED
 	 * 
+	 * 
+	 * 2/2 - WILL ADD SCALING LATER SO BACKGROUND DOESN'T SEEM SO SMALL
 	 * @param x
 	 * @param y
 	 * @param w
 	 * @param h
 	 */
 	
-	private BufferedImage image;
-	private boolean loadedImages;
-	
 	private static String testFile = "resources\\ui\\buttons\\test";
 	
 	private String[][] gridOfImages;
 	
 	public static void main(String[] args) {
-		ScalableButtonBackGroundThingIDunno a = new ScalableButtonBackGroundThingIDunno(0,0,120,120);
+		ScalablePixelBack a = new ScalablePixelBack(0,0,120,120);
 	}
 	
-	public ScalableButtonBackGroundThingIDunno(int x, int y, int w, int h) {
+	public ScalablePixelBack(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		
+		w -= w%12; h -= h%12;
 		
 		//each image is a 12 by 12 pixel square
 		int xCount = w/12; int yCount = h/12;
@@ -75,42 +77,40 @@ public class ScalableButtonBackGroundThingIDunno extends Component {
 			}
 		}
 		
-		for(int row = 0; row < gridOfImages.length; row++) {
+		/*for(int row = 0; row < gridOfImages.length; row++) {
 			String printLine = "";
 			for(int column = 0; column < gridOfImages[row].length; column++) {
 				printLine += " "+gridOfImages[row][column];
 			}
 			System.out.println(printLine);
-		}
+		}*/
+		update();
 	}
 
 	@Override
 	public void update(Graphics2D g) {
-		// TODO Auto-generated method stub
-
-	}
-	
-	private void loadImages(String imageLocation, double scale) {
-		try{
-			//get the full-size image
-			ImageIcon icon = new ImageIcon(imageLocation);
-	
-			int newWidth = (int) (icon.getIconWidth() * scale);
-			int newHeight = (int) (icon.getIconHeight() * scale);
-			
-			image = new BufferedImage(icon.getIconWidth(),icon.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g = image.createGraphics();
-			g.drawImage(icon.getImage(), 0, 0, null);
-			
-			AffineTransform scaleT = new AffineTransform();
-			scaleT.scale(scale, scale);
-			AffineTransformOp scaleOp = new AffineTransformOp(scaleT, AffineTransformOp.TYPE_BILINEAR);
-			image = scaleOp.filter(image,new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB));
-			
-			loadedImages = true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		super.clear();
+			try {
+				int currentX = 0; int currentY = 0;
+				for(int row = 0; row < gridOfImages.length; row++) {
+					for(int column = 0; column < gridOfImages[row].length; column++) {
+						ImageIcon icon = new ImageIcon(gridOfImages[row][column]);
+						//SCALING THE IMAGE
+						
+						
+						
+						
+						g.drawImage(icon.getImage(),currentX,currentY,null);
+/*D*/						currentX+= 12;
+						//System.out.println(currentX + " " + currentY);
+					}
+						currentX = 0;
+/*D*/					currentY+=12;
+				}
+				//System.out.println("I am working inside you");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 	}
 
 }

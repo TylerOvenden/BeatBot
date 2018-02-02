@@ -27,28 +27,27 @@ public class LevelSelectG extends FullFunctionScreen{
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		background = updateBackground("resources\\backgrounds\\start.jpg");
-		//viewObjects.add(background);
+		background = updateBackground("resources\\mop.png");
+		viewObjects.add(background);
 		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
 		buttons = new ArrayList<ImageButton>();
-		for(int i=0; i<4; i++) {
-/*P D*/		buttons.add(new ImageButton( 150*(-i-1)+getWidth()-200,100*(i+1) + getHeight()-600,icon.getIconWidth(),100,"resources\\tester.jpg"));
+		for(int i=0; i<5; i++) {
+/*P D*/		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-600, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
 		}
 		buttons.get(0).setAction(new Action() {
 			public void act(){
 				buttons.get(0).unhoverAction();
 			}
 		});
+		buttons.get(3).loadImages("resources\\tester.jpg", buttons.get(3).getWidth()+25, buttons.get(3).getHeight()+25);
 		buttons.get(3).setAction(new Action() {
-			//Options pop up
+			
 			public void act() {
-				if(true) {
-				viewObjects.add(new OptionsPopUp(null, 250, 250, getWidth()/2, getHeight()/2));
-				for(ImageButton b: buttons)
-					b.setEnabled(false);
-				}
+				background = updateBackground("resources\\tester1.jpg");
+				viewObjects.add(background);
 			}
 		});
+		buttons.get(3).setEnabled(true);
 		for(ImageButton b: buttons) {
 			viewObjects.add(b);
 		}
@@ -56,7 +55,7 @@ public class LevelSelectG extends FullFunctionScreen{
 	
 	private Graphic updateBackground(String path) {
 		ImageIcon icon = new ImageIcon(path);
-		int w; int h; // 0 for either will use original image size/width 
+		int w; int h; // 0 for either will us e original image size/width 
 		int x = 0; int y = 0;
 		if(background != null) {
 			x = background.getX(); y = background.getY();
