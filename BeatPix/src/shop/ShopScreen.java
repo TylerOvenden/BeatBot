@@ -197,8 +197,7 @@ public class ShopScreen extends FullFunctionScreen
 								purchased.setCustomTextColor(Color.white);
 								viewObjects.add(purchased);
 								Thread.sleep(1500);
-								purchased.setVisible(false);
-								
+								purchased.setVisible(false);								
 								scroll.remove(clickedButton);		
 								buttons.remove(clickedButton);
 
@@ -259,8 +258,7 @@ public class ShopScreen extends FullFunctionScreen
 			
 		for(int i = 0; i < 5; i++)
 		{ 
-			final int z = i;
-			Button b = new Button(5,30*i,100,25,i+"",null);
+			Button b = new Button(0,(0+(i*50)),200,70,"Song "+i+" | Credits: 1500",null);
 			b.setAction(new Action() 
 			{
 				
