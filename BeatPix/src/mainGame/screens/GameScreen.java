@@ -94,14 +94,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private Timing timing;
 	private TextArea visual;
 	private Accuracy accDisplay;
-	private Scoring gamescore;
 	private float[] totalAcc;
 	private float accuracy;
 	private CustomText combo;
 	private CustomText ctext;
 	private int comboCount;
 	//Steven
-	
+	//tyler
+	private Scoring gamescore;
+	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
 		
@@ -511,7 +512,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			Keystroke cStroke = strokes.get(0);
 			removeStroke(cStroke);
 			cStroke.cancelFall();
-
 		}
  		
  	}
