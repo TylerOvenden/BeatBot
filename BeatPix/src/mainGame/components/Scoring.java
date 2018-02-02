@@ -11,6 +11,11 @@ import javax.swing.ImageIcon;
 import gui.components.Component;
 
 public class Scoring extends Component {
+	/**
+	 * 
+	 * 
+	 * @author Tyler Ovenden
+	 */
 	int score;
 	int offset;
 	String img;
