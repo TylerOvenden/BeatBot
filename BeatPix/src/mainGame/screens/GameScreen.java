@@ -2,6 +2,7 @@ package mainGame.screens;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -101,6 +102,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private CustomText ctext;
 	private int comboCount;
 	private ArrayList<Timing2> timings;
+
 	//Steven
 	//tyler
 	private Scoring gamescore;
@@ -156,11 +158,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		playing = false;
 	}
 	
-	/**
-	 * Overrides component adapter such that the gear click area is bigger
-	 * 
-	 * @author Justin Yau
-	 */
 	public ComponentAdapter getComponentAdapter() {
 		return new ComponentAdapter() {
 			
@@ -906,6 +903,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public int getCombo() {
 		// TODO Auto-generated method stub
 		return comboCount;
+	}
+
+	public ArrayList<Timing2> getTimings() {
+		// TODO Auto-generated method stub
+		return timings;
 	}
 	
 }
