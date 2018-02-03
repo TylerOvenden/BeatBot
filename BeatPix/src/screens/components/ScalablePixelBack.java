@@ -29,14 +29,18 @@ public class ScalablePixelBack extends Component {
 	
 	private String[][] gridOfImages;
 	private double scale;
+	private int w;
+	private int h;
 	
 	public ScalablePixelBack(int x, int y, int w, int h, double scale) {
 		super(x, y, w, h);
 		
-		determineGridOfImagesSize(w,h,scale);
-		populateGridOfImages();
-		
 		this.scale = scale;
+		this.w = w;
+		this.h = h;
+		
+		determineGridOfImagesSize();
+		populateGridOfImages();
 		
 		/*for(int row = 0; row < gridOfImages.length; row++) {
 			String printLine = "";
@@ -57,23 +61,19 @@ public class ScalablePixelBack extends Component {
 	 * the width and height of the image, will not be exact.
 	 * 
 	 * By default (no scale), the individual images are 12x12 pixels
-	 * 
-	 * @param width
-	 * @param height
-	 * @param scale2
 	 */
-	public void determineGridOfImagesSize(int width, int height, double scale2) {
+	public void determineGridOfImagesSize() {
 		int xCount; int yCount;
-		if(scale2 > 0) {
-			width -= width%(12*scale2);
-			height -= height%(12*scale2);
-			xCount = (int) (width/(12*scale2));
-			yCount = (int) (height/(12*scale2));
+		if(this.scale > 0) {
+			this.w -= w%(12*this.scale);
+			this.h -= h%(12*this.scale);
+			xCount = (int) (w/(12*this.scale));
+			yCount = (int) (h/(12*this.scale));
 		}else {
-			width -= width%12; height -= height%12;
-			xCount = width/12; yCount = height/12;
+			w -= w%12; h -= h%12;
+			xCount = w/12; yCount = h/12;
 		}
-		System.out.println("Original Dimensions: " + width/12 + ", " + height/12);
+		System.out.println("Original Dimensions: " + w/12 + ", " + h/12);
 		System.out.println("New Dimensions: " + xCount + ", " + yCount);
 		gridOfImages = new String[yCount][xCount];
 	}
@@ -128,18 +128,22 @@ public class ScalablePixelBack extends Component {
 					for(int column = 0; column < gridOfImages[row].length; column++) {
 						ImageIcon icon = new ImageIcon(gridOfImages[row][column]);
 						Image image = icon.getImage();
+						Image newimg;
 						//SCALING THE IMAGE
 						if(scale > 0) {
 							int side = (int)(12*scale);
-							Image image2 = image.getScaledInstance(side,side, java.awt.Image.SCALE_SMOOTH);
-							g.drawImage(image2,currentX,currentY,null);
+							newimg = image.getScaledInstance(side,side, java.awt.Image.SCALE_SMOOTH);
+							//g.drawImage(image2,currentX,currentY,null);
 						}else
-							g.drawImage(image,currentX,currentY,null);
-/*D*/					currentX+= 12;
+							newimg = image.getScaledInstance(12,12, java.awt.Image.SCALE_SMOOTH);
+						
+						ImageIcon newIcon = new ImageIcon(newimg);
+						g.drawImage(newIcon.getImage(),currentX,currentY,null);
+/*D*/					currentX+= 12*scale; System.out.println(this.w+","+this.h);
 						//System.out.println(currentX + " " + currentY);
 					}
 					currentX = 0;
-/*D*/				currentY+=12;
+/*D*/				currentY+=12*scale;
 				}
 			}catch(Exception e){
 				e.printStackTrace();

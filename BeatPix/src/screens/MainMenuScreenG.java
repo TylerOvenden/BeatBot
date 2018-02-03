@@ -103,13 +103,13 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			}
 		});
 		
-		options = new OptionsPopUp(this, getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
-				//viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,2));
-				viewObjects.add(options);
+				viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,2));
+				//viewObjects.add(options);
 			}
 		});
 		//
