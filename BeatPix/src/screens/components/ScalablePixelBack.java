@@ -131,15 +131,15 @@ public class ScalablePixelBack extends Component {
 						//SCALING THE IMAGE
 						if(scale > 0) {
 							int side = (int)(12*scale);
-							image.getScaledInstance(side,side, java.awt.Image.SCALE_SMOOTH);
-						}
-						
-						g.drawImage(image,currentX,currentY,null);
-/*D*/						currentX+= 12;
+							Image image2 = image.getScaledInstance(side,side, java.awt.Image.SCALE_SMOOTH);
+							g.drawImage(image2,currentX,currentY,null);
+						}else
+							g.drawImage(image,currentX,currentY,null);
+/*D*/					currentX+= 12;
 						//System.out.println(currentX + " " + currentY);
 					}
-						currentX = 0;
-/*D*/					currentY+=12;
+					currentX = 0;
+/*D*/				currentY+=12;
 				}
 			}catch(Exception e){
 				e.printStackTrace();

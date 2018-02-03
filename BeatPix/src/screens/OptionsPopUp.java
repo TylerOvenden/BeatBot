@@ -33,7 +33,7 @@ public class OptionsPopUp extends ScrollablePane {
 	
 	public OptionsPopUp(FocusController parentScreen, int x, int y, int w, int h) {
 		super(parentScreen, x, y, w, h);
-		this.addObject(new ScalablePixelBack(0,0,w,h,2));
+		this.addObject(new ScalablePixelBack(0,0,w,h,1));
 		update();
 		this.setBackground(Color.black);
 		// TODO Auto-generated constructor stub
