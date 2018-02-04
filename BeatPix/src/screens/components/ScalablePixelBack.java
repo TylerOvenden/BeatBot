@@ -73,8 +73,8 @@ public class ScalablePixelBack extends Component {
 			w -= w%12; h -= h%12;
 			xCount = w/12; yCount = h/12;
 		}
-		System.out.println("Original Dimensions: " + w/12 + ", " + h/12);
-		System.out.println("New Dimensions: " + xCount + ", " + yCount);
+		//System.out.println("Original Dimensions: " + w/12 + ", " + h/12);
+		//System.out.println("New Dimensions: " + xCount + ", " + yCount);
 		gridOfImages = new String[yCount][xCount];
 	}
 	
@@ -139,7 +139,7 @@ public class ScalablePixelBack extends Component {
 						
 						ImageIcon newIcon = new ImageIcon(newimg);
 						g.drawImage(newIcon.getImage(),currentX,currentY,null);
-/*D*/					currentX+= 12*scale; System.out.println(this.w+","+this.h);
+/*D*/					currentX+= 12*scale; //System.out.println(this.w+","+this.h);
 						//System.out.println(currentX + " " + currentY);
 					}
 					currentX = 0;
