@@ -2,6 +2,8 @@ package screens;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gui.GUIApplication;
 import gui.interfaces.FocusController;
@@ -21,6 +23,8 @@ public class Test extends GUIApplication {
 	public static int MENU = 1;
 	public static int CHARACTER = 1;
 	
+	int x;
+	
 	public static int[] options;
 	//options [VOLUME,KEY1,KEY2,KEY3,KEY4]
 
@@ -30,6 +34,16 @@ public class Test extends GUIApplication {
 		super(width, height);
 		setVisible(true);
 		options = new int[5];
+
+		Timer time = new Timer(); x = 0;
+		time.scheduleAtFixedRate(new TimerTask() {
+			
+			@Override
+			public void run() {
+				System.out.println(x+"s");
+				x++;
+			}
+		}, 0, 1);
 	}
 
 	@Override
