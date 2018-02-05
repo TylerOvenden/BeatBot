@@ -15,8 +15,7 @@ public class ShopScreenKevin2 extends FullFunctionScreen {
 
 	private ArrayList<Button> buttonList;
 	private int index;
-	private int timesClicked = 0;
-	private boolean clicked = false;
+	private ArrayList<Integer> indexList;
 	public ShopScreenKevin2(int width, int height) {
 		super(width, height);
 
@@ -26,6 +25,8 @@ public class ShopScreenKevin2 extends FullFunctionScreen {
 	public void initAllObjects(List<Visible> viewObjects) {
 		// TODO Auto-generated method stub
 		buttonList = new ArrayList<Button>();
+		indexList = new ArrayList<Integer>();
+		createIntList(5);
 		for(int i=0; i < 5; i++){ 
 			//got the index number
 			final int x = i;
@@ -33,41 +34,24 @@ public class ShopScreenKevin2 extends FullFunctionScreen {
 				int j = x;
 				@Override
 				public void act() {
-					if(clicked == false) {
-						index = j;
-						clicked = true;
-						timesClicked ++;
-						System.out.println(j);
-						System.out.println("first index = " +index);
-						System.out.println("Times Clicked = " +timesClicked);
-						buttonList.get(index).setVisible(false);
-						buttonList.remove(buttonList.get(index));
-						
-					}else{
-						if(j > index && index != 0) {
-							System.out.println(j);
-							index = j - timesClicked;
-							System.out.println("Times Clicked = " +timesClicked);
-							System.out.println(index);
-							buttonList.get(index).setVisible(false);
-							buttonList.remove(buttonList.get(index));
-						}else {
-							timesClicked ++;
-							index = j;
-							System.out.println(j);
-							System.out.println("first index = " +index);
-							System.out.println("Times Clicked = " +timesClicked);
-							buttonList.get(index).setVisible(false);
-							buttonList.remove(buttonList.get(index));
-						}
-					}
-
+				System.out.println(j);
+				System.out.println(indexList.indexOf(j));
+				index = indexList.indexOf(j);
+				System.out.println("The index number is "+index);			
+				buttonList.get(j).setVisible(false);
+				indexList.remove(indexList.indexOf(j));
+				
 
 				}
 			}));
 		}
 		for(int a = 0; a < buttonList.size(); a++) {
 			viewObjects.add(buttonList.get(a));
+		}
+	}
+	public void createIntList(int a) {
+		for(int i = 0; i < a; i++) {
+			indexList.add(i);
 		}
 	}
 }
