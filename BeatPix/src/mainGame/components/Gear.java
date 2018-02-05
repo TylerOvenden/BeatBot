@@ -19,10 +19,9 @@ import mainGame.screens.GameScreen;
  */
 public class Gear extends Button {
 
-	private int oHeight; //The original height will be stored here
-	private int oWidth; //The original width will be stored here
 	private int scaledWidth; //The scaled width will be stored here
 	private int scaledHeight; //The scaled height will be stored
+	private int oX; //The original x coordinate of the gear
 	private int oY; //The original y coordinate of the gear
 	
 	/**
@@ -41,9 +40,8 @@ public class Gear extends Button {
 			}
 			
 		});
+		oX = x;
 		oY = y;
-		oHeight = h;
-		oWidth = w;
 		scaledWidth = w;
 		scaledHeight = h;
 		update();
@@ -58,27 +56,7 @@ public class Gear extends Button {
 	public int getOY() {
 		return oY;
 	}
-	
-	/**
-	 * This method returns the original height of the gear
-	 * @return - Returns the original height of the gear
-	 * 
-	 * @author Justin Yau
-	 */
-	public int getOHeight() {
-		return oHeight;
-	}
-	
-	/**
-	 * This method returns the original width of the gear
-	 * @return - Returns the original width of the gear
-	 * 
-	 * @author Justin Yau
-	 */
-	public int getOWidth() {
-		return oWidth;
-	}
-	
+
 	/**
 	 * This method calculates and sets the new scaled widths and heights based on the inputted scales
 	 * @param xScale - The x scale that was applied to the gear
@@ -87,13 +65,15 @@ public class Gear extends Button {
 	 * @author  Justin Yau
 	 */
 	public void updateScales(double xScale, double yScale) {
-		scaledWidth = (int) (oWidth * xScale);
-		scaledHeight = (int) (oHeight * yScale);
+		scaledWidth = (int) (getWidth() * xScale);
+		scaledHeight = (int) (getHeight() * yScale);
 	}
 	
 	public boolean isOnButton(int x, int y) {
-		return x>getX() && x<getX()+scaledWidth 
-		&& y > getY() && y<getY()+scaledHeight;
+		int sWidth = (int) (GameScreen.game.getWidth() * (((double) oX)/GameScreen.game.getOWidth()));
+		int sHeight = (int) (GameScreen.game.getHeight() * (((double) oY)/GameScreen.game.getOHeight()));
+		return x>sWidth && x<sWidth+scaledWidth 
+		&& y > sHeight && y<sHeight+scaledHeight;
 	}
 	
 	public void drawButton(Graphics2D g, boolean hover) {

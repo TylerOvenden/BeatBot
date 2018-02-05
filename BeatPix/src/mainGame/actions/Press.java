@@ -35,7 +35,7 @@ public class Press extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(GameScreen.game.currentlyHeldLanes().contains(columnLane) || GameScreen.game.currentTooLongLanes().contains(columnLane)) {
+		if(GameScreen.game.currentlyHeldLanes().contains(columnLane) || GameScreen.game.currentTooLongLanes().contains(columnLane) || GameScreen.game.getPause()) {
 			return;
 		}
 		Visible stroke = GameScreen.game.getFirstInLane(columnLane);

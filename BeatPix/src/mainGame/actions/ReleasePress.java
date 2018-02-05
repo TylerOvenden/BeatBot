@@ -34,6 +34,9 @@ public class ReleasePress extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(GameScreen.game.getPause()) {
+			return;
+		}
 		if(GameScreen.game.currentlyHeldLanes().contains(columnLane)) {
 			Holdstroke hold = retrieveFirstHoldInLane(columnLane, GameScreen.game.getHolds());
 			if(hold != null) {
