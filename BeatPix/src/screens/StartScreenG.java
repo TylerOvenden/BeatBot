@@ -64,7 +64,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-		background = updateBackground("resources\\backgrounds\\start.jpg");
+		background = updateBackground("resources\\backgrounds\\background_plan.png");
 		title = updateTitle("resources\\title.png");
 		start = updateStart("resources\\ui\\buttons\\startbutton.png");
 		
@@ -84,7 +84,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		w = getWidth()/5;
 		h = getHeight()/5;
 		x = (getWidth()/2) - w/2;
-		y = (getHeight()/2) - h/2 + 100; //will have to modify 100 in order to scale
+		y = (getHeight()/2) - h/2 + getHeight()*100/540;
 		
 		return new Graphic(x,y,w,h,path);
 	}
@@ -109,8 +109,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			x = background.getX(); y = background.getY();
 		}
 		w = getWidth();
-		//GUIApp scales the height last
-/*needs fixing*/h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
+		//GUIApp scales the height last *needs fixing as other images don't work with it
+		h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
 		return new Graphic(x,y,w,h,path);
 	}
 	
@@ -128,7 +128,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					scrollInEnd();
 				}
 			}
-		}, 0, 2); //100fps
+		}, 0, 2); //set FPS
 	}
 	public void scrollInEnd() {
 		time.cancel();
@@ -157,7 +157,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					fadeInsEnd();
 				}
 			}
-		}, 0, 4); //100fps
+		}, 0, 4); //set FPS
 	}
 	public void fadeInsEnd() {
 		time.cancel();
@@ -181,7 +181,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					title.setAlpha(title.getAlpha() - 0.01f);
 				}
 			}
-		}, 0, 4); //100fps
+		}, 0, 4); //set FPS
 	}
 	public void fadeOutsEnd() {
 		time.cancel();
@@ -201,8 +201,6 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					background.setY(background.getY() - 1);
 				}else {
 					scrollOutEnd();
-/**/				//Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
-					//this.cancel();
 				}
 			}
 		}, 0, 2); //100fps
@@ -211,10 +209,6 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 4;
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight()*2);
-		System.out.println(Test.test.x+"s END START");
-		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+/*Screen switch*/		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 	}
-	
-	
-	//--Create setDimensions method which will resize/redraw the images based off window size changes--//
 }

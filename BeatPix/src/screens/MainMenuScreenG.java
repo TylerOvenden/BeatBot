@@ -156,7 +156,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	 * be modified in any of the events
 	 * */
 	public void createIdleCharacter() {
-/*D*/	idleCharacter = new AnimatedComponent(100, 200 + getHeight(), 400, 300);
+/*D*/	idleCharacter = new AnimatedComponent(getWidth()/10, getHeight()*200/540 + getHeight(), getWidth()*400/960, getHeight()*300/540);
 /*P*/	idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
@@ -172,10 +172,9 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	 * trying to animate it sliding in from the right
 	 */
 	public void createButtons() {
-/*P*/	ImageIcon icon = new ImageIcon("resources\\ui\\buttons\\buttonwithrivet.png");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<4; i++) {
-/*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),100*(i+1) + getHeight(),icon.getIconWidth(),100,"resources\\ui\\buttons\\buttonwithrivet.png"));
+/*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),getHeight()*100/540*(i+1) + getHeight(),getWidth()*399/960,getHeight()*100/540,"resources\\ui\\buttons\\buttonwithrivet.png"));
 			buttons.get(i).setUnhoverAction(new Action() {
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -191,6 +190,9 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	
 //--EVENTS--//
 	/**
+	 * Returns true if the final status is incomplete
+	 * Returns false when its done
+	 * 
 	 * moveBackground()
 	 * 	Will move background until it is shown as the bottom
 	 * 	of the background image matches with the bottom of the screen
@@ -214,14 +216,17 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				
-					if(!moveBackground()&&!moveIdleCharacter()
-							&&!moveButtonsX()&&!moveButtonsY()) {
-						//Nothing happens cus ^ makes it happen
+					if(!isBackgroundFinal()
+							|| !isIdleFinal()
+								|| !isButtonXFinal()
+									|| !isButtonYFinal()) {
+						moveBackground();
+						moveIdleCharacter();
+						moveButtonsX(); 
+						moveButtonsY();
 					}else {
 						scrollDownEnd();
 					}
-					
 				/*
 					//-- SCROLL BACKGROUND UP
 					moveBackground();
@@ -239,41 +244,49 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			}
 		}, 0, 2);
 	}
+	
 	//--SCROLL DOWN METHODS
-	public boolean moveBackground() {
-		if(background.getY() > -background.getHeight()+getHeight()) {
+	public void moveBackground() {
+		if(!isBackgroundFinal()) {
 			background.setY(background.getY() - 1);
-			return false;
 		}
-		return true;
 	}
-	public boolean moveIdleCharacter() {
-/*D*/		if(idleCharacter.getY() > 200) {
+	public boolean isBackgroundFinal() {
+		return !(background.getY() > -background.getHeight()+getHeight());
+	}
+	
+	public void moveIdleCharacter() {
+		if(!isIdleFinal()) {
 			idleCharacter.setY(idleCharacter.getY() - 1);
-			return false;
 		}
-		return true;
 	}
-	public boolean moveButtonsX() {
-		if(buttons.get(0).getX() > getWidth()*5/10) {
+	public boolean isIdleFinal() {
+		return !(idleCharacter.getY() > getHeight()*200/540);
+	}
+	
+	public void moveButtonsX() {
+		if(!isButtonXFinal()) {
 			for(int i = 0; i < buttons.size(); i++) {
-/*D*/			buttons.get(i).setX(buttons.get(i).getX()-1);
+				buttons.get(i).setX(buttons.get(i).getX()-1);
 			}
-			return false;
 		}
-		return true;
 	}
-	public boolean moveButtonsY() {
-		if(buttons.get(0).getY() > 100) {
+	public boolean isButtonXFinal() {
+		return !(buttons.get(0).getX() > getWidth()*480/960);
+	}
+	
+	public void moveButtonsY() {
+		if(!isButtonYFinal()) {
 			for(int i = 0; i < buttons.size(); i++) {
-/*D*/			buttons.get(i).setY(buttons.get(i).getY()-1);
+				buttons.get(i).setY(buttons.get(i).getY()-1);
 			}
-			return false;
 		}
-		return true;
 	}
+	public boolean isButtonYFinal() {
+		return !(buttons.get(0).getY() > getHeight()*100/540);
+	}
+	
 	public void scrollDownEnd() {
-		time.cancel();
 		background.setY(-background.getHeight()+getHeight());
 		background.setEnabled(false);
 /*D*/	idleCharacter.setY(200);

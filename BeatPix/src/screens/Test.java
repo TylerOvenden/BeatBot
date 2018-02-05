@@ -40,7 +40,7 @@ public class Test extends GUIApplication {
 			
 			@Override
 			public void run() {
-				System.out.println(x+"s");
+				//System.out.println(x+"s");
 				x++;
 			}
 		}, 0, 1);
