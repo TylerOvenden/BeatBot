@@ -106,7 +106,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getEndClickTime() {
-		return startingTime + ((GameScreen.columnHeight + height - (GameScreen.distanceAAfterGoal)) * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + height) * fallSpeed);
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			topHeight = getY() + prevHeight;
 		}
 		int bottomHeightFromStart = topHeight - GameScreen.columnY;
-		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + GameScreen.distanceAAfterGoal - topHeight;
+		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + 64 + GameScreen.distanceAAfterGoal - topHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
@@ -217,7 +217,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 				handleRemove();
 				return 1;
 			}
-			return bottomHeightFromBottom - GameScreen.distanceAAfterGoal;
+			return bottomHeightFromBottom - 64 - GameScreen.distanceAAfterGoal;
 		}
 		return height;
 	}
