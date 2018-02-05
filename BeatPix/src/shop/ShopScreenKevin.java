@@ -36,6 +36,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private Button noButton;
 	private int numChars;
 	
+	
 
 	public ShopScreenKevin(int width, int height) 
 	{
@@ -49,7 +50,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		yesButton = new ArrayList<Button>();
 		confirmButton = new ArrayList<Button>();
 		//the ten should be number chars that the player should unlock
-		numChars = 10;
+		numChars = 4;
 		//create the back button
 		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
 			
