@@ -9,6 +9,7 @@ import gui.components.Action;
 import gui.components.Graphic;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.screens.GameScreen;
 import screens.components.ImageButton;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class LevelSelectG extends FullFunctionScreen{
 		buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
 		buttons.get(2).setAction(new Action() {
 			public void act(){
-				Test.test.setScreen(new LevelSelectG(getWidth(),getHeight()));
+				Test.test.setScreen(new GameScreen(getWidth(),getHeight(),audio));
 			}
 	});
 		
