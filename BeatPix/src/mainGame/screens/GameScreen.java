@@ -107,7 +107,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//Steven
 	//tyler
 	private Scoring gamescore;
-	private float score;
+	private float score =0;
 	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
@@ -583,6 +583,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 	}*/
 	public void calcScore(double timing) {
+		System.out.println(score);
 		if(timing==1) {
 			if(score>25000)
 				score+=5000;
@@ -604,6 +605,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(timing==0) {
 			score+=0;
 		}
+		
 	}
 	
 	public void calcAcc(double timing) {
