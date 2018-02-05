@@ -20,7 +20,9 @@ public class LevelSelectG extends FullFunctionScreen{
 
 	private static final long serialVersionUID = 6265786684466337399L;
 	public ArrayList<ImageButton> buttons;
+	public ArrayList<ImageButton> unseenButtons;
 	private Graphic background;
+	
 	public LevelSelectG(int width, int height) {
 		super(width, height);
 		}
@@ -32,24 +34,45 @@ public class LevelSelectG extends FullFunctionScreen{
 		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<5; i++) {
-/*P D*/		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-600, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
+/*P D*/		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
+				
+		buttons.get(i).setEnabled(true);
+		
 		}
-		buttons.get(0).setAction(new Action() {
+		buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
+		unseenButtons.add(null);
+		
+		
+		ImageButton left = new ImageButton( getWidth()-900, getHeight()-300, icon.getIconWidth(), 100 ,"resources\\LeftArrow-small.jpg");
+		viewObjects.add(left);
+		left.setAction(new Action() {
 			public void act(){
-				buttons.get(0).unhoverAction();
+				unseenButtons.add(buttons.get(4));
+
+				buttons.set(4, buttons.get(3));
+				buttons.set(3, buttons.get(2));
+				buttons.set(2, buttons.get(1));
+				buttons.set(1, buttons.get(0));
+				buttons.set(0, unseenButtons.get(0));
+				unseenButtons.remove(0);
+				for(int i=0; i<5; i++) {
+					buttons.get(i).setX(180*(-i-1)+getWidth()-10);
+					buttons.get(i).setY(80*(i+1) + getHeight()-580);
+				}
+				buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
+				buttons.get(2).setAction(new Action() {
+					public void act(){
+
+					}
+			});
 			}
-		});
-		buttons.get(3).loadImages("resources\\tester.jpg", buttons.get(3).getWidth()+25, buttons.get(3).getHeight()+25);
-		buttons.get(3).setAction(new Action() {
-			
-			public void act() {
-				background = updateBackground("resources\\tester1.jpg");
-				viewObjects.add(background);
-			}
-		});
-		buttons.get(3).setEnabled(true);
-		for(ImageButton b: buttons) {
-			viewObjects.add(b);
+	});
+		
+		ImageButton right = new ImageButton( getWidth()-200, getHeight()-300, icon.getIconWidth(), 100 ,"resources\\rightArrow-small.jpg");
+		viewObjects.add(right);
+		
+		for(int i=0; i<5; i++) {
+			viewObjects.add(buttons.get(i));
 		}
 	}
 	
