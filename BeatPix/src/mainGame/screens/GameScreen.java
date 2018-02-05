@@ -14,6 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ActionMap;
@@ -22,6 +23,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import gui.components.Action;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
@@ -67,6 +69,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
 	private ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
+	
+	private ArrayList<OptionButton> optBTN; //All the option buttons will be on the screen here
 	
 	private ColoredRectangle pauseRect; //This rectangle will represent the rectangle spawned in when the escape button is pressed
 	private Gear escapeGear; //The gear the user can press to open the escape menu will be stored here
@@ -159,6 +163,12 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		playing = false;
 	}
 	
+	/**
+	 * This method overrides the default adapter to resize clickable components 
+	 * @return The New Component Adapter to suit our needs
+	 * 
+	 * @author Justin Yau
+	 */
 	public ComponentAdapter getComponentAdapter() {
 		return new ComponentAdapter() {
 			
@@ -171,6 +181,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				setYScale(((double) height)/getOHeight());
 				escapeGear.setY((int) (escapeGear.getOY() - (6 * getYScale())));
 				escapeGear.updateScales(getXScale(), getYScale());
+				for(OptionButton btn: optBTN) {
+					btn.updateScales(getXScale(), getYScale());
+				}
 			}
 			
 		};
@@ -405,6 +418,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		addColumnLanes(viewObjects);
 		addKeystrokeIndicator(viewObjects);
 		setUpGearButton(viewObjects);
+		spawnOptionButtons();
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -712,6 +726,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(escapeGear != null) {
 			remove(escapeGear);
 		}
+		for(OptionButton btn: optBTN) {
+			addObject(btn);
+		}
 	}
 	
 	/**
@@ -727,6 +744,48 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		if(escapeGear != null) {
 			addObject(escapeGear);
+		}
+		for(OptionButton btn: optBTN) {
+			remove(btn);
+		}
+	}
+	
+	/**
+	 * This method creates the 3 option buttons that will appear when the game is escaped or paused
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnOptionButtons() {
+		optBTN = new ArrayList<OptionButton>();
+		String[] btnTypes = {"Continue", "Options", "Exit"};
+		Action[] act = {new Action() {
+			
+			@Override
+			public void act() {
+				//Continue Action Button will be here
+				System.out.println("Continue");
+			}
+		}, new Action() {
+			
+			@Override
+			public void act() {
+				//Options Action Button will be here
+				System.out.println("Options");
+			}
+		}, new Action() {
+			
+			@Override
+			public void act() {
+				//Exit Action Button will be here
+				stop();
+				//Switch to a different screen below
+				System.out.println("Exit");
+			}
+		}};
+		for(int i = 0; i < btnTypes.length; i++) {
+			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i]);
+			bt.setAction(act[i]);
+			optBTN.add(bt);
 		}
 	}
 	
@@ -872,7 +931,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			if(beats.size() == 0) {
 				playing = false;
 			}
-			else if(timePass() >= beats.get(0)[1]) {
+			else if(timePass() >= beats.get(0)[1] && !pause) {
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
 				if(beat[2] != 0) {
