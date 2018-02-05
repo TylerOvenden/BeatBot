@@ -64,14 +64,14 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-		background = updateBackground("resources\\backgrounds\\background_plan.png");
+		background = updateBackground("resources\\backgrounds\\start.jpg");
 		title = updateTitle("resources\\title.png");
 		start = updateStart("resources\\ui\\buttons\\startbutton.png");
 		
 		title.setAlpha(0.0f);
 		start.setAlpha(0.0f);
 		
-		scrollIn();
+		//scrollIn();
 		
 		viewObjects.add(background);
 		viewObjects.add(title);
@@ -210,6 +210,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight()*2);
 		System.out.println(Test.test.x+"s END START");
-/*Screen switch*/		Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+
+						
+/*Screen switch*/		Test.test.setScreen(Test.test.mainMenu);
+						Test.mainMenu.scrollDown();
 	}
 }

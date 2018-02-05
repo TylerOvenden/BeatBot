@@ -44,6 +44,8 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public AnimatedComponent idleCharacter;
 	
 	public ArrayList<ImageButton> buttons;
+	public ArrayList<CustomText> buttonTexts;
+	public static String[] buttonT = {"Level Select","Character","Unlocks","Options"};
 	public static int LEVEL_IDX = 0;
 	public static int CHARACTER_IDX = 1;
 	public static int UNLOCK_IDX = 2;
@@ -90,21 +92,22 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
-				viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,5));
+				viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
+
 				//viewObjects.add(options);
 			}
 		});
 		//
 		
-		//viewObjects adding
+		//viewObjects adding]
 		viewObjects.add(background);
-		for(ImageButton b: buttons) {
-			viewObjects.add(b);
+		for(int i = 0; i < buttons.size(); i++) {
+			viewObjects.add(buttons.get(i));
+			viewObjects.add(buttonTexts.get(i));
 		}
 		viewObjects.add(idleCharacter);
-		
-		scrollDown();
-/**/		System.out.println(Test.test.x+"s START MAIN");
+		//scrollDown();
+/**/		//System.out.println(Test.test.x+"s START MAIN");
 	}
 	
 	/** --COMPLETE--
@@ -131,7 +134,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		});
 	}
 	
-	/** --INCOMPLETE-- need to fix dimensions to scale (specifically the y position and dimensions of the image)
+	/** --COMPLETE--
 	 * Creates an animation of the idle character with SPECIFIC dimensions
 	 * that are not scalable
 	 * 
@@ -162,7 +165,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		run.start();
 	}
 	
-	/** --INCOMPLETE-- need to fix dimensions to scale EVERYWHERE
+	/** --COMPLETE--
 	 * Creates a series of buttons on the screen that is not scaled whatsover
 	 * using the original image dimensions
 	 * 
@@ -173,8 +176,19 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	 */
 	public void createButtons() {
 		buttons = new ArrayList<ImageButton>();
+		buttonTexts = new ArrayList<CustomText>();
 		for(int i=0; i<4; i++) {
-/*P D*/		buttons.add(new ImageButton(getHeight()/6 + getWidth(),getHeight()*100/540*(i+1) + getHeight(),getWidth()*399/960,getHeight()*100/540,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			int buttonX = getHeight()*160/540 + getWidth();
+			int buttonY = getHeight()*100/540*(i+1) + getHeight();
+			int buttonW = getWidth()*399/960;
+			int buttonH = getHeight()*100/540;
+			System.out.println(buttonY);
+/*P D*/		buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
+												buttonY + getHeight()*25/540,
+													buttonW - buttonW*100/399,
+														buttonH - buttonH*70/100,
+															buttonT[i],false));
 			buttons.get(i).setUnhoverAction(new Action() {
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -268,6 +282,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		if(!isButtonXFinal()) {
 			for(int i = 0; i < buttons.size(); i++) {
 				buttons.get(i).setX(buttons.get(i).getX()-1);
+				buttonTexts.get(i).setX(buttonTexts.get(i).getX()-1);
 			}
 		}
 	}
@@ -279,6 +294,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		if(!isButtonYFinal()) {
 			for(int i = 0; i < buttons.size(); i++) {
 				buttons.get(i).setY(buttons.get(i).getY()-1);
+				buttonTexts.get(i).setY(buttonTexts.get(i).getY()-1);
 			}
 		}
 	}
@@ -287,13 +303,18 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	}
 	
 	public void scrollDownEnd() {
+		time.cancel();
+		
 		background.setY(-background.getHeight()+getHeight());
 		background.setEnabled(false);
-/*D*/	idleCharacter.setY(200);
-
+/*D*/	idleCharacter.setY(getHeight()*200/540);
+		System.out.println(buttonTexts.get(0).getX() + "," + buttonTexts.get(0).getY());
 		for(int i = 0; i < buttons.size(); i++) {
-/*D*/		buttons.get(i).setY(100*(i+1));
-/*D*/		buttons.get(i).setX(getWidth()/2 + getWidth()/2*(1/10));
+/*D*/		buttons.get(i).setY(getHeight()*100/540*(i+1));
+/*D*/		buttons.get(i).setX(getWidth()*480/960);
+			buttonTexts.get(i).setY(getHeight()*100/540*(i+1) + getHeight()*25/540);
+			buttonTexts.get(i).setX(getWidth()*480/960 + getWidth()*70/960);
+
 		}
 		for(ImageButton b: buttons) {
 			b.setEnabled(true);
