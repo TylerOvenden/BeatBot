@@ -600,7 +600,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
-		ctext.setText(accuracy+"%");
+		int temp=(int) (accuracy*100);
+		String set=accuracy+"%";
+		if(temp%10==0) {
+			set=accuracy+"0%";
+		}
+		if(temp<1000) {
+			set="0"+set;
+		}
+		ctext.setText(set);
 	}
 	
 	public void calcCombo(boolean isMiss) {
