@@ -69,6 +69,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/perfect.png");
 				update();
 				GameScreen.game.calcAcc(1);
+				GameScreen.game.calcScore(1);
 				GameScreen.game.calcCombo(false);
 				//GameScreen.game.getTimings().add(new Timing2(1,1,100,100,"resources/perfect.png"));
 				return ;
@@ -77,6 +78,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/great.png");
 				update();
 				GameScreen.game.calcAcc(.95);
+				GameScreen.game.calcScore(.95);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -84,6 +86,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/good.png");
 				update();
 				GameScreen.game.calcAcc(.66);
+				GameScreen.game.calcScore(.66);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -91,6 +94,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/ok.png");
 				update();
 				GameScreen.game.calcAcc(.5);
+				GameScreen.game.calcScore(.5);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -98,6 +102,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/bad.png");
 				update();
 				GameScreen.game.calcAcc(.33);
+				GameScreen.game.calcScore(.33);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -105,6 +110,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/miss.png");
 				update();
 				GameScreen.game.calcAcc(0);
+				GameScreen.game.calcScore(0);
 				GameScreen.game.calcCombo(true);
 				return ;
 			}
@@ -113,6 +119,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/perfect.png");
 				update();
 				GameScreen.game.calcAcc(1);
+				GameScreen.game.calcScore(1);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -120,6 +127,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/great.png");
 				update();
 				GameScreen.game.calcAcc(.95);
+				GameScreen.game.calcScore(.95);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -127,6 +135,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/good.png");
 				update();
 				GameScreen.game.calcAcc(.66);
+				GameScreen.game.calcScore(.66);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -134,6 +143,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/ok.png");
 				update();
 				GameScreen.game.calcAcc(.5);
+				GameScreen.game.calcScore(.5);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -141,6 +151,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/bad.png");
 				update();
 				GameScreen.game.calcAcc(.33);
+				GameScreen.game.calcScore(.33);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
@@ -148,6 +159,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				changeImg("resources/miss.png");
 				update();
 				GameScreen.game.calcAcc(0);
+				GameScreen.game.calcScore(0);
 				GameScreen.game.calcCombo(true);
 				return ;
 			}

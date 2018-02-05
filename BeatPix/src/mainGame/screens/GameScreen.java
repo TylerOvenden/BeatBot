@@ -111,6 +111,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//Steven
 	//tyler
 	private Scoring gamescore;
+	private float score =0;
 	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
@@ -448,7 +449,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
 
-		gamescore = new Scoring(500,40,400,400);
 
 		viewObjects.add(gamescore);
 		gamescore.update();  
@@ -595,6 +595,28 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
+	public void calcScore(double timing) {
+		System.out.println(score);
+		if(timing==1) {
+			score+=1000000/beats.size()*1;
+		}
+		if(timing==.95) {
+			score+=1000000/beats.size()*.95;
+		}
+		if(timing==.66) {
+			score+=1000000/beats.size()*.66;
+		}
+		if(timing==.5) {
+			score+=1000000/beats.size()*.5;
+		}
+		if(timing==.33) {
+			score+=1000000/beats.size()*.33;
+		}
+		if(timing==0) {
+			score+=0;
+		}
+		
+	}
 	
 	public void calcAcc(double timing) {
 		int totalHit=0;
@@ -615,7 +637,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
-		ctext.setText(accuracy+"%");
+		int temp=(int) (accuracy*100);
+		String set=accuracy+"%";
+		if(temp%10==0) {
+			set=accuracy+"0%";
+		}
+		if(temp<1000) {
+			set="0"+set;
+		}
+		ctext.setText(set);
 	}
 	
 	public void calcCombo(boolean isMiss) {

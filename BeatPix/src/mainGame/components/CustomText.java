@@ -99,7 +99,6 @@ public class CustomText extends Component {
 		for(int i=0;i<text.length();i++) {
 			try {
 				ImageIcon icon = new ImageIcon("resources/text/"+text.substring(i,i+1)+".png");
-				//System.out.println("resources/text/"+text.substring(i,i+1)+".png");
 				Image img = icon.getImage();
 				Image newimg;
 				int newW=w-(text.length()*5);
@@ -109,8 +108,7 @@ public class CustomText extends Component {
 					newimg = img.getScaledInstance(newW/text.length(),h,java.awt.Image.SCALE_SMOOTH);
 				}
 				ImageIcon newIcon = new ImageIcon(newimg);
-				g.drawImage(newIcon.getImage(), i*w/text.length(), 0, null);
-					
+				g.drawImage(newIcon.getImage(), i*w/text.length(), 0, null);		
 			}catch(Exception e){
 				e.printStackTrace();
 			}
