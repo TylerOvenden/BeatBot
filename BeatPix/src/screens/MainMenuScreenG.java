@@ -54,7 +54,6 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	
 	public MainMenuScreenG(int width, int height) {
 		super(width, height);
-		System.out.println(Test.test.x+"s START MAIN");
 		screenPhase = 0;
 	}
 	
@@ -105,6 +104,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		viewObjects.add(idleCharacter);
 		
 		scrollDown();
+/**/		System.out.println(Test.test.x+"s START MAIN");
 	}
 	
 	/** --COMPLETE--
