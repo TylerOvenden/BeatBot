@@ -270,11 +270,13 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public void resizeFramesEnd(int height) {
+		boolean vanish = false;
 		if(height == this.height) {
 			return;
 		}
 		if(height <= 0) {
 			height = 1;
+			vanish = true;
 		}
 		for(int i = 0; i < frames.size(); i++) {
 			BufferedImage fram = frames.get(i);
@@ -282,7 +284,9 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			BufferedImage dest = fram.getSubimage(0, 0, width, height);
 			BufferedImage nImg = new BufferedImage(width, this.height, dest.getType());
 			Graphics2D g2d = nImg.createGraphics();
-			g2d.drawImage(dest, 0, 0, null);
+			if(!vanish) {
+				g2d.drawImage(dest, 0, 0, null);
+			}
 			g2d.dispose();
 			frameSet(i, nImg);
 		}
