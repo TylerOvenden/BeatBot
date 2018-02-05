@@ -798,7 +798,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void calculateAndSetFallTimeFromBeats() {
-		if(BPM == 0 || BPM <= 45) {
+		if(BPM == 0 || BPM <= 100) {
 			fallTime = 10;
 		}
 		else {

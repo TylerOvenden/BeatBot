@@ -70,7 +70,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				update();
 				GameScreen.game.calcAcc(1);
 				GameScreen.game.calcCombo(false);
-				GameScreen.game.getTimings().add(new Timing2(1,1,100,100,"resources/perfect.png"));
+				//GameScreen.game.getTimings().add(new Timing2(1,1,100,100,"resources/perfect.png"));
 				return ;
 			}
 			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<40) {
