@@ -435,7 +435,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
 
-		gamescore = new Scoring(500,40,400,400);
 
 		viewObjects.add(gamescore);
 		gamescore.update();  
@@ -585,22 +584,19 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void calcScore(double timing) {
 		System.out.println(score);
 		if(timing==1) {
-			if(score>25000)
-				score+=5000;
-			else
-				score+=2500;	
+			score+=1000000/beats.size()*1;
 		}
 		if(timing==.95) {
-			score+=2000;
+			score+=1000000/beats.size()*.95;
 		}
 		if(timing==.66) {
-			score+=1000;
+			score+=1000000/beats.size()*.66;
 		}
 		if(timing==.5) {
-			score+=500;
+			score+=1000000/beats.size()*.5;
 		}
 		if(timing==.33) {
-			score+=100;
+			score+=1000000/beats.size()*.33;
 		}
 		if(timing==0) {
 			score+=0;
