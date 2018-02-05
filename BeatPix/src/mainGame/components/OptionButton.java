@@ -10,16 +10,33 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import gui.components.Button;
+import mainGame.components.interfaces.ResizeClickInterface;
 import mainGame.screens.GameScreen;
 
-public class OptionButton extends Button {
+/**
+ * This button is for the ones that appear in the options menu when the user is esacped/paused
+ *  
+ * @author Justin Yau
+ *
+ */
+public class OptionButton extends Button implements ResizeClickInterface {
 
-	private String field;
-	private int oX;
-	private int oY;
-	private int scaledWidth;
-	private int scaledHeight;
+	private String field; //The text the button contains
+	private int oX; //The original x value of the button
+	private int oY; //The original y value of the button
+	private int scaledWidth; //The scaled width of the button (FOR RESIZING)
+	private int scaledHeight; //The scaled height of the button (FOR RESIZING)
 	
+	/**
+	 * Constructor creates an "option" button where the user can click the custom button to do what the button says
+	 * @param x - The x coordinate of the button
+	 * @param y - The y coordinate of the button
+	 * @param w - The width of the button
+	 * @param h - The height of the button
+	 * @param text - What the button should say or what type of option button is should be
+	 * 
+	 * @author Justin Yau
+	 */
 	public OptionButton(int x, int y, int w, int h, String text) {
 		super(x, y, w, h, text, null, null);
 		oX = x;
@@ -42,9 +59,6 @@ public class OptionButton extends Button {
 		scaledHeight = (int) (getHeight() * yScale);
 	}
 	
-	/**
-	 * 
-	 */
 	public boolean isOnButton(int x, int y) {
 		int sWidth = (int) (GameScreen.game.getWidth() * (((double) oX)/GameScreen.game.getOWidth()));
 		int sHeight = (int) (GameScreen.game.getHeight() * (((double) oY)/GameScreen.game.getOHeight()));

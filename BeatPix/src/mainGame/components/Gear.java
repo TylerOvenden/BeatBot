@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import gui.components.Action;
 import gui.components.Button;
+import mainGame.components.interfaces.ResizeClickInterface;
 import mainGame.screens.GameScreen;
 
 /**
@@ -17,7 +18,7 @@ import mainGame.screens.GameScreen;
  * @author Justin Yau
  *
  */
-public class Gear extends Button {
+public class Gear extends Button  implements ResizeClickInterface {
 
 	private int scaledWidth; //The scaled width will be stored here
 	private int scaledHeight; //The scaled height will be stored
