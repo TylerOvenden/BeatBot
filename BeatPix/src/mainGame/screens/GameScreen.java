@@ -945,4 +945,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		return timings;
 	}
 	
+	public void addTimings() {
+		for(int i=0;i<getObjects().size();i++) {
+			if(getObjects().get(i) instanceof Timing2) {
+				getObjects().remove(i);
+			}
+		}
+		for(int i=0;i<timings.size();i++) {
+			addObject(timings.get(i));
+		}
+	}
+	
 }

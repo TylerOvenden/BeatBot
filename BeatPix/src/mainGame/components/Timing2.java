@@ -7,8 +7,11 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import gui.components.Component;
+import mainGame.components.interfaces.JustinTimingInterface;
+import mainGame.screens.GameScreen;
+import mainGame.screens.MainScreen;
 
-public class Timing2 extends Component implements Runnable {
+public class Timing2 extends Component implements Runnable,JustinTimingInterface {
 	
 	String imgString;
 	float trans;
@@ -60,5 +63,31 @@ public class Timing2 extends Component implements Runnable {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void calculateAccuracy(Keystroke stroke) {
+		GameScreen.game.getTimings().add(new Timing2(100,100,100,100,""));
+		
+	}
+
+	@Override
+	public void calculateFirstAccuracy(Holdstroke stroke) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void calculateEndAccuracy(Holdstroke stroke) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void missAccuracy() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }
