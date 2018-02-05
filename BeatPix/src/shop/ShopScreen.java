@@ -69,76 +69,7 @@ public class ShopScreen extends FullFunctionScreen
 		
 		buttons = new ArrayList<Button>();
 
-		/*
-		songButton1 = new Button(0,0,100,70,"Song 1 | 1500 Credits", new Action() {
-			
-			@Override
-			public void act() {
-				index = buttons.indexOf(songButton1);
-				text.setVisible(true);
-				yes.setVisible(true);				
-				no.setVisible(true);
-				
-			}
-		});
 		
-		songButton2 = new Button(0,50,100,70,"Song 2 | 1500 Credits", new Action() {
-			
-			@Override
-			public void act() {
-				index = buttons.indexOf(songButton2);
-				text.setVisible(true);
-				yes.setVisible(true);				
-				no.setVisible(true);
-				
-			}
-		});
-
-		songButton3 = new Button(0,100,100,70,"Song 3 | 1500 Credits", new Action() {
-			
-			@Override
-			public void act() {
-				index = buttons.indexOf(songButton3);	
-				text.setVisible(true);
-				yes.setVisible(true);				
-				no.setVisible(true);
-				
-			}
-		});
-		songButton4 = new Button(0,150,100,70,"Song 4 | 1500 Credits", new Action() {
-			
-			@Override
-			public void act() {
-				index = buttons.indexOf(songButton4);
-				text.setVisible(true);
-				yes.setVisible(true);				
-				no.setVisible(true);
-				
-			}
-		});
-		songButton5 = new Button(0,200,100,70,"Song 5 | 1500 Credits", new Action() {
-			
-			@Override
-			public void act() {
-				index = buttons.indexOf(songButton5);
-				System.out.println(index);
-				text.setVisible(true);
-				yes.setVisible(true);				
-				no.setVisible(true);
-				
-			}
-		});
-		
-		
-		
-		buttons.add(songButton1);
-		buttons.add(songButton2);
-		buttons.add(songButton3);
-		buttons.add(songButton4);
-		buttons.add(songButton5);
-				
-		
-		*/
 		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
 		creditFont = new Font("Verdana", Font.BOLD, 20);
 		warningFont = new Font("Verdana", Font.BOLD, 18);
@@ -198,9 +129,19 @@ public class ShopScreen extends FullFunctionScreen
 								viewObjects.add(purchased);
 								Thread.sleep(1500);
 								purchased.setVisible(false);								
-								scroll.remove(clickedButton);		
+								scroll.remove(clickedButton);
+								int index = buttons.indexOf(clickedButton);
 								buttons.remove(clickedButton);
+								for (int i = index; i < buttons.size(); i++)
+								{
+									if (buttons.get(i).getY() != 0)
+									{
+										buttons.get(i).move(buttons.get(i).getX(), (buttons.get(i).getY()-50), 10);
+										scroll.update();
+									}
 
+								}
+								
 								scroll.update();							
 							}
 							catch (InterruptedException e)
