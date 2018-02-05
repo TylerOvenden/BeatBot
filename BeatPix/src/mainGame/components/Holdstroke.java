@@ -202,26 +202,48 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			return 1;
 		}
 		else if(height - 64 >= bottomHeightFromStart && !switchEnd) {
-			if(height > GameScreen.columnHeight) {
-				tooBig = true;
-				return 64 + prevHeight++;
-			}
-			if(switchEnd) {
-				return height;
-			}
-			return bottomHeightFromStart + 64;
+			return determineBeginningHeight(bottomHeightFromStart);
 		}
 		//Above works
 		else if(height >= bottomHeightFromBottom) {
-			if(bottomHeightFromBottom <= -1 * GameScreen.distanceAAfterGoal ) {
-				handleRemove();
-				return 1;
-			}
-			return bottomHeightFromBottom - 64 - GameScreen.distanceAAfterGoal;
+			return determineEndHeight(bottomHeightFromBottom);
 		}
 		return height;
 	}
 
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromStart - The calculated height from the start point of the stroke
+	 * @return - The height the stroke should be rendered at 
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineBeginningHeight(int bottomHeightFromStart) {
+		if(height > GameScreen.columnHeight) {
+			tooBig = true;
+			return 64 + prevHeight++;
+		}
+		if(switchEnd) {
+			return height;
+		}
+		return bottomHeightFromStart + 64;
+	}
+	
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromBottom - The calculated height from the end point of the stroke
+	 * @return - The height the stroke should be rendered at
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineEndHeight(int bottomHeightFromBottom) {
+		if(bottomHeightFromBottom <= -1 * GameScreen.distanceAAfterGoal ) {
+			handleRemove();
+			return 1;
+		}
+		return bottomHeightFromBottom - 64 - GameScreen.distanceAAfterGoal;
+	}
+	
 	/**
 	 * This method handles the self removal of the stroke if needed
 	 * 
