@@ -45,12 +45,10 @@ public class ShopScreen extends FullFunctionScreen
 	private Button clickedButton;
 	
 	private int credits;
-//	private int index;
 	private int price;
 	
 	private TextArea text;
-	
-	private boolean clicked;
+
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -65,7 +63,6 @@ public class ShopScreen extends FullFunctionScreen
 	{
 
 		credits = 25000;
-		clicked = false;
 		
 		buttons = new ArrayList<Button>();
 
