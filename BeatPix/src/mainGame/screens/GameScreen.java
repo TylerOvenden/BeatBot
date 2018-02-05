@@ -38,6 +38,7 @@ import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
+import mainGame.components.OptionButton;
 import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
@@ -106,6 +107,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//Steven
 	//tyler
 	private Scoring gamescore;
+	private float score =0;
 	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
@@ -580,6 +582,31 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
+	public void calcScore(double timing) {
+		System.out.println(score);
+		if(timing==1) {
+			if(score>25000)
+				score+=5000;
+			else
+				score+=2500;	
+		}
+		if(timing==.95) {
+			score+=2000;
+		}
+		if(timing==.66) {
+			score+=1000;
+		}
+		if(timing==.5) {
+			score+=500;
+		}
+		if(timing==.33) {
+			score+=100;
+		}
+		if(timing==0) {
+			score+=0;
+		}
+		
+	}
 	
 	public void calcAcc(double timing) {
 		int totalHit=0;
