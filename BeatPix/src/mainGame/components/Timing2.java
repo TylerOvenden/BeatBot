@@ -16,16 +16,23 @@ public class Timing2 extends Component implements Runnable,JustinTimingInterface
 	String imgString;
 	float trans;
 	int scale;
+	boolean play;
 	private int w;
 	private int h;
 
-	public Timing2(int x, int y, int w, int h, String img) {
+	public Timing2(int x, int y, int w, int h, String img, float al,boolean playAni) {
 		super(x, y, w, h);
 		this.w=w;
 		this.h=h;
 		this.imgString=img;
 		trans=(float) .001;
-		scale=1;
+		if(playAni) {
+			scale=1;
+		}else {
+			scale=w;
+		}
+		
+		play=playAni;
 		Thread a=new Thread(this);
 		a.start();
 		update();
@@ -33,15 +40,17 @@ public class Timing2 extends Component implements Runnable,JustinTimingInterface
 
 	@Override
 	public void run() {
-		try {
-			for(int i=0;i<30;i++) {
-				Thread.sleep(17);
-				trans+=0.032;
-				scale+=4;
-				update();
+		if(play) {
+			try {
+				for(int i=0;i<30;i++) {
+					Thread.sleep(17);
+					trans+=0.032;
+					scale+=4;
+					update();
+				}
+			}catch(Exception e) {
+				
 			}
-		}catch(Exception e) {
-			
 		}
 
 	}
@@ -66,7 +75,7 @@ public class Timing2 extends Component implements Runnable,JustinTimingInterface
 
 	@Override
 	public void calculateAccuracy(Keystroke stroke) {
-		GameScreen.game.getTimings().add(new Timing2(100,100,100,100,""));
+		GameScreen.game.getTimings().add(new Timing2(100,100,100,100,"resources/perfect.png",(float) 0.6,false));
 		
 	}
 
