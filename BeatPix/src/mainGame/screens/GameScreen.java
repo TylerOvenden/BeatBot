@@ -38,6 +38,7 @@ import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
+import mainGame.components.OptionButton;
 import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
