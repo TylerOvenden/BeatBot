@@ -793,7 +793,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			@Override
 			public void act() {
 				//Continue Action Button will be here
-				System.out.println("Continue");
+				resumeGame();
 			}
 		}, new Action() {
 			
