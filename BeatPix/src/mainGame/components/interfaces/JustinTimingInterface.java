@@ -5,6 +5,7 @@ import mainGame.components.Keystroke;
 
 /**
  * This interface will contain all the essential methods used by Justin's Code for registering the pressing and release of strokes
+ * Meant for STEVEN
  * 
  * @author Justin Yau
  *

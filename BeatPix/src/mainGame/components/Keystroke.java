@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import gui.components.AnimatedComponent;
 import mainGame.components.interfaces.KeystrokeInterface;
+import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
 
 /*
@@ -26,7 +27,7 @@ import mainGame.screens.GameScreen;
  * Players will have to time their strokes such that it almost matches the time when this indicator passes through the stroke location
  * @author Justin Yau
  */
-public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
+public class Keystroke extends AnimatedComponent implements KeystrokeInterface, Stroke {
 
 	private int fallTime; //The speed at which the stroke falls down
 	private int startTime; //The starting time in the map when this stroke spawned
@@ -266,9 +267,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 		if(!cancel) {
 			GameScreen.game.removeStroke(this);
 			if(height <= 0) {
-				GameScreen.game.getTiming().changeImg("resources/miss.png");
-				GameScreen.game.getCombo().set();
-				GameScreen.game.calcAcc(0);
+				GameScreen.game.getTiming().missAccuracy();
 				//Place Scoring Here
 			}
 		}
@@ -284,6 +283,24 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface {
 	 */
 	public boolean isBeyondGoal(int goal) {
 		return getY() > goal;
+	}
+
+	/**
+	 * This method calculates the time, in ms, the first stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the first stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getFirstClickTime() {
+		return startTime + (GameScreen.columnHeight * fallTime);
+	}
+	
+	/**
+	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getEndClickTime() {
+		return 0;
 	}
 	
 }

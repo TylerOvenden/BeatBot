@@ -163,4 +163,22 @@ public interface HoldstrokeInterface {
 	 */
 	public void setHeld(boolean h);
 	
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromStart - The calculated height from the start point of the stroke
+	 * @return - The height the stroke should be rendered at 
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineBeginningHeight(int bottomHeightFromStart);
+	
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromBottom - The calculated height from the end point of the stroke
+	 * @return - The height the stroke should be rendered at
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineEndHeight(int bottomHeightFromBottom);
+	
 }

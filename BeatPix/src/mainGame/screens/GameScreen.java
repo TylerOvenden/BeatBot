@@ -2,6 +2,7 @@ package mainGame.screens;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,6 +14,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ActionMap;
@@ -21,6 +23,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
+import gui.components.Action;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
@@ -32,13 +35,16 @@ import mainGame.components.Accuracy;
 import mainGame.components.ColoredRectangle;
 import mainGame.components.ColumnLane;
 import mainGame.components.Combo;
+import mainGame.components.CustomText;
 import mainGame.components.Gear;
 import mainGame.components.Holdstroke;
 import mainGame.components.Keystroke;
 import mainGame.components.KeystrokeIndicator;
+import mainGame.components.OptionButton;
 import mainGame.components.Scoring;
 import mainGame.components.Song;
 import mainGame.components.Timing;
+import mainGame.components.Timing2;
 import mainGame.screens.interfaces.ResizableScreen;
 
 public class GameScreen extends ResizableScreen implements Runnable {
@@ -63,6 +69,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
 	private ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
+	
+	private ArrayList<OptionButton> optBTN; //All the option buttons will be on the screen here
 	
 	private ColoredRectangle pauseRect; //This rectangle will represent the rectangle spawned in when the escape button is pressed
 	private Gear escapeGear; //The gear the user can press to open the escape menu will be stored here
@@ -93,12 +101,18 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private Timing timing;
 	private TextArea visual;
 	private Accuracy accDisplay;
-	private Scoring gamescore;
 	private float[] totalAcc;
 	private float accuracy;
-	private Combo combo;
+	private CustomText combo;
+	private CustomText ctext;
+	private int comboCount;
+	private ArrayList<Timing2> timings;
+
 	//Steven
-	
+	//tyler
+	private Scoring gamescore;
+	private float score =0;
+	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
 		
@@ -148,6 +162,32 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
+	}
+	
+	/**
+	 * This method overrides the default adapter to resize clickable components 
+	 * @return The New Component Adapter to suit our needs
+	 * 
+	 * @author Justin Yau
+	 */
+	public ComponentAdapter getComponentAdapter() {
+		return new ComponentAdapter() {
+			
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Component c = (Component)arg0.getSource();
+				int height = c.getHeight();
+				int width = c.getWidth();
+				setXScale(((double) width)/getOWidth());
+				setYScale(((double) height)/getOHeight());
+				escapeGear.setY((int) (escapeGear.getOY() - (6 * getYScale())));
+				escapeGear.updateScales(getXScale(), getYScale());
+				for(OptionButton btn: optBTN) {
+					btn.updateScales(getXScale(), getYScale());
+				}
+			}
+			
+		};
 	}
 	
 	/**
@@ -379,6 +419,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		addColumnLanes(viewObjects);
 		addKeystrokeIndicator(viewObjects);
 		setUpGearButton(viewObjects);
+		spawnOptionButtons();
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -397,21 +438,26 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accDisplay=new Accuracy(600,30,400,400);
+		/*accDisplay=new Accuracy(600,30,400,400);
 		viewObjects.add(accDisplay);
 		accDisplay.update();
-		combo=new Combo(275,300, 128, 128);
+		*/
+		combo=new CustomText(215,100, 50, 50,"0");
 		viewObjects.add(combo);
-		combo.update();
-		/*	gamescore = new Scoring(500,40,400,400);
+
+		ctext=new CustomText(600,130,300,300,"100%");
+		viewObjects.add(ctext);
+		gamescore = new Scoring(500,40,400,400);
+
+
 		viewObjects.add(gamescore);
-		gamescore.update(); */
+		gamescore.update();  
 		
 		
 	}
 	
 	public void setUpGearButton(List<Visible> viewObjects) {
-		escapeGear = new Gear(5, 25, 50, 50);
+		escapeGear = new Gear(2, 25, 50, 50);
 		viewObjects.add(escapeGear);
 	}
 
@@ -422,6 +468,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
+	
 	public void addKeystrokeIndicator(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
@@ -501,7 +548,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			Keystroke cStroke = strokes.get(0);
 			removeStroke(cStroke);
 			cStroke.cancelFall();
-
 		}
  		
  	}
@@ -549,6 +595,28 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
+	public void calcScore(double timing) {
+		System.out.println(score);
+		if(timing==1) {
+			score+=1000000/beats.size()*1;
+		}
+		if(timing==.95) {
+			score+=1000000/beats.size()*.95;
+		}
+		if(timing==.66) {
+			score+=1000000/beats.size()*.66;
+		}
+		if(timing==.5) {
+			score+=1000000/beats.size()*.5;
+		}
+		if(timing==.33) {
+			score+=1000000/beats.size()*.33;
+		}
+		if(timing==0) {
+			score+=0;
+		}
+		
+	}
 	
 	public void calcAcc(double timing) {
 		int totalHit=0;
@@ -569,7 +637,24 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		acc=acc/totalHit;
 		accuracy=((float)Math.round(acc*10000)/100);
 		//System.out.println(accuracy);
-		accDisplay.setAcc(accuracy);
+		int temp=(int) (accuracy*100);
+		String set=accuracy+"%";
+		if(temp%10==0) {
+			set=accuracy+"0%";
+		}
+		if(temp<1000) {
+			set="0"+set;
+		}
+		ctext.setText(set);
+	}
+	
+	public void calcCombo(boolean isMiss) {
+		if(isMiss) {
+			comboCount=0;
+		}else {
+			comboCount++;
+		}
+		combo.setText(comboCount+"");
 	}
 
 	/**
@@ -665,11 +750,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
-		ColoredRectangle rect = new ColoredRectangle(0,0, getWidth(), getHeight(), ((float)0.3), Color.GRAY);
+		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
 		if(escapeGear != null) {
 			remove(escapeGear);
+		}
+		for(OptionButton btn: optBTN) {
+			addObject(btn);
 		}
 	}
 	
@@ -686,6 +774,48 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		if(escapeGear != null) {
 			addObject(escapeGear);
+		}
+		for(OptionButton btn: optBTN) {
+			remove(btn);
+		}
+	}
+	
+	/**
+	 * This method creates the 3 option buttons that will appear when the game is escaped or paused
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnOptionButtons() {
+		optBTN = new ArrayList<OptionButton>();
+		String[] btnTypes = {"Continue", "Options", "Exit"};
+		Action[] act = {new Action() {
+			
+			@Override
+			public void act() {
+				//Continue Action Button will be here
+				resumeGame();
+			}
+		}, new Action() {
+			
+			@Override
+			public void act() {
+				//Options Action Button will be here
+				System.out.println("Options");
+			}
+		}, new Action() {
+			
+			@Override
+			public void act() {
+				//Exit Action Button will be here
+				stop();
+				//Switch to a different screen below
+				System.out.println("Exit");
+			}
+		}};
+		for(int i = 0; i < btnTypes.length; i++) {
+			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i]);
+			bt.setAction(act[i]);
+			optBTN.add(bt);
 		}
 	}
 	
@@ -758,8 +888,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void calculateAndSetFallTimeFromBeats() {
-		if(BPM == 0 || BPM <= 45) {
-			fallTime = 10;
+		if(BPM == 0 || BPM <= 100) {
+			fallTime = 5;
 		}
 		else {
 			fallTime = (int) (((float)1/BPM) * 800);
@@ -831,7 +961,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			if(beats.size() == 0) {
 				playing = false;
 			}
-			else if(timePass() >= beats.get(0)[1]) {
+			else if(timePass() >= beats.get(0)[1] && !pause) {
 				int[] beat = beats.remove(0);
 				int lane = beat[0] - 1;
 				if(beat[2] != 0) {
@@ -860,9 +990,25 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		return timing;
 	}
 
-	public Combo getCombo() {
+	public int getCombo() {
 		// TODO Auto-generated method stub
-		return combo;
+		return comboCount;
+	}
+
+	public ArrayList<Timing2> getTimings() {
+		// TODO Auto-generated method stub
+		return timings;
+	}
+	
+	public void addTimings() {
+		for(int i=0;i<getObjects().size();i++) {
+			if(getObjects().get(i) instanceof Timing2) {
+				getObjects().remove(i);
+			}
+		}
+		for(int i=0;i<timings.size();i++) {
+			addObject(timings.get(i));
+		}
 	}
 	
 }
