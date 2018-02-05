@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 
 import gui.components.*;
 import gui.interfaces.FocusController;
@@ -23,7 +25,6 @@ public class ShopScreen extends FullFunctionScreen
 	private Graphic background;	
 	private Graphic songBanner;
 	
-	private TextLabel currency;	
 	private TextLabel banner;
 	private TextLabel credit;
 	private TextLabel purchased;
@@ -35,11 +36,7 @@ public class ShopScreen extends FullFunctionScreen
 	private ArrayList<Song> songs;
 	private ArrayList<Button> buttons;
 	
-	private Button songButton1;
-	private Button songButton2;
-	private Button songButton3;
-	private Button songButton4;
-	private Button songButton5;
+
 	private Button yes;
 	private Button no;
 	private Button clickedButton;
@@ -196,20 +193,30 @@ public class ShopScreen extends FullFunctionScreen
 			
 		for(int i = 0; i < 5; i++)
 		{ 
-			Button b = new Button(0,(0+(i*50)),200,70,"Song "+i+" | Credits: 1500",null);
-			b.setAction(new Action() 
+			try 
 			{
-				
-				@Override
-				public void act() 
+			    File pathToFile = new File("resources//button.png");
+			    Image image = ImageIO.read(pathToFile);
+		//	    ImageTextButton b = new ImageTextButton("Song "+i+" | Credits: 1500",image,15,(0+(i*70)),180,50,null);
+			    Button b = new Button(0,(i*50),200,70,"Song "+i+" | Credits: 1500",null);
+				b.setAction(new Action() 
 				{
-					clickedButton = b;				
-					text.setVisible(true);
-					yes.setVisible(true);				
-					no.setVisible(true);				
-				}
-			});
-			buttons.add(b);
+					
+					@Override
+					public void act() 
+					{
+						clickedButton = b;				
+						text.setVisible(true);
+						yes.setVisible(true);				
+						no.setVisible(true);				
+					}
+				});
+				buttons.add(b);
+			} catch (IOException ex)
+			{
+			    ex.printStackTrace();
+			}
+			
 		}
 		
 		for (int i = 0; i < buttons.size(); i++)
@@ -217,11 +224,15 @@ public class ShopScreen extends FullFunctionScreen
 			scroll.addObject(buttons.get(i));
 		}
 		
+		
+		
+		
 		scroll.update();
 		viewObjects.add(scroll);
 				
 	}	
 
+	
 	public Action songAction()
 	{
 		Action a  = new Action() 
