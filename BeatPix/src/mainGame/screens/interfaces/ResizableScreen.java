@@ -57,6 +57,12 @@ public abstract class ResizableScreen extends ClickableScreen {
 		addComponentListener(getComponentAdapter());
 	}
 	
+	/**
+	 * This method generates the default adapter that will change the scales whenever the window is resized
+	 * @return - The component adapter generated
+	 * 
+	 * @author Justin Yau
+	 */
 	public ComponentAdapter getComponentAdapter() {
 		return new ComponentAdapter() {
 			
@@ -72,18 +78,42 @@ public abstract class ResizableScreen extends ClickableScreen {
 		};
 	}
 	
+	/**
+	 * This method returns the original width of the screen
+	 * @return - The original width of the screen
+	 * 
+	 * @author Justin Yau
+	 */
 	public int getOWidth() {
 		return originalWidth;
 	}
 	
+	/**
+	 * This method returns the original height of the screen
+	 * @return - The original height of the screen
+	 * 
+	 * @author Justin Yau
+	 */
 	public int getOHeight() {
 		return originalHeight;
 	}
 	
+	/**
+	 * This method sets the x scale of window screen
+	 * @param x - X scale of the window screen 
+	 * 
+	 * @author Justin Yau
+	 */
 	public void setXScale(double x) {
 		xScale = x;
 	}
 	
+	/**
+	 * This method sets the y scale of the window screen
+	 * @param y - Y scale of the window screen
+	 * 
+	 * @author Justin Yau
+	 */
 	public void setYScale(double y) {
 		yScale = y;
 	}
