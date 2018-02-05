@@ -106,7 +106,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getEndClickTime() {
-		return startingTime + ((GameScreen.columnHeight + height) * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + height - GameScreen.distanceAAfterGoal) * fallSpeed);
 	}
 	
 	/**
