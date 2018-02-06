@@ -74,7 +74,7 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 
-		credits = 15000;
+		credits = 1500;
 		
 		buttons = new ArrayList<Button>();
 
@@ -84,20 +84,21 @@ public class ShopScreen extends FullFunctionScreen
  		background = new Graphic(40,0,getWidth(),getHeight(),"resources//shop_bg.png");
 		viewObjects.add(background);
 		
-		songBanner = new CustomText(143,135,200,150,"Songs");
+		songBanner = new CustomText(123,135,200,150,"Songs");
 		viewObjects.add(songBanner);
 		
 		
-		String s = "Credits: "+credits; // add method "getCredits()" later
-		credit = new CustomText(150,60,200,200, s);
+		String s = "Credits:"+credits; // add method "getCredits()" later
+		credit = new CustomText(120,60,200,200, s);
 		viewObjects.add(credit);
 		
 		//area where "SONGS" will be displayed
-		banner = new CustomText(190,100,200,200, "Songs");
+		banner = new CustomText(170,100,200,200, "Songs");
 		
 		//scroll bar, contains the songs
-		ScrollablePane scroll = new ScrollablePane(this, 130,175,220,300);		
-		
+		ScrollablePane scroll = new ScrollablePane(this, 110,175,220,300);		
+	//	scroll.setBackground(new Color(255,255,255,12));
+	//	scroll.update();
 		//when user clicks yes to buy song
 		yes = new Button(430,205,45,30, "Yes",Color.gray, new Action() 
 		{			
@@ -122,11 +123,11 @@ public class ShopScreen extends FullFunctionScreen
 								yes.setVisible(false);				
 								text.setVisible(false);
 								no.setVisible(false);
-								purchasedTextLine1 = new CustomText(380,60,500,450, "Song Purchased!");
-								purchasedTextLine2 = new CustomText(365,100,500,550, "Added to Your Library");
+								purchasedTextLine1 = new CustomText(350,90,300,430, "Song Purchased!");
+								purchasedTextLine2 = new CustomText(342,130,300,420, "Added to Library");
 								viewObjects.add(purchasedTextLine1);
 								viewObjects.add(purchasedTextLine2);
-								Thread.sleep(1500);
+								Thread.sleep(1000);
 								purchasedTextLine1.setVisible(false);
 								purchasedTextLine2.setVisible(false);
 								scroll.remove(clickedButton);
@@ -160,14 +161,17 @@ public class ShopScreen extends FullFunctionScreen
 						{
 							try
 							{
-								CustomText warningLine1 = new CustomText(380,70,500,450, "You Do Not Have");
-								CustomText warningLine2 = new CustomText(380,110,500,440, "Enough Credits");
+								CustomText warningLine1 = new CustomText(342,90,300,430, "You Do Not Have");
+								CustomText warningLine2 = new CustomText(342,130,300,420, "Enough Credits");
 								
 								viewObjects.add(warningLine1);
 								viewObjects.add(warningLine2);
 								Thread.sleep(1000);
 								warningLine1.setVisible(false);		
 								warningLine2.setVisible(false);	
+								yes.setVisible(false);				
+								text.setVisible(false);
+								no.setVisible(false);
 							}
 							catch (InterruptedException e) 
 							{
