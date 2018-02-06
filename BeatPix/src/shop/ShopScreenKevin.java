@@ -28,6 +28,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private ArrayList<Button> buttonList;
 	private ArrayList <Button> confirmButton;
 	private ArrayList<Button> yesButton;
+	private ArrayList<Integer> indexList;
 	
 	private CustomRectangle border; //for the text
 	private CustomRectangle border2; //for the unlock
@@ -35,6 +36,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private ScrollablePane charScroll;
 	private Button noButton;
 	private int numChars;
+	private int index;
 	
 	
 
@@ -49,9 +51,11 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		buttonList = new ArrayList<Button>();
 		yesButton = new ArrayList<Button>();
 		confirmButton = new ArrayList<Button>();
+		indexList = new ArrayList<Integer>();
 		//the ten should be number chars that the player should unlock
 		numChars = 4;
 		//create the back button
+		createIntList(numChars);
 		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
 			
 			@Override
@@ -76,6 +80,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 					
 					setThings1VisTrue();
 					setYesButVisExceptThis(j);
+					index = indexList.indexOf(j);
 				}
 			}));
 			charScroll.addObject(buttonList.get(i));
@@ -107,12 +112,17 @@ public class ShopScreenKevin extends FullFunctionScreen {
 				public void act() {
 					setThings2VisFalse();
 					setAllConfButVisFalse();
-					charScroll.remove(buttonList.get(a));
-					buttonList.remove(a);
-					yesButton.remove(a);
-					confirmButton.remove(a);
-					charScroll.update();
-					
+					buttonList.get(a).setVisible(false);
+					indexList.remove(index);
+					for (int i = index; i < buttonList.size(); i++)
+					{
+						if (buttonList.get(i).getY() != 0)
+						{
+							buttonList.get(i).move(buttonList.get(i).getX(), (buttonList.get(i).getY()-30), 10);
+							charScroll.update();
+						}
+
+					}
 					
 				}
 			}));
@@ -157,6 +167,12 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		viewObjects.add(unlock);
 		
 		
+	}
+	//create the index array
+	public void createIntList(int a) {
+		for(int i = 0; i < a; i++) {
+			indexList.add(i);
+		}
 	}
 	//helper methods
 
