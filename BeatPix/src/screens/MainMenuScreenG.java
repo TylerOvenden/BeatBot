@@ -92,8 +92,8 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
-				viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
-
+				//viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
+				viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
 				//viewObjects.add(options);
 			}
 		});

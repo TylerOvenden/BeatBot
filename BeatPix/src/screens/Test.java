@@ -18,10 +18,6 @@ public class Test extends GUIApplication {
 	private static final long serialVersionUID = 6557376208612089301L;
 	
 	public static Test test;
-	public static ArrayList<Screen> screens;
-	public static int START = 0;
-	public static int MENU = 1;
-	public static int CHARACTER = 1;
 	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
