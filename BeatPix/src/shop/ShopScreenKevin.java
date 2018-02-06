@@ -22,7 +22,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	 */
 	private static final long serialVersionUID = 1504601622695326879L;
 	
-	private TextLabel text;
+	private TextLabel textKev;
 	private TextLabel unlock;
 	
 	private ArrayList<Button> buttonList;
@@ -130,7 +130,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		
 		 //create all the things 
 		 border = new CustomRectangle(280, 180, 220, 120, Color.BLACK, 3);
-		 text = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
+		 textKev = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
 		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
 		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
 		 
@@ -155,7 +155,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		//add the objects
 		viewObjects.add(backButton);
 		viewObjects.add(border);
-		viewObjects.add(text);
+		viewObjects.add(textKev);
 		charScroll.update();
 		viewObjects.add(charScroll);
 		viewObjects.add(noButton);
@@ -179,13 +179,13 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = false
 	public void setThings1VisFalse() {
 		 border.setVisible(false);
-		 text.setVisible(false);
+		 textKev.setVisible(false);
 		 noButton.setVisible(false);
 	}
 	//same things as Things1false but, visibility = true
 	public void setThings1VisTrue() {
 		 border.setVisible(true);
-		 text.setVisible(true);
+		 textKev.setVisible(true);
 		 noButton.setVisible(true);
 	}
 	

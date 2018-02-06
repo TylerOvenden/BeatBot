@@ -19,21 +19,18 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import mainGame.components.Song;
+import screens.components.CustomText;
 public class ShopScreen extends FullFunctionScreen
 {
 	private CustomRectangle songArea;
 	
 	private Graphic background;	
-	private Graphic songBanner;
 	
-	private TextLabel banner;
-	private TextLabel credit;
-	private TextLabel purchased;
+	private CustomText songBanner;
+	private CustomText banner;
+	private CustomText credit;
+	private CustomText purchased;
 	
-	private Font bannerFont;
-	private Font creditFont;
-	private Font warningFont;
-
 	private ArrayList<Song> songs;
 	private ArrayList<Button> buttons;
 	
@@ -48,6 +45,23 @@ public class ShopScreen extends FullFunctionScreen
 	private TextArea text;
 
 	
+	//kevin
+	private TextLabel textKev;
+	private TextLabel unlock;
+	
+	private ArrayList<Button> buttonList;
+	private ArrayList <Button> confirmButton;
+	private ArrayList<Button> yesButton;
+	private ArrayList<Integer> indexList;
+	
+	private CustomRectangle border; //for the text
+	private CustomRectangle border2; //for the unlock
+	
+	private ScrollablePane charScroll;
+	private Button noButton;
+	private int numChars;
+	private int index;
+	
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
@@ -60,41 +74,27 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 
-		credits = 25000;
+		credits = 15000;
 		
 		buttons = new ArrayList<Button>();
 
 		
-		bannerFont = new Font("resources//slkscr.ttf", Font.ITALIC, 25);
-		creditFont = new Font("Verdana", Font.BOLD, 20);
-		warningFont = new Font("Verdana", Font.BOLD, 18);
 		//graphics
-		ImageIcon a = new ImageIcon("resources//background//start.jpg");
 		
-		background = new Graphic(40,-a.getIconHeight()+getHeight(),getWidth(),getHeight(),"resources//background//start.jpg");
+ 		background = new Graphic(40,0,getWidth(),getHeight(),"resources//shop_bg.png");
 		viewObjects.add(background);
-		songBanner = new Graphic(170,100,120,120,"resources//SongsBanner.png");
+		
+		songBanner = new CustomText(143,135,200,150,"Songs");
 		viewObjects.add(songBanner);
 		
-		//background for credits, make new component later
-		CustomRectangle creditBG = new CustomRectangle(135,60,190,40, Color.white,5);
-		viewObjects.add(creditBG);
 		
 		String s = "Credits: "+credits; // add method "getCredits()" later
-		credit = new TextLabel(150,60,200,200, s);
-		credit.setCustomTextColor(Color.white);
-		credit.setFont(creditFont);
+		credit = new CustomText(150,60,200,200, s);
 		viewObjects.add(credit);
 		
-		// where the new songs will be placed
-		songArea = new CustomRectangle(110, 150, 260, 350, Color.CYAN,25);
-		viewObjects.add(songArea);
-		
 		//area where "SONGS" will be displayed
-		banner = new TextLabel(190,100,200,200, "Songs");
-		banner.setCustomTextColor(Color.white);
-		banner.setFont(bannerFont);
-
+		banner = new CustomText(190,100,200,200, "Songs");
+		
 		//scroll bar, contains the songs
 		ScrollablePane scroll = new ScrollablePane(this, 130,175,220,300);		
 		
@@ -109,6 +109,9 @@ public class ShopScreen extends FullFunctionScreen
 				{	
 					new Thread()
 					{
+						private CustomText purchasedTextLine1;
+						private CustomText purchasedTextLine2;
+
 						public void run()
 						{
 							try
@@ -119,12 +122,13 @@ public class ShopScreen extends FullFunctionScreen
 								yes.setVisible(false);				
 								text.setVisible(false);
 								no.setVisible(false);
-								purchased = new TextLabel(350,60,450,200, "Song Purchased! Added to Your Library");
-								purchased.setFont(warningFont);
-								purchased.setCustomTextColor(Color.white);
-								viewObjects.add(purchased);
+								purchasedTextLine1 = new CustomText(380,60,500,450, "Song Purchased!");
+								purchasedTextLine2 = new CustomText(365,100,500,550, "Added to Your Library");
+								viewObjects.add(purchasedTextLine1);
+								viewObjects.add(purchasedTextLine2);
 								Thread.sleep(1500);
-								purchased.setVisible(false);								
+								purchasedTextLine1.setVisible(false);
+								purchasedTextLine2.setVisible(false);
 								scroll.remove(clickedButton);
 								int index = buttons.indexOf(clickedButton);
 								buttons.remove(clickedButton);
@@ -156,12 +160,14 @@ public class ShopScreen extends FullFunctionScreen
 						{
 							try
 							{
-								TextLabel warning = new TextLabel(350,60,450,200, "You Do Not Have Enough Credits");
-								warning.setFont(warningFont);
-								warning.setCustomTextColor(Color.red);
-								viewObjects.add(warning);
-								Thread.sleep(1500);
-								warning.setVisible(false);			
+								CustomText warningLine1 = new CustomText(380,70,500,450, "You Do Not Have");
+								CustomText warningLine2 = new CustomText(380,110,500,440, "Enough Credits");
+								
+								viewObjects.add(warningLine1);
+								viewObjects.add(warningLine2);
+								Thread.sleep(1000);
+								warningLine1.setVisible(false);		
+								warningLine2.setVisible(false);	
 							}
 							catch (InterruptedException e) 
 							{
@@ -233,6 +239,127 @@ public class ShopScreen extends FullFunctionScreen
 		scroll.update();
 		viewObjects.add(scroll);
 				
+		
+		// kevin
+		
+		
+		buttonList = new ArrayList<Button>();
+		yesButton = new ArrayList<Button>();
+		confirmButton = new ArrayList<Button>();
+		indexList = new ArrayList<Integer>();
+		//the ten should be number chars that the player should unlock
+		numChars = 4;
+		//create the back button
+		createIntList(numChars);
+		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
+			
+			@Override
+			public void act() {
+				// go back to main screen
+				
+			}
+		});
+		
+		//create the panel 
+		charScroll = new ScrollablePane(this, 650, 100, 250, 400);
+		charScroll.setBorderWidth(3);
+		
+		//create the list of Buttons and add it to panel
+		for(int i=0; i < numChars; i++){ 
+			//got the index number
+			final int x = i;
+			buttonList.add(new Button(5,30*i,100,25,"Button "+i, new Action() {
+				int j = x;
+				@Override
+				public void act() {
+					
+					setThings1VisTrue();
+					setYesButVisExceptThis(j);
+					index = indexList.indexOf(j);
+				}
+			}));
+			charScroll.addObject(buttonList.get(i));
+		}
+		
+		//create arrayList of YesButtons
+		for(int k = 0; k < numChars; k++) {
+			final int z = k;
+			yesButton.add(new Button(300, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
+				int j = z;
+				@Override
+				public void act() {
+					// i guess to have the images, and set the a boolean to true and a textfield says unlock
+					 setThings2VisTrue();
+					 setThings1VisFalse();
+					 setAllYesButVisFalse();
+					 setConfButVisExceptThis(j);
+					 
+						
+				}
+			}));
+		}
+		//create arrayList of confirmButtons
+		for(int l = 0; l < numChars; l ++) {
+			final int y = l;
+			confirmButton.add(new Button(370, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
+				int a = y;
+				@Override
+				public void act() {
+					setThings2VisFalse();
+					setAllConfButVisFalse();
+					buttonList.get(a).setVisible(false);
+					indexList.remove(index);
+					for (int i = index; i < buttonList.size(); i++)
+					{
+						if (buttonList.get(i).getY() != 0)
+						{
+							buttonList.get(i).move(buttonList.get(i).getX(), (buttonList.get(i).getY()-30), 10);
+							charScroll.update();
+						}
+
+					}
+					
+				}
+			}));
+		}
+		
+		 //create all the things 
+		 border = new CustomRectangle(280, 180, 220, 120, Color.BLACK, 3);
+		 textKev = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
+		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
+		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
+		 
+		 noButton = new Button(400, 250, 50, 50, "no", Color.RED, new Action() {
+			
+			@Override
+			public void act() {
+				 setThings1VisFalse();
+				 setAllYesButVisFalse();
+			}
+		});
+		 
+		 
+		 //visible all the things
+		 setThings1VisFalse();
+		 setAllYesButVisFalse();
+		 setThings2VisFalse();
+		 setAllConfButVisFalse();
+		 
+		 
+		
+		//add the objects
+		viewObjects.add(backButton);
+		viewObjects.add(border);
+		viewObjects.add(textKev);
+		charScroll.update();
+		viewObjects.add(charScroll);
+		viewObjects.add(noButton);
+		for(int a = 0; a < numChars; a++) {
+			viewObjects.add(yesButton.get(a));
+			viewObjects.add(confirmButton.get(a));
+		}
+		viewObjects.add(border2);
+		viewObjects.add(unlock);
 	}	
 
 	
@@ -253,34 +380,257 @@ public class ShopScreen extends FullFunctionScreen
 		return a;
 		
 	}
+	
+	public void createIntList(int a) {
+		for(int i = 0; i < a; i++) {
+			indexList.add(i);
+		}
+	}
+	//helper methods
+
+	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = false
+	public void setThings1VisFalse() {
+		 border.setVisible(false);
+		 textKev.setVisible(false);
+		 noButton.setVisible(false);
+	}
+	//same things as Things1false but, visibility = true
+	public void setThings1VisTrue() {
+		 border.setVisible(true);
+		 textKev.setVisible(true);
+		 noButton.setVisible(true);
+	}
+	
+	//things that things1 doesnt consist of, visibility = false
+	public void setThings2VisFalse() {
+		 border2.setVisible(false);
+		 unlock.setVisible(false);
+		 //confirmButton.setVisible(false);
+	}
+	//things that things1 doesnt consist of, visibility = false
+	public void setThings2VisTrue() {
+		 border2.setVisible(true);
+		 unlock.setVisible(true);
+		 //confirmButton.setVisible(true);
+	}
+	
+	 //turn all yesButtons, visibility = false;
+	public void setAllYesButVisFalse() {
+		for(int i = 0; i < yesButton.size(); i ++) {
+			yesButton.get(i).setVisible(false);
+		}
+	}
+	//turn all  yes button visibility that are false except for the  chosen one
+	public void setYesButVisExceptThis(int i) {
+		for(int x = 0; x < yesButton.size(); x++) {
+			if(x != i) {
+				yesButton.get(x).setVisible(false);
+			}
+			yesButton.get(i).setVisible(true);
+		}
+	}
+	
+	 //turn all confirmButtons, visibility = false;
+	public void setAllConfButVisFalse() {
+		for(int i = 0; i < confirmButton.size(); i ++) {
+			confirmButton.get(i).setVisible(false);
+		}
+	}
+	//turn all  yes button visibility that are false except for de chosen one
+	public void setConfButVisExceptThis(int i) {
+		for(int x = 0; x < confirmButton.size(); x++) {
+			if(x != i) {
+				confirmButton.get(x).setVisible(false);
+			}
+			confirmButton.get(i).setVisible(true);
+		}
+	}
 }
 
 
-/*KEVIN'S CODE________________________________________________________________________________________________________________
+/*KEVIN'S CODEbuttonList = new ArrayList<Button>();
+		yesButton = new ArrayList<Button>();
+		confirmButton = new ArrayList<Button>();
+		indexList = new ArrayList<Integer>();
+		//the ten should be number chars that the player should unlock
+		numChars = 4;
+		//create the back button
+		createIntList(numChars);
+		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
+			
+			@Override
+			public void act() {
+				// go back to main screen
+				
+			}
+		});
+		
+		//create the panel 
+		charScroll = new ScrollablePane(this, 650, 100, 250, 400);
+		charScroll.setBorderWidth(3);
+		
+		//create the list of Buttons and add it to panel
+		for(int i=0; i < numChars; i++){ 
+			//got the index number
+			final int x = i;
+			buttonList.add(new Button(5,30*i,100,25,"Button "+i, new Action() {
+				int j = x;
+				@Override
+				public void act() {
+					
+					setThings1VisTrue();
+					setYesButVisExceptThis(j);
+					index = indexList.indexOf(j);
+				}
+			}));
+			charScroll.addObject(buttonList.get(i));
+		}
+		
+		//create arrayList of YesButtons
+		for(int k = 0; k < numChars; k++) {
+			final int z = k;
+			yesButton.add(new Button(300, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
+				int j = z;
+				@Override
+				public void act() {
+					// i guess to have the images, and set the a boolean to true and a textfield says unlock
+					 setThings2VisTrue();
+					 setThings1VisFalse();
+					 setAllYesButVisFalse();
+					 setConfButVisExceptThis(j);
+					 
+						
+				}
+			}));
+		}
+		//create arrayList of confirmButtons
+		for(int l = 0; l < numChars; l ++) {
+			final int y = l;
+			confirmButton.add(new Button(370, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
+				int a = y;
+				@Override
+				public void act() {
+					setThings2VisFalse();
+					setAllConfButVisFalse();
+					buttonList.get(a).setVisible(false);
+					indexList.remove(index);
+					for (int i = index; i < buttonList.size(); i++)
+					{
+						if (buttonList.get(i).getY() != 0)
+						{
+							buttonList.get(i).move(buttonList.get(i).getX(), (buttonList.get(i).getY()-30), 10);
+							charScroll.update();
+						}
 
-Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
-	
-	@Override
-	public void act() {
-		// go back to main screen
+					}
+					
+				}
+			}));
+		}
+		
+		 //create all the things 
+		 border = new CustomRectangle(280, 180, 220, 120, Color.BLACK, 3);
+		 textKev = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
+		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
+		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
+		 
+		 noButton = new Button(400, 250, 50, 50, "no", Color.RED, new Action() {
+			
+			@Override
+			public void act() {
+				 setThings1VisFalse();
+				 setAllYesButVisFalse();
+			}
+		});
+		 
+		 
+		 //visible all the things
+		 setThings1VisFalse();
+		 setAllYesButVisFalse();
+		 setThings2VisFalse();
+		 setAllConfButVisFalse();
+		 
+		 
+		
+		//add the objects
+		viewObjects.add(backButton);
+		viewObjects.add(border);
+		viewObjects.add(textKev);
+		charScroll.update();
+		viewObjects.add(charScroll);
+		viewObjects.add(noButton);
+		for(int a = 0; a < numChars; a++) {
+			viewObjects.add(yesButton.get(a));
+			viewObjects.add(confirmButton.get(a));
+		}
+		viewObjects.add(border2);
+		viewObjects.add(unlock);
+		
 		
 	}
-});
-ScrollablePane charScroll = new gui.components.ScrollablePane(this, 130,500,220,300);
-charScroll.setBorderWidth(3);
-for(int i=0; i < 10; i++){
-	charScroll.addObject(new Button(5,30*i,100,25,"Label "+(i+1), new Action() {
-		
-		@Override
-		public void act() {
-			// TODO Auto-generated method stub
-			
+	//create the index array
+	public void createIntList(int a) {
+		for(int i = 0; i < a; i++) {
+			indexList.add(i);
 		}
-	}));
-}
-charScroll.update();
+	}
+	//helper methods
 
-viewObjects.add(backButton);
-viewObjects.add(charScroll);
-
+	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = false
+	public void setThings1VisFalse() {
+		 border.setVisible(false);
+		 textKev.setVisible(false);
+		 noButton.setVisible(false);
+	}
+	//same things as Things1false but, visibility = true
+	public void setThings1VisTrue() {
+		 border.setVisible(true);
+		 textKev.setVisible(true);
+		 noButton.setVisible(true);
+	}
+	
+	//things that things1 doesnt consist of, visibility = false
+	public void setThings2VisFalse() {
+		 border2.setVisible(false);
+		 unlock.setVisible(false);
+		 //confirmButton.setVisible(false);
+	}
+	//things that things1 doesnt consist of, visibility = false
+	public void setThings2VisTrue() {
+		 border2.setVisible(true);
+		 unlock.setVisible(true);
+		 //confirmButton.setVisible(true);
+	}
+	
+	 //turn all yesButtons, visibility = false;
+	public void setAllYesButVisFalse() {
+		for(int i = 0; i < yesButton.size(); i ++) {
+			yesButton.get(i).setVisible(false);
+		}
+	}
+	//turn all  yes button visibility that are false except for the  chosen one
+	public void setYesButVisExceptThis(int i) {
+		for(int x = 0; x < yesButton.size(); x++) {
+			if(x != i) {
+				yesButton.get(x).setVisible(false);
+			}
+			yesButton.get(i).setVisible(true);
+		}
+	}
+	
+	 //turn all confirmButtons, visibility = false;
+	public void setAllConfButVisFalse() {
+		for(int i = 0; i < confirmButton.size(); i ++) {
+			confirmButton.get(i).setVisible(false);
+		}
+	}
+	//turn all  yes button visibility that are false except for de chosen one
+	public void setConfButVisExceptThis(int i) {
+		for(int x = 0; x < confirmButton.size(); x++) {
+			if(x != i) {
+				confirmButton.get(x).setVisible(false);
+			}
+			confirmButton.get(i).setVisible(true);
+		}
+	}
 */
