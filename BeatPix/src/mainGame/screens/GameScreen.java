@@ -604,9 +604,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(timing==0) {
 			score+=0;
 		}
-		
-	}
 	
+	} 
+
 	public void calcAcc(double timing) {
 		int totalHit=0;
 		for(int i=0;i<totalAcc.length;i++) {
