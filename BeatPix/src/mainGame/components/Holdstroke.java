@@ -136,8 +136,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public void cancelFall() {
-		this.cancel = true;
-		update();
+		cancel = true;
 	}
 	
 	/**

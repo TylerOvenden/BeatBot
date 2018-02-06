@@ -202,7 +202,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface, 
 	 * @author Justin Yau
 	 */
 	public void cancelFall() {
-		this.cancel = true;
+		cancel = true;
 	}
 	
 	/**
