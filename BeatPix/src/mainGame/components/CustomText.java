@@ -20,7 +20,8 @@ public class CustomText extends Component {
 	String text;
 	int w;
 	int h;
-	boolean keepScale;
+	boolean scaleHeight;
+	boolean scaleWidth;
 
 	/**
 	 * 
@@ -35,7 +36,8 @@ public class CustomText extends Component {
 		this.text=text.toUpperCase();
 		this.w=w;
 		this.h=h;
-		keepScale=true;
+		scaleHeight=true;
+		scaleWidth=true;
 		update();
 	}
 	
@@ -46,14 +48,15 @@ public class CustomText extends Component {
 	 * @param w - w
 	 * @param h - h
 	 * @param text - Text
-	 * @param keepScale - Keep height scale or not
+	 * @param scaleHeight - Keep height scale or not
 	 */
-	public CustomText(int x, int y, int w, int h, String text,boolean keepScale) {
+	public CustomText(int x, int y, int w, int h, String text,boolean scaleHeight,boolean scaleWidth) {
 		super(x, y, w, h);
 		this.text=text.toUpperCase();
 		this.w=w;
 		this.h=h;
-		this.keepScale=keepScale;
+		this.scaleHeight=scaleHeight;
+		this.scaleWidth=scaleWidth;
 		update();
 	}
 
@@ -84,12 +87,12 @@ public class CustomText extends Component {
 		update();
 	}
 
-	public boolean isKeepScale() {
-		return keepScale;
+	public boolean isScaleHeight() {
+		return scaleHeight;
 	}
 
-	public void setKeepScale(boolean keepScale) {
-		this.keepScale = keepScale;
+	public void setScaleHeight(boolean scaleHeight) {
+		this.scaleHeight = scaleHeight;
 		update();
 	}
 
@@ -102,10 +105,14 @@ public class CustomText extends Component {
 				Image img = icon.getImage();
 				Image newimg;
 				int newW=w-(text.length()*5);
-				if(keepScale) {
+				if(scaleHeight&&scaleWidth) {
 					newimg = img.getScaledInstance(newW/text.length(),h/text.length(),java.awt.Image.SCALE_SMOOTH);
-				}else {
+				}else if(!scaleHeight&&scaleWidth){
 					newimg = img.getScaledInstance(newW/text.length(),h,java.awt.Image.SCALE_SMOOTH);
+				}else if(!scaleWidth&&scaleHeight){
+					newimg = img.getScaledInstance(newW,h/text.length(),java.awt.Image.SCALE_SMOOTH);
+				}else {
+					newimg = img.getScaledInstance(newW,h,java.awt.Image.SCALE_SMOOTH);
 				}
 				ImageIcon newIcon = new ImageIcon(newimg);
 				g.drawImage(newIcon.getImage(), i*w/text.length(), 0, null);		
