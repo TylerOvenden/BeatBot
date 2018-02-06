@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import gui.components.*;
 import gui.interfaces.FocusController;
@@ -68,7 +69,9 @@ public class ShopScreen extends FullFunctionScreen
 		creditFont = new Font("Verdana", Font.BOLD, 20);
 		warningFont = new Font("Verdana", Font.BOLD, 18);
 		//graphics
-		background = new Graphic(40,0,getWidth(),getHeight(),"resources//shop_bg.png");
+		ImageIcon a = new ImageIcon("resources//background//start.jpg");
+		
+		background = new Graphic(40,-a.getIconHeight()+getHeight(),getWidth(),getHeight(),"resources//background//start.jpg");
 		viewObjects.add(background);
 		songBanner = new Graphic(170,100,120,120,"resources//SongsBanner.png");
 		viewObjects.add(songBanner);
@@ -91,7 +94,6 @@ public class ShopScreen extends FullFunctionScreen
 		banner = new TextLabel(190,100,200,200, "Songs");
 		banner.setCustomTextColor(Color.white);
 		banner.setFont(bannerFont);
-	//	viewObjects.add(banner);
 
 		//scroll bar, contains the songs
 		ScrollablePane scroll = new ScrollablePane(this, 130,175,220,300);		
@@ -191,6 +193,7 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(no);
 		no.setVisible(false);
 			
+		
 		for(int i = 0; i < 5; i++)
 		{ 
 			try 
