@@ -168,7 +168,7 @@ public class Timing extends Component implements JustinTimingInterface {
 		update();
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
-		System.out.println("b");
+		//System.out.println("b");
 	}
 
 }
