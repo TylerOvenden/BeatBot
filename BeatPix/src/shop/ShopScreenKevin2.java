@@ -39,7 +39,7 @@ public class ShopScreenKevin2 extends FullFunctionScreen {
 				index = indexList.indexOf(j);
 				System.out.println("The index number is "+index);			
 				buttonList.get(j).setVisible(false);
-				indexList.remove(indexList.indexOf(j));
+				indexList.remove(index);
 				
 
 				}
