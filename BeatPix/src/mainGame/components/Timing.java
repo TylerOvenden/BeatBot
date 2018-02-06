@@ -16,7 +16,7 @@ import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
 
-public class Timing extends Component implements JustinTimingInterface,Runnable {
+public class Timing extends Component implements JustinTimingInterface {
 	
 	private String img="";
 	private float lastTiming=0;
@@ -174,9 +174,4 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 		GameScreen.game.calcCombo(true);
 	}
 
-	@Override
-	public void run() {
-		
-		
-	}
 }
