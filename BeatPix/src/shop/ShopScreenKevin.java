@@ -112,8 +112,6 @@ public class ShopScreenKevin extends FullFunctionScreen {
 				public void act() {
 					setThings2VisFalse();
 					setAllConfButVisFalse();
-					buttonList.get(a).setVisible(false);
-					indexList.remove(index);
 					for (int i = index; i < buttonList.size(); i++)
 					{
 						if (buttonList.get(i).getY() != 0)
@@ -123,6 +121,10 @@ public class ShopScreenKevin extends FullFunctionScreen {
 						}
 
 					}
+					charScroll.remove(buttonList.get(a));
+					//buttonList.get(a).setVisible(false);
+					charScroll.update();
+					indexList.remove(index);
 					
 				}
 			}));
