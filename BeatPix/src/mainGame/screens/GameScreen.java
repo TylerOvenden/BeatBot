@@ -475,7 +475,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
 
-		displayScore = new CustomText(500,300,80,80,"0");
+		displayScore = new CustomText(500,300,120,120,"0");
 		viewObjects.add(displayScore);
 		gamescore.update();  
 		
