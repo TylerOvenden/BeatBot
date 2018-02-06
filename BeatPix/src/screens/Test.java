@@ -60,7 +60,7 @@ public class Test extends GUIApplication {
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
-		setScreen(start);
+		setScreen(start); //
 		start.scrollIn();
 	}
 
