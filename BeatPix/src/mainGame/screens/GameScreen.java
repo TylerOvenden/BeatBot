@@ -190,6 +190,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		cancelAllFalls();
 	}
 	
+	/**
+	 * This method goes through each stroke and cancels their fall
+	 * 
+	 * @author Justin Yau
+	 */
 	public void cancelAllFalls() {
 		for(Visible str: strokes) {
 			if(str instanceof Keystroke) {
