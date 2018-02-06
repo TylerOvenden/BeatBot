@@ -210,7 +210,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 4;
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight());
-		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+//		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 		background.setY(-background.getHeight() + getHeight()*2);
 		System.out.println(Test.test.x+"s END START");
 
