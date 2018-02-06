@@ -107,11 +107,7 @@ public class Timing extends Component implements JustinTimingInterface {
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<164) {
-				changeImg("resources/miss.png");
-				update();
-				GameScreen.game.calcAcc(0);
-				GameScreen.game.calcScore(0);
-				GameScreen.game.calcCombo(true);
+				calculations(0,"resources/miss.png");
 				return ;
 			}
 		}else {
@@ -140,29 +136,29 @@ public class Timing extends Component implements JustinTimingInterface {
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<103) {
-				changeImg("resources/ok.png");
-				update();
-				GameScreen.game.calcAcc(.5);
-				GameScreen.game.calcScore(.5);
-				GameScreen.game.calcCombo(false);
+				calculations(.5,"resources/ok.png");
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<127) {
-				changeImg("resources/bad.png");
-				update();
-				GameScreen.game.calcAcc(.33);
-				GameScreen.game.calcScore(.33);
-				GameScreen.game.calcCombo(false);
+				calculations(.33,"resources/bad.png");
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<164) {
-				changeImg("resources/miss.png");
-				update();
-				GameScreen.game.calcAcc(0);
-				GameScreen.game.calcScore(0);
-				GameScreen.game.calcCombo(true);
+				calculations(0,"resources/miss.png");
 				return ;
 			}
+		}
+	}
+	
+	public void calculations(double score,String image) {
+		changeImg(image);
+		update();
+		GameScreen.game.calcAcc(score);
+		GameScreen.game.calcScore(score);
+		if(score>0) {
+			GameScreen.game.calcCombo(false);
+		}else {
+			GameScreen.game.calcCombo(true);
 		}
 	}
 	
@@ -172,6 +168,7 @@ public class Timing extends Component implements JustinTimingInterface {
 		update();
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
+		System.out.println("b");
 	}
 
 }
