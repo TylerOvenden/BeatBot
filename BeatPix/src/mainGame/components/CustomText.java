@@ -49,6 +49,7 @@ public class CustomText extends Component {
 	 * @param h - h
 	 * @param text - Text
 	 * @param scaleHeight - Keep height scale or not
+	 * @param scaleWidth - Keep Width scale or not
 	 */
 	public CustomText(int x, int y, int w, int h, String text,boolean scaleHeight,boolean scaleWidth) {
 		super(x, y, w, h);
