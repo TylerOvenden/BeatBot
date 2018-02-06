@@ -187,6 +187,24 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gameRunning = false;
 		playing = false;
 		resumeGame();
+		cancelAllFalls();
+	}
+	
+	public void cancelAllFalls() {
+		for(Visible str: strokes) {
+			if(str instanceof Keystroke) {
+				((Keystroke)str).cancelFall();
+			}
+			else if(str instanceof Holdstroke) {
+				((Holdstroke)str).cancelFall();
+			}
+		}
+		for(Holdstroke str1: holds) {
+			str1.cancelFall();
+		}
+		for(Holdstroke str2: tooLongHolds) {
+			str2.cancelFall();
+		}
 	}
 	
 	/**
@@ -984,10 +1002,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			
 			@Override
 			public void run() {
-				
-				while(strokes.contains(s)) {
-					s.keystrokeFall();
-				}
+
+				s.keystrokeFall();
 					
 			}
 			
@@ -1011,10 +1027,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			@Override
 			public void run() {
 				
-				while(strokes.contains(s)) {
-					s.holdstrokeFall();
-				}
-					
+				s.holdstrokeFall();
+				
 			}
 			
 		});
