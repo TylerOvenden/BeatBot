@@ -13,10 +13,13 @@ import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -486,10 +489,27 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void addBackground() {
 		if(backgroundPath != null && backgroundPath != "") {
-			Graphic g = new Graphic(0,0, 2.5, backgroundPath);
+			Graphic g = new Graphic(0,0, determineScale(backgroundPath), backgroundPath);
 			addObject(g);
 			moveToBack(g);
 		}
+	}
+	
+	/**
+	 * Determines the appropriate scale for the background image such that it fits entirely on the screen
+	 * @param path - Path of the background file
+	 * @return - The appropriate scale to apply to the image to make it fit the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public double determineScale(String path) {
+		double scale = 1;
+		try {
+			BufferedImage img = ImageIO.read(new File(backgroundPath));
+			scale = ((double)getWidth())/img.getWidth();
+		} catch (IOException e) {
+		}
+		return scale;
 	}
 	
 	/**
