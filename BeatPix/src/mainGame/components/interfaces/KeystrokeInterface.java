@@ -90,4 +90,22 @@ public interface KeystrokeInterface {
 	 * @return Returns whether or not this stroke is part of a hold stroke
 	 */
 	public boolean getHold();
+	
+	/**
+	 * This method will allow the program to know that the keystroke is being used in a hold press at the moment
+	 * 
+	 * @param b - Whether the keystroke is being held down or not
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setCurrentHold(boolean b);
+	
+	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time);
 }
