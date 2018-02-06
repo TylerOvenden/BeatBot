@@ -28,23 +28,11 @@ import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import mainGame.MainGUI;
 import mainGame.actions.Escape;
 import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
-import mainGame.components.Accuracy;
-import mainGame.components.ColoredRectangle;
-import mainGame.components.ColumnLane;
-import mainGame.components.Combo;
-import mainGame.components.CustomText;
-import mainGame.components.Gear;
-import mainGame.components.Holdstroke;
-import mainGame.components.Keystroke;
-import mainGame.components.KeystrokeIndicator;
-import mainGame.components.OptionButton;
-import mainGame.components.Scoring;
-import mainGame.components.Song;
-import mainGame.components.Timing;
-import mainGame.components.Timing2;
+import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 
 public class GameScreen extends ResizableScreen implements Runnable {
@@ -63,7 +51,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
 	
-	public static long startTime; //The starting time in ms
+	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
@@ -146,7 +134,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public synchronized void start() {
+	public void start() {
 		if(gameRunning) { return; }
 		gameThread = new Thread(this);
 		gameRunning = true;
@@ -158,10 +146,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public synchronized void stop() {
+	public void stop() {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
+		resumeGame();
 	}
 	
 	/**
@@ -682,11 +671,20 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		startTime = (System.nanoTime());
 		playing = true;
 		pause = false;
+		initializeStrokeArrayList();
+		calculateAndSetFallTimeFromBeats();
+		playMap();
+	}
+	
+	/**
+	 * This method resets/initializes the arraylists
+	 * 
+	 * @author Justin Yau
+	 */
+	public void initializeStrokeArrayList() {
 		strokes = new ArrayList<Visible>(0);
 		holds = new ArrayList<Holdstroke>(0);
 		tooLongHolds = new ArrayList<Holdstroke>(0);
-		calculateAndSetFallTimeFromBeats();
-		playMap();
 	}
 	
 	/**
@@ -696,7 +694,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public static long timePass() {
+	public long timePass() {
 		return ((System.nanoTime() - startTime))/1000000;
 	}
 	
@@ -706,7 +704,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public static void recalculateStartTime(long ellapsedTime) {
+	public void recalculateStartTime(long ellapsedTime) {
 		long timeEllapsedNano = ellapsedTime * 1000000;
 		startTime = System.nanoTime() - timeEllapsedNano;
 	}
@@ -809,7 +807,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				//Exit Action Button will be here
 				stop();
 				//Switch to a different screen below
-				System.out.println("Exit");
+				MainGUI.test.setScreen(MainGUI.test.getMenu());
 			}
 		}};
 		for(int i = 0; i < btnTypes.length; i++) {
@@ -982,7 +980,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				//strokes.add(str);
 			}
 		}
-		return;
 	}
 
 	public Timing getTiming() {

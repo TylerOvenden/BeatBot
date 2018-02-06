@@ -65,7 +65,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 	}
 	public void checkAcc(Stroke stroke, boolean start) {
 		if(start) {
-			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<16) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<16) {
 				changeImg("resources/perfect.png");
 				update();
 				GameScreen.game.calcAcc(1);
@@ -74,7 +74,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				//GameScreen.game.getTimings().add(new Timing2(1,1,100,100,"resources/perfect.png"));
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<40) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<40) {
 				changeImg("resources/great.png");
 				update();
 				GameScreen.game.calcAcc(.95);
@@ -82,7 +82,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<73) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<73) {
 				changeImg("resources/good.png");
 				update();
 				GameScreen.game.calcAcc(.66);
@@ -90,7 +90,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<103) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<103) {
 				changeImg("resources/ok.png");
 				update();
 				GameScreen.game.calcAcc(.5);
@@ -98,7 +98,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<127) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<127) {
 				changeImg("resources/bad.png");
 				update();
 				GameScreen.game.calcAcc(.33);
@@ -106,7 +106,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getFirstClickTime())<164) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<164) {
 				changeImg("resources/miss.png");
 				update();
 				GameScreen.game.calcAcc(0);
@@ -115,7 +115,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				return ;
 			}
 		}else {
-			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<16) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<16) {
 				changeImg("resources/perfect.png");
 				update();
 				GameScreen.game.calcAcc(1);
@@ -123,7 +123,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<40) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<40) {
 				changeImg("resources/great.png");
 				update();
 				GameScreen.game.calcAcc(.95);
@@ -131,7 +131,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<73) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<73) {
 				changeImg("resources/good.png");
 				update();
 				GameScreen.game.calcAcc(.66);
@@ -139,7 +139,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<103) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<103) {
 				changeImg("resources/ok.png");
 				update();
 				GameScreen.game.calcAcc(.5);
@@ -147,7 +147,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<127) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<127) {
 				changeImg("resources/bad.png");
 				update();
 				GameScreen.game.calcAcc(.33);
@@ -155,7 +155,7 @@ public class Timing extends Component implements JustinTimingInterface,Runnable 
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.timePass()-stroke.getEndClickTime())<164) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<164) {
 				changeImg("resources/miss.png");
 				update();
 				GameScreen.game.calcAcc(0);
