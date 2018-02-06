@@ -30,7 +30,7 @@ public class CustomScroll extends ScrollablePane {
 		setUpContentImage();
 		update();
 	}
-
+//
 	public CustomScroll(FocusController focusController, ArrayList<Visible> initWithObjects, int x, int y, int w,
 			int h) {
 		super(focusController, initWithObjects, x, y, w, h);
