@@ -148,7 +148,7 @@ public class Scoring extends Component {
 					}			
 			}	   
 		} */
-	public void update(Graphics2D g) {
+	/*public void update(Graphics2D g) {
 		String img1="";
 		String img2="";
 		String img3="";
@@ -186,7 +186,7 @@ public class Scoring extends Component {
 		catch(Exception e){
 			e.printStackTrace();
 		}
-		}	
-	
+		}*/	
+	public void update(Graphics2D g) {}
 
 	}
