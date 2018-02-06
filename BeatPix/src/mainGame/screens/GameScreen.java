@@ -100,6 +100,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//tyler
 	private Scoring gamescore;
 	private float score =0;
+	private CustomText displayScore;
 	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
@@ -437,9 +438,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		ctext=new CustomText(600,130,300,300,"100%");
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
-
-
 		viewObjects.add(gamescore);
+
+		displayScore = new CustomText(500,300,80,80,"0");
+		viewObjects.add(displayScore);
 		gamescore.update();  
 		
 		
@@ -604,7 +606,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(timing==0) {
 			score+=0;
 		}
-	
+		int tScore = (int)Math.round(score);
+		String display = String.valueOf(tScore);
+		displayScore.setText(display);
 	} 
 
 	public void calcAcc(double timing) {
