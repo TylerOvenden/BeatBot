@@ -72,18 +72,21 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Level Screen Clicked");
 				buttons.get(LEVEL_IDX).unhoverAction();
+				Test.test.setScreen(Test.test.level);
 			}
 		});
 		buttons.get(CHARACTER_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Character Screen Clicked");
 				buttons.get(CHARACTER_IDX).unhoverAction();
+				//Test.test.setScreen(screen);
 			}
 		});
 		buttons.get(UNLOCK_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Unlocks Screen Clicked");
 				buttons.get(UNLOCK_IDX).unhoverAction();
+				Test.test.setScreen(Test.test.shop);
 			}
 		});
 		//NEED TO TEST OPTIONS AND FINISH
@@ -188,7 +191,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
-															buttonT[i],false));
+															buttonT[i] ,false , true));
 			buttons.get(i).setUnhoverAction(new Action() {
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

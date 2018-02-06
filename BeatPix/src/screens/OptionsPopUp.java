@@ -39,9 +39,17 @@ public class OptionsPopUp extends Component {
 	
 	private ScalablePixelBack a;
 	
+	int x;
+	int y;
+	int w;
+	int h;
+	
 	public OptionsPopUp(int x, int y, int w, int h) {
 		super( x, y, w, h);
-		
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
 		/*this.addObject(new ScalablePixelBack(0,0,w,h,1));
 		this.addObject(new Button(getWidth()/4, getHeight()/8, 100, 100, "", new Action() {
 			public void act() {
@@ -55,7 +63,7 @@ public class OptionsPopUp extends Component {
 	public void update(Graphics2D g) {
 		//g.setColor(Color.GRAY);
 		//g.fillRect(0, 0, getWidth(), getHeight());
-		a = new ScalablePixelBack(0,0,getWidth(),getHeight(),0);
+		a = new ScalablePixelBack(x,y,w,h,0);
 		a.update(g);
 	}
 	
