@@ -56,7 +56,7 @@ public class OptionsPopUp extends Component {
 		//g.setColor(Color.GRAY);
 		//g.fillRect(0, 0, getWidth(), getHeight());
 		a = new ScalablePixelBack(0,0,getWidth(),getHeight(),0);
-		a.update();
+		a.update(g);
 	}
 	
 }
