@@ -57,7 +57,7 @@ public class MainMenuScreenG extends FullFunctionScreen{
 			public void act(){
 				buttons.get(0).unhoverAction();
 				Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
-/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song));
+/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
 			}
 		});
 		buttons.get(2).setAction(new Action() {

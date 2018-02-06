@@ -24,6 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import gui.components.Action;
+import gui.components.Graphic;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
@@ -80,6 +81,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
     
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
+    
+    private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -108,6 +111,35 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		setPreferredSize(new Dimension(width, height));
 		
 		game = this;
+		
+		//Retrieve metadata and beats from the song
+		title = song.getTitle();
+		BPM = song.getBPM();
+		artist = song.getArtist();
+		offSet = song.getOffSet();
+		beats = song.getBeats();
+		
+		setUpBindings();
+		
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+			totalAcc[i]=-1;
+		}
+		
+		accuracy=100;
+		
+		gameRunning = false;
+		start();
+	}
+	
+	public GameScreen(int width, int height, Song song, String backPath) {
+		super(width, height);
+		
+		setFixedSize(false);
+		setPreferredSize(new Dimension(width, height));
+		
+		game = this;
+		backgroundPath = backPath;
 		
 		//Retrieve metadata and beats from the song
 		title = song.getTitle();
@@ -445,6 +477,25 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		
 	}
 	
+	/**
+	 * This method adds the background if there was one specified in the constructor
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addBackground() {
+		if(backgroundPath != null && backgroundPath != "") {
+			Graphic g = new Graphic(0,0, 2.5, backgroundPath);
+			addObject(g);
+			moveToBack(g);
+		}
+	}
+	
+	/**
+	 * This method adds the gear button to the screen
+	 * @param viewObjects - the list of objects that will be visible by the display
+	 * 
+	 * @author Justin Yau
+	 */
 	public void setUpGearButton(List<Visible> viewObjects) {
 		escapeGear = new Gear(2, 25, 50, 50);
 		viewObjects.add(escapeGear);
@@ -585,7 +636,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 	}*/
 	public void calcScore(double timing) {
-		System.out.println(score);
 		if(timing==1) {
 			score+=1000000/beats.size()*1;
 		}
@@ -671,6 +721,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		startTime = (System.nanoTime());
 		playing = true;
 		pause = false;
+		addBackground();
 		initializeStrokeArrayList();
 		calculateAndSetFallTimeFromBeats();
 		playMap();
