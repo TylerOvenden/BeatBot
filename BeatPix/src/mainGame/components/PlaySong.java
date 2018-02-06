@@ -40,7 +40,12 @@ public class PlaySong {
              
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
- 
+            try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             while ((bytesRead = audioStream.read(bytesBuffer)) != -1) {
                 audioLine.write(bytesBuffer, 0, bytesRead);
             }

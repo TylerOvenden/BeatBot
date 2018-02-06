@@ -20,10 +20,10 @@ public class Timing extends Component {
 
 	@Override
 	public void update(Graphics2D g) {
+		super.clear();
 		try {
 			ImageIcon icon = new ImageIcon(img);
-			g.drawImage(icon.getImage(), 0, 0, null);
-			
+			g.drawImage(icon.getImage(), 0, 0, null);		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
