@@ -3,9 +3,14 @@ package screens;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+
+import org.w3c.dom.css.CSSPrimitiveValue;
+import org.w3c.dom.css.Rect;
 
 import gui.components.Action;
 import gui.components.Button;
@@ -63,8 +68,11 @@ public class OptionsPopUp extends Component {
 	public void update(Graphics2D g) {
 		//g.setColor(Color.GRAY);
 		//g.fillRect(0, 0, getWidth(), getHeight());
-		a = new ScalablePixelBack(x,y,w,h,0);
+		a = new ScalablePixelBack(x,y,w,h,2);
 		a.update(g);
+		CustomText b = new CustomText(400,300,300,100,"Options");
+		b.update(g);
+		//ImageButton i = new ImageButton(20, 20, 200, 300, imageLocation)
 	}
 	
 }

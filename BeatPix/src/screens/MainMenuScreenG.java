@@ -52,6 +52,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public static int OPTIONS_IDX = 3;
 	
 	public static OptionsPopUp options;
+	public static OptionsContainer options2;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -90,13 +91,17 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			}
 		});
 		//NEED TO TEST OPTIONS AND FINISH
-		options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		//options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		//options2 = new OptionsContainer(0,0,getWidth(),getHeight(), this);
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
+				new OptionsContainer(getWidth(),getHeight(),vObjects)
 				//viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
-				viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
+				//viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
+				//viewObjects.add(options2);
+				//options2.setVisible(true);
 				//viewObjects.add(options);
 			}
 		});
@@ -163,7 +168,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	 * */
 	public void createIdleCharacter() {
 /*D*/	idleCharacter = new AnimatedComponent(getWidth()/10, getHeight()*200/540 + getHeight(), getWidth()*400/960, getHeight()*300/540);
-/*P*/	idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
+/*P*/	idleCharacter.addSequence("resources/sprites/defaultSprite_Transparent.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
 	}
