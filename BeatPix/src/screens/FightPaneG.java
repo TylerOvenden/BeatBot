@@ -111,61 +111,34 @@ public class FightPaneG extends FullFunctionPane{
 				pastRand = rand;
 				
 				if(rand == 0) {
-					robotHit1.setAlpha(1);
-					Timer time = new Timer();
-					time.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							robotIdle.setAlpha(1);
-							robotHit1.setAlpha(0);
-							animationRunning = false;
-						}
-					}, 700);
+					setAnimation(robotHit1, 700);
 				} 
 				else if(rand == 1) {
-					robotHit2.setAlpha(1);
-					Timer time = new Timer();
-					time.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							robotIdle.setAlpha(1);
-							robotHit2.setAlpha(0);
-							animationRunning = false;
-						}
-					}, 900);
+					setAnimation(robotHit2, 900);
 				} 
 				else if(rand == 2) {
-					robotHit3.setAlpha(1);
-					Timer time = new Timer();
-					time.schedule(new TimerTask() {
-						@Override
-						public void run() {
-							// TODO Auto-generated method stub
-							robotIdle.setAlpha(1);
-							robotHit3.setAlpha(0);
-							animationRunning = false;
-						}
-					}, 500);
+					setAnimation(robotHit3, 500);
 				}
 			} //End if miss statement
 			else
 			{
-				robotMiss.setAlpha(1);
-				Timer time = new Timer();
-				time.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						robotIdle.setAlpha(1);
-						robotMiss.setAlpha(0);
-						animationRunning = false;
-					}
-				}, 300);
+				setAnimation(robotMiss, 300);
 			}
 		}
 	}
 	
+	public void setAnimation(AnimatedComponent a, int s) {
+		a.setAlpha(1);
+		Timer time = new Timer();
+		time.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				robotIdle.setAlpha(1);
+				a.setAlpha(0);
+				animationRunning = false;
+			}
+		}, s);
+	}
 	
 }
