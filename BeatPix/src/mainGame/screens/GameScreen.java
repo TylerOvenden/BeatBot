@@ -13,10 +13,13 @@ import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -24,27 +27,16 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import gui.components.Action;
+import gui.components.Graphic;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import mainGame.MainGUI;
 import mainGame.actions.Escape;
 import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
-import mainGame.components.Accuracy;
-import mainGame.components.ColoredRectangle;
-import mainGame.components.ColumnLane;
-import mainGame.components.Combo;
-import mainGame.components.CustomText;
-import mainGame.components.Gear;
-import mainGame.components.Holdstroke;
-import mainGame.components.Keystroke;
-import mainGame.components.KeystrokeIndicator;
-import mainGame.components.OptionButton;
-import mainGame.components.Scoring;
-import mainGame.components.Song;
-import mainGame.components.Timing;
-import mainGame.components.Timing2;
+import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 
 public class GameScreen extends ResizableScreen implements Runnable {
@@ -63,7 +55,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
 	
-	public static long startTime; //The starting time in ms
+	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
@@ -92,6 +84,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
     
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
+    
+    private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -112,6 +106,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//tyler
 	private Scoring gamescore;
 	private float score =0;
+	private CustomText displayScore;
 	//tyler
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
@@ -140,13 +135,42 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gameRunning = false;
 		start();
 	}
+	
+	public GameScreen(int width, int height, Song song, String backPath) {
+		super(width, height);
+		
+		setFixedSize(false);
+		setPreferredSize(new Dimension(width, height));
+		
+		game = this;
+		backgroundPath = backPath;
+		
+		//Retrieve metadata and beats from the song
+		title = song.getTitle();
+		BPM = song.getBPM();
+		artist = song.getArtist();
+		offSet = song.getOffSet();
+		beats = song.getBeats();
+		
+		setUpBindings();
+		
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+			totalAcc[i]=-1;
+		}
+		
+		accuracy=100;
+		
+		gameRunning = false;
+		start();
+	}
 
 	/**
 	 * This method creates a new thread and starts it
 	 * 
 	 * @author Justin Yau
 	 */
-	public synchronized void start() {
+	public void start() {
 		if(gameRunning) { return; }
 		gameThread = new Thread(this);
 		gameRunning = true;
@@ -158,10 +182,34 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public synchronized void stop() {
+	public void stop() {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
+		resumeGame();
+		cancelAllFalls();
+	}
+	
+	/**
+	 * This method goes through each stroke and cancels their fall
+	 * 
+	 * @author Justin Yau
+	 */
+	public void cancelAllFalls() {
+		for(Visible str: strokes) {
+			if(str instanceof Keystroke) {
+				((Keystroke)str).cancelFall();
+			}
+			else if(str instanceof Holdstroke) {
+				((Holdstroke)str).cancelFall();
+			}
+		}
+		for(Holdstroke str1: holds) {
+			str1.cancelFall();
+		}
+		for(Holdstroke str2: tooLongHolds) {
+			str2.cancelFall();
+		}
 	}
 	
 	/**
@@ -448,14 +496,51 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		ctext=new CustomText(600,130,300,300,"100%");
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
-
-
 		viewObjects.add(gamescore);
+
+		displayScore = new CustomText(500,300,200,200," ");
+		viewObjects.add(displayScore);
 		gamescore.update();  
 		
 		
 	}
 	
+	/**
+	 * This method adds the background if there was one specified in the constructor
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addBackground() {
+		if(backgroundPath != null && backgroundPath != "") {
+			Graphic g = new Graphic(0,0, determineScale(backgroundPath), backgroundPath);
+			addObject(g);
+			moveToBack(g);
+		}
+	}
+	
+	/**
+	 * Determines the appropriate scale for the background image such that it fits entirely on the screen
+	 * @param path - Path of the background file
+	 * @return - The appropriate scale to apply to the image to make it fit the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public double determineScale(String path) {
+		double scale = 1;
+		try {
+			BufferedImage img = ImageIO.read(new File(backgroundPath));
+			scale = ((double)getWidth())/img.getWidth();
+		} catch (IOException e) {
+		}
+		return scale;
+	}
+	
+	/**
+	 * This method adds the gear button to the screen
+	 * @param viewObjects - the list of objects that will be visible by the display
+	 * 
+	 * @author Justin Yau
+	 */
 	public void setUpGearButton(List<Visible> viewObjects) {
 		escapeGear = new Gear(2, 25, 50, 50);
 		viewObjects.add(escapeGear);
@@ -596,7 +681,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 	}*/
 	public void calcScore(double timing) {
-		System.out.println(score);
 		if(timing==1) {
 			score+=1000000/beats.size()*1;
 		}
@@ -615,9 +699,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(timing==0) {
 			score+=0;
 		}
-		
-	}
-	
+		int tScore = (int)Math.round(score);
+		String display = String.valueOf(tScore);
+		displayScore.setText(display);
+	} 
+
 	public void calcAcc(double timing) {
 		int totalHit=0;
 		for(int i=0;i<totalAcc.length;i++) {
@@ -682,11 +768,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		startTime = (System.nanoTime());
 		playing = true;
 		pause = false;
+		addBackground();
+		initializeStrokeArrayList();
+		calculateAndSetFallTimeFromBeats();
+		playMap();
+	}
+	
+	/**
+	 * This method resets/initializes the arraylists
+	 * 
+	 * @author Justin Yau
+	 */
+	public void initializeStrokeArrayList() {
 		strokes = new ArrayList<Visible>(0);
 		holds = new ArrayList<Holdstroke>(0);
 		tooLongHolds = new ArrayList<Holdstroke>(0);
-		calculateAndSetFallTimeFromBeats();
-		playMap();
 	}
 	
 	/**
@@ -696,7 +792,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public static long timePass() {
+	public long timePass() {
 		return ((System.nanoTime() - startTime))/1000000;
 	}
 	
@@ -706,7 +802,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public static void recalculateStartTime(long ellapsedTime) {
+	public void recalculateStartTime(long ellapsedTime) {
 		long timeEllapsedNano = ellapsedTime * 1000000;
 		startTime = System.nanoTime() - timeEllapsedNano;
 	}
@@ -809,7 +905,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				//Exit Action Button will be here
 				stop();
 				//Switch to a different screen below
-				System.out.println("Exit");
+				MainGUI.test.setScreen(MainGUI.test.getMenu());
 			}
 		}};
 		for(int i = 0; i < btnTypes.length; i++) {
@@ -911,10 +1007,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			
 			@Override
 			public void run() {
-				
-				while(strokes.contains(s)) {
-					s.keystrokeFall();
-				}
+
+				s.keystrokeFall();
 					
 			}
 			
@@ -938,10 +1032,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			@Override
 			public void run() {
 				
-				while(strokes.contains(s)) {
-					s.holdstrokeFall();
-				}
-					
+				s.holdstrokeFall();
+				
 			}
 			
 		});
@@ -982,7 +1074,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				//strokes.add(str);
 			}
 		}
-		return;
 	}
 
 	public Timing getTiming() {
