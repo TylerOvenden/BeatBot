@@ -681,17 +681,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
-	public void calcHealth(double timing) {
-		if(timing==.33) {
-			health= health-1;
-			System.out.println(health);
-		}
-		if(timing == 0) {
-			health = health-3;
-			System.out.println(health);
-		}
-	}
-	
+
 	public void calcScore(double timing) {
 		if(timing==1) {
 			score+=1000000/beats.size()*1;
@@ -707,9 +697,13 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		if(timing==.33) {
 			score+=1000000/beats.size()*.33;
+			health= health-1;
+		//	System.out.println(health);			
 		}
 		if(timing==0) {
 			score+=0;
+			health = health-3;
+		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
 		String display = String.valueOf(tScore);

@@ -103,12 +103,10 @@ public class Timing extends Component implements JustinTimingInterface {
 				update();
 				GameScreen.game.calcAcc(.33);
 				GameScreen.game.calcScore(.33);
-				GameScreen.game.calcHealth(.33);
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<164) {
-				GameScreen.game.calcHealth(0);
 				calculations(0,"resources/miss.png");
 				return ;
 			}
@@ -142,12 +140,10 @@ public class Timing extends Component implements JustinTimingInterface {
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<127) {
-				GameScreen.game.calcHealth(.33);
 				calculations(.33,"resources/bad.png");
 				return ;
 			}
 			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<164) {
-				GameScreen.game.calcHealth(0);
 				calculations(0,"resources/miss.png");
 				return ;
 			}
