@@ -339,7 +339,7 @@ public class ShopScreen extends FullFunctionScreen
 		buttons.remove(clickedButton);
 		scroll.remove(customText.get(index));
 		customText.remove(index);
-//		customText.remove(index);
+		scroll.update();
 		
 		for (int i = index; i < buttons.size(); i++)
 		{
@@ -347,10 +347,11 @@ public class ShopScreen extends FullFunctionScreen
 			if (buttons.get(i).getY() != 0)
 			{
 				buttons.get(i).move(buttons.get(i).getX(), (buttons.get(i).getY()-50), 10);
+				scroll.update();
 				customText.get(i).move(customText.get(i).getX(), (customText.get(i).getY()-50), 10);
 				scroll.update();
 			}
-
+			scroll.update();
 		}
 		
 	}
@@ -376,8 +377,23 @@ public class ShopScreen extends FullFunctionScreen
 				
 				b.setEnabled(true);
 				buttons.add(b);
-				customText.add(new CustomText(0 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 200*100/399, 70 - 70*70/100, texts[i],false));
-							
+				customText.add(new CustomText(0 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 200*100/399, 120, texts[i]));
+			
+				buttons.get(i).setUnhoverAction(new Action()
+				{
+					public void act() 
+					{
+						GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					}
+				});
+				
+				buttons.get(i).setHoverAction(new Action()
+				{
+					public void act() 
+					{
+						GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					}
+				});
 		}
 		
 		for (int i = 0; i < buttons.size(); i++)
