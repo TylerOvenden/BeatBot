@@ -18,8 +18,9 @@ import gui.userInterfaces.FullFunctionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
+import screens.interfaces.Options;
 
-public class MainMenuScreenG extends FullFunctionScreen {
+public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	/**Design:
 	 * 	-Background - based off where StartScreen left its background
@@ -52,6 +53,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public static int OPTIONS_IDX = 3;
 	
 	public static OptionsPopUp options;
+	public static OptionsContainer options2;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -72,29 +74,35 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Level Screen Clicked");
 				buttons.get(LEVEL_IDX).unhoverAction();
+				Test.test.setScreen(Test.test.level);
 			}
 		});
 		buttons.get(CHARACTER_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Character Screen Clicked");
 				buttons.get(CHARACTER_IDX).unhoverAction();
+				//Test.test.setScreen(screen);
 			}
 		});
 		buttons.get(UNLOCK_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Unlocks Screen Clicked");
 				buttons.get(UNLOCK_IDX).unhoverAction();
+				Test.test.setScreen(Test.test.shop);
 			}
 		});
+		
 		//NEED TO TEST OPTIONS AND FINISH
-		options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		//options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		//options2 = new OptionsContainer(0,0,getWidth(),getHeight(), this)
+
+		OptionsContainer a = new OptionsContainer(getWidth(),getHeight(),viewObjects,this);
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
-				viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
-
-				//viewObjects.add(options);
+				toggleButtons(false);
+				a.addObjects();
 			}
 		});
 		//
@@ -125,6 +133,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 /*P D*/	background = new ImageButton(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
 		background.setEnabled(true);
 		background.setY(-background.getHeight()+getHeight()*2);
+		background.setHoverAction(null); background.setUnhoverAction(null);
 		background.setAction(new Action() {
 			public void act() {
 				if(screenPhase == 0) {
@@ -160,7 +169,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	 * */
 	public void createIdleCharacter() {
 /*D*/	idleCharacter = new AnimatedComponent(getWidth()/10, getHeight()*200/540 + getHeight(), getWidth()*400/960, getHeight()*300/540);
-/*P*/	idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
+/*P*/	idleCharacter.addSequence("resources/sprites/defaultSprite_Transparent.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
 	}
@@ -188,17 +197,14 @@ public class MainMenuScreenG extends FullFunctionScreen {
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
-															buttonT[i],false));
-			buttons.get(i).setUnhoverAction(new Action() {
-				public void act() {
-					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-			});
-			buttons.get(i).setHoverAction(new Action() {
-				public void act() {
-					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				}
-			});
+															buttonT[i] ,false , true));
+		}
+	}
+	
+	//--OPTIONS INTERFACE METHODS
+	public void toggleButtons(boolean b) {
+		for(int i=0; i<4; i++) {
+			buttons.get(i).setEnabled(b);
 		}
 	}
 	

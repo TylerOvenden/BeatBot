@@ -1,8 +1,9 @@
-package screens;
+package screens.components;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,9 +31,12 @@ public class FightPaneG extends FullFunctionPane{
 	private Thread hit3Thread;
 	private Thread missThread;
 	
-	boolean animationRunning = false;
-	boolean miss;
-	int pastRand;
+	private ArrayList<AnimatedComponent> poweredUp; // the attacks are improved and stronger if the combo is > 10 //Or DO HATS but have to change a lot of the art
+	private int combo;
+	private String skin = "default"; //Skins will just be recolors of the robot, maybe;
+	private boolean animationRunning = false;
+	private boolean miss;
+	private int pastRand;
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
@@ -40,20 +44,20 @@ public class FightPaneG extends FullFunctionPane{
 	}
 
 	public void initAllObjects(List<Visible> viewObjects){
+		String rsrcFile = "resources/sprites/defaultSprite.bmp";
 		robotIdle = new AnimatedComponent(30, 100, 117, 84);
-		robotIdle.addSequence("resources/spriteSheet.bmp", 200, 0, 0, 39, 28, 2);
+		robotIdle.addSequence("resources/sprites/defaultSprite.bmp", 200, 0, 0, 39, 28, 2);
 		robotHit1 = new AnimatedComponent(30,100,117,84);
-		robotHit1.addSequence("resources/spriteSheet.bmp", 200, 0, 105, 39, 28, 4);
+		robotHit1.addSequence(rsrcFile, 200, 0, 105, 39, 28, 4);
 		robotHit1.setAlpha(0);
 		robotHit2 = new AnimatedComponent(30,100,117,84);
-		robotHit2.addSequence("resources/spriteSheet.bmp", 200, 0, 34, 39, 27, 5);
+		robotHit2.addSequence(rsrcFile, 200, 0, 34, 39, 27, 5);
 		robotHit2.setAlpha(0);
 		robotHit3 = new AnimatedComponent(30,100,117,84);
-		robotHit3.addSequence("resources/spriteSheet.bmp", 200, 0, 70, 39, 27, 3);
+		robotHit3.addSequence(rsrcFile, 200, 0, 70, 39, 27, 3);
 		robotHit3.setAlpha(0);
 		robotMiss = new AnimatedComponent(30,100,117,84);
-		robotMiss.addSequence("resources/spriteSheet.bmp", 200, 0, 146, 39, 27, 2);
-		
+		robotMiss.addSequence(rsrcFile, 200, 0, 146, 39, 27, 2);
 		robotMiss.setAlpha(0);
 		
 		
@@ -90,62 +94,51 @@ public class FightPaneG extends FullFunctionPane{
 	
 	public void keyPressed(KeyEvent e)
 	{	
-		if((e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false)) {
-			
-			robotIdle.setAlpha(0);
-			robotHit1.setAlpha(0);
-			robotHit2.setAlpha(0);
-			robotHit3.setAlpha(0);
-			robotMiss.setAlpha(0);
-			animationRunning = true;
-			
-			
-			int rand = (int) (Math.random()*3);
-			while(rand == pastRand)
-				rand = (int) (Math.random()*3);
-			pastRand = rand;
-			
-			if(rand == 0) {
-				robotHit1.setAlpha(1);
-				Timer time = new Timer();
-				time.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						robotIdle.setAlpha(1);
-						robotHit1.setAlpha(0);
-						animationRunning = false;
-					}
-				}, 800);
-			} 
-			else if(rand == 1) {
-				robotHit2.setAlpha(1);
-				Timer time = new Timer();
-				time.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						robotIdle.setAlpha(1);
-						robotHit2.setAlpha(0);
-						animationRunning = false;
-					}
-				}, 1000);
-			} 
-			else if(rand == 2) {
-				robotHit3.setAlpha(1);
-				Timer time = new Timer();
-				time.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						robotIdle.setAlpha(1);
-						robotHit3.setAlpha(0);
-						animationRunning = false;
-					}
-				}, 600);
+		miss = false;
+		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false)) {
+			if(!miss) {
+				robotIdle.setAlpha(0);
+				robotHit1.setAlpha(0);
+				robotHit2.setAlpha(0);
+				robotHit3.setAlpha(0);
+				robotMiss.setAlpha(0);
+				animationRunning = true;
+				
+				
+				int rand = (int) (Math.random()*3);
+				while(rand == pastRand)
+					rand = (int) (Math.random()*3);
+				pastRand = rand;
+				
+				if(rand == 0) {
+					setAnimation(robotHit1, 700);
+				} 
+				else if(rand == 1) {
+					setAnimation(robotHit2, 900);
+				} 
+				else if(rand == 2) {
+					setAnimation(robotHit3, 500);
+				}
+			} //End if miss statement
+			else
+			{
+				setAnimation(robotMiss, 300);
 			}
 		}
 	}
 	
+	public void setAnimation(AnimatedComponent a, int s) {
+		a.setAlpha(1);
+		Timer time = new Timer();
+		time.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				robotIdle.setAlpha(1);
+				a.setAlpha(0);
+				animationRunning = false;
+			}
+		}, s);
+	}
 	
 }
