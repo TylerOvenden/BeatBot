@@ -2,6 +2,7 @@ package mainGame.components;
 
 import java.util.ArrayList;
 
+import mainGame.components.interfaces.Highscore;
 import mainGame.components.interfaces.SongInterface;
 import mainGame.saving.FileP;
 
@@ -15,13 +16,15 @@ import mainGame.saving.FileP;
  * @author Justin Yau
  *
  */
-public class Song implements SongInterface {
+public class Song implements SongInterface, Highscore {
 
 	private String title;
 	private int BPM;
 	private String artist;
 	private int offSet;
 	private ArrayList<int[]> beats;
+	private ArrayList<Integer> scores;
+	private ArrayList<Float> accuracy;
 	
 	/**
 	 * This constructor will load the file utilizing a file loader and then update the metadata and beats in fields. <br>
@@ -39,6 +42,8 @@ public class Song implements SongInterface {
 		artist = map.getArtist();
 		offSet = map.getOffSet();
 		beats = map.getBeats();
+		scores = new ArrayList<Integer>();
+		accuracy = new ArrayList<Float>();
 	}
 
 	/**
@@ -110,5 +115,34 @@ public class Song implements SongInterface {
 
 		return beats;
 	}
+	
+	/**
+	 * This method adds the given score to the array list of scores and accuracies
+	 * @param s - The score you would like to add to correspond with the song
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addScoreAndAccuracy(int s,  float a) {
+		scores.add(s);
+		accuracy.add(a);
+	}
+	
+	/**
+	 * This method returns the current scores the user had 
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Integer> getScores() {
+		return scores;
+	}
 
+	/**
+	 * This method returns the current accuracies the user had
+	 * 
+	 * @author Justin Yau
+	 */
+	public ArrayList<Float> getAccuracies() {
+		return accuracy;
+	}
+	
 }

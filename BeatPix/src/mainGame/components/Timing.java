@@ -143,7 +143,7 @@ public class Timing extends Component implements JustinTimingInterface {
 				calculations(.33,"resources/bad.png");
 				return ;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<164) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())>127) {
 				calculations(0,"resources/miss.png");
 				return ;
 			}
