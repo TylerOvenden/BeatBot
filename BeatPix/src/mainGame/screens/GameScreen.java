@@ -106,6 +106,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//tyler
 	private Scoring gamescore;
 	private float score =0;
+	private float health = 100;
 	private CustomText displayScore;
 	//tyler
 	public GameScreen(int width, int height, Song song) {
@@ -680,6 +681,17 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
+	public void calcHealth(double timing) {
+		if(timing==.33) {
+			health= health-1;
+			System.out.println(health);
+		}
+		if(timing == 0) {
+			health = health-3;
+			System.out.println(health);
+		}
+	}
+	
 	public void calcScore(double timing) {
 		if(timing==1) {
 			score+=1000000/beats.size()*1;
