@@ -33,7 +33,6 @@ public class MainGUI extends GUIApplication {
 	public static LevelSelectG level;
 	public static ShopScreen shop;
 	
-	
 	public int x;
 	
 	public static int[] options;

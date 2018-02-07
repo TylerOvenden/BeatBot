@@ -1,5 +1,7 @@
 package mainGame.components.interfaces;
 
+import java.util.ArrayList;
+
 public interface Highscore {
-	public int[] getScores();
+	public ArrayList<Integer> getScores();
 }
