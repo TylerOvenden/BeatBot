@@ -1,4 +1,4 @@
-package screens.components;
+package shop;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -33,21 +33,13 @@ public class ImageButton extends Graphic implements Clickable{
 
 	private boolean enabled;
 	
-	public ImageButton(int x, int y, int w, int h, String imageLocation) {
+	public ImageButton(int x, int y, int w, int h, String imageLocation, String label,Action action) {
 		super(x, y, w, h, imageLocation);
-		unhoverAction = new Action() {
-			public void act() {
-				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-		};
-		hoverAction = new Action() {
-			public void act() {
-				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-		};
+		hoverAction = null;
+		unhoverAction = null;
 	}
 
-
+	
 
 	public void act(){
 		if(action != null) action.act();
@@ -85,20 +77,24 @@ public class ImageButton extends Graphic implements Clickable{
 		if(unhoverAction != null)
 			unhoverAction.act();
 	}
+	
 	public void setUnhoverAction(Action a) {
 		unhoverAction = a;
 	}
+	
 	public boolean isEnabled() {
 		return enabled;
 	}
+	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 		if(!enabled)hovered = false;
 	}
-	//--Text Label--//
+	
 	public boolean hasLeft() {
 		return left;
 	} 
+	
 	public void setLeft(boolean left) {
 		this.left = left;
 	}
