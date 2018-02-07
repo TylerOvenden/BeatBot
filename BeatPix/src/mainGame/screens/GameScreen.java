@@ -493,12 +493,12 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		combo=new CustomText(215,100, 50, 50,"0");
 		viewObjects.add(combo);
 
-		ctext=new CustomText(600,130,300,300,"100%");
+		ctext=new CustomText(550,450,200,200,"100%");
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
 
-		displayScore = new CustomText(500,300,200,200," ");
+		displayScore = new CustomText(550,400,200,200,"0000000");
 		viewObjects.add(displayScore);
 		gamescore.update();  
 		
