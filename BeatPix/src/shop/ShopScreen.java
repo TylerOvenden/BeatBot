@@ -492,6 +492,11 @@ public class ShopScreen extends FullFunctionScreen
 			confirmButton.get(i).setVisible(true);
 		}
 	}
+	
+	public ArrayList<Song> getSongs()
+	{
+		return songs;
+	}
 }
 
 
