@@ -16,13 +16,13 @@ public class HighscoreScreen extends FullFunctionScreen {
 	private static final long serialVersionUID = 1L;
 	private boolean isWin;
 	private int score;
-	private double acc;
+	private float acc;
 	public ArrayList<Song> songList;
 	public CustomText condition;
 	public CustomText currentScore;
 	public CustomText currentAcc;
 
-	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc) {
+	public HighscoreScreen(int width, int height,boolean isWin,int score,float acc) {
 		super(width, height);
 		this.isWin=isWin;
 		this.score=score;
@@ -36,8 +36,11 @@ public class HighscoreScreen extends FullFunctionScreen {
 		if(!isWin) {
 			condition.setText("You Win");
 		}
-		currentScore=new CustomText(400, 200, 100, 100, "Score: "+score);
+		currentScore=new CustomText(400, 120, 100, 100, "Score "+score);
 		viewObjects.add(currentScore);
+		System.out.println(acc);
+		currentAcc=new CustomText(380, 140, 200, 200, "Accuracy "+acc+"%");
+		viewObjects.add(currentAcc);
 	}
 
 }
