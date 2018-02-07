@@ -2,6 +2,7 @@ package screens.interfaces;
 
 public interface Options  {
 
-	public void toggleButtons(boolean b);
+	void toggleButtons(boolean b);
+	
 	
 }

@@ -18,6 +18,8 @@ public class Test extends GUIApplication {
 	 */
 	private static final long serialVersionUID = 6557376208612089301L;
 	
+	private Screen currentScreen;
+	
 	public static Test test;
 	public static ArrayList<Screen> screens;
 	public static int START = 0;
@@ -28,11 +30,10 @@ public class Test extends GUIApplication {
 	public static MainMenuScreenG mainMenu;
 	public static LevelSelectG level;
 	public static ShopScreen shop;
-	
+	public static OptionsContainer options;
 	
 	int x;
 	
-	public static int[] options;
 	//options [VOLUME,KEY1,KEY2,KEY3,KEY4]
 
 	public Visible optionScreen;
@@ -40,7 +41,6 @@ public class Test extends GUIApplication {
 	public Test(int width, int height) {
 		super(width, height);
 		setVisible(true);
-		options = new int[5];
 
 		
 		Timer time = new Timer(); x = 0;
@@ -60,6 +60,7 @@ public class Test extends GUIApplication {
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
+		options = new OptionsContainer(getWidth(), getHeight(),currentScreen);
 		setScreen(start); //
 		start.scrollIn();
 	}

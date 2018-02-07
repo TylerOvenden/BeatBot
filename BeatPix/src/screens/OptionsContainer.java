@@ -15,23 +15,21 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ComponentContainer;
 import gui.userInterfaces.FullFunctionScreen;
+import gui.userInterfaces.Screen;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
 
 public class OptionsContainer{
 
 	ScalablePixelBack background;
-	MainMenuScreenG parentScreen;
+	Screen parentScreen;
 	int x; int y;
 	
 	ArrayList<ImageButton> keySelect;
 	ImageButton toggleVolume;
 	
-	//FROM CLICKABLESCREEN
-	private ArrayList<Clickable> clickables;
-	
-	public OptionsContainer(int x , int y, List<Visible> vObjects, MainMenuScreenG screen) {
-		this.parentScreen = screen;
+	public OptionsContainer(int x , int y, Screen currentScreen) {
+		this.parentScreen = currentScreen;
 		this.x = x;
 		this.y = y;
 	}
@@ -46,7 +44,7 @@ public class OptionsContainer{
 			public void act() {
 				parentScreen.remove(a);
 				parentScreen.remove(temp);
-				parentScreen.toggleButtons(true);
+				//parentScreen.toggleButtons(true);
 			}
 		});
 		temp.setEnabled(true);
