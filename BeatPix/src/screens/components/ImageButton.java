@@ -35,8 +35,16 @@ public class ImageButton extends Graphic implements Clickable{
 	
 	public ImageButton(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
-		hoverAction = null;
-		unhoverAction = null;
+		unhoverAction = new Action() {
+			public void act() {
+				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		};
+		hoverAction = new Action() {
+			public void act() {
+				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		};
 	}
 
 

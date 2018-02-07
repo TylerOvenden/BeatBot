@@ -18,8 +18,9 @@ import gui.userInterfaces.FullFunctionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
+import screens.interfaces.Options;
 
-public class MainMenuScreenG extends FullFunctionScreen {
+public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	/**Design:
 	 * 	-Background - based off where StartScreen left its background
@@ -100,12 +101,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
-				//new OptionsContainer(getWidth(),getHeight(),vObjects)//
-				//viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
-				//viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
-				//viewObjects.add(options2);
-				//options2.setVisible(true);
-				//viewObjects.add(options);
+				toggleButtons(false);
 				a.addObjects();
 			}
 		});
@@ -137,6 +133,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 /*P D*/	background = new ImageButton(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
 		background.setEnabled(true);
 		background.setY(-background.getHeight()+getHeight()*2);
+		background.setHoverAction(null); background.setUnhoverAction(null);
 		background.setAction(new Action() {
 			public void act() {
 				if(screenPhase == 0) {
@@ -201,16 +198,13 @@ public class MainMenuScreenG extends FullFunctionScreen {
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
 															buttonT[i] ,false , true));
-			buttons.get(i).setUnhoverAction(new Action() {
-				public void act() {
-					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-			});
-			buttons.get(i).setHoverAction(new Action() {
-				public void act() {
-					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				}
-			});
+		}
+	}
+	
+	//--OPTIONS INTERFACE METHODS
+	public void toggleButtons(boolean b) {
+		for(int i=0; i<4; i++) {
+			buttons.get(i).setEnabled(b);
 		}
 	}
 	

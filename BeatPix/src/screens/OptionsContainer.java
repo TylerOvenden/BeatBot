@@ -21,7 +21,7 @@ import screens.components.ScalablePixelBack;
 public class OptionsContainer{
 
 	ScalablePixelBack background;
-	FullFunctionScreen parentScreen;
+	MainMenuScreenG parentScreen;
 	int x; int y;
 	
 	ArrayList<ImageButton> keySelect;
@@ -30,7 +30,7 @@ public class OptionsContainer{
 	//FROM CLICKABLESCREEN
 	private ArrayList<Clickable> clickables;
 	
-	public OptionsContainer(int x , int y, List<Visible> vObjects, FullFunctionScreen screen) {
+	public OptionsContainer(int x , int y, List<Visible> vObjects, MainMenuScreenG screen) {
 		this.parentScreen = screen;
 		this.x = x;
 		this.y = y;
@@ -46,7 +46,7 @@ public class OptionsContainer{
 			public void act() {
 				parentScreen.remove(a);
 				parentScreen.remove(temp);
-				System.out.println("Words");
+				parentScreen.toggleButtons(true);
 			}
 		});
 		temp.setEnabled(true);
