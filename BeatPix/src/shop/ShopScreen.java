@@ -38,7 +38,7 @@ public class ShopScreen extends FullFunctionScreen
 	private CustomText songBanner;
 	private CustomText credit;
 	
-	private ArrayList<Song> songs;
+	private static ArrayList<Song> songs;
 	private ArrayList<ImageButton> buttons;
 	private ArrayList<CustomText> customText;
 
