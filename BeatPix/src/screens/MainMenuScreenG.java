@@ -95,7 +95,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		//options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
 		//options2 = new OptionsContainer(0,0,getWidth(),getHeight(), this)
 
-		OptionsContainer a = new OptionsContainer(getWidth(),getHeight(),viewObjects);;
+		OptionsContainer a = new OptionsContainer(getWidth(),getHeight(),viewObjects,this);
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
