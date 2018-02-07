@@ -56,6 +56,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public static int OPTIONS_IDX = 3;
 	
 	public static OptionsPopUp options;
+	public static OptionsContainer options2;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -77,40 +78,41 @@ public class MainMenuScreenG extends FullFunctionScreen {
 
 				buttons.get(0).unhoverAction();
 				Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
-/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
+/**/			Test.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
 			}
 		});
-		buttons.get(2).setAction(new Action() {
-			public void act(){
-				buttons.get(2).unhoverAction();
-/**/			MainGUI.test.setScreen(new ShopScreen(getWidth(),getHeight()));
-
-				System.out.println("Select Level Screen Clicked");
-				buttons.get(LEVEL_IDX).unhoverAction();
-
-			}
-		});
+		
+		
 		buttons.get(CHARACTER_IDX).setAction(new Action() {
 			public void act(){
-				System.out.println("Select Character Screen Clicked");
-				buttons.get(CHARACTER_IDX).unhoverAction();
+				buttons.get(1).unhoverAction();
 			}
 		});
+		
 		buttons.get(UNLOCK_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Unlocks Screen Clicked");
 				buttons.get(UNLOCK_IDX).unhoverAction();
+				Test.test.setScreen(Test.test.shop);
 			}
 		});
+		
 		//NEED TO TEST OPTIONS AND FINISH
-		options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		//options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
+		//options2 = new OptionsContainer(0,0,getWidth(),getHeight(), this)
+
+		OptionsContainer a = new OptionsContainer(getWidth(),getHeight(),viewObjects);;
 		buttons.get(OPTIONS_IDX).setAction(new Action() {
 			public void act(){
 				System.out.println("Select Options Screen Clicked");
 				buttons.get(OPTIONS_IDX).unhoverAction();
+				//new OptionsContainer(getWidth(),getHeight(),vObjects)//
 				//viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
-				viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
+				//viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
+				//viewObjects.add(options2);
+				//options2.setVisible(true);
 				//viewObjects.add(options);
+				a.addObjects();
 			}
 		});
 		//
@@ -176,7 +178,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	 * */
 	public void createIdleCharacter() {
 /*D*/	idleCharacter = new AnimatedComponent(getWidth()/10, getHeight()*200/540 + getHeight(), getWidth()*400/960, getHeight()*300/540);
-/*P*/	idleCharacter.addSequence("resources//sprites//sheet.png", 500, 0, 0, 39, 33, 2);
+/*P*/	idleCharacter.addSequence("resources/sprites/defaultSprite_Transparent.png", 500, 0, 0, 39, 33, 2);
 		Thread run = new Thread(idleCharacter);
 		run.start();
 	}
@@ -204,7 +206,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
-															buttonT[i],false));
+															buttonT[i] ,false , true));
 			buttons.get(i).setUnhoverAction(new Action() {
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
