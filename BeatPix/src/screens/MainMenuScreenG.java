@@ -16,6 +16,7 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
+import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
 import shop.ShopScreen;
@@ -78,7 +79,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 
 				buttons.get(0).unhoverAction();
 				Song song = new Song("DreadnoughtMastermind(xi+nora2r).csv");
-/**/			Test.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
+/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
 			}
 		});
 		
@@ -93,7 +94,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			public void act(){
 				System.out.println("Select Unlocks Screen Clicked");
 				buttons.get(UNLOCK_IDX).unhoverAction();
-				Test.test.setScreen(Test.test.shop);
+				MainGUI.test.setScreen(MainGUI.test.shop);
 			}
 		});
 		

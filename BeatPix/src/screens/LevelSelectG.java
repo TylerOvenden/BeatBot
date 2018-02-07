@@ -9,6 +9,7 @@ import gui.components.Action;
 import gui.components.Graphic;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
 import screens.components.ImageButton;
@@ -49,7 +50,7 @@ public class LevelSelectG extends FullFunctionScreen{
 		//		Test.test.setScreen(new GameScreen(getWidth(),getHeight(),audio));
 
 				
-				Test.test.setScreen(new GameScreen(getWidth(),getHeight(),new Song("resources\\DreadnoughtMastermind(xi+nora2r).csv")));
+				MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),new Song("resources\\DreadnoughtMastermind(xi+nora2r).csv")));
 
 			}
 	});

@@ -905,7 +905,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				//Exit Action Button will be here
 				stop();
 				//Switch to a different screen below
-				MainGUI.test.setScreen(MainGUI.test.getMenu());
+				MainGUI.test.setScreen(MainGUI.test.mainMenu);
 			}
 		}};
 		for(int i = 0; i < btnTypes.length; i++) {
