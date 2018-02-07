@@ -30,6 +30,7 @@ import gui.components.Action;
 import gui.components.Graphic;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
+import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import mainGame.MainGUI;
@@ -38,6 +39,7 @@ import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
+import screens.components.FightPaneG;
 
 public class GameScreen extends ResizableScreen implements Runnable {
 
@@ -54,6 +56,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private String artist; //Artist of the beatmap
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
+	private Song mainSong; //The song of the game will be stored here
 	
 	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
@@ -117,6 +120,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		game = this;
 		
 		//Retrieve metadata and beats from the song
+		mainSong = song;
 		title = song.getTitle();
 		BPM = song.getBPM();
 		artist = song.getArtist();
@@ -146,6 +150,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		backgroundPath = backPath;
 		
 		//Retrieve metadata and beats from the song
+		mainSong = song;
 		title = song.getTitle();
 		BPM = song.getBPM();
 		artist = song.getArtist();
@@ -468,6 +473,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		addKeystrokeIndicator(viewObjects);
 		setUpGearButton(viewObjects);
 		spawnOptionButtons();
+		spawnRobot();
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -503,6 +509,16 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gamescore.update();  
 		
 		
+	}
+	
+	/**
+	 * This method spawns the animated robot that'll attack according to the keys
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnRobot() {
+		//FightPaneG robot = new FightPaneG(, 600, 200);
+		//addObject(robot);
 	}
 	
 	/**
@@ -1074,6 +1090,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				//strokes.add(str);
 			}
 		}
+		mainSong.addScoreAndAccuracy((int) score, accuracy);
 	}
 
 	public Timing getTiming() {
