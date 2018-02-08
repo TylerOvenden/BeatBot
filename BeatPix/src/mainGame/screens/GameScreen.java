@@ -1169,6 +1169,19 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	/**
+	 * This method handles the end of the game
+	 * 
+	 * @author Justin Yau
+	 */
+	public void handleEnd() {
+		player.stopSong();
+		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		if(!exited) {
+			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+		}
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
@@ -1186,11 +1199,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				spawnBeat();
 			}
 		}
-		player.stopSong();
-		mainSong.addScoreAndAccuracy((int) score, accuracy);
-		if(!exited) {
-			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
-		}
+		handleEnd();
 	}
 
 	public Timing getTiming() {
