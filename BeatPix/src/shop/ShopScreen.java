@@ -554,7 +554,7 @@ public class ShopScreen extends FullFunctionScreen
 		return credits;
 	}
 	
-	public void setCredits(int c)
+	public void changeCredits(int c)
 	{
 		credits = c;
 	}
