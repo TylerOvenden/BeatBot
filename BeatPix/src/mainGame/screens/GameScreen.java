@@ -247,7 +247,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
-		player.stopSong();
+		//player.stopSong();
 		resumeGame();
 		cancelAllFalls();
 	}
@@ -307,7 +307,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void setUpBindings() {
 		bindings = MainGUI.bindings;
-		//updateKeyStrokes("D", "F", "J", "K");
+		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -938,7 +938,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
-		player.pauseSong();
+		//player.pauseSong();
 		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
@@ -957,7 +957,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void resumeGame() {
 		pause = false;
-		player.resumeSong();
+		//player.resumeSong();
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
@@ -1155,7 +1155,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			
 			@Override
 			public void run() {
-				player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
+				//player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
 			}
 			
 		});
@@ -1197,7 +1197,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Steven Li
 	 */
 	public void handleEnd() {
-		player.stopSong();
+		//player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {
