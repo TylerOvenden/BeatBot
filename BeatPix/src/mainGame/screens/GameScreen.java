@@ -41,6 +41,14 @@ import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 import screens.components.FightPaneG;
 
+/**
+ * This screen is for the actual game play of the map for a song
+ * 
+ * @author Justin Yau
+ * @author Steven Li
+ * @author Tyler Ovenden
+ *
+ */
 public class GameScreen extends ResizableScreen implements Runnable {
 
 	/**
@@ -113,6 +121,17 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private float score =0;
 	private CustomText displayScore;
 	//tyler
+	
+	/**
+	 * Constructor creates a screen in which the player can start playing the game for the selected song
+	 * @param width - Width of the screen
+	 * @param height - Height of the screen
+	 * @param song - The song to be played
+	 * 
+	 * @author Justin Yau
+	 * @author Steven Li
+	 * @author Tyler Ovenden
+	 */
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
 		
@@ -143,6 +162,17 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		start();
 	}
 	
+	/**
+	 * Constructor creates a screen in which the player can start playing the game for the selected song with a background
+	 * @param width - Width of the screen
+	 * @param height - Height of the screen
+	 * @param song - The song to be played
+	 * @param backPath - The background image's path for the song
+	 * 
+	 * @author Justin Yau
+	 * @author Steven Li
+	 * @author Tyler Ovenden
+	 */
 	public GameScreen(int width, int height, Song song, String backPath) {
 		super(width, height);
 		
@@ -254,8 +284,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void setUpBindings() {
-		bindings = new String[4];
-		updateKeyStrokes("D", "F", "J", "K");
+		bindings = MainGUI.bindings;
+		//updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
