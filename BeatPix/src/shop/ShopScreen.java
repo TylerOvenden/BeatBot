@@ -92,7 +92,8 @@ public class ShopScreen extends FullFunctionScreen
 
 		//graphics
 		
- 		background = new Graphic(40,0,getWidth(),getHeight(),"resources//shop_bg.png");
+		
+ 		background = new Graphic(0,0,getWidth(),getHeight(),"resources//backgrounds//shop_background.png");
 		viewObjects.add(background);
 		
 		songBanner = new CustomText(123,135,200,150,"Songs");
