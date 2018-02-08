@@ -163,11 +163,10 @@ public class OptionsContainer{
 	
 
 	public void setKeySelectActions() {
-		hiddenKeyButtons.get(i).setAction(new Action() {
-			int myX = x2;
+		hiddenKeyButtons.get(0).setAction(new Action() {
 			public void act() {
 				selectingKeyPhase = 0; 
-				columnButtonSelected = myX;
+				columnButtonSelected = 0;
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
@@ -176,11 +175,10 @@ public class OptionsContainer{
 				toggleButtons(false);
 			}
 		});
-		hiddenKeyButtons.get(i).setAction(new Action() {
-			int myX = x2;
+		hiddenKeyButtons.get(1).setAction(new Action() {
 			public void act() {
 				selectingKeyPhase = 0; 
-				columnButtonSelected = myX;
+				columnButtonSelected = 1;
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
@@ -189,11 +187,10 @@ public class OptionsContainer{
 				toggleButtons(false);
 			}
 		});
-		hiddenKeyButtons.get(i).setAction(new Action() {
-			int myX = x2;
+		hiddenKeyButtons.get(2).setAction(new Action() {
 			public void act() {
 				selectingKeyPhase = 0; 
-				columnButtonSelected = myX;
+				columnButtonSelected = 2;
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
@@ -203,10 +200,9 @@ public class OptionsContainer{
 			}
 		});
 		hiddenKeyButtons.get(3).setAction(new Action() {
-			int myX = x2;
 			public void act() {
 				selectingKeyPhase = 0; 
-				columnButtonSelected = myX;
+				columnButtonSelected = 3;
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
