@@ -58,9 +58,38 @@ public class HighscoreScreen extends ResizableScreen {
 			}
 		}
 		score1.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
-		
-		score2.setText("1.  "+score+"   "+acc+"%");
-		score3.setText("1.  "+score+"   "+acc+"%");
+		ints.remove(idx);
+		doubles.remove(idx);
+		if(ints.size()>0) {
+			temp=ints.get(0);
+			idx=0;
+			for(int i=0;i<ints.size();i++) {
+				if(ints.get(i)>temp) {
+					temp=ints.get(i);
+					idx=i;
+				}
+			}
+			score2.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
+			ints.remove(idx);
+			doubles.remove(idx);
+		}else {
+			score2.setText("2.                                  ");
+		}
+		if(ints.size()>0) {
+			temp=ints.get(0);
+			idx=0;
+			for(int i=0;i<ints.size();i++) {
+				if(ints.get(i)>temp) {
+					temp=ints.get(i);
+					idx=i;
+				}
+			}
+			score3.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
+			ints.remove(idx);
+			doubles.remove(idx);
+		}else {
+			score3.setText("3.                                  ");
+		}
 	}
 
 	public void initAllObjects(List<Visible> viewObjects) {
