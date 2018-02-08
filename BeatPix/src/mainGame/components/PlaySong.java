@@ -34,7 +34,7 @@ public class PlaySong extends Application {
         // This mediaView is added to a Pane
         MediaView mediaView = new MediaView(player);
 
-
+ 
 
         // Play the media once the stage is shown
         player.play();
