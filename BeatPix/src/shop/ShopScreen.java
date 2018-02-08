@@ -160,7 +160,7 @@ public class ShopScreen extends FullFunctionScreen
 							//add transfer of song later
 						}
 
-						
+						//
 					} .start();
 				}
 				else
