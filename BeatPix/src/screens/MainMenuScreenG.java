@@ -23,8 +23,9 @@ import shop.ShopScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
+import screens.interfaces.Options;
 
-public class MainMenuScreenG extends FullFunctionScreen {
+public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	/**Design:
 	 * 	-Background - based off where StartScreen left its background
@@ -56,8 +57,6 @@ public class MainMenuScreenG extends FullFunctionScreen {
 	public static int UNLOCK_IDX = 2;
 	public static int OPTIONS_IDX = 3;
 	
-	public static OptionsPopUp options;
-	public static OptionsContainer options2;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -73,6 +72,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 		//--IDLE CHARACTER ANIMATION 
 		createIdleCharacter();
 		
+
 		// Set button actions
 		buttons.get(LEVEL_IDX).setAction(new Action() {
 			public void act(){
@@ -98,37 +98,17 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			}
 		});
 		
-		//NEED TO TEST OPTIONS AND FINISH
-		//options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
-		//options2 = new OptionsContainer(0,0,getWidth(),getHeight(), this)
-
-		OptionsContainer a = new OptionsContainer(getWidth(),getHeight(),viewObjects);;
-		buttons.get(OPTIONS_IDX).setAction(new Action() {
-			public void act(){
-				System.out.println("Select Options Screen Clicked");
-				buttons.get(OPTIONS_IDX).unhoverAction();
-				//new OptionsContainer(getWidth(),getHeight(),vObjects)//
-				//viewObjects.add(new ScalablePixelBack(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10,1.5));
-				//viewObjects.add(new OptionsPopUp(getWidth()/10,getHeight()/10,getWidth()*8/10,getHeight()*8/10));
-				//viewObjects.add(options2);
-				//options2.setVisible(true);
-				//viewObjects.add(options);
-				a.addObjects();
-			}
-		});
-		//
-		
-		//viewObjects adding]
+		//viewObjects adding
 		viewObjects.add(background);
 		for(int i = 0; i < buttons.size(); i++) {
 			viewObjects.add(buttons.get(i));
 			viewObjects.add(buttonTexts.get(i));
 		}
 		viewObjects.add(idleCharacter);
-		//scrollDown();
+		
 /**/		//System.out.println(Test.test.x+"s START MAIN");
 	}
-	
+//--COMPONENTS--//
 	/** --COMPLETE--
 	 * Creates a background that scales to the screens width resolution
 	 * 
@@ -144,6 +124,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 /*P D*/	background = new ImageButton(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
 		background.setEnabled(true);
 		background.setY(-background.getHeight()+getHeight()*2);
+		background.setHoverAction(null); background.setUnhoverAction(null);
 		background.setAction(new Action() {
 			public void act() {
 				if(screenPhase == 0) {
@@ -203,21 +184,110 @@ public class MainMenuScreenG extends FullFunctionScreen {
 			int buttonH = getHeight()*100/540;
 			System.out.println(buttonY);
 /*P D*/		buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			buttons.get(i).setIdxArray(i);
 			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
 															buttonT[i] ,false , true));
-			buttons.get(i).setUnhoverAction(new Action() {
-				public void act() {
-					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
-			});
+		}
+		
+		setButtonsActions();
+		setButtonsHoverAction();
+	}
+	public void setButtonsActions() {
+		// Set button actions
+				buttons.get(LEVEL_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Level Screen Clicked");
+						buttons.get(LEVEL_IDX).unhoverAction();
+						Test.test.setScreen(Test.test.level);
+					}
+				});
+				buttons.get(CHARACTER_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Character Screen Clicked");
+						buttons.get(CHARACTER_IDX).unhoverAction();
+						//Test.test.setScreen(screen);
+					}
+				});
+				buttons.get(UNLOCK_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Unlocks Screen Clicked");
+						buttons.get(UNLOCK_IDX).unhoverAction();
+						Test.test.setScreen(Test.test.shop);
+					}
+				});
+				
+				//NEED TO TEST OPTIONS AND FINISH
+				
+				buttons.get(OPTIONS_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Options Screen Clicked");
+						buttons.get(OPTIONS_IDX).unhoverAction();
+						toggleButtons(false);
+						Test.test.options.addObjects();
+					}
+				});
+				//
+	}
+	
+	int x;
+	public void setButtonsHoverAction() {
+		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
+		x = 0;
+		for(int i = 0; i < 4; i++) {
 			buttons.get(i).setHoverAction(new Action() {
+				
+				ImageButton b = buttons.get(x);
+				
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					buttons.get(b.getIdxArray()).setAlpha(0.3f);
+					/*b.setOn(true);
+					if(buttons.get(b.getIdxArray()).getOn()) {
+						buttons.get(b.getIdxArray()).setHoverAction(new Action() {
+							
+							@Override
+							public void act() {
+								System.out.println("Good");
+							}
+						});
+					}*/
+					
+					/*Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
+					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
+					int tempx = b.getIdxArray();
+
+					System.out.println(tempx);
+					buttons.set(tempx, new ImageButton(getWidth()*480/960,getHeight()*100/540*(tempx+1),getWidth()*399/960,getHeight()*100/540,"resources\\ui\\buttons\\buttongeneral.png"));
+					buttons.get(tempx).setIdxArray(tempx);
+					
+					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
+					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));*/
+					//System.out.println("hover");
+					//setButtonsHoverAction();
+					//setButtonsActions();
 				}
 			});
+			buttons.get(i).setUnhoverAction(new Action() {
+				
+				ImageButton b = buttons.get(x);
+				
+				public void act() {
+					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					buttons.get(b.getIdxArray()).setAlpha(1f);
+					System.out.println("unhover");
+				}
+			});
+			x++;
+		}
+	}
+	
+	//--OPTIONS INTERFACE METHODS
+	public void toggleButtons(boolean b) {
+		for(int i=0; i<4; i++) {
+			buttons.get(i).setEnabled(b);
 		}
 	}
 	
