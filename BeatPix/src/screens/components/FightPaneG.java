@@ -24,12 +24,16 @@ public class FightPaneG extends FullFunctionPane{
 	private AnimatedComponent robotHit3;
 	private AnimatedComponent robotHit2;
 	private AnimatedComponent robotMiss;
+	private AnimatedComponent enemyHit;
+	private AnimatedComponent enemyMiss;
 
 	private Thread idleThread;
 	private Thread hit1Thread;
 	private Thread hit2Thread;
 	private Thread hit3Thread;
 	private Thread missThread;
+	private Thread enemyHitThread;
+	private Thread enemyMissThread;
 	
 	private ArrayList<AnimatedComponent> poweredUp; // the attacks are improved and stronger if the combo is > 10 //Or DO HATS but have to change a lot of the art
 	private int combo;
@@ -46,19 +50,22 @@ public class FightPaneG extends FullFunctionPane{
 	public void initAllObjects(List<Visible> viewObjects){
 		String rsrcFile = "resources/sprites/defaultSprite.bmp";
 		robotIdle = new AnimatedComponent(30, 100, 117, 84);
+		 robotHit1 = new AnimatedComponent(30, 100, 117, 84);
+		robotHit3 = new AnimatedComponent(30, 100, 117, 84);
+		robotHit2 = new AnimatedComponent(30, 100, 117, 84);
+		robotMiss = new AnimatedComponent(30, 100, 117, 84);
 		robotIdle.addSequence("resources/sprites/defaultSprite.bmp", 200, 0, 0, 39, 28, 2);
-		robotHit1 = new AnimatedComponent(30,100,117,84);
 		robotHit1.addSequence(rsrcFile, 200, 0, 105, 39, 28, 4);
-		robotHit1.setAlpha(0);
-		robotHit2 = new AnimatedComponent(30,100,117,84);
+		robotHit1.setVisible(false);
 		robotHit2.addSequence(rsrcFile, 200, 0, 34, 39, 27, 5);
-		robotHit2.setAlpha(0);
+		robotHit2.setVisible(false);
 		robotHit3 = new AnimatedComponent(30,100,117,84);
 		robotHit3.addSequence(rsrcFile, 200, 0, 70, 39, 27, 3);
-		robotHit3.setAlpha(0);
+		robotHit3.setVisible(false);
 		robotMiss = new AnimatedComponent(30,100,117,84);
 		robotMiss.addSequence(rsrcFile, 200, 0, 146, 39, 27, 2);
-		robotMiss.setAlpha(0);
+		robotMiss.setVisible(false);
+		
 		
 		
 		hit1Thread = new Thread(robotHit1);
@@ -86,22 +93,16 @@ public class FightPaneG extends FullFunctionPane{
 		robotIdle.setVisible(true);
 	}
 	
-	public void update(Graphics2D g){
-		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, getWidth()-1, getHeight()-1);
-		super.drawObjects(g);
-	}
-	
 	public void keyPressed(KeyEvent e)
 	{	
 		miss = false;
 		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false)) {
 			if(!miss) {
-				robotIdle.setAlpha(0);
-				robotHit1.setAlpha(0);
-				robotHit2.setAlpha(0);
-				robotHit3.setAlpha(0);
-				robotMiss.setAlpha(0);
+				robotIdle.setVisible(false);
+				robotHit1.setVisible(false);
+				robotHit2.setVisible(false);
+				robotHit3.setVisible(false);
+				robotMiss.setVisible(false);
 				animationRunning = true;
 				
 				
@@ -128,17 +129,20 @@ public class FightPaneG extends FullFunctionPane{
 	}
 	
 	public void setAnimation(AnimatedComponent a, int s) {
-		a.setAlpha(1);
+		a.setVisible(true);
+		Thread show = new Thread(a);
+		show.start();
 		Timer time = new Timer();
 		time.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				robotIdle.setAlpha(1);
-				a.setAlpha(0);
+				robotIdle.setVisible(true);
+				a.setVisible(false);
+				a.setRunning(false);
 				animationRunning = false;
 			}
-		}, s);
+		}, s                );
 	}
 	
 }

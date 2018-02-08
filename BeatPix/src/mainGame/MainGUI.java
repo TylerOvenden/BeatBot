@@ -40,6 +40,7 @@ public class MainGUI extends GUIApplication {
 	public int x;
 	
 	public static int[] options;
+	public static String[] bindings;
 	//options [VOLUME,KEY1,KEY2,KEY3,KEY4]
 
 	public Visible optionScreen;
@@ -48,6 +49,9 @@ public class MainGUI extends GUIApplication {
 		super(width, height);
 		setVisible(true);
 		options = new int[5];
+		
+		String[] temp = {"D","F","J","K"};
+		bindings = temp;
 
 		
 		Timer time = new Timer(); x = 0;
