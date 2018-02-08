@@ -61,6 +61,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
 	
+	private PlaySong player; //The current player will be stored here
+	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
 	private ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
@@ -118,6 +120,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		setPreferredSize(new Dimension(width, height));
 		
 		game = this;
+		player = new PlaySong();
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -148,6 +151,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		
 		game = this;
 		backgroundPath = backPath;
+		player = new PlaySong();
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -191,6 +195,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
+		player.stopSong();
 		resumeGame();
 		cancelAllFalls();
 	}
@@ -862,6 +867,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
+		player.pauseSong();
 		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
@@ -880,6 +886,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void resumeGame() {
 		pause = false;
+		player.resumeSong();
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
@@ -1062,8 +1069,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void playSong() {
-		
-		PlaySong player = new PlaySong();
+
 		String fileName = title + artist;
 		Thread play = new Thread(new Runnable() {
 			
@@ -1075,6 +1081,32 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		});
 		play.start();
 		
+	}
+	
+	/**
+	 * This method spawns the next beat in the list
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnBeat() {
+		int[] beat = beats.remove(0);
+		int lane = beat[0] - 1;
+		if(beat[2] != 0) {
+			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
+			if(height >= columnHeight - 20) {
+				height = columnHeight - 20;
+			}
+			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
+					"resources/arrows/"+ arrowPaths[lane] + "h.png");
+			str.updateFallSpeed(fallTime);
+			handleHoldstroke(str);
+		}
+		else {
+			Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png");
+			str.updateFallSpeed(fallTime);
+			handleKeystroke(str);
+		}
+		//strokes.add(str);
 	}
 	
 	/**
@@ -1092,26 +1124,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				playing = false;
 			}
 			else if(timePass() >= beats.get(0)[1] && !pause) {
-				int[] beat = beats.remove(0);
-				int lane = beat[0] - 1;
-				if(beat[2] != 0) {
-					int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-					if(height >= columnHeight - 20) {
-						height = columnHeight - 20;
-					}
-					Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
-							"resources/arrows/"+ arrowPaths[lane] + "h.png");
-					str.updateFallSpeed(fallTime);
-					handleHoldstroke(str);
-				}
-				else {
-					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png");
-					str.updateFallSpeed(fallTime);
-					handleKeystroke(str);
-				}
-				//strokes.add(str);
+				spawnBeat();
 			}
 		}
+		player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 	}
 

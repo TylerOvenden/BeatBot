@@ -40,7 +40,7 @@ public class PlaySong implements JustinPlaySongInterface {
  
             audioLine.start();
              
-            System.out.println("Playback started.");
+           // System.out.println("Playback started.");
              
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
@@ -58,7 +58,7 @@ public class PlaySong implements JustinPlaySongInterface {
             audioLine.close();
             audioStream.close();
              
-            System.out.println("Playback completed.");
+           // System.out.println("Playback completed.");
              
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
