@@ -26,7 +26,7 @@ import screens.components.ImageButton;
 
 public class ShopScreen extends FullFunctionScreen
 {
-
+	//Daniel Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	private static final long serialVersionUID = 1L;
 
 	private CustomRectangle songArea;
@@ -52,7 +52,7 @@ public class ShopScreen extends FullFunctionScreen
 	private TextArea text;
 
 	
-	//kevin
+	//Kevin Fields-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	private TextLabel textKev;
 	private TextLabel unlock;
 	
@@ -83,7 +83,7 @@ public class ShopScreen extends FullFunctionScreen
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
-
+		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		credits = 15000;
 		
 		songs = new ArrayList<Song>();
@@ -212,7 +212,7 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(scroll);
 				
 	
-		// kevin
+		//Kevin Components------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		
 		buttonList = new ArrayList<Button>();
@@ -436,7 +436,7 @@ public class ShopScreen extends FullFunctionScreen
 	
 	
 	
-	// kevin methods
+	// kevin methods----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void createIntList(int a) {
 		for(int i = 0; i < a; i++) {
 			indexList.add(i);
