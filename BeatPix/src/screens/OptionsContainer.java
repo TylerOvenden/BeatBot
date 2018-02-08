@@ -160,20 +160,63 @@ public class OptionsContainer{
 		}
 		setKeySelectActions();
 	}
+	
+
 	public void setKeySelectActions() {
-		hiddenKeyButtons.get(0).setAction(new Action() {
+		hiddenKeyButtons.get(i).setAction(new Action() {
+			int myX = x2;
 			public void act() {
 				selectingKeyPhase = 0; 
-				columnButtonSelected = 0;
+				columnButtonSelected = myX;
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
-				parentScreen.addObject(selectingKeyScreenText.get(0));
 				
 				
 				toggleButtons(false);
 			}
 		});
+		hiddenKeyButtons.get(i).setAction(new Action() {
+			int myX = x2;
+			public void act() {
+				selectingKeyPhase = 0; 
+				columnButtonSelected = myX;
+				
+				createSelectingKeyPopUp("Words");
+				parentScreen.addObject(selectingKeyScreen);
+				
+				
+				toggleButtons(false);
+			}
+		});
+		hiddenKeyButtons.get(i).setAction(new Action() {
+			int myX = x2;
+			public void act() {
+				selectingKeyPhase = 0; 
+				columnButtonSelected = myX;
+				
+				createSelectingKeyPopUp("Words");
+				parentScreen.addObject(selectingKeyScreen);
+				
+				
+				toggleButtons(false);
+			}
+		});
+		hiddenKeyButtons.get(3).setAction(new Action() {
+			int myX = x2;
+			public void act() {
+				selectingKeyPhase = 0; 
+				columnButtonSelected = myX;
+				
+				createSelectingKeyPopUp("Words");
+				parentScreen.addObject(selectingKeyScreen);
+				
+				
+				toggleButtons(false);
+			}
+		});
+
+		
 	}
 	
 	public void readKey(KeyEvent e) {
@@ -187,10 +230,18 @@ public class OptionsContainer{
 			if(validKey) {
 				//selectingKeyPhase = 1;
 				Test.test.keys[columnButtonSelected] = Integer.toString(e.getKeyCode());
-				System.out.println(Test.test.keys[columnButtonSelected]);
+				//System.out.println(Test.test.keys[columnButtonSelected]);
+				selectingKeyPhase = -1;
 				//System.out.println("Valid");
+				for(String s: Test.test.keys) {
+					System.out.println(s);
+				}
+				System.out.println("Key set to " + Integer.toString(e.getKeyCode()));
+				parentScreen.remove(selectingKeyScreen);
+				toggleButtons(true);
 			}else {
-				System.out.println("Valid");
+				selectingKeyPhase = 0;
+				System.out.println("Reselect key");
 			}
 		}
 	}
