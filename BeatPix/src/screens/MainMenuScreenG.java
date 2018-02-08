@@ -1,6 +1,7 @@
 package screens;
 
 import java.awt.Cursor;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -406,6 +407,22 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 /*D*/		buttons.get(i).setY(i);
 /*D*/		buttons.get(i).setX(i);
 		}
+	}
+
+	
+	@Override
+	public boolean inOptions() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void passKeyCodeIntoOptions(KeyEvent e) {
+		Test.test.options.readKey(e);
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		passKeyCodeIntoOptions(e);
 	}
 	
 }

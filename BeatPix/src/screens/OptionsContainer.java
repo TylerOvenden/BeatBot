@@ -41,14 +41,23 @@ public class OptionsContainer{
 	
 	ScalablePixelBack selectingKeyScreen;
 	ArrayList<CustomText> selectingKeyScreenText;
-	boolean selectingKey;
+	
+	/**
+	 * selectingKeyPhases:
+	 * -1 - not awaiting a key input
+	 * 0 - awaiting keyinput
+	 * 1 - keypressed
+	 * 2 - key is not valid
+	 */
+	int selectingKeyPhase;
 	int columnButtonSelected;
 	
 	public OptionsContainer(int x , int y, Options currentScreen) {
 		this.parentScreen = currentScreen;
 		this.x = x;
 		this.y = y;
-
+		
+		selectingKeyPhase = -1;
 		createComponents();
 	}
 	
@@ -74,7 +83,21 @@ public class OptionsContainer{
 		
 		parentScreen.addObject(toggleVolume);
 	}
-
+	public void removeObjects() {
+		parentScreen.remove(blackBack);
+		parentScreen.remove(background);
+		parentScreen.remove(back);
+		parentScreen.remove(backText);
+		for(int i = 0; i<4; i++) {
+			parentScreen.remove(hiddenKeyButtons.get(i));
+			parentScreen.remove(keyBackground.get(i));
+			parentScreen.remove(keySelect.get(i));
+		}
+		parentScreen.remove(toggleVolume);
+		
+		parentScreen.toggleButtons(true);
+		GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
 	/**
 	 * Short helper method to help
 	 * me organize all component creation
@@ -109,19 +132,7 @@ public class OptionsContainer{
 		backText = new CustomText(x*620/960, y*200/540, x*150/960, y*40/540,"Back",true,true);
 		back.setAction(new Action() {
 			public void act() {
-				parentScreen.remove(blackBack);
-				parentScreen.remove(background);
-				parentScreen.remove(back);
-				parentScreen.remove(backText);
-				for(int i = 0; i<4; i++) {
-					parentScreen.remove(hiddenKeyButtons.get(i));
-					parentScreen.remove(keyBackground.get(i));
-					parentScreen.remove(keySelect.get(i));
-				}
-				parentScreen.remove(toggleVolume);
-				
-				parentScreen.toggleButtons(true);
-				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				removeObjects();
 			}
 		});
 		back.setEnabled(true);
@@ -152,17 +163,37 @@ public class OptionsContainer{
 	public void setKeySelectActions() {
 		hiddenKeyButtons.get(0).setAction(new Action() {
 			public void act() {
-				selectingKey = true; 
+				selectingKeyPhase = 0; 
 				columnButtonSelected = 0;
+				
+				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
+				parentScreen.addObject(selectingKeyScreenText.get(0));
 				
 				
 				toggleButtons(false);
 			}
 		});
-		createSelectingKeyPopUp("I am a very long sentecne that will be displayed appropriately");
 	}
 	
+	public void readKey(KeyEvent e) {
+		if(selectingKeyPhase == 0) {
+			boolean validKey = true;
+			for(String s: Test.test.keys) {
+				if(e.getKeyCode() == (int) s.charAt(0)) {
+					validKey = false; break;
+				}
+			}
+			if(validKey) {
+				//selectingKeyPhase = 1;
+				Test.test.keys[columnButtonSelected] = Integer.toString(e.getKeyCode());
+				System.out.println(Test.test.keys[columnButtonSelected]);
+				//System.out.println("Valid");
+			}else {
+				System.out.println("Valid");
+			}
+		}
+	}
 	/** --KEY SELECTION SCREEN--
 	 * Will always be recreated as there will be different
 	 * text depending on what the user selected for the key
@@ -175,7 +206,7 @@ public class OptionsContainer{
 				
 			}
 		}
-		parentScreen.addObject(new CustomText(330, 50, 1000,  200, s, true ,false));
+		selectingKeyScreenText.add(new CustomText(330, 50, 1000,  200, s, true ,false));
 	}
 	
 	/** --VOLUME TOGGLE--
