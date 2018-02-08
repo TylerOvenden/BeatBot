@@ -112,6 +112,7 @@ public class HighscoreScreen extends ResizableScreen {
 		viewObjects.add(score3);
 		retry=new ImageButton(500, 300, 120, 50, "resources/re.png");
 		viewObjects.add(retry);
+		retry.setEnabled(true);
 		retry.setAction(new Action() {
 			
 			@Override
@@ -122,6 +123,7 @@ public class HighscoreScreen extends ResizableScreen {
 		});
 		menu=new ImageButton(650, 300, 120, 50, "resources/menu.png");
 		viewObjects.add(menu);
+		menu.setEnabled(true);
 		menu.setAction(new Action() {
 			
 			@Override
