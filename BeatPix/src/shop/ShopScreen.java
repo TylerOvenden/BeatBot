@@ -39,6 +39,10 @@ public class ShopScreen extends FullFunctionScreen
 	
 	private CustomText songBanner;
 	private CustomText credit;
+	private CustomText textLine1;
+	private CustomText textLine2;
+	private CustomText noText;
+	private CustomText yesText;
 	
 	private static ArrayList<Song> songs;
 	private ArrayList<ImageButton> buttons;
@@ -73,10 +77,9 @@ public class ShopScreen extends FullFunctionScreen
 	private int numChars;
 	private int index;
 
-	private CustomText textLine1;
-	private CustomText textLine2;
-	private CustomText noText;
-	private CustomText yesText;
+	private Graphic creditBorder;
+
+	
 	
 	public ShopScreen(int width, int height) 
 	{
@@ -91,7 +94,7 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 
-		credits = 15000;
+		credits = 3000;
 		
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
@@ -102,24 +105,28 @@ public class ShopScreen extends FullFunctionScreen
 		//graphics
 		
 		
+		
  		background = new Graphic(0,0,getWidth(),getHeight(),"resources//backgrounds//shop_background.png");
  		viewObjects.add(background);
+		
+ 		creditBorder = new Graphic(90,40,260,195,"resources//TransparentButtonA.png");
+		viewObjects.add(creditBorder);
 		
 		songBanner = new CustomText(123,135,200,150,"Songs",true);
 		viewObjects.add(songBanner);
 		
 		
 		String s = "Credits:"+credits; // add method "getCredits()" later
-		credit = new CustomText(120,60,200,200, s,true);
+		credit = new CustomText(110,58,200,200, s,true);
 		viewObjects.add(credit);
 		
 		
 		//scroll bar, contains the songs
 		scroll = new ScrollablePane(this, 110,175,220,300);		
-	
+		
 		//when user clicks yes to buy song
 		yes = new ImageButton(360,235,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
-		yesText = new CustomText(500,238,50,40, "yes",true); 	
+		yesText = new CustomText(390,238,60,60, "yes",false); 	
 		
 		yes.setAction(new Action() 
 		{			
