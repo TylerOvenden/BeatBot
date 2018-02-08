@@ -49,7 +49,7 @@ public class HighscoreScreen extends ResizableScreen {
 			condition.setText("You Win");
 		}
 		int temp;
-		int idx;
+		int idx=0;
 		temp=ints.get(0);
 		for(int i=0;i<ints.size();i++) {
 			if(ints.get(i)>temp) {
