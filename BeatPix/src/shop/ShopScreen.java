@@ -26,7 +26,7 @@ import mainGame.components.Song;
 import screens.Test;
 import screens.components.ImageButton;
 
-public class ShopScreen extends FullFunctionScreen
+public class ShopScreen extends FullFunctionScreen implements CreditChanger
 {
 
 	private static final long serialVersionUID = 1L;
@@ -96,7 +96,8 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 
-		credits = 3000;
+		changeCredits(getCredits()+3000);
+		credits = getCredits();
 		
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
@@ -119,7 +120,7 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(songBanner);
 		
 		
-		String s = "Credits:"+credits; // add method "getCredits()" later
+		String s = "Credits:"+getCredits(); 
 		credit = new CustomText(110,58,200,200, s,true);
 		viewObjects.add(credit);
 		
@@ -137,7 +138,7 @@ public class ShopScreen extends FullFunctionScreen
 			@Override
 			public void act() 
 			{
-				int x = (credits - 1500);
+				int x = (getCredits() - 1500);
 				if (x >= 0)
 				{	
 					new Thread()
@@ -558,6 +559,8 @@ public class ShopScreen extends FullFunctionScreen
 	{
 		credits = c;
 	}
+
+
 }
 
 
