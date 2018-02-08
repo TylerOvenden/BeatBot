@@ -12,6 +12,8 @@ public interface Options{
 	 */
 	void toggleButtons(boolean b);
 
+	
+	//FullFunctionScreen Methods that are used
 	void addObject(Visible a);
 
 	void remove(Visible a);
