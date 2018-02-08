@@ -52,8 +52,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	public static int UNLOCK_IDX = 2;
 	public static int OPTIONS_IDX = 3;
 	
-	public static OptionsPopUp options;
-	public static OptionsContainer options2;
 	public boolean optionsOn;
 	
 	public MainMenuScreenG(int width, int height) {
@@ -69,42 +67,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		//--IDLE CHARACTER ANIMATION 
 		createIdleCharacter();
 		
-		// Set button actions
-		buttons.get(LEVEL_IDX).setAction(new Action() {
-			public void act(){
-				System.out.println("Select Level Screen Clicked");
-				buttons.get(LEVEL_IDX).unhoverAction();
-				Test.test.setScreen(Test.test.level);
-			}
-		});
-		buttons.get(CHARACTER_IDX).setAction(new Action() {
-			public void act(){
-				System.out.println("Select Character Screen Clicked");
-				buttons.get(CHARACTER_IDX).unhoverAction();
-				//Test.test.setScreen(screen);
-			}
-		});
-		buttons.get(UNLOCK_IDX).setAction(new Action() {
-			public void act(){
-				System.out.println("Select Unlocks Screen Clicked");
-				buttons.get(UNLOCK_IDX).unhoverAction();
-				Test.test.setScreen(Test.test.shop);
-			}
-		});
 		
-		//NEED TO TEST OPTIONS AND FINISH
-		//options = new OptionsPopUp(getWidth()/10, getHeight()/10,getWidth()*8/10, getHeight()*8/10);
-		//options2 = new OptionsContainer(0,0,getWidth(),getHeight(), this)
-		
-		buttons.get(OPTIONS_IDX).setAction(new Action() {
-			public void act(){
-				System.out.println("Select Options Screen Clicked");
-				buttons.get(OPTIONS_IDX).unhoverAction();
-				toggleButtons(false);
-				Test.test.options.addObjects();
-			}
-		});
-		//
 		
 		//viewObjects adding]
 		viewObjects.add(background);
@@ -198,6 +161,41 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 														buttonH - buttonH*70/100,
 															buttonT[i] ,false , true));
 		}
+		
+		// Set button actions
+				buttons.get(LEVEL_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Level Screen Clicked");
+						buttons.get(LEVEL_IDX).unhoverAction();
+						Test.test.setScreen(Test.test.level);
+					}
+				});
+				buttons.get(CHARACTER_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Character Screen Clicked");
+						buttons.get(CHARACTER_IDX).unhoverAction();
+						//Test.test.setScreen(screen);
+					}
+				});
+				buttons.get(UNLOCK_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Unlocks Screen Clicked");
+						buttons.get(UNLOCK_IDX).unhoverAction();
+						Test.test.setScreen(Test.test.shop);
+					}
+				});
+				
+				//NEED TO TEST OPTIONS AND FINISH
+				
+				buttons.get(OPTIONS_IDX).setAction(new Action() {
+					public void act(){
+						System.out.println("Select Options Screen Clicked");
+						buttons.get(OPTIONS_IDX).unhoverAction();
+						toggleButtons(false);
+						Test.test.options.addObjects();
+					}
+				});
+				//
 	}
 	
 	//--OPTIONS INTERFACE METHODS
