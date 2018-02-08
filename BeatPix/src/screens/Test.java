@@ -10,6 +10,7 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.*;
 import mainGame.screens.ShopScreen;
+import screens.interfaces.Options;
 
 public class Test extends GUIApplication {
 
@@ -21,10 +22,6 @@ public class Test extends GUIApplication {
 	private Screen currentScreen;
 	
 	public static Test test;
-	public static ArrayList<Screen> screens;
-	public static int START = 0;
-	public static int MENU = 1;
-	public static int CHARACTER = 1;
 	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
@@ -34,22 +31,36 @@ public class Test extends GUIApplication {
 	
 	int x;
 	
+	public static String[] keys;
+	public static int volume;
 	//options [VOLUME,KEY1,KEY2,KEY3,KEY4]
-
-	public Visible optionScreen;
 	
 	public Test(int width, int height) {
 		super(width, height);
 		setVisible(true);
-
+		
+		//keys = new String[4];
+		String[] temp = {"D","F","J","K"};
+		keys = temp;
+		
+		volume = 2;
 		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
 			
+			private Screen previousScreen = currentScreen;
+
 			@Override
 			public void run() {
 				//System.out.println(x+"s");
 				x++;
+				
+				//Need to connect this with setScreen so the options is connected to the right screen
+				if(currentScreen instanceof Options && currentScreen != previousScreen) {
+					options = new OptionsContainer(getWidth(), getHeight(), (Options) currentScreen);
+				}else {
+					currentScreen = previousScreen;
+				}
 			}
 		}, 0, 1);
 	}
@@ -60,8 +71,9 @@ public class Test extends GUIApplication {
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
-		options = new OptionsContainer(getWidth(), getHeight(),currentScreen);
-		setScreen(start); //
+
+		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
+		setScreen(start);
 		start.scrollIn();
 	}
 

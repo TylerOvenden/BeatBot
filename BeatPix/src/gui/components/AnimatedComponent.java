@@ -57,12 +57,25 @@ public class AnimatedComponent extends MovingComponent{
 		repeat = true;
 	}
 
+	public void run() {
+		currentFrame = 0;
+		super.run();
+	}
+	
 	public void setRepeat(boolean b){
 		repeat = b;
 	}
 
 	public boolean isAnimated(){
 		return true;
+	}
+	
+	public ArrayList<BufferedImage> getFrames() {
+		return frame;
+	}
+	
+	public void frameSet(int pos, BufferedImage n) {
+		frame.set(pos, n);
 	}
 	
 	public void addSequence(String originalImgageAddress, ArrayList<Integer> times, int x, int y, int w, int h,
@@ -112,8 +125,6 @@ public class AnimatedComponent extends MovingComponent{
 		frame.add(image);
 		this.times.add(time);
 	}
-
-
 
 	public void drawImage(Graphics2D g) {
 		long currentTime = System.currentTimeMillis();//gets time now
