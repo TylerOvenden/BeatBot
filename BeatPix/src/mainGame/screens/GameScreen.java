@@ -133,10 +133,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song) {
-		super(width, height);
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
 		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		startResize(width, height);
+		update();
 		
 		game = this;
 		player = new PlaySong();
@@ -174,10 +174,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song, String backPath) {
-		super(width, height);
-		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
+
+		startResize(width, height);
+		update();
 		
 		game = this;
 		backgroundPath = backPath;
@@ -204,6 +204,19 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		start();
 	}
 
+	/**
+	 * This method updates the scalings in case the screen was resized before the screen was made
+	 * 
+	 * @param width - The previous width of the screen before this screen
+	 * @param height - The previous height of the screen before this screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
+	}
+	
 	/**
 	 * This method creates a new thread and starts it
 	 * 
@@ -580,7 +593,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		double scale = 1;
 		try {
 			BufferedImage img = ImageIO.read(new File(backgroundPath));
-			scale = ((double)getWidth())/img.getWidth();
+			scale = ((double)MainGUI.screenWidth)/img.getWidth();
 		} catch (IOException e) {
 		}
 		return scale;

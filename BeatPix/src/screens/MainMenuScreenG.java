@@ -79,7 +79,7 @@ public class MainMenuScreenG extends FullFunctionScreen {
 
 				buttons.get(0).unhoverAction();
 				Song song = new Song("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.csv");
-/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
+/**/			MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
 			}
 		});
 		
