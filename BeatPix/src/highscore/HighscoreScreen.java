@@ -35,9 +35,9 @@ public class HighscoreScreen extends ResizableScreen {
 	private CustomText score3;
 	private ImageButton retry;
 	private ImageButton menu;
-	private Highscore song;
+	private Song song;
 
-	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Highscore song, ArrayList<Integer> ints,ArrayList<Float> arrayList) {
+	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Song song, ArrayList<Integer> ints,ArrayList<Float> arrayList) {
 		super(width, height);
 		this.isWin=isWin;
 		this.score=score;
@@ -117,7 +117,7 @@ public class HighscoreScreen extends ResizableScreen {
 			
 			@Override
 			public void act() {
-				MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), (Song) song));
+				MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(),song));
 				
 			}
 		});
