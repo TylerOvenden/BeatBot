@@ -14,6 +14,10 @@ import screens.MainMenuScreenG;
 import screens.StartScreenG;
 import shop.ShopScreen;
 
+import screens.LevelScreenG;
+import mainGame.components.Song;
+import mainGame.saving.FileP;
+import mainGame.screens.*;
 
 public class MainGUI extends GUIApplication {
 

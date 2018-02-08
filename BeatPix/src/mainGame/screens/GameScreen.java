@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -119,6 +120,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//tyler
 	private Scoring gamescore;
 	private float score =0;
+	private float health = 100;
 	private CustomText displayScore;
 	//tyler
 	
@@ -731,6 +733,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
+
 	public void calcScore(double timing) {
 		if(beats.size() == 0) {
 			return;
@@ -749,12 +752,27 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		if(timing==.33) {
 			score+=1000000/beats.size()*.33;
+			health= health-1;
+		//	System.out.println(health);			
 		}
 		if(timing==0) {
 			score+=0;
+			health = health-3;
+		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
 		String display = String.valueOf(tScore);
+		
+		int[] scoreA = {0,0,0,0,0,0};
+		for(int i = 0; i<display.length();i++) {
+		
+			scoreA[scoreA.length-i-1] = display.charAt(i);
+			
+		} 
+	//	scoreA[scoreA.length-2] = 2;
+		//scoreA[scoreA.length-2] = display.charAt();
+	//	System.out.println(Arrays.toString(scoreA));
+		//System.out.println(display.charAt(0));
 		displayScore.setText(display);
 	} 
 
