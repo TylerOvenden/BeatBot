@@ -247,7 +247,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
-		player.stopSong();
+		//player.stopSong();
 		resumeGame();
 		cancelAllFalls();
 	}
@@ -307,7 +307,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void setUpBindings() {
 		bindings = MainGUI.bindings;
-		//updateKeyStrokes("D", "F", "J", "K");
+		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -938,7 +938,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
-		player.pauseSong();
+		//player.pauseSong();
 		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
@@ -957,7 +957,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void resumeGame() {
 		pause = false;
-		player.resumeSong();
+		//player.resumeSong();
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
@@ -1155,7 +1155,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			
 			@Override
 			public void run() {
-				player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
+				//player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
 			}
 			
 		});
@@ -1172,9 +1172,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		int[] beat = beats.remove(0);
 		int lane = beat[0] - 1;
 		if(beat[2] != 0) {
-			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-			if(height >= columnHeight - 20) {
-				height = columnHeight - 20;
+			int height = 64 + Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
+			if(height >= columnHeight) {
+				System.out.println(true);
+				height = columnHeight - 60;
 			}
 			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 					"resources/arrows/"+ arrowPaths[lane] + "h.png");
@@ -1193,9 +1194,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * This method handles the end of the game
 	 * 
 	 * @author Justin Yau
+	 * @author Steven Li
 	 */
 	public void handleEnd() {
-		player.stopSong();
+		//player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {
