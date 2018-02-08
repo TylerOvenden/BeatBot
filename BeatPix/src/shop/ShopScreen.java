@@ -79,6 +79,8 @@ public class ShopScreen extends FullFunctionScreen
 
 	private Graphic creditBorder;
 
+	private Graphic scrollBorder;
+
 	
 	
 	public ShopScreen(int width, int height) 
@@ -103,14 +105,15 @@ public class ShopScreen extends FullFunctionScreen
 		songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
 
 		//graphics
-		
-		
-		
- 		background = new Graphic(0,0,getWidth(),getHeight(),"resources//backgrounds//shop_background.png");
+			
+ 		background = new Graphic(0,0,getWidth(),getHeight(),"resources//backgrounds//shop_bg1.png");
  		viewObjects.add(background);
 		
  		creditBorder = new Graphic(90,40,260,195,"resources//TransparentButtonA.png");
 		viewObjects.add(creditBorder);
+		
+		
+		
 		
 		songBanner = new CustomText(123,135,200,150,"Songs",true);
 		viewObjects.add(songBanner);
@@ -122,7 +125,8 @@ public class ShopScreen extends FullFunctionScreen
 		
 		
 		//scroll bar, contains the songs
-		scroll = new ScrollablePane(this, 110,175,220,300);		
+		scroll = new ScrollablePane(this, 110,195,220,260);		
+		
 		
 		//when user clicks yes to buy song
 		yes = new ImageButton(360,235,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
@@ -240,6 +244,9 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(scroll);
 				
 	
+//		scrollBorder = new Graphic(90,175,350,325,"resources//shop//border.png");
+//		viewObjects.add(scrollBorder);
+		
 		// kevin
 		
 		//
@@ -399,7 +406,7 @@ public class ShopScreen extends FullFunctionScreen
 		for(int i = 0; i < texts.length; i++)
 		{ 
 
-				ImageButton b = new ImageButton(10,(i*52)+5,200,70,"resources\\ui\\buttons\\buttonwithrivet.png");
+				ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png");
 				b.setAction(new Action() 
 				{
 					
@@ -413,7 +420,7 @@ public class ShopScreen extends FullFunctionScreen
 				
 				b.setEnabled(true);
 				buttons.add(b);
-				customText.add(new CustomText(0 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 200*100/399, 120, texts[i],false));
+				customText.add(new CustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 210*100/399, 120, texts[i],false));
 			
 				buttons.get(i).setUnhoverAction(new Action()
 				{
@@ -540,6 +547,16 @@ public class ShopScreen extends FullFunctionScreen
 	public ArrayList<Song> getSongs()
 	{
 		return songs;
+	}
+	
+	public int getCredits()
+	{
+		return credits;
+	}
+	
+	public void changeCredits(int c)
+	{
+		credits = c;
 	}
 }
 
