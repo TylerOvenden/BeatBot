@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.xml.soap.Text;
+
 import gui.GUIApplication;
 import gui.components.Action;
 import gui.components.Button;
@@ -60,13 +62,17 @@ public class OptionsContainer{
 	public void addObjects() {
 		parentScreen.addObject(blackBack);
 		parentScreen.addObject(background);
+		
 		parentScreen.addObject(back);
 		parentScreen.addObject(backText);
+		
 		for(int i = 0; i<4; i++) {
 			parentScreen.addObject(hiddenKeyButtons.get(i));
 			parentScreen.addObject(keyBackground.get(i));
 			parentScreen.addObject(keySelect.get(i));
 		}
+		
+		parentScreen.addObject(toggleVolume);
 	}
 
 	/**
@@ -84,13 +90,14 @@ public class OptionsContainer{
 		blackBack.setAlpha(0.7f);
 		
 		background = new ScalablePixelBack(x/10,y/10,x*8/10,y*8/10,1.5);
-		
 		createBackButton();
 		
 		createKeySelects();
+		
+		updateVolumeToggle();
 	}
 	
-	 /**
+	 /** --BACK BUTTON--
 	  * Designed the same way as the MainMenuScreen buttons
 	  * where there is an ImageButton with CustomText on top of it
 	  * 
@@ -114,7 +121,7 @@ public class OptionsContainer{
 		back.setEnabled(true);
 	}
 	
-	/**
+	/** --KEY SELECT BUTTONS--
 	 * Since I'm Lazy:
 	 * Will be made of three things:
 	 * 	-ScalablePixelBack - just for aesthetics to look like a button
@@ -131,6 +138,7 @@ public class OptionsContainer{
 		for(int i = 0; i < 4; i ++) {
 			keyBackground.add(new ScalablePixelBack(x*i*110/960 + x*180/960,y*150/540,x*100/960,x*100/960,1.3));
 			hiddenKeyButtons.add(new Button(x*i*110/960 + x*180/960,y*150/540,x*100/960,x*100/960,"",null));
+			//System.out.println(Test.test.keys[i]);
 /**/			keySelect.add(new ImageButton(x*i*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + "A" + ".png"));
 		}
 		setKeySelectActions();
@@ -140,14 +148,16 @@ public class OptionsContainer{
 			public void act() {
 				selectingKey = true; 
 				columnButtonSelected = 0;
+				parentScreen.addObject(selectingKeyScreen);
 				
 				
+				toggleButtons(false);
 			}
 		});
 		createSelectingKeyPopUp("I am a very long sentecne that will be displayed appropriately");
 	}
 	
-	/**
+	/** --KEY SELECTION SCREEN--
 	 * Will always be recreated as there will be different
 	 * text depending on what the user selected for the key
 	 */
@@ -160,8 +170,30 @@ public class OptionsContainer{
 			}
 		}
 		parentScreen.addObject(new CustomText(330, 50, 1000,  200, s, true ,false));
-		parentScreen.addObject(selectingKeyScreen);
 	}
+	
+	/** --VOLUME TOGGLE--
+	 * 
+	 */
+	public void updateVolumeToggle() {
+		toggleVolume = new ImageButton(200, 300, 50, 50, "resources\\ui\\volume\\v" + Test.test.volume + ".png");
+		toggleVolume.setEnabled(true);
+		toggleVolume.setAction(new Action() {
+			public void act() {
+				if(Test.test.volume - 1 == -1) {
+					Test.test.volume = 3;
+				}else {
+					Test.test.volume -= 1;
+				}
+
+				parentScreen.remove(toggleVolume);
+				updateVolumeToggle();
+				parentScreen.addObject(toggleVolume);
+				System.out.println("resources\\ui\\volume\\v" + Test.test.volume + ".png");
+			}
+		});
+	}
+	
 	/**
 	 * Will set all buttons' enabled to
 	 * the boolean b
@@ -169,6 +201,7 @@ public class OptionsContainer{
 	 */
 	public void toggleButtons(boolean b) {
 		back.setEnabled(b);
+		toggleVolume.setEnabled(b);
 		for(int i = 0; i < 4; i++) {
 			hiddenKeyButtons.get(i).setEnabled(b);
 		}

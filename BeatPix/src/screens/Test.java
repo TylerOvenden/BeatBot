@@ -43,6 +43,8 @@ public class Test extends GUIApplication {
 		String[] temp = {"D","F","J","K"};
 		keys = temp;
 		
+		volume = 2;
+		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
 			
