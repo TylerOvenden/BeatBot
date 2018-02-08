@@ -37,7 +37,7 @@ public class HighscoreScreen extends ResizableScreen {
 	private ImageButton menu;
 	private Highscore song;
 
-	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Highscore song) {
+	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Highscore song, ArrayList<Integer> ints,ArrayList<Double> doubles) {
 		super(width, height);
 		this.isWin=isWin;
 		this.score=score;
@@ -48,7 +48,17 @@ public class HighscoreScreen extends ResizableScreen {
 		if(isWin) {
 			condition.setText("You Win");
 		}
-		score1.setText("1.  "+score+"   "+acc+"%");
+		int temp;
+		int idx;
+		temp=ints.get(0);
+		for(int i=0;i<ints.size();i++) {
+			if(ints.get(i)>temp) {
+				temp=ints.get(i);
+				idx=i;
+			}
+		}
+		score1.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
+		
 		score2.setText("1.  "+score+"   "+acc+"%");
 		score3.setText("1.  "+score+"   "+acc+"%");
 	}
