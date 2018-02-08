@@ -32,6 +32,9 @@ public class MainGUI extends GUIApplication {
 	public static int MENU = 1;
 	public static int CHARACTER = 1;
 	
+	public static final int screenWidth = 960;
+	public static final int screenHeight = 540;
+	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
 	public static LevelSelectG level;
@@ -76,7 +79,7 @@ public class MainGUI extends GUIApplication {
 	}
 
 	public static void main(String[] args) {
-		test = new MainGUI(960,540);
+		test = new MainGUI(screenWidth,screenHeight);
 		Thread s = new Thread(test);
 		s.run();
 	}

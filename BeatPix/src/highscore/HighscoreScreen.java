@@ -37,7 +37,7 @@ public class HighscoreScreen extends ResizableScreen {
 	private ImageButton menu;
 	private Highscore song;
 
-	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Highscore song, ArrayList<Integer> ints,ArrayList<Double> doubles) {
+	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Highscore song, ArrayList<Integer> ints,ArrayList<Float> arrayList) {
 		super(width, height);
 		this.isWin=isWin;
 		this.score=score;
@@ -57,9 +57,9 @@ public class HighscoreScreen extends ResizableScreen {
 				idx=i;
 			}
 		}
-		score1.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
+		score1.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
 		ints.remove(idx);
-		doubles.remove(idx);
+		arrayList.remove(idx);
 		if(ints.size()>0) {
 			temp=ints.get(0);
 			idx=0;
@@ -69,9 +69,9 @@ public class HighscoreScreen extends ResizableScreen {
 					idx=i;
 				}
 			}
-			score2.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
+			score2.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
 			ints.remove(idx);
-			doubles.remove(idx);
+			arrayList.remove(idx);
 		}else {
 			score2.setText("2.                                  ");
 		}
@@ -84,9 +84,9 @@ public class HighscoreScreen extends ResizableScreen {
 					idx=i;
 				}
 			}
-			score3.setText("1.  "+temp+"   "+doubles.get(idx)+"%");
+			score3.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
 			ints.remove(idx);
-			doubles.remove(idx);
+			arrayList.remove(idx);
 		}else {
 			score3.setText("3.                                  ");
 		}
@@ -112,6 +112,7 @@ public class HighscoreScreen extends ResizableScreen {
 		viewObjects.add(score3);
 		retry=new ImageButton(500, 300, 120, 50, "resources/re.png");
 		viewObjects.add(retry);
+		retry.setEnabled(true);
 		retry.setAction(new Action() {
 			
 			@Override
@@ -122,6 +123,7 @@ public class HighscoreScreen extends ResizableScreen {
 		});
 		menu=new ImageButton(650, 300, 120, 50, "resources/menu.png");
 		viewObjects.add(menu);
+		menu.setEnabled(true);
 		menu.setAction(new Action() {
 			
 			@Override

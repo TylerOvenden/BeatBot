@@ -34,6 +34,7 @@ import gui.interfaces.Clickable;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import highscore.HighscoreScreen;
 import mainGame.MainGUI;
 import mainGame.actions.Escape;
 import mainGame.actions.Press;
@@ -99,6 +100,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
     
+    private boolean exited; //This boolean will track whether or not the game was exited
     private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
@@ -135,13 +137,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song) {
-		super(width, height);
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
 		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		startResize(width, height);
+		update();
 		
 		game = this;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -176,14 +179,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song, String backPath) {
-		super(width, height);
-		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
+
+		startResize(width, height);
+		update();
 		
 		game = this;
 		backgroundPath = backPath;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -206,6 +210,19 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		start();
 	}
 
+	/**
+	 * This method updates the scalings in case the screen was resized before the screen was made
+	 * 
+	 * @param width - The previous width of the screen before this screen
+	 * @param height - The previous height of the screen before this screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
+	}
+	
 	/**
 	 * This method creates a new thread and starts it
 	 * 
@@ -582,7 +599,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		double scale = 1;
 		try {
 			BufferedImage img = ImageIO.read(new File(backgroundPath));
-			scale = ((double)getWidth())/img.getWidth();
+			scale = ((double)MainGUI.screenWidth)/img.getWidth();
 		} catch (IOException e) {
 		}
 		return scale;
@@ -978,6 +995,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			public void act() {
 				//Exit Action Button will be here
 				stop();
+				exited = true;
 				//Switch to a different screen below
 				MainGUI.test.setScreen(MainGUI.test.mainMenu);
 			}
@@ -1188,6 +1206,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		if(!exited) {
+			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+		}
 	}
 
 	public Timing getTiming() {
