@@ -732,6 +732,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 	}*/
 	public void calcScore(double timing) {
+		if(beats.size() == 0) {
+			return;
+		}
 		if(timing==1) {
 			score+=1000000/beats.size()*1;
 		}

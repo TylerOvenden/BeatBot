@@ -60,7 +60,7 @@ public class FileP implements FileProcessor {
 		p.load("DreadnoughtMastermind(xi+nora2r).csv");
 		System.out.println(p.getTitle());
 		*/
-		
+
 	}
 	
 	/**
@@ -75,7 +75,9 @@ public class FileP implements FileProcessor {
 	 * @author Justin Yau
 	 */
 	public static void save(String title, int BPM, String artist, int offSet, ArrayList<int[]> list) {
-		String fileName = title + artist + ".csv";
+		String name = title + artist;
+		new File("resources/maps/" + name).mkdirs();
+		String fileName = "resources/maps/" + name + "/"+ name + ".csv";
 		try{    
 			
 			FileWriter fw=new FileWriter(fileName);
@@ -241,7 +243,7 @@ public class FileP implements FileProcessor {
 			BufferedReader br = new BufferedReader(fileReader);
 			
 			//Keep reading till it hit [MetaData]
-			if(!keepReadingTillYouReach(br, "[MetaData]")) { return false; }
+			if(!keepReadingTillYouReach(br, "[Metadata]")) { return false; }
 			
 			//Retrieve title information
 			tempTitle = sSplitLine(br);
