@@ -8,7 +8,7 @@ public class HighscoreGui extends GUIApplication{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HighscoreScreen highscore;
+	private TempSongSelect highscore;
 	
 	public static void main(String[] args) 
 	{
@@ -24,7 +24,7 @@ public class HighscoreGui extends GUIApplication{
 
 	@Override
 	public void initScreen() {
-		highscore = new HighscoreScreen(getWidth(), getHeight(),true,1000000,99.99,null);
+		highscore = new TempSongSelect(getWidth(), getHeight());
 		setScreen(highscore);
 		
 	}
