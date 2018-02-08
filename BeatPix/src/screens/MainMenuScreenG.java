@@ -78,7 +78,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			public void act(){
 
 				buttons.get(0).unhoverAction();
-				Song song = new Song("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.csv");
+				Song song = new Song("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail-EZ.csv");
 /**/			MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
 			}
 		});

@@ -17,7 +17,7 @@ public class ShopScreenKevin2 extends FullFunctionScreen {
 	private ArrayList<Button> buttonList;
 	private int index;
 	private ArrayList<Integer> indexList;
-	private String[] imageName;
+	private String[] imageNames;
 	private ArrayList<ImageButton> images;
 	public ShopScreenKevin2(int width, int height) {
 		super(width, height);
@@ -29,11 +29,11 @@ public class ShopScreenKevin2 extends FullFunctionScreen {
 		buttonList = new ArrayList<Button>();
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
-		imageName = new String[] {"resources/redGuy.png", "resources/greenGuy.png", "resources/whiteGuy.png"};
-		for(int i = 0; i < imageName.length; i ++) {
-			images.add(new ImageButton(100, (100*i)+50, 200, 300, imageName[i], null, null));
+		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
+		for(int i = 0; i < imageNames.length; i ++) {
+			images.add(new ImageButton(100, (100*i)+50, 200, 300, imageNames[i], null, null));
 		}
-		createIntList(5);
+		createIntList(3);
 		for(int i=0; i < 3; i++){ 
 			//got the index number
 			final int x = i;
