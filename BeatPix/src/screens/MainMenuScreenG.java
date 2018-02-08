@@ -78,7 +78,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			public void act(){
 
 				buttons.get(0).unhoverAction();
-				Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
+				Song song = new Song("resources/maps/Hitorigoto -TV MIX-ClariS/Hitorigoto -TV MIX-ClariS-EZ.csv");
 /**/			MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
 			}
 		});

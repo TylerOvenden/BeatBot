@@ -1172,9 +1172,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		int[] beat = beats.remove(0);
 		int lane = beat[0] - 1;
 		if(beat[2] != 0) {
-			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-			if(height >= columnHeight - 20) {
-				height = columnHeight - 20;
+			int height = 64 + Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
+			if(height >= columnHeight) {
+				System.out.println(true);
+				height = columnHeight - 60;
 			}
 			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 					"resources/arrows/"+ arrowPaths[lane] + "h.png");
@@ -1193,6 +1194,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * This method handles the end of the game
 	 * 
 	 * @author Justin Yau
+	 * @author Steven Li
 	 */
 	public void handleEnd() {
 		player.stopSong();

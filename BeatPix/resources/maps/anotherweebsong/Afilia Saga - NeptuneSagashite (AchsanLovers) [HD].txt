@@ -19,13 +19,13 @@ GridSize: 8
 TimelineZoom: 3.099999
 
 [Metadata]
-Title:Neptune*Sagashite
-TitleUnicode:ネプテューヌ☆サガして
+Title:NeptuneSagashite
+TitleUnicode:ãƒ�ãƒ—ãƒ†ãƒ¥ãƒ¼ãƒŒâ˜†ã‚µã‚¬ã�—ã�¦
 Artist:Afilia Saga
-ArtistUnicode:アフィリア・サーガ
+ArtistUnicode:ã‚¢ãƒ•ã‚£ãƒªã‚¢ãƒ»ã‚µãƒ¼ã‚¬
 Creator:AchsanLovers
 Version:HD
-Source:超次元ゲイム ネプテューヌ
+Source:è¶…æ¬¡å…ƒã‚²ã‚¤ãƒ  ãƒ�ãƒ—ãƒ†ãƒ¥ãƒ¼ãƒŒ
 Tags:THE ANIMATION Hyperdimension Neptunia ending ed tv size -_Ly0572_-
 BeatmapID:1215232
 BeatmapSetID:501481
