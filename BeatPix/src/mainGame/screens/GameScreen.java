@@ -307,7 +307,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void setUpBindings() {
 		bindings = MainGUI.bindings;
-		//updateKeyStrokes("D", "F", "J", "K");
+		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
