@@ -11,10 +11,11 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import mainGame.components.interfaces.JustinPlaySongInterface;
 import mainGame.screens.GameScreen;
  
 
-public class PlaySong {
+public class PlaySong implements JustinPlaySongInterface {
  
     // size of the byte buffer used to read/write the audio stream
     private static final int BUFFER_SIZE = 4000;
@@ -76,5 +77,23 @@ public class PlaySong {
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
+
+	@Override
+	public void pauseSong() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resumeSong() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stopSong() {
+		// TODO Auto-generated method stub
+		
+	}
  
 }
