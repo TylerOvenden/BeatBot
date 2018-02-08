@@ -531,15 +531,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(accDisplay);
 		accDisplay.update();
 		*/
-		combo=new CustomText(215,100, 50, 50,"0");
+		combo=new CustomText(215,100, 50, 50,"0",true);
 		viewObjects.add(combo);
 
-		ctext=new CustomText(550,450,200,200,"100%");
+		ctext=new CustomText(550,450,200,200,"100%",true);
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
 
-		displayScore = new CustomText(550,400,200,200,"0000000");
+		displayScore = new CustomText(550,400,200,200,"0000000",true);
 		viewObjects.add(displayScore);
 		gamescore.update();  
 		

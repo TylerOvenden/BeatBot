@@ -66,20 +66,20 @@ public class HighscoreScreen extends ResizableScreen {
 	public void initAllObjects(List<Visible> viewObjects) {
 		bg=new Graphic(0, 0,4, "resources/background1.png");
 		viewObjects.add(bg);
-		condition=new CustomText(400, 100, 100, 100, "You Lose");
+		condition=new CustomText(400, 100, 100, 100, "You Lose",true);
 		viewObjects.add(condition);
-		currentScore=new CustomText(380, 120, 200, 200, "Score "+score);
+		currentScore=new CustomText(380, 120, 200, 200, "Score "+score,true);
 		viewObjects.add(currentScore);
 		System.out.println(acc);
-		currentAcc=new CustomText(380, 140, 200, 200, "");
+		currentAcc=new CustomText(380, 140, 200, 200, "",true);
 		viewObjects.add(currentAcc);
-		highScore=new CustomText(380, 180, 200, 200, "High Scores");
+		highScore=new CustomText(380, 180, 200, 200, "High Scores",true);
 		viewObjects.add(highScore);
-		score1=new CustomText(380, 210, 200, 200, "");
+		score1=new CustomText(380, 210, 200, 200, "",true);
 		viewObjects.add(score1);
-		score2=new CustomText(380, 240, 200, 200, "");
+		score2=new CustomText(380, 240, 200, 200, "",true);
 		viewObjects.add(score2);
-		score3=new CustomText(380, 270, 200, 200, "");
+		score3=new CustomText(380, 270, 200, 200, "",true);
 		viewObjects.add(score3);
 		retry=new ImageButton(500, 300, 120, 50, "resources/re.png");
 		viewObjects.add(retry);

@@ -109,7 +109,7 @@ public class CustomText extends Component {
 				if(!isWhite) {
 					icon = new ImageIcon("resources/text/"+text.substring(i,i+1)+".png");
 				}else {
-					icon = new ImageIcon("resources/text/"+text.substring(i,i+1)+"_White_Transparent.png");
+					icon = new ImageIcon("resources/WhiteFont/"+text.substring(i,i+1)+"_White_Transparent.png");
 				}
 				Image img = icon.getImage();
 				Image newimg;
