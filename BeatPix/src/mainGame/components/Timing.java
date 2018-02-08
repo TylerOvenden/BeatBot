@@ -90,7 +90,7 @@ public class Timing extends Component implements JustinTimingInterface {
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 25) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 30) {
 				changeImg("resources/ok.png");
 				update();
 				GameScreen.game.calcAcc(.5);
@@ -98,7 +98,7 @@ public class Timing extends Component implements JustinTimingInterface {
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 35) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 45) {
 				changeImg("resources/bad.png");
 				update();
 				GameScreen.game.calcAcc(.33);
@@ -133,11 +133,11 @@ public class Timing extends Component implements JustinTimingInterface {
 				GameScreen.game.calcCombo(false);
 				return ;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 25) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 30) {
 				calculations(.5,"resources/ok.png");
 				return ;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())< GameScreen.game.getFallTime() * 35) {
+			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())< GameScreen.game.getFallTime() * 45) {
 				calculations(.33,"resources/bad.png");
 				return ;
 			}
