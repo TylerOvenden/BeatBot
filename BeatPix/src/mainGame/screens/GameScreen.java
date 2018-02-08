@@ -33,6 +33,7 @@ import gui.interfaces.Clickable;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import highscore.HighscoreScreen;
 import mainGame.MainGUI;
 import mainGame.actions.Escape;
 import mainGame.actions.Press;
@@ -1170,6 +1171,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
 	}
 
 	public Timing getTiming() {
