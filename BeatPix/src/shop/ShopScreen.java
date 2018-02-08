@@ -20,8 +20,10 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.MainGUI;
+import mainGame.components.CustomText;
 import mainGame.components.Song;
-import screens.components.CustomText;
+import screens.Test;
 import screens.components.ImageButton;
 
 public class ShopScreen extends FullFunctionScreen
@@ -99,14 +101,14 @@ public class ShopScreen extends FullFunctionScreen
 		
 		
  		background = new Graphic(0,0,getWidth(),getHeight(),"resources//backgrounds//shop_background.png");
-//		viewObjects.add(background);
+ 		viewObjects.add(background);
 		
-		songBanner = new CustomText(123,135,200,150,"Songs");
+		songBanner = new CustomText(123,135,200,150,"Songs",true);
 		viewObjects.add(songBanner);
 		
 		
 		String s = "Credits:"+credits; // add method "getCredits()" later
-		credit = new CustomText(120,60,200,200, s);
+		credit = new CustomText(120,60,200,200, s,true);
 		viewObjects.add(credit);
 		
 		
@@ -115,7 +117,8 @@ public class ShopScreen extends FullFunctionScreen
 	
 		//when user clicks yes to buy song
 		yes = new ImageButton(360,235,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
-		yesText = new CustomText(500,238,50,40, "yes"); 		
+		yesText = new CustomText(500,238,50,40, "yes",true); 	
+		
 		yes.setAction(new Action() 
 		{			
 			@Override
@@ -139,8 +142,8 @@ public class ShopScreen extends FullFunctionScreen
 								
 								setInvis(false);
 								
-								purchasedTextLine1 = new CustomText(350,90,300,430, "Song Purchased!");
-								purchasedTextLine2 = new CustomText(342,130,300,420, "Added to Library");
+								purchasedTextLine1 = new CustomText(350,90,300,430, "Song Purchased!",true);
+								purchasedTextLine2 = new CustomText(342,130,300,420, "Added to Library",true);
 								viewObjects.add(purchasedTextLine1);
 								viewObjects.add(purchasedTextLine2);
 								
@@ -171,8 +174,8 @@ public class ShopScreen extends FullFunctionScreen
 						{
 							try
 							{
-								CustomText warningLine1 = new CustomText(342,90,300,430, "You Do Not Have");
-								CustomText warningLine2 = new CustomText(342,130,300,420, "Enough Credits");
+								CustomText warningLine1 = new CustomText(342,90,300,430, "You Do Not Have",true);
+								CustomText warningLine2 = new CustomText(342,130,300,420, "Enough Credits",true);
 								
 								viewObjects.add(warningLine1);
 								viewObjects.add(warningLine2);
@@ -197,15 +200,15 @@ public class ShopScreen extends FullFunctionScreen
 		yes.setVisible(false);		
 		yesText.setVisible(false);
 		
-		textLine1 = new CustomText(370,175,250,280, "Do you want to"); 			
-		textLine2 = new CustomText(370,200,250,280,"buy this song?");
+		textLine1 = new CustomText(370,175,250,280, "Do you want to",true); 			
+		textLine2 = new CustomText(370,200,250,280,"buy this song?",true);
 		viewObjects.add(textLine1);
 		viewObjects.add(textLine2);
 		textLine1.setVisible(false);
 		textLine2.setVisible(false);
 		
 		no = new ImageButton(500,235,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
-		noText = new CustomText(540,238,50,40, "no"); 	
+		noText = new CustomText(540,238,50,40, "no",false);
 		no.setAction(new Action()
 		{
 			@Override
@@ -243,8 +246,8 @@ public class ShopScreen extends FullFunctionScreen
 			
 			@Override
 			public void act() {
-				// go back to main screen
-				
+				MainGUI.test.setScreen(MainGUI.test.mainMenu);
+			
 			}
 		});
 		
@@ -395,7 +398,7 @@ public class ShopScreen extends FullFunctionScreen
 				
 				b.setEnabled(true);
 				buttons.add(b);
-				customText.add(new CustomText(0 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 200*100/399, 120, texts[i]));
+				customText.add(new CustomText(0 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 200*100/399, 120, texts[i],false));
 			
 				buttons.get(i).setUnhoverAction(new Action()
 				{
