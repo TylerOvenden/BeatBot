@@ -89,7 +89,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 15; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
@@ -1032,6 +1032,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public int calculateTotalFallTime() {
 		return fallTime * columnHeight;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getFallTime() {
+		return fallTime;
 	}
 	
 	/**
