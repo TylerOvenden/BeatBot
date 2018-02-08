@@ -90,7 +90,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 15; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
@@ -533,15 +533,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(accDisplay);
 		accDisplay.update();
 		*/
-		combo=new CustomText(215,100, 50, 50,"0");
+		combo=new CustomText(215,100, 50, 50,"0",true);
 		viewObjects.add(combo);
 
-		ctext=new CustomText(550,450,200,200,"100%");
+		ctext=new CustomText(550,450,200,200,"100%",true);
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
 
-		displayScore = new CustomText(550,400,200,200,"0000000");
+		displayScore = new CustomText(550,400,200,200,"0000000",true);
 		viewObjects.add(displayScore);
 		gamescore.update();  
 		
@@ -1050,6 +1050,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public int calculateTotalFallTime() {
 		return fallTime * columnHeight;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getFallTime() {
+		return fallTime;
 	}
 	
 	/**

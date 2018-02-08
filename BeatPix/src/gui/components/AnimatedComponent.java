@@ -57,6 +57,11 @@ public class AnimatedComponent extends MovingComponent{
 		repeat = true;
 	}
 
+	public void run() {
+		currentFrame = 0;
+		super.run();
+	}
+	
 	public void setRepeat(boolean b){
 		repeat = b;
 	}

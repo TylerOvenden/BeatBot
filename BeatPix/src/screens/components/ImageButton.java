@@ -5,6 +5,9 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
@@ -33,6 +36,12 @@ public class ImageButton extends Graphic implements Clickable{
 
 	private boolean enabled;
 	
+	private BufferedImage image;
+	private boolean loadedImages;
+	
+	private int idxArray;
+	private boolean on;
+	
 	public ImageButton(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
 		unhoverAction = new Action() {
@@ -47,7 +56,19 @@ public class ImageButton extends Graphic implements Clickable{
 		};
 	}
 
-
+	public void setIdxArray(int x) {
+		idxArray = x;
+	}
+	public int getIdxArray() {
+		return idxArray;
+	}
+	
+	public void setOn(boolean x) {
+		on = x;
+	}
+	public boolean getOn() {
+		return on;
+	}
 
 	public void act(){
 		if(action != null) action.act();

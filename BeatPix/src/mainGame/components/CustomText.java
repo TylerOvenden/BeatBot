@@ -22,6 +22,7 @@ public class CustomText extends Component {
 	int h;
 	boolean scaleHeight;
 	boolean scaleWidth;
+	boolean isWhite;
 
 	/**
 	 * 
@@ -31,11 +32,12 @@ public class CustomText extends Component {
 	 * @param h - h
 	 * @param text - Text
 	 */
-	public CustomText(int x, int y, int w, int h, String text) {
+	public CustomText(int x, int y, int w, int h, String text,boolean isWhite) {
 		super(x, y, w, h);
 		this.text=text.toUpperCase();
 		this.w=w;
 		this.h=h;
+		this.isWhite=isWhite;
 		scaleHeight=true;
 		scaleWidth=true;
 		update();
@@ -51,13 +53,14 @@ public class CustomText extends Component {
 	 * @param scaleHeight - Keep height scale or not
 	 * @param scaleWidth - Keep Width scale or not
 	 */
-	public CustomText(int x, int y, int w, int h, String text,boolean scaleHeight,boolean scaleWidth) {
+	public CustomText(int x, int y, int w, int h, String text,boolean scaleHeight,boolean scaleWidth,boolean isWhite) {
 		super(x, y, w, h);
 		this.text=text.toUpperCase();
 		this.w=w;
 		this.h=h;
 		this.scaleHeight=scaleHeight;
 		this.scaleWidth=scaleWidth;
+		this.isWhite=isWhite;
 		update();
 	}
 
@@ -102,7 +105,12 @@ public class CustomText extends Component {
 		super.clear();
 		for(int i=0;i<text.length();i++) {
 			try {
-				ImageIcon icon = new ImageIcon("resources/text/"+text.substring(i,i+1)+".png");
+				ImageIcon icon;
+				if(!isWhite) {
+					icon = new ImageIcon("resources/text/"+text.substring(i,i+1)+".png");
+				}else {
+					icon = new ImageIcon("resources/WhiteFont/"+text.substring(i,i+1)+"_White_Transparent.png");
+				}
 				Image img = icon.getImage();
 				Image newimg;
 				int newW=w-(text.length()*5);
