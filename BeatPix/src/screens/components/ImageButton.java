@@ -39,6 +39,8 @@ public class ImageButton extends Graphic implements Clickable{
 	private BufferedImage image;
 	private boolean loadedImages;
 	
+	private int idxArray;
+	
 	public ImageButton(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
 		unhoverAction = new Action() {
@@ -53,6 +55,13 @@ public class ImageButton extends Graphic implements Clickable{
 		};
 	}
 
+	public void setIdxArray(int x) {
+		idxArray = x;
+	}
+	public int getIdxArray() {
+		return idxArray;
+	}
+	
 	public void loadImages(String imageLocation, double scale) {
 		try{
 			//get the full-size image

@@ -69,17 +69,17 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		
 		
 		
-		//viewObjects adding]
+		//viewObjects adding
 		viewObjects.add(background);
 		for(int i = 0; i < buttons.size(); i++) {
 			viewObjects.add(buttons.get(i));
 			viewObjects.add(buttonTexts.get(i));
 		}
 		viewObjects.add(idleCharacter);
-		//scrollDown();
+		
 /**/		//System.out.println(Test.test.x+"s START MAIN");
 	}
-	
+//--COMPONENTS--//
 	/** --COMPLETE--
 	 * Creates a background that scales to the screens width resolution
 	 * 
@@ -155,6 +155,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			int buttonH = getHeight()*100/540;
 			System.out.println(buttonY);
 /*P D*/		buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			buttons.get(i).setIdxArray(i);
 			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
@@ -162,6 +163,10 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 															buttonT[i] ,false , true));
 		}
 		
+		setButtonsActions();
+		setButtonsHoverAction();
+	}
+	public void setButtonsActions() {
 		// Set button actions
 				buttons.get(LEVEL_IDX).setAction(new Action() {
 					public void act(){
@@ -198,21 +203,44 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				//
 	}
 	
+	int x;
 	public void setButtonsHoverAction() {
 		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
+		x = 0;
 		for(int i = 0; i < 4; i++) {
 			buttons.get(i).setHoverAction(new Action() {
+				
+				ImageButton b = buttons.get(x);
+				
 				public void act() {
-					// TODO Auto-generated method stub
-					
+					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
+					int tempx = b.getIdxArray();
+					buttons.set(tempx, new ImageButton(getWidth()*480/960,getHeight()*100/540*(tempx+1),getWidth()*399/960,getHeight()*100/540,"resources\\ui\\buttons\\buttongeneral.png"));
+					buttons.get(tempx).setIdxArray(tempx);
+					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
+					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
+					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));
+					setButtonsHoverAction();
 				}
 			});
 			buttons.get(i).setUnhoverAction(new Action() {
+				
+				ImageButton b = buttons.get(x);
+				
 				public void act() {
-					// TODO Auto-generated method stub
-					
+					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
+					int tempx = b.getIdxArray();
+					buttons.set(tempx, new ImageButton(getWidth()*480/960,getHeight()*100/540*(tempx+1),getWidth()*399/960,getHeight()*100/540,"resources\\bad.png"));
+					buttons.get(tempx).setIdxArray(tempx);
+					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
+					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
+					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));
+					setButtonsHoverAction();
 				}
 			});
+			x++;
 		}
 	}
 	
