@@ -406,13 +406,13 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			for(Visible stroke: strokes) {
 				if(stroke instanceof Keystroke) {
 					Keystroke str = ((Keystroke)stroke);
-					if(str.getColumnLane() == lane && str.getStartingTime() == startingTime) {
+					if(str.getColumnLane() == lane && (str.getStartingTime() - startingTime) < 10) {
 						return stroke;
 					}
 				}
 				if(stroke instanceof Holdstroke) {
 					Holdstroke str = ((Holdstroke)stroke);
-					if(str.getColumnLane() == lane && str.getStartingTime() == startingTime) {
+					if(str.getColumnLane() == lane && (str.getStartingTime() - startingTime) < 10) {
 						return stroke;
 					}
 				}
@@ -462,10 +462,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public int getFirstStrokeStartingTime() {
 		if(strokes.size() > 0) {
 			Visible firstStroke = strokes.get(0);
-			if(strokes.get(0) instanceof Keystroke) {
+			if(firstStroke instanceof Keystroke) {
 				return ((Keystroke)firstStroke).getStartingTime(); 
 			}
-			if(strokes.get(0) instanceof Holdstroke) {
+			if(firstStroke instanceof Holdstroke) {
 				return ((Holdstroke)firstStroke).getStartingTime();
 			}
 		}
