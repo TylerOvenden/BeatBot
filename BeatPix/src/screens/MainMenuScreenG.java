@@ -214,8 +214,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-					
-					b.setOn(true);
+					buttons.get(b.getIdxArray()).setAlpha(0.3f);
+					/*b.setOn(true);
 					if(buttons.get(b.getIdxArray()).getOn()) {
 						buttons.get(b.getIdxArray()).setHoverAction(new Action() {
 							
@@ -224,7 +224,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 								System.out.println("Good");
 							}
 						});
-					}
+					}*/
 					
 					/*Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
 					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
@@ -236,9 +236,9 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					
 					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
 					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));*/
-					System.out.println("hover");
-					setButtonsHoverAction();
-					setButtonsActions();
+					//System.out.println("hover");
+					//setButtonsHoverAction();
+					//setButtonsActions();
 				}
 			});
 			buttons.get(i).setUnhoverAction(new Action() {
@@ -247,6 +247,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					buttons.get(b.getIdxArray()).setAlpha(1f);
 					System.out.println("unhover");
 				}
 			});
