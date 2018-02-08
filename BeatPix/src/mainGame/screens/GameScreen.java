@@ -66,6 +66,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private String artist; //Artist of the beatmap
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
+	private ArrayList<int[]> originalBeats; //All the original beats will be stored here
 	private Song mainSong; //The song of the game will be stored here
 	
 	private long startTime; //The starting time in ms
@@ -153,6 +154,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		originalBeats = beats;
 		
 		setUpBindings();
 		
@@ -196,6 +198,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		originalBeats = beats;
 		
 		setUpBindings();
 		
@@ -1194,6 +1197,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void handleEnd() {
 		player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		mainSong.setBeats(originalBeats);
 		if(!exited) {
 			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
 		}
