@@ -235,7 +235,7 @@ public class ShopScreen extends FullFunctionScreen
 	
 		// kevin
 		
-		
+		//
 		buttonList = new ArrayList<Button>();
 		yesButton = new ArrayList<Button>();
 		confirmButton = new ArrayList<Button>();
