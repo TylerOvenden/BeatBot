@@ -1,19 +1,25 @@
 package mainGame.screens;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.RenderingHints;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
@@ -21,26 +27,29 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import gui.components.Action;
+import gui.components.Graphic;
 import gui.components.TextArea;
+import gui.interfaces.Clickable;
+import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import mainGame.MainGUI;
 import mainGame.actions.Escape;
-import mainGame.actions.Pause;
 import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
-import mainGame.actions.Resume;
-import mainGame.components.Accuracy;
-import mainGame.components.ColoredRectangle;
-import mainGame.components.ColumnLane;
-import mainGame.components.Combo;
-import mainGame.components.Gear;
-import mainGame.components.Holdstroke;
-import mainGame.components.Keystroke;
-import mainGame.components.KeystrokeIndicator;
-import mainGame.components.Song;
-import mainGame.components.Timing;
+import mainGame.components.*;
+import mainGame.screens.interfaces.ResizableScreen;
+import screens.components.FightPaneG;
 
-public class GameScreen extends ClickableScreen implements Runnable {
+/**
+ * This screen is for the actual game play of the map for a song
+ * 
+ * @author Justin Yau
+ * @author Steven Li
+ * @author Tyler Ovenden
+ *
+ */
+public class GameScreen extends ResizableScreen implements Runnable {
 
 	/**
 	 * 
@@ -55,13 +64,18 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	private String artist; //Artist of the beatmap
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
+	private Song mainSong; //The song of the game will be stored here
 	
-	public static long startTime; //The starting time in ms
+	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
+	
+	private PlaySong player; //The current player will be stored here
 	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
 	private ArrayList<Holdstroke> tooLongHolds; //All the holdstrokes that user overheld for
+	
+	private ArrayList<OptionButton> optBTN; //All the option buttons will be on the screen here
 	
 	private ColoredRectangle pauseRect; //This rectangle will represent the rectangle spawned in when the escape button is pressed
 	private Gear escapeGear; //The gear the user can press to open the escape menu will be stored here
@@ -83,6 +97,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
     
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
+    
+    private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
@@ -91,19 +107,42 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	//Steven
 	private Timing timing;
 	private TextArea visual;
-	private Accuracy accuracy;
-	private int totalAcc;
-	private Combo combo;
+	private Accuracy accDisplay;
+	private float[] totalAcc;
+	private float accuracy;
+	private CustomText combo;
+	private CustomText ctext;
+	private int comboCount;
+	private ArrayList<Timing2> timings;
+
 	//Steven
+	//tyler
+	private Scoring gamescore;
+	private float score =0;
+	private CustomText displayScore;
+	//tyler
 	
+	/**
+	 * Constructor creates a screen in which the player can start playing the game for the selected song
+	 * @param width - Width of the screen
+	 * @param height - Height of the screen
+	 * @param song - The song to be played
+	 * 
+	 * @author Justin Yau
+	 * @author Steven Li
+	 * @author Tyler Ovenden
+	 */
 	public GameScreen(int width, int height, Song song) {
 		super(width, height);
 		
 		setFixedSize(false);
+		setPreferredSize(new Dimension(width, height));
 		
 		game = this;
+		player = new PlaySong();
 		
 		//Retrieve metadata and beats from the song
+		mainSong = song;
 		title = song.getTitle();
 		BPM = song.getBPM();
 		artist = song.getArtist();
@@ -112,7 +151,54 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		
 		setUpBindings();
 		
-		totalAcc=100;
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+			totalAcc[i]=-1;
+		}
+		
+		accuracy=100;
+		
+		gameRunning = false;
+		start();
+	}
+	
+	/**
+	 * Constructor creates a screen in which the player can start playing the game for the selected song with a background
+	 * @param width - Width of the screen
+	 * @param height - Height of the screen
+	 * @param song - The song to be played
+	 * @param backPath - The background image's path for the song
+	 * 
+	 * @author Justin Yau
+	 * @author Steven Li
+	 * @author Tyler Ovenden
+	 */
+	public GameScreen(int width, int height, Song song, String backPath) {
+		super(width, height);
+		
+		setFixedSize(false);
+		setPreferredSize(new Dimension(width, height));
+		
+		game = this;
+		backgroundPath = backPath;
+		player = new PlaySong();
+		
+		//Retrieve metadata and beats from the song
+		mainSong = song;
+		title = song.getTitle();
+		BPM = song.getBPM();
+		artist = song.getArtist();
+		offSet = song.getOffSet();
+		beats = song.getBeats();
+		
+		setUpBindings();
+		
+		totalAcc=new float[beats.size()];
+		for(int i=0;i<totalAcc.length;i++) {
+			totalAcc[i]=-1;
+		}
+		
+		accuracy=100;
 		
 		gameRunning = false;
 		start();
@@ -123,7 +209,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public synchronized void start() {
+	public void start() {
 		if(gameRunning) { return; }
 		gameThread = new Thread(this);
 		gameRunning = true;
@@ -135,10 +221,61 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public synchronized void stop() {
+	public void stop() {
 		if(!gameRunning) { return; } 
 		gameRunning = false;
 		playing = false;
+		player.stopSong();
+		resumeGame();
+		cancelAllFalls();
+	}
+	
+	/**
+	 * This method goes through each stroke and cancels their fall
+	 * 
+	 * @author Justin Yau
+	 */
+	public void cancelAllFalls() {
+		for(Visible str: strokes) {
+			if(str instanceof Keystroke) {
+				((Keystroke)str).cancelFall();
+			}
+			else if(str instanceof Holdstroke) {
+				((Holdstroke)str).cancelFall();
+			}
+		}
+		for(Holdstroke str1: holds) {
+			str1.cancelFall();
+		}
+		for(Holdstroke str2: tooLongHolds) {
+			str2.cancelFall();
+		}
+	}
+	
+	/**
+	 * This method overrides the default adapter to resize clickable components 
+	 * @return The New Component Adapter to suit our needs
+	 * 
+	 * @author Justin Yau
+	 */
+	public ComponentAdapter getComponentAdapter() {
+		return new ComponentAdapter() {
+			
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				Component c = (Component)arg0.getSource();
+				int height = c.getHeight();
+				int width = c.getWidth();
+				setXScale(((double) width)/getOWidth());
+				setYScale(((double) height)/getOHeight());
+				escapeGear.setY((int) (escapeGear.getOY() - (6 * getYScale())));
+				escapeGear.updateScales(getXScale(), getYScale());
+				for(OptionButton btn: optBTN) {
+					btn.updateScales(getXScale(), getYScale());
+				}
+			}
+			
+		};
 	}
 	
 	/**
@@ -147,8 +284,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void setUpBindings() {
-		bindings = new String[4];
-		updateKeyStrokes("D", "F", "J", "K");
+		bindings = MainGUI.bindings;
+		//updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -269,13 +406,13 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			for(Visible stroke: strokes) {
 				if(stroke instanceof Keystroke) {
 					Keystroke str = ((Keystroke)stroke);
-					if(str.getColumnLane() == lane && str.getStartingTime() == startingTime) {
+					if(str.getColumnLane() == lane && (str.getStartingTime() - startingTime) < 10) {
 						return stroke;
 					}
 				}
 				if(stroke instanceof Holdstroke) {
 					Holdstroke str = ((Holdstroke)stroke);
-					if(str.getColumnLane() == lane && str.getStartingTime() == startingTime) {
+					if(str.getColumnLane() == lane && (str.getStartingTime() - startingTime) < 10) {
 						return stroke;
 					}
 				}
@@ -325,10 +462,10 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	public int getFirstStrokeStartingTime() {
 		if(strokes.size() > 0) {
 			Visible firstStroke = strokes.get(0);
-			if(strokes.get(0) instanceof Keystroke) {
+			if(firstStroke instanceof Keystroke) {
 				return ((Keystroke)firstStroke).getStartingTime(); 
 			}
-			if(strokes.get(0) instanceof Holdstroke) {
+			if(firstStroke instanceof Holdstroke) {
 				return ((Holdstroke)firstStroke).getStartingTime();
 			}
 		}
@@ -370,6 +507,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		addColumnLanes(viewObjects);
 		addKeystrokeIndicator(viewObjects);
 		setUpGearButton(viewObjects);
+		spawnOptionButtons();
+		spawnRobot();
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -388,18 +527,73 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		timing=new Timing(175,300, 128, 128);
 		viewObjects.add(timing);
 		timing.update();
-		accuracy=new Accuracy(600,30,400,400);
-		viewObjects.add(accuracy);
-		accuracy.update();
-		combo=new Combo(275,300, 128, 128);
+		/*accDisplay=new Accuracy(600,30,400,400);
+		viewObjects.add(accDisplay);
+		accDisplay.update();
+		*/
+		combo=new CustomText(215,100, 50, 50,"0");
 		viewObjects.add(combo);
-		combo.update();
+
+		ctext=new CustomText(550,450,200,200,"100%");
+		viewObjects.add(ctext);
+		gamescore = new Scoring(500,40,400,400);
+		viewObjects.add(gamescore);
+
+		displayScore = new CustomText(550,400,200,200,"0000000");
+		viewObjects.add(displayScore);
+		gamescore.update();  
 		
 		
 	}
 	
+	/**
+	 * This method spawns the animated robot that'll attack according to the keys
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnRobot() {
+		//FightPaneG robot = new FightPaneG(, 600, 200);
+		//addObject(robot);
+	}
+	
+	/**
+	 * This method adds the background if there was one specified in the constructor
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addBackground() {
+		if(backgroundPath != null && backgroundPath != "") {
+			Graphic g = new Graphic(0,0, determineScale(backgroundPath), backgroundPath);
+			addObject(g);
+			moveToBack(g);
+		}
+	}
+	
+	/**
+	 * Determines the appropriate scale for the background image such that it fits entirely on the screen
+	 * @param path - Path of the background file
+	 * @return - The appropriate scale to apply to the image to make it fit the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public double determineScale(String path) {
+		double scale = 1;
+		try {
+			BufferedImage img = ImageIO.read(new File(backgroundPath));
+			scale = ((double)getWidth())/img.getWidth();
+		} catch (IOException e) {
+		}
+		return scale;
+	}
+	
+	/**
+	 * This method adds the gear button to the screen
+	 * @param viewObjects - the list of objects that will be visible by the display
+	 * 
+	 * @author Justin Yau
+	 */
 	public void setUpGearButton(List<Visible> viewObjects) {
-		escapeGear = new Gear(5, 25, 50, 50);
+		escapeGear = new Gear(2, 25, 50, 50);
 		viewObjects.add(escapeGear);
 	}
 
@@ -410,6 +604,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
+	
 	public void addKeystrokeIndicator(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
@@ -489,13 +684,13 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			Keystroke cStroke = strokes.get(0);
 			removeStroke(cStroke);
 			cStroke.cancelFall();
-
 		}
  		
  	}
  	*/
 	
-	private void displayAcc(Keystroke stroke) {
+
+	/*private void displayAcc(Keystroke stroke) {
 		//System.out.println(timePass());
 		//System.out.println(stroke.getClickTime());
 		//System.out.println(Math.abs(timePass()-stroke.getClickTime()));
@@ -535,16 +730,68 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			calcAcc(0);
 			return ;
 		}
+	}*/
+	public void calcScore(double timing) {
+		if(timing==1) {
+			score+=1000000/beats.size()*1;
+		}
+		if(timing==.95) {
+			score+=1000000/beats.size()*.95;
+		}
+		if(timing==.66) {
+			score+=1000000/beats.size()*.66;
+		}
+		if(timing==.5) {
+			score+=1000000/beats.size()*.5;
+		}
+		if(timing==.33) {
+			score+=1000000/beats.size()*.33;
+		}
+		if(timing==0) {
+			score+=0;
+		}
+		int tScore = (int)Math.round(score);
+		String display = String.valueOf(tScore);
+		displayScore.setText(display);
+	} 
+
+	public void calcAcc(double timing) {
+		int totalHit=0;
+		for(int i=0;i<totalAcc.length;i++) {
+			if(totalAcc[i]==-1) {
+				totalAcc[i]=(float) timing;
+				break;
+			}
+		}
+		double acc=0;
+		for(double a:totalAcc) {
+			if(a!=-1) {
+				totalHit++;
+				acc+=a;
+			}
+		}
+		
+		acc=acc/totalHit;
+		accuracy=((float)Math.round(acc*10000)/100);
+		//System.out.println(accuracy);
+		int temp=(int) (accuracy*100);
+		String set=accuracy+"%";
+		if(temp%10==0) {
+			set=accuracy+"0%";
+		}
+		if(temp<1000) {
+			set="0"+set;
+		}
+		ctext.setText(set);
 	}
 	
-	public void calcAcc(double timing) {
-		int amtOfNotes=0;
-		for(int i=0;i<beats.size();i++) {
-			amtOfNotes+=beats.get(i).length;
+	public void calcCombo(boolean isMiss) {
+		if(isMiss) {
+			comboCount=0;
+		}else {
+			comboCount++;
 		}
-		double indAcc=100/amtOfNotes;
-		totalAcc-=(indAcc*(1-timing));
-		accuracy.setAcc(totalAcc);
+		combo.setText(comboCount+"");
 	}
 
 	/**
@@ -572,11 +819,21 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		startTime = (System.nanoTime());
 		playing = true;
 		pause = false;
+		addBackground();
+		initializeStrokeArrayList();
+		calculateAndSetFallTimeFromBeats();
+		playMap();
+	}
+	
+	/**
+	 * This method resets/initializes the arraylists
+	 * 
+	 * @author Justin Yau
+	 */
+	public void initializeStrokeArrayList() {
 		strokes = new ArrayList<Visible>(0);
 		holds = new ArrayList<Holdstroke>(0);
 		tooLongHolds = new ArrayList<Holdstroke>(0);
-		calculateAndSetFallTimeFromBeats();
-		playMap();
 	}
 	
 	/**
@@ -586,7 +843,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public static long timePass() {
+	public long timePass() {
 		return ((System.nanoTime() - startTime))/1000000;
 	}
 	
@@ -596,7 +853,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public static void recalculateStartTime(long ellapsedTime) {
+	public void recalculateStartTime(long ellapsedTime) {
 		long timeEllapsedNano = ellapsedTime * 1000000;
 		startTime = System.nanoTime() - timeEllapsedNano;
 	}
@@ -640,11 +897,15 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 */
 	public void pauseGame() {
 		pause = true;
-		ColoredRectangle rect = new ColoredRectangle(0,0, getWidth(), getHeight(), ((float)0.3), Color.GRAY);
+		player.pauseSong();
+		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
 		if(escapeGear != null) {
 			remove(escapeGear);
+		}
+		for(OptionButton btn: optBTN) {
+			addObject(btn);
 		}
 	}
 	
@@ -655,12 +916,55 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 */
 	public void resumeGame() {
 		pause = false;
+		player.resumeSong();
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
 		}
 		if(escapeGear != null) {
 			addObject(escapeGear);
+		}
+		for(OptionButton btn: optBTN) {
+			remove(btn);
+		}
+	}
+	
+	/**
+	 * This method creates the 3 option buttons that will appear when the game is escaped or paused
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnOptionButtons() {
+		optBTN = new ArrayList<OptionButton>();
+		String[] btnTypes = {"Continue", "Options", "Exit"};
+		Action[] act = {new Action() {
+			
+			@Override
+			public void act() {
+				//Continue Action Button will be here
+				resumeGame();
+			}
+		}, new Action() {
+			
+			@Override
+			public void act() {
+				//Options Action Button will be here
+				System.out.println("Options");
+			}
+		}, new Action() {
+			
+			@Override
+			public void act() {
+				//Exit Action Button will be here
+				stop();
+				//Switch to a different screen below
+				MainGUI.test.setScreen(MainGUI.test.mainMenu);
+			}
+		}};
+		for(int i = 0; i < btnTypes.length; i++) {
+			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i]);
+			bt.setAction(act[i]);
+			optBTN.add(bt);
 		}
 	}
 	
@@ -733,8 +1037,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void calculateAndSetFallTimeFromBeats() {
-		if(BPM == 0 || BPM <= 45) {
-			fallTime = 10;
+		if(BPM == 0 || BPM <= 100) {
+			fallTime = 5;
 		}
 		else {
 			fallTime = (int) (((float)1/BPM) * 800);
@@ -756,10 +1060,8 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			
 			@Override
 			public void run() {
-				
-				while(strokes.contains(s)) {
-					s.keystrokeFall();
-				}
+
+				s.keystrokeFall();
 					
 			}
 			
@@ -783,14 +1085,58 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			@Override
 			public void run() {
 				
-				while(strokes.contains(s)) {
-					s.holdstrokeFall();
-				}
-					
+				s.holdstrokeFall();
+				
 			}
 			
 		});
 		tr.start();
+	}
+	
+	/**
+	 * This method will start playing the song of the map
+	 * 
+	 * @author Justin Yau
+	 */
+	public void playSong() {
+
+		String fileName = title + artist;
+		Thread play = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
+			}
+			
+		});
+		play.start();
+		
+	}
+	
+	/**
+	 * This method spawns the next beat in the list
+	 * 
+	 * @author Justin Yau
+	 */
+	public void spawnBeat() {
+		int[] beat = beats.remove(0);
+		int lane = beat[0] - 1;
+		if(beat[2] != 0) {
+			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
+			if(height >= columnHeight - 20) {
+				height = columnHeight - 20;
+			}
+			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
+					"resources/arrows/"+ arrowPaths[lane] + "h.png");
+			str.updateFallSpeed(fallTime);
+			handleHoldstroke(str);
+		}
+		else {
+			Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png");
+			str.updateFallSpeed(fallTime);
+			handleKeystroke(str);
+		}
+		//strokes.add(str);
 	}
 	
 	/**
@@ -799,6 +1145,7 @@ public class GameScreen extends ClickableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void playMap() {
+		playSong();
 		while(playing) {
 			if(pause) {
 				handlePause();
@@ -806,28 +1153,12 @@ public class GameScreen extends ClickableScreen implements Runnable {
 			if(beats.size() == 0) {
 				playing = false;
 			}
-			else if(timePass() >= beats.get(0)[1]) {
-				int[] beat = beats.remove(0);
-				int lane = beat[0] - 1;
-				if(beat[2] != 0) {
-					int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-					if(height >= columnHeight - 20) {
-						height = columnHeight - 20;
-					}
-					Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
-							"resources/arrows/"+ arrowPaths[lane] + "h.png");
-					str.updateFallSpeed(fallTime);
-					handleHoldstroke(str);
-				}
-				else {
-					Keystroke str = new Keystroke(arrowX[lane], columnY, beat[1], "resources/arrows/" + arrowPaths[lane] + ".png");
-					str.updateFallSpeed(fallTime);
-					handleKeystroke(str);
-				}
-				//strokes.add(str);
+			else if(timePass() >= beats.get(0)[1] && !pause) {
+				spawnBeat();
 			}
 		}
-		return;
+		player.stopSong();
+		mainSong.addScoreAndAccuracy((int) score, accuracy);
 	}
 
 	public Timing getTiming() {
@@ -835,8 +1166,25 @@ public class GameScreen extends ClickableScreen implements Runnable {
 		return timing;
 	}
 
-	public Combo getCombo() {
+	public int getCombo() {
 		// TODO Auto-generated method stub
-		return combo;
+		return comboCount;
 	}
+
+	public ArrayList<Timing2> getTimings() {
+		// TODO Auto-generated method stub
+		return timings;
+	}
+	
+	public void addTimings() {
+		for(int i=0;i<getObjects().size();i++) {
+			if(getObjects().get(i) instanceof Timing2) {
+				getObjects().remove(i);
+			}
+		}
+		for(int i=0;i<timings.size();i++) {
+			addObject(timings.get(i));
+		}
+	}
+	
 }

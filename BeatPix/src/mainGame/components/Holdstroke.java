@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import gui.components.AnimatedComponent;
 import mainGame.components.interfaces.HoldstrokeInterface;
+import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
 
 /**
@@ -14,7 +15,7 @@ import mainGame.screens.GameScreen;
  * @author Justin Yau
  *
  */
-public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface {
+public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface, Stroke {
 	
 	private int fallSpeed; //The speed at which you would like the stroke to fall at
 	private int holdTime; //The time the user has to hold down a particular key for this stroke
@@ -91,12 +92,21 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
-	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
-	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * This method calculates the time, in ms, the first stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the first stroke should've been pressed since the game started 
 	 * @author Justin Yau
 	 */
-	public int getClickTime() {
-		return startingTime + (GameScreen.columnY * fallSpeed);
+	public int getFirstClickTime() {
+		return startingTime + (GameScreen.columnHeight * fallSpeed);
+	}
+	
+	/**
+	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getEndClickTime() {
+		return startingTime + ((GameScreen.columnHeight + height - GameScreen.distanceAAfterGoal) * fallSpeed);
 	}
 	
 	/**
@@ -126,8 +136,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public void cancelFall() {
-		this.cancel = true;
-		update();
+		cancel = true;
 	}
 	
 	/**
@@ -187,31 +196,53 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			topHeight = getY() + prevHeight;
 		}
 		int bottomHeightFromStart = topHeight - GameScreen.columnY;
-		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + GameScreen.distanceAAfterGoal - topHeight;
+		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + 64 + GameScreen.distanceAAfterGoal - topHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
 		else if(height - 64 >= bottomHeightFromStart && !switchEnd) {
-			if(height > GameScreen.columnHeight) {
-				tooBig = true;
-				return 64 + prevHeight++;
-			}
-			if(switchEnd) {
-				return height;
-			}
-			return bottomHeightFromStart + 64;
+			return determineBeginningHeight(bottomHeightFromStart);
 		}
 		//Above works
 		else if(height >= bottomHeightFromBottom) {
-			if(bottomHeightFromBottom <= (GameScreen.distanceAAfterGoal) ) {
-				handleRemove();
-				return 1;
-			}
-			return bottomHeightFromBottom;
+			return determineEndHeight(bottomHeightFromBottom);
 		}
 		return height;
 	}
 
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromStart - The calculated height from the start point of the stroke
+	 * @return - The height the stroke should be rendered at 
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineBeginningHeight(int bottomHeightFromStart) {
+		if(height > GameScreen.columnHeight) {
+			tooBig = true;
+			return 64 + prevHeight++;
+		}
+		if(switchEnd) {
+			return height;
+		}
+		return bottomHeightFromStart + 64;
+	}
+	
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromBottom - The calculated height from the end point of the stroke
+	 * @return - The height the stroke should be rendered at
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineEndHeight(int bottomHeightFromBottom) {
+		if(bottomHeightFromBottom <= -1 * GameScreen.distanceAAfterGoal ) {
+			handleRemove();
+			return 1;
+		}
+		return bottomHeightFromBottom - 64 - GameScreen.distanceAAfterGoal;
+	}
+	
 	/**
 	 * This method handles the self removal of the stroke if needed
 	 * 
@@ -220,9 +251,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public void handleRemove() {
 		GameScreen.game.removeHoldStroke(this);
 		//Place Scoring Here
-		GameScreen.game.getTiming().changeImg("resources/miss.png");
-		GameScreen.game.getCombo().set();
-		GameScreen.game.calcAcc(0);
+		GameScreen.game.getTiming().missAccuracy();
 		//Place Scoring Here
 		cancel = true;
 	}
@@ -262,8 +291,13 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public void resizeFramesEnd(int height) {
+		boolean vanish = false;
 		if(height == this.height) {
 			return;
+		}
+		if(height <= 0) {
+			height = 1;
+			vanish = true;
 		}
 		for(int i = 0; i < frames.size(); i++) {
 			BufferedImage fram = frames.get(i);
@@ -271,7 +305,9 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			BufferedImage dest = fram.getSubimage(0, 0, width, height);
 			BufferedImage nImg = new BufferedImage(width, this.height, dest.getType());
 			Graphics2D g2d = nImg.createGraphics();
-			g2d.drawImage(dest, 0, 0, null);
+			if(!vanish) {
+				g2d.drawImage(dest, 0, 0, null);
+			}
 			g2d.dispose();
 			frameSet(i, nImg);
 		}
@@ -343,7 +379,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 				sleep(0);
 			}
 			moveOneDown();
-			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + 64 + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
+			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
 				handleRemove();
 			}
 			sleep(fallSpeed);
@@ -360,7 +396,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public boolean isBeyondGoal(int goal) {
-		return getY() + height > goal;
+		return (getY() + height - 64) > goal;
 	}
 
 	/**

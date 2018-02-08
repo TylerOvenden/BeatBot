@@ -10,9 +10,12 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import mainGame.components.interfaces.JustinPlaySongInterface;
+import mainGame.screens.GameScreen;
  
 
-public class PlaySong {
+public class PlaySong implements JustinPlaySongInterface {
  
     // size of the byte buffer used to read/write the audio stream
     private static final int BUFFER_SIZE = 4000;
@@ -20,8 +23,9 @@ public class PlaySong {
     /**
      * Play a given audio file.
      * @param audioFilePath Path of the audio file.
+     * Tyler
      */
-    void play(String audioFilePath) {
+    public void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -36,12 +40,12 @@ public class PlaySong {
  
             audioLine.start();
              
-            System.out.println("Playback started.");
+           // System.out.println("Playback started.");
              
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
             try {
-				Thread.sleep(3000);
+				Thread.sleep(GameScreen.game.calculateTotalFallTime());
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -54,7 +58,7 @@ public class PlaySong {
             audioLine.close();
             audioStream.close();
              
-            System.out.println("Playback completed.");
+           // System.out.println("Playback completed.");
              
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
@@ -69,9 +73,27 @@ public class PlaySong {
     }
      
     public static void main(String[] args) {
-        String audioFilePath = "resources/audio.wav";
+        String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
+
+	@Override
+	public void pauseSong() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resumeSong() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stopSong() {
+		// TODO Auto-generated method stub
+		
+	}
  
 }

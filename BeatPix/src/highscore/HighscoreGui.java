@@ -24,7 +24,7 @@ public class HighscoreGui extends GUIApplication{
 
 	@Override
 	public void initScreen() {
-		highscore = new HighscoreScreen(getWidth(), getHeight());
+		highscore = new HighscoreScreen(getWidth(), getHeight(),true,1000000,99.99,null);
 		setScreen(highscore);
 		
 	}

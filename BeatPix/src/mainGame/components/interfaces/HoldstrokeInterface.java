@@ -141,11 +141,18 @@ public interface HoldstrokeInterface {
 	public int getStartingTime();
 	
 	/**
-	 * This method calculates the time, in ms, the stroke should've been pressed since the game started 
-	 * @return Returns the time, in ms, the stroke should've been pressed since the game started 
+	 * This method calculates the time, in ms, the first stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the first stroke should've been pressed since the game started 
 	 * @author Justin Yau
 	 */
-	public int getClickTime();
+	public int getFirstClickTime();
+	
+	/**
+	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
+	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
+	 * @author Justin Yau
+	 */
+	public int getEndClickTime();
 	
 	/**
 	 * This method sets whether or not the stroke is being held or not
@@ -155,5 +162,23 @@ public interface HoldstrokeInterface {
 	 * @author Justin Yau
 	 */
 	public void setHeld(boolean h);
+	
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromStart - The calculated height from the start point of the stroke
+	 * @return - The height the stroke should be rendered at 
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineBeginningHeight(int bottomHeightFromStart);
+	
+	/**
+	 * This method determines the height based on the current circumstances
+	 * @param bottomHeightFromBottom - The calculated height from the end point of the stroke
+	 * @return - The height the stroke should be rendered at
+	 * 
+	 * @author Justin Yau
+	 */
+	public int determineEndHeight(int bottomHeightFromBottom);
 	
 }

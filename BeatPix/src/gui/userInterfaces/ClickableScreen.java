@@ -67,7 +67,9 @@ public abstract class ClickableScreen extends Screen implements MouseListener, M
 		}
 	}
 
-
+	public ArrayList<Clickable> getObjects() {
+		return clickables;
+	}
 
 	public void remove(Visible v){
 		super.remove(v);

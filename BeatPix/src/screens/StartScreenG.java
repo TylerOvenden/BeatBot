@@ -13,6 +13,7 @@ import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
 import mainGame.MainGUI;
+import mainGame.MainGUI;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
@@ -65,14 +66,14 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-/**/		background = updateBackground("resources\\backgrounds\\start.jpg");
-/**/		title = updateTitle("resources\\title.png");
-/**/		start = updateStart("resources\\ui\\buttons\\startbutton.png");
+		background = updateBackground("resources\\backgrounds\\start.jpg");
+		title = updateTitle("resources\\title.png");
+		start = updateStart("resources\\ui\\buttons\\startbutton.png");
 		
 		title.setAlpha(0.0f);
 		start.setAlpha(0.0f);
 		
-		scrollIn();
+		//scrollIn();
 		
 		viewObjects.add(background);
 		viewObjects.add(title);
@@ -85,12 +86,12 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		w = getWidth()/5;
 		h = getHeight()/5;
 		x = (getWidth()/2) - w/2;
-		y = (getHeight()/2) - h/2 + 100; //will have to modify 100 in order to scale
+		y = (getHeight()/2) - h/2 + getHeight()*100/540;
 		
 		return new Graphic(x,y,w,h,path);
 	}
 	
-//--Title (BEATBOT)--//
+//--TITLE (BEATBOT)--//
 	private Graphic updateTitle(String path) {
 		ImageIcon icon = new ImageIcon(path);
 		int w; int h; int x; int y;
@@ -101,7 +102,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		return new Graphic(x,y,w,h,path);
 	}
 	
-//--Background (background)--//
+//--BACKGROUND (background)--//
 	private Graphic updateBackground(String path) {
 		ImageIcon icon = new ImageIcon(path);
 		int w; int h; // 0 for either will use original image size/width
@@ -110,11 +111,12 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			x = background.getX(); y = background.getY();
 		}
 		w = getWidth();
-/*needs fixing*/h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
+		//GUIApp scales the height last *needs fixing as other images don't work with it
+		h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
 		return new Graphic(x,y,w,h,path);
 	}
 	
-	//--Events--//
+//--EVENTS--//
 	public void scrollIn() {
 		
 		background.setX(0); background.setY(0);
@@ -128,7 +130,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					scrollInEnd();
 				}
 			}
-		}, 0, 10); //100fps
+		}, 0, 2); //set FPS
 	}
 	public void scrollInEnd() {
 		time.cancel();
@@ -157,7 +159,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					fadeInsEnd();
 				}
 			}
-		}, 0, 10); //100fps
+		}, 0, 4); //set FPS
 	}
 	public void fadeInsEnd() {
 		time.cancel();
@@ -181,7 +183,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					title.setAlpha(title.getAlpha() - 0.01f);
 				}
 			}
-		}, 0, 10); //100fps
+		}, 0, 4); //set FPS
 	}
 	public void fadeOutsEnd() {
 		time.cancel();
@@ -197,23 +199,24 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
-				if(background.getY() > -background.getHeight() + getHeight()) {
+				if(background.getY() > -background.getHeight() + getHeight()*2) {
 					background.setY(background.getY() - 1);
 				}else {
 					scrollOutEnd();
-/**/					//Test.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
-					//this.cancel();
 				}
 			}
-		}, 0, 10); //100fps
+		}, 0, 2); //100fps
 	}
 	public void scrollOutEnd() {
 		screenPhase = 4;
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight());
-		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+//		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
+		background.setY(-background.getHeight() + getHeight()*2);
+		System.out.println(MainGUI.test.x+"s END START");
+
+						
+/*Screen switch*/		MainGUI.test.setScreen(MainGUI.test.mainMenu);
+						MainGUI.mainMenu.scrollDown();
 	}
-	
-	
-	//--Create setDimensions method which will resize/redraw the images based off window size changes--//
 }
