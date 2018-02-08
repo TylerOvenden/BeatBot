@@ -1057,11 +1057,33 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	/**
+	 * This method will start playing the song of the map
+	 * 
+	 * @author Justin Yau
+	 */
+	public void playSong() {
+		
+		PlaySong player = new PlaySong();
+		String fileName = title + artist;
+		Thread play = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
+			}
+			
+		});
+		play.start();
+		
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
 	 */
 	public void playMap() {
+		playSong();
 		while(playing) {
 			if(pause) {
 				handlePause();

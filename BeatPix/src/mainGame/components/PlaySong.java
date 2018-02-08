@@ -10,6 +10,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import mainGame.screens.GameScreen;
  
 
 public class PlaySong {
@@ -22,7 +24,7 @@ public class PlaySong {
      * @param audioFilePath Path of the audio file.
      * Tyler
      */
-    void play(String audioFilePath) {
+    public void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -42,7 +44,7 @@ public class PlaySong {
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
             try {
-				Thread.sleep(3000);
+				Thread.sleep(GameScreen.game.calculateTotalFallTime());
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,7 +72,7 @@ public class PlaySong {
     }
      
     public static void main(String[] args) {
-        String audioFilePath = "resources/audio.wav";
+        String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
