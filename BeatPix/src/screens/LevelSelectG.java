@@ -39,7 +39,7 @@ public class LevelSelectG extends FullFunctionScreen{
 		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
 		buttons = new ArrayList<ImageButton>();
 		for(int i=0; i<ShopScreen.getSongs().size(); i++) {
-/*P D*/		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
+/*P D*/ 		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
 			//ShopScreen.getSongs();
 			buttons.get(i).setAction(new Action() {
 				public void act(){
