@@ -113,6 +113,12 @@ public class OptionsContainer{
 				parentScreen.remove(background);
 				parentScreen.remove(back);
 				parentScreen.remove(backText);
+				for(int i = 0; i<4; i++) {
+					parentScreen.remove(hiddenKeyButtons.get(i));
+					parentScreen.remove(keyBackground.get(i));
+					parentScreen.remove(keySelect.get(i));
+				}
+				parentScreen.remove(toggleVolume);
 				
 				parentScreen.toggleButtons(true);
 				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

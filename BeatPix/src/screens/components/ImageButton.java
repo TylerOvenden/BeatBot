@@ -40,6 +40,7 @@ public class ImageButton extends Graphic implements Clickable{
 	private boolean loadedImages;
 	
 	private int idxArray;
+	private boolean on;
 	
 	public ImageButton(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
@@ -62,27 +63,11 @@ public class ImageButton extends Graphic implements Clickable{
 		return idxArray;
 	}
 	
-	public void loadImages(String imageLocation, double scale) {
-		try{
-			//get the full-size image
-			ImageIcon icon = new ImageIcon(imageLocation);
-	
-			int newWidth = (int) (icon.getIconWidth() * scale);
-			int newHeight = (int) (icon.getIconHeight() * scale);
-			
-			image = new BufferedImage(icon.getIconWidth(),icon.getIconHeight(),BufferedImage.TYPE_INT_ARGB);
-			Graphics2D g = image.createGraphics();
-			g.drawImage(icon.getImage(), 0, 0, null);
-			
-			AffineTransform scaleT = new AffineTransform();
-			scaleT.scale(scale, scale);
-			AffineTransformOp scaleOp = new AffineTransformOp(scaleT, AffineTransformOp.TYPE_BILINEAR);
-			image = scaleOp.filter(image,new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB));
-			
-			loadedImages = true;
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	public void setOn(boolean x) {
+		on = x;
+	}
+	public boolean getOn() {
+		return on;
 	}
 
 	public void act(){

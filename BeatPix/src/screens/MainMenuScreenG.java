@@ -214,14 +214,31 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
-					Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
+					
+					b.setOn(true);
+					if(buttons.get(b.getIdxArray()).getOn()) {
+						buttons.get(b.getIdxArray()).setHoverAction(new Action() {
+							
+							@Override
+							public void act() {
+								System.out.println("Good");
+							}
+						});
+					}
+					
+					/*Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
+					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
 					int tempx = b.getIdxArray();
+
+					System.out.println(tempx);
 					buttons.set(tempx, new ImageButton(getWidth()*480/960,getHeight()*100/540*(tempx+1),getWidth()*399/960,getHeight()*100/540,"resources\\ui\\buttons\\buttongeneral.png"));
 					buttons.get(tempx).setIdxArray(tempx);
+					
 					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
-					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
-					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));
+					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));*/
+					System.out.println("hover");
 					setButtonsHoverAction();
+					setButtonsActions();
 				}
 			});
 			buttons.get(i).setUnhoverAction(new Action() {
@@ -230,14 +247,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-					Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
-					int tempx = b.getIdxArray();
-					buttons.set(tempx, new ImageButton(getWidth()*480/960,getHeight()*100/540*(tempx+1),getWidth()*399/960,getHeight()*100/540,"resources\\bad.png"));
-					buttons.get(tempx).setIdxArray(tempx);
-					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
-					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
-					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));
-					setButtonsHoverAction();
+					System.out.println("unhover");
 				}
 			});
 			x++;
