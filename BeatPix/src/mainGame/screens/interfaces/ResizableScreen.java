@@ -28,6 +28,8 @@ public abstract class ResizableScreen extends ClickableScreen {
 	private double xScale; //The x scaling factor will be stored in this variable
 	private double yScale; //the y scaling factor will be stored in this variable
 	
+	private ComponentAdapter adapter; //The adapter of the screen will be stored here
+	
 	/**
 	 * Constructer creates a resizeable clickable screen with all the components scaling to how much the <br>
 	 * window was resized by. 
@@ -54,7 +56,16 @@ public abstract class ResizableScreen extends ClickableScreen {
 	 * @author Justin Yau
 	 */
 	public void setUpComponentListener() {
-		addComponentListener(getComponentAdapter());
+		adapter = getComponentAdapter();
+		addComponentListener(adapter);
+	}
+	
+	/**
+	 * This method will return the current adapter in the screen
+	 * @return - The current adapter in the screen
+	 */
+	public ComponentAdapter getCAdapter() {
+		return adapter;
 	}
 	
 	/**
