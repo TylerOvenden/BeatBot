@@ -29,6 +29,8 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private ArrayList <Button> confirmButton;
 	private ArrayList<Button> yesButton;
 	private ArrayList<Integer> indexList;
+	private String[] imageNames;
+	private ArrayList<ImageButton> images;
 	
 	private CustomRectangle border; //for the text
 	private CustomRectangle border2; //for the unlock
@@ -37,7 +39,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private Button noButton;
 	private int numChars;
 	private int index;
-	
+	public String imageName;
 	
 
 	public ShopScreenKevin(int width, int height) 
@@ -48,12 +50,20 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{	
+		//instantiate the variables
 		buttonList = new ArrayList<Button>();
 		yesButton = new ArrayList<Button>();
 		confirmButton = new ArrayList<Button>();
 		indexList = new ArrayList<Integer>();
+		images = new ArrayList<ImageButton>();
+		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
+		for(int i = 0; i < imageNames.length; i ++) {
+			images.add(new ImageButton(290, 180, 200, 300, imageNames[i], null, null));
+		}
 		//the ten should be number chars that the player should unlock
-		numChars = 4;
+		numChars = 3;
+		
+		
 		//create the back button
 		createIntList(numChars);
 		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
@@ -164,6 +174,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		for(int a = 0; a < numChars; a++) {
 			viewObjects.add(yesButton.get(a));
 			viewObjects.add(confirmButton.get(a));
+			viewObjects.add(images.get(a));
 		}
 		viewObjects.add(border2);
 		viewObjects.add(unlock);
@@ -220,19 +231,22 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		}
 	}
 	
-	 //turn all confirmButtons, visibility = false;
+	 //turn all confirmButtons with the images, visibility = false;
 	public void setAllConfButVisFalse() {
 		for(int i = 0; i < confirmButton.size(); i ++) {
 			confirmButton.get(i).setVisible(false);
+			images.get(i).setVisible(false);
 		}
 	}
-	//turn all  yes button visibility that are false except for de chosen one
+	//turn all  confirm button and respected image visibility that are false except for de chosen one
 	public void setConfButVisExceptThis(int i) {
 		for(int x = 0; x < confirmButton.size(); x++) {
 			if(x != i) {
 				confirmButton.get(x).setVisible(false);
+				images.get(x).setVisible(false);
 			}
 			confirmButton.get(i).setVisible(true);
+			images.get(i).setVisible(true);
 		}
 	}
 	
