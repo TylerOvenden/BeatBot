@@ -144,7 +144,7 @@ public class OptionsContainer{
 				
 			}
 		});
-		createSelectingKeyPopUp("I am a very long sentene that will be displayed appropriately");
+		createSelectingKeyPopUp("I am a very long sentecne that will be displayed appropriately");
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class OptionsContainer{
 				
 			}
 		}
-		parentScreen.addObject(new CustomText(330, 50, 300,  100, s, true ,true));
+		parentScreen.addObject(new CustomText(330, 50, 1000,  200, s, true ,false));
 		parentScreen.addObject(selectingKeyScreen);
 	}
 	/**

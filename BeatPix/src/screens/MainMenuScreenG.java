@@ -198,6 +198,24 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				//
 	}
 	
+	public void setButtonsHoverAction() {
+		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
+		for(int i = 0; i < 4; i++) {
+			buttons.get(i).setHoverAction(new Action() {
+				public void act() {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			buttons.get(i).setUnhoverAction(new Action() {
+				public void act() {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		}
+	}
+	
 	//--OPTIONS INTERFACE METHODS
 	public void toggleButtons(boolean b) {
 		for(int i=0; i<4; i++) {
