@@ -99,6 +99,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
     
+    private boolean exited; //This boolean will track whether or not the game was exited
     private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
@@ -141,6 +142,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		
 		game = this;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -183,6 +185,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		game = this;
 		backgroundPath = backPath;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -974,6 +977,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			public void act() {
 				//Exit Action Button will be here
 				stop();
+				exited = true;
 				//Switch to a different screen below
 				MainGUI.test.setScreen(MainGUI.test.mainMenu);
 			}
@@ -1184,7 +1188,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		player.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
-		MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+		if(!exited) {
+			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+		}
 	}
 
 	public Timing getTiming() {
