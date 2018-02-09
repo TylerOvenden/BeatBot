@@ -34,6 +34,7 @@ import gui.interfaces.Clickable;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import highscore.HighscoreScreen;
 import mainGame.MainGUI;
 import mainGame.actions.Escape;
 import mainGame.actions.Press;
@@ -41,6 +42,7 @@ import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 import screens.components.FightPaneG;
+
 
 /**
  * This screen is for the actual game play of the map for a song
@@ -65,6 +67,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private String artist; //Artist of the beatmap
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
+	private ArrayList<int[]> originalBeats; //All the original beats will be stored here
 	private Song mainSong; //The song of the game will be stored here
 	
 	private long startTime; //The starting time in ms
@@ -90,7 +93,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 15; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 12; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
@@ -99,6 +102,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
     
+    private boolean exited; //This boolean will track whether or not the game was exited
     private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
@@ -135,13 +139,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song) {
-		super(width, height);
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
 		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		startResize(width, height);
+		update();
 		
 		game = this;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -150,6 +155,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		originalBeats = beats;
 		
 		setUpBindings();
 		
@@ -176,14 +182,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song, String backPath) {
-		super(width, height);
-		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
+
+		startResize(width, height);
+		update();
 		
 		game = this;
 		backgroundPath = backPath;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -192,6 +199,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		originalBeats = beats;
 		
 		setUpBindings();
 		
@@ -206,6 +214,19 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		start();
 	}
 
+	/**
+	 * This method updates the scalings in case the screen was resized before the screen was made
+	 * 
+	 * @param width - The previous width of the screen before this screen
+	 * @param height - The previous height of the screen before this screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
+	}
+	
 	/**
 	 * This method creates a new thread and starts it
 	 * 
@@ -287,7 +308,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void setUpBindings() {
 		bindings = MainGUI.bindings;
-		//updateKeyStrokes("D", "F", "J", "K");
+		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -582,7 +603,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		double scale = 1;
 		try {
 			BufferedImage img = ImageIO.read(new File(backgroundPath));
-			scale = ((double)getWidth())/img.getWidth();
+			scale = ((double)MainGUI.screenWidth)/img.getWidth();
 		} catch (IOException e) {
 		}
 		return scale;
@@ -978,6 +999,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			public void act() {
 				//Exit Action Button will be here
 				stop();
+				exited = true;
 				//Switch to a different screen below
 				MainGUI.test.setScreen(MainGUI.test.mainMenu);
 			}
@@ -1152,8 +1174,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		int lane = beat[0] - 1;
 		if(beat[2] != 0) {
 			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-			if(height >= columnHeight - 20) {
-				height = columnHeight - 20;
+			if(height + 35 >= columnHeight) {
+				height = columnHeight - 60;
 			}
 			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 					"resources/arrows/"+ arrowPaths[lane] + "h.png");
@@ -1166,6 +1188,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			handleKeystroke(str);
 		}
 		//strokes.add(str);
+	}
+	
+	/**
+	 * This method handles the end of the game
+	 * 
+	 * @author Justin Yau
+	 * @author Steven Li
+	 */
+	public void handleEnd() {
+		player.stopSong();
+		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		mainSong.setBeats(originalBeats);
+		if(!exited) {
+			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+		}
 	}
 	
 	/**
@@ -1186,8 +1223,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				spawnBeat();
 			}
 		}
-		player.stopSong();
-		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		handleEnd();
 	}
 
 	public Timing getTiming() {

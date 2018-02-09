@@ -3,6 +3,7 @@ package screens;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -15,6 +16,7 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import highscore.TempSongSelect;
 import mainGame.MainGUI;
 import mainGame.MainGUI;
 import mainGame.components.Song;
@@ -78,8 +80,16 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			public void act(){
 
 				buttons.get(0).unhoverAction();
-				Song song = new Song("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.csv");
-/**/			MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(), song, "resources/sample_bg.gif"));
+				Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
+/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
+				
+				try {
+					MainGUI.test.setScreen(new TempSongSelect(getWidth(), getHeight()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 		});
 		

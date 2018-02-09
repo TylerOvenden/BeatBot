@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
@@ -16,7 +17,8 @@ import mainGame.screens.GameScreen;
  
 
 public class PlaySong implements JustinPlaySongInterface {
- 
+	
+	
     // size of the byte buffer used to read/write the audio stream
     private static final int BUFFER_SIZE = 4000;
      
@@ -25,6 +27,10 @@ public class PlaySong implements JustinPlaySongInterface {
      * @param audioFilePath Path of the audio file.
      * Tyler
      */
+    boolean paused;
+    Long audioPosition;
+    Clip clip;
+    
     public void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
         try {
@@ -71,7 +77,6 @@ public class PlaySong implements JustinPlaySongInterface {
             ex.printStackTrace();
         }      
     }
-     
     public static void main(String[] args) {
         String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
@@ -80,8 +85,7 @@ public class PlaySong implements JustinPlaySongInterface {
 
 	@Override
 	public void pauseSong() {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
@@ -92,8 +96,7 @@ public class PlaySong implements JustinPlaySongInterface {
 
 	@Override
 	public void stopSong() {
-		// TODO Auto-generated method stub
-		
+//		audioLine.stop();		
 	}
  
 }

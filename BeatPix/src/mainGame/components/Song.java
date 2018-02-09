@@ -47,6 +47,16 @@ public class Song implements SongInterface, Highscore {
 	}
 
 	/**
+	 * This method will update the specified beats 
+	 * @param b - The beats you want to replace the current beats with
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setBeats(ArrayList<int[]> b) {
+		beats = b;
+	}
+	
+	/**
 	 * This method will return the title of the beatmap.
 	 * If you have not loaded a file prior to running this command it will return blank fields.
 	 * 
