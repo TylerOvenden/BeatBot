@@ -41,6 +41,7 @@ public class FightPaneG extends FullFunctionPane{
 	private boolean animationRunning = false;
 	private boolean miss;
 	private int pastRand;
+	private boolean isPaused;
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
@@ -83,7 +84,7 @@ public class FightPaneG extends FullFunctionPane{
 		addKeyListener(this);
 		setFocusable(true);
 		
-		
+		setOpaque(false);
 		viewObjects.add(robotIdle);
 		viewObjects.add(robotHit1);
 		viewObjects.add(robotHit2);
@@ -96,7 +97,7 @@ public class FightPaneG extends FullFunctionPane{
 	public void keyPressed(KeyEvent e)
 	{	
 		miss = false;
-		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false)) {
+		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false) && (isPaused == false)) {
 			if(!miss) {
 				robotIdle.setVisible(false);
 				robotHit1.setVisible(false);
@@ -142,7 +143,23 @@ public class FightPaneG extends FullFunctionPane{
 				a.setRunning(false);
 				animationRunning = false;
 			}
-		}, s                );
+		}, s);
+	}
+	
+	public void pause() {
+		robotIdle.setVisible(true);
+		robotHit1.setVisible(false);
+		robotHit2.setVisible(false);
+		robotHit3.setVisible(false);
+		robotMiss.setVisible(false);
+		robotIdle.setRunning(false);
+		isPaused = true;
+	}
+	
+	public void resume()
+	{
+		isPaused = false;
+		robotIdle.setRunning(true);
 	}
 	
 }
