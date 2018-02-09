@@ -673,7 +673,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void addColumnLanes(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
-			ColumnLane lane = new ColumnLane(arrowX[i] - 3,columnY - 5, columnWidth, columnY + columnHeight + GameScreen.distanceAAfterGoal);
+			ColumnLane lane = new ColumnLane(arrowX[i] - 3,columnY - 10, columnWidth, columnY + columnHeight + GameScreen.distanceAAfterGoal);
 			lane.setAlpha((float)0.3);
 			viewObjects.add(lane);
 		}

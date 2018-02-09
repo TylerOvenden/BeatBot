@@ -101,6 +101,14 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public int getBottomPosition() {
+		return getY() + getHeight();
+	}
+	
+	/**
 	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
 	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
 	 * @author Justin Yau
@@ -379,7 +387,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 				sleep(0);
 			}
 			moveOneDown();
-			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
+			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY) && !currentBeingHeld) {
 				handleRemove();
 			}
 			sleep(fallSpeed);

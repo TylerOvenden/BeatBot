@@ -252,7 +252,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface, 
 	public void keystrokeFall() {
 		cancel = false;
 		pause = false;
-		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal)) && !cancel) {
+		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
 			while(pause) {
 				sleep(0);
 			}
@@ -301,6 +301,10 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface, 
 	 */
 	public int getEndClickTime() {
 		return 0;
+	}
+	
+	public int getBottomPosition() {
+		return getY();
 	}
 	
 }
