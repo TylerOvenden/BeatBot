@@ -97,7 +97,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getFirstClickTime() {
-		return startingTime + ((GameScreen.columnHeight) * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + 35) * fallSpeed);
 	}
 	
 	/**
@@ -396,7 +396,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public boolean isBeyondGoal(int goal) {
-		return (getY() + height - 35) > goal;
+		return (getY() + (height) - 35) > goal;
 	}
 
 	/**

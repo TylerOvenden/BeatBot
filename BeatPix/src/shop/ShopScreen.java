@@ -26,7 +26,7 @@ import mainGame.components.Song;
 import screens.Test;
 import screens.components.ImageButton;
 
-public class ShopScreen extends FullFunctionScreen
+public class ShopScreen extends FullFunctionScreen implements CreditChanger
 {
 
 	private static final long serialVersionUID = 1L;
@@ -43,6 +43,8 @@ public class ShopScreen extends FullFunctionScreen
 	private CustomText textLine2;
 	private CustomText noText;
 	private CustomText yesText;
+	private CustomText purchasedTextLine1;
+	private CustomText purchasedTextLine2;
 	
 	private static ArrayList<Song> songs;
 	private ArrayList<ImageButton> buttons;
@@ -81,6 +83,9 @@ public class ShopScreen extends FullFunctionScreen
 
 	private Graphic scrollBorder;
 
+	private Graphic textBorder;
+
+
 	
 	
 	public ShopScreen(int width, int height) 
@@ -96,7 +101,8 @@ public class ShopScreen extends FullFunctionScreen
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
 
-		credits = 3000;
+		changeCredits(getCredits()+1500);
+		credits = getCredits();
 		
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
@@ -119,31 +125,35 @@ public class ShopScreen extends FullFunctionScreen
 		viewObjects.add(songBanner);
 		
 		
-		String s = "Credits:"+credits; // add method "getCredits()" later
+		String s = "Credits:"+getCredits(); 
 		credit = new CustomText(110,58,200,200, s,true);
 		viewObjects.add(credit);
 		
 		
+		textLine1 = new CustomText(370,195,250,280, "Do you want to",true); 			
+		textLine2 = new CustomText(370,220,250,280,"buy this song?",true);
+		
+		purchasedTextLine1 = new CustomText(417,200,150,120, "Song",true);
+		purchasedTextLine2 = new CustomText(355,245,276,276, "Purchased",true);
+		
 		//scroll bar, contains the songs
 		scroll = new ScrollablePane(this, 110,195,220,260);		
-		
-		
+		textBorder = new Graphic(340,160,305,405,"resources//shop//TransparentButtonB.png");	
+		viewObjects.add(textBorder);
 		//when user clicks yes to buy song
-		yes = new ImageButton(360,235,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
-		yesText = new CustomText(390,238,60,60, "yes",false); 	
+		yes = new ImageButton(360,255,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
+		yesText = new CustomText(390,258,60,60, "yes",false); 	
 		
 		yes.setAction(new Action() 
 		{			
 			@Override
 			public void act() 
 			{
-				int x = (credits - 1500);
+				int x = (getCredits() - 1500);
 				if (x >= 0)
 				{	
 					new Thread()
 					{
-						CustomText purchasedTextLine1;
-						CustomText purchasedTextLine2;
 
 						public void run()
 						{
@@ -155,13 +165,12 @@ public class ShopScreen extends FullFunctionScreen
 								
 								setInvis(false);
 								
-								purchasedTextLine1 = new CustomText(350,90,300,430, "Song Purchased!",true);
-								purchasedTextLine2 = new CustomText(342,130,300,420, "Added to Library",true);
+								
 								viewObjects.add(purchasedTextLine1);
 								viewObjects.add(purchasedTextLine2);
 								
 								Thread.sleep(1000);
-								
+								textBorder.setVisible(false);
 								purchasedTextLine1.setVisible(false);
 								purchasedTextLine2.setVisible(false);
 								
@@ -187,15 +196,22 @@ public class ShopScreen extends FullFunctionScreen
 						{
 							try
 							{
-								CustomText warningLine1 = new CustomText(342,90,300,430, "You Do Not Have",true);
-								CustomText warningLine2 = new CustomText(342,130,300,420, "Enough Credits",true);
+								
+								CustomText warningLine1 = new CustomText(363,200,260,260, "Not Enough",true);
+								CustomText warningLine2 = new CustomText(372,240,246,246, "Credits",true);
 								
 								viewObjects.add(warningLine1);
 								viewObjects.add(warningLine2);
-								Thread.sleep(1000);
-								warningLine1.setVisible(false);		
-								warningLine2.setVisible(false);	
+								
 								setInvis(false);
+								
+								Thread.sleep(1000);
+								
+								textBorder.setVisible(false);
+								warningLine1.setVisible(false);		
+								warningLine2.setVisible(false);
+								
+								
 							}
 							catch (InterruptedException e) 
 							{
@@ -213,15 +229,18 @@ public class ShopScreen extends FullFunctionScreen
 		yes.setVisible(false);		
 		yesText.setVisible(false);
 		
-		textLine1 = new CustomText(370,175,250,280, "Do you want to",true); 			
-		textLine2 = new CustomText(370,200,250,280,"buy this song?",true);
+		
+		
+		
 		viewObjects.add(textLine1);
 		viewObjects.add(textLine2);
+		
+		textBorder.setVisible(false);
 		textLine1.setVisible(false);
 		textLine2.setVisible(false);
 		
-		no = new ImageButton(500,235,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
-		noText = new CustomText(540,238,50,40, "no",false);
+		no = new ImageButton(500,255,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
+		noText = new CustomText(540,258,50,40, "no",false);
 		no.setAction(new Action()
 		{
 			@Override
@@ -453,6 +472,7 @@ public class ShopScreen extends FullFunctionScreen
 	{			
 		if (b)
 		{
+			textBorder.setVisible(true);
 			noText.setVisible(true);
 			yesText.setVisible(true);
 			textLine1.setVisible(true);
@@ -462,6 +482,7 @@ public class ShopScreen extends FullFunctionScreen
 		}
 		else
 		{
+		//	textBorder.setVisible(true);
 			noText.setVisible(false);
 			yesText.setVisible(false);
 			textLine1.setVisible(false);
@@ -558,6 +579,8 @@ public class ShopScreen extends FullFunctionScreen
 	{
 		credits = c;
 	}
+
+
 }
 
 
