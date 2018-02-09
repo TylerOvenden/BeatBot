@@ -252,7 +252,7 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface, 
 	public void keystrokeFall() {
 		cancel = false;
 		pause = false;
-		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY)) && !cancel) {
+		while(!(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal)) && !cancel) {
 			while(pause) {
 				sleep(0);
 			}
@@ -303,6 +303,12 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface, 
 		return 0;
 	}
 	
+	/**
+	 * This method returns the bottom of the hold stroke
+	 * @return - The bottom position of the stroke
+	 * 
+	 * @author Justin Yau
+	 */
 	public int getBottomPosition() {
 		return getY();
 	}

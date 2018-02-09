@@ -63,92 +63,59 @@ public class Timing extends Component implements JustinTimingInterface {
 		checkAcc((Stroke) stroke,false);
 		
 	}
+	
+	/**
+	 * @author Justin Yau
+	 * @author Steven Li
+	 */
 	public void checkAcc(Stroke stroke, boolean start) {
-		int goal = GameScreen.columnHeight;
-		int difference = goal - stroke.getY();
-		if(start) {
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())< GameScreen.game.getFallTime() * 5) {
-				changeImg("resources/perfect.png");
-				update();
-				GameScreen.game.calcAcc(1);
-				GameScreen.game.calcScore(1);
-				GameScreen.game.calcCombo(false);
-				//GameScreen.game.getTimings().add(new Timing2(1,1,100,100,"resources/perfect.png"));
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 10) {
-				changeImg("resources/great.png");
-				update();
-				GameScreen.game.calcAcc(.95);
-				GameScreen.game.calcScore(.95);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 15) {
-				changeImg("resources/good.png");
-				update();
-				GameScreen.game.calcAcc(.66);
-				GameScreen.game.calcScore(.66);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 20) {
-				changeImg("resources/ok.png");
-				update();
-				GameScreen.game.calcAcc(.5);
-				GameScreen.game.calcScore(.5);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 27) {
-				changeImg("resources/bad.png");
-				update();
-				GameScreen.game.calcAcc(.33);
-				GameScreen.game.calcScore(.33);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			calculations(0,"resources/miss.png");
-			return ;
-		}else {
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 5) {
-			difference = goal - stroke.getBottomPosition();
-			if(Math.abs(difference)< 3) {
-				changeImg("resources/perfect.png");
-				update();
-				GameScreen.game.calcAcc(1);
-				GameScreen.game.calcScore(1);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 10) {
-				changeImg("resources/great.png");
-				update();
-				GameScreen.game.calcAcc(.95);
-				GameScreen.game.calcScore(.95);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 15) {
-				changeImg("resources/good.png");
-				update();
-				GameScreen.game.calcAcc(.66);
-				GameScreen.game.calcScore(.66);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 20) {
-				calculations(.5,"resources/ok.png");
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())< GameScreen.game.getFallTime() * 27) {
-				calculations(.33,"resources/bad.png");
-				return ;
-			}
-			calculations(0,"resources/miss.png");
+		int goal = GameScreen.columnY + GameScreen.columnHeight;
+		int difference = goal - stroke.getBottomPosition();
+		if(!start) {
+			difference = goal - stroke.getY();
+		}
+		if(Math.abs(difference)< 5) {
+			changeImg("resources/perfect.png");
+			update();
+			GameScreen.game.calcAcc(1);
+			GameScreen.game.calcScore(1);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
+		if(Math.abs(difference)< 10) {
+			changeImg("resources/great.png");
+			update();
+			GameScreen.game.calcAcc(.95);
+			GameScreen.game.calcScore(.95);
+			GameScreen.game.calcCombo(false);
+			return ;
 		}
+		if(Math.abs(difference)< 20) {
+			changeImg("resources/good.png");
+			update();
+			GameScreen.game.calcAcc(.66);
+			GameScreen.game.calcScore(.66);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		if(Math.abs(difference)< 27) {
+			changeImg("resources/ok.png");
+			update();
+			GameScreen.game.calcAcc(.5);
+			GameScreen.game.calcScore(.5);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		if(Math.abs(difference)< 40) {
+			changeImg("resources/bad.png");
+			update();
+			GameScreen.game.calcAcc(.33);
+			GameScreen.game.calcScore(.33);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		calculations(0,"resources/miss.png");
+		return ;
 	}
 	
 	public void calculations(double score,String image) {

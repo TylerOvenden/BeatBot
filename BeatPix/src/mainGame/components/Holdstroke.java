@@ -101,11 +101,13 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
+	 * This method returns the bottom of the hold stroke
+	 * @return - The bottom position of the stroke
 	 * 
-	 * @return
+	 * @author Justin Yau
 	 */
 	public int getBottomPosition() {
-		return getY() + getHeight();
+		return getY() + height - 35;
 	}
 	
 	/**
@@ -387,7 +389,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 				sleep(0);
 			}
 			moveOneDown();
-			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY) && !currentBeingHeld) {
+			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
 				handleRemove();
 			}
 			sleep(fallSpeed);
