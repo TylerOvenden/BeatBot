@@ -387,7 +387,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 				sleep(0);
 			}
 			moveOneDown();
-			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY) && !currentBeingHeld) {
+			if(isBeyondGoal(GameScreen.columnHeight + GameScreen.columnY + GameScreen.distanceAAfterGoal) && !currentBeingHeld) {
 				handleRemove();
 			}
 			sleep(fallSpeed);
