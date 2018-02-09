@@ -800,7 +800,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
-		String display = String.valueOf(tScore);
+		/*String display = String.valueOf(tScore);
 		
 		int[] scoreA = {0,0,0,0,0,0};
 		for(int i = 0; i<display.length();i++) {
@@ -811,8 +811,37 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//	scoreA[scoreA.length-2] = 2;
 		//scoreA[scoreA.length-2] = display.charAt();
 	//	System.out.println(Arrays.toString(scoreA));
-		//System.out.println(display.charAt(0));
-		displayScore.setText(display);
+		//System.out.println(display.charAt(0));*/
+		if(tScore>=1000000) {
+			displayScore.setText(""+tScore);
+			return ;
+		}
+		if(tScore>=100000) {
+			displayScore.setText("0"+tScore);
+			return ; 
+		}
+		if(tScore>=10000) {
+			displayScore.setText("00"+tScore);
+			return ; 
+		}
+		if(tScore>=1000) {
+			displayScore.setText("000"+tScore);
+			return ; 
+		}
+		if(tScore>=100) {
+			displayScore.setText("0000"+tScore);
+			return ; 
+		}
+		if(tScore>=10) {
+			displayScore.setText("00000"+tScore);
+			return ; 
+		}
+	   if(tScore==0) {
+			displayScore.setText("000000"+tScore);
+			return ; 
+		}
+		
+		//displayScore.setText(tScore+"");
 	} 
 
 	public void calcAcc(double timing) {
