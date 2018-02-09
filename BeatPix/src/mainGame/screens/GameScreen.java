@@ -423,6 +423,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public Visible getFirstInLane(int lane) {
+		/*
 		int startingTime = getFirstStrokeStartingTime();
 		if(strokes.size() > 0 && startingTime >= 0) {
 			Visible firstStroke = strokes.get(0);
@@ -441,6 +442,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				}
 			}
 			return firstStroke;
+		}
+		*/
+		for(Visible stroke: strokes) {
+			if(stroke instanceof Keystroke) {
+				Keystroke str = ((Keystroke)stroke);
+				if(str.getColumnLane() == lane) {
+					return stroke;
+				}
+			}
+			if(stroke instanceof Holdstroke) {
+				Holdstroke str = ((Holdstroke)stroke);
+				if(str.getColumnLane() == lane) {
+					return stroke;
+				}
+			}
 		}
 		return null;
 	}
