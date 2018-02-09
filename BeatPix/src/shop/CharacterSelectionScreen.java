@@ -55,7 +55,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 			
 			@Override
 			public void act() {
-				//go back
+				MainGUI.test.setScreen(MainGUI.mainMenu);
 				
 			}
 		});

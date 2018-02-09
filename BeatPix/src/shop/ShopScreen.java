@@ -288,7 +288,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			
 			@Override
 			public void act() {
-				MainGUI.test.setScreen(MainGUI.test.mainMenu);
+				MainGUI.test.setScreen(MainGUI.mainMenu);
 			
 			}
 		});

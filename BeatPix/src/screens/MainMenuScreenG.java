@@ -16,17 +16,18 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import gui.userInterfaces.Screen;
 import highscore.TempSongSelect;
 import mainGame.MainGUI;
 import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
 import shop.ShopScreen;
+import shop.CharacterSelectionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
 import screens.interfaces.Options;
-
 public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	/**Design:
@@ -43,6 +44,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	/*P*/ // <- indicate that there are folder path specific parameters
 	
 	private static final long serialVersionUID = -7197187517418245951L;
+
 	
 	public Timer time;
 	private int screenPhase;
@@ -104,7 +106,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			public void act(){
 				System.out.println("Select Unlocks Screen Clicked");
 				buttons.get(UNLOCK_IDX).unhoverAction();
-				MainGUI.test.setScreen(MainGUI.test.shop);
+				MainGUI.test.setScreen(MainGUI.shop);
 			}
 		});
 		
@@ -211,21 +213,21 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
-						Test.test.setScreen(Test.test.level);
+						Test.test.setScreen(Test.level);
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Character Screen Clicked");
 						buttons.get(CHARACTER_IDX).unhoverAction();
-						//Test.test.setScreen(screen);
+						//Test.test.setScreen();
 					}
 				});
 				buttons.get(UNLOCK_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Unlocks Screen Clicked");
 						buttons.get(UNLOCK_IDX).unhoverAction();
-						Test.test.setScreen(Test.test.shop);
+						Test.test.setScreen(Test.shop);
 					}
 				});
 				
@@ -236,7 +238,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 						System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
 						toggleButtons(false);
-						Test.test.options.addObjects();
+						Test.options.addObjects();
 					}
 				});
 				//
