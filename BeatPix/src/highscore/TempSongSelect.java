@@ -33,7 +33,7 @@ public class TempSongSelect extends FullFunctionScreen {
 			temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
 				@Override
 				public void act() {
-					MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),s.get(tempint),"resources/sample_bg.gif"));
+					MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),s.get(tempint - 1),"resources/sample_bg.gif"));
 					
 				}
 			});
