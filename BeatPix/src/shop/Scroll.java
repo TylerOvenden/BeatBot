@@ -16,7 +16,7 @@ import gui.interfaces.Visible;
 public class Scroll extends Component implements Scrollable {
 
 	public Scroll(int x, int y, int w, int h, String image) {
-		super(x, y, w, h, image);
+		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
 	}
 
