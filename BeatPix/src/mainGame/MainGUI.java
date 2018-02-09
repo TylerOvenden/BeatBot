@@ -11,6 +11,7 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.*;
 import screens.LevelSelectG;
 import screens.MainMenuScreenG;
+import screens.OptionsContainer;
 import screens.StartScreenG;
 import shop.ShopScreen;
 
@@ -31,7 +32,7 @@ public class MainGUI extends GUIApplication {
 	public static int START = 0;
 	public static int MENU = 1;
 	public static int CHARACTER = 1;
-	
+//	public static OptionsContainer options;
 	public static final int screenWidth = 960;
 	public static final int screenHeight = 540;
 	
