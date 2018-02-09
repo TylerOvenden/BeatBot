@@ -32,6 +32,8 @@ import gui.components.Graphic;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.FocusController;
+import gui.interfaces.KeyedComponent;
+import gui.interfaces.Scrollable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
 import highscore.HighscoreScreen;
@@ -591,7 +593,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void spawnRobot() {
-		//FightPaneG robot = new FightPaneG(, 600, 200);
+		//FightPaneG robot = new FightPaneG(this, 600, 200);
 		//addObject(robot);
 	}
 	
