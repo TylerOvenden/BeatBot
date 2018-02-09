@@ -766,7 +766,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}*/
 
 	public void calcScore(double timing) {
-		System.out.println(bScore);
+		
 		if(beats.size() == 0) {
 			return;
 		}
