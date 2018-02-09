@@ -154,7 +154,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			int buttonY = getHeight()*100/540*(i+1) + getHeight();
 			int buttonW = getWidth()*399/960;
 			int buttonH = getHeight()*100/540;
-			System.out.println(buttonY);
+			
 /*P D*/		buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
 			buttons.get(i).setIdxArray(i);
 			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
@@ -249,7 +249,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					buttons.get(b.getIdxArray()).setAlpha(1f);
-					System.out.println("unhover");
+					//System.out.println("unhover");
 				}
 			});
 			x++;
@@ -369,7 +369,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		background.setY(-background.getHeight()+getHeight());
 		background.setEnabled(false);
 /*D*/	idleCharacter.setY(getHeight()*200/540);
-		System.out.println(buttonTexts.get(0).getX() + "," + buttonTexts.get(0).getY());
+		//System.out.println(buttonTexts.get(0).getX() + "," + buttonTexts.get(0).getY());
 		for(int i = 0; i < buttons.size(); i++) {
 /*D*/		buttons.get(i).setY(getHeight()*100/540*(i+1));
 /*D*/		buttons.get(i).setX(getWidth()*480/960);

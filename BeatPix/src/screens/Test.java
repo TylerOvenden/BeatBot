@@ -45,6 +45,8 @@ public class Test extends GUIApplication {
 		
 		volume = 2;
 		
+		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
+		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
 			
@@ -72,7 +74,6 @@ public class Test extends GUIApplication {
 		level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
 
-		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
 		setScreen(start);
 		start.scrollIn();
 	}

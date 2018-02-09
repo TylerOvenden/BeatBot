@@ -46,8 +46,6 @@ public class OptionsContainer{
 	 * selectingKeyPhases:
 	 * -1 - not awaiting a key input
 	 * 0 - awaiting keyinput
-	 * 1 - keypressed
-	 * 2 - key is not valid
 	 */
 	int selectingKeyPhase;
 	int columnButtonSelected;
@@ -156,12 +154,35 @@ public class OptionsContainer{
 			keyBackground.add(new ScalablePixelBack(x*i*110/960 + x*180/960,y*150/540,x*100/960,x*100/960,1.3));
 			hiddenKeyButtons.add(new Button(x*i*110/960 + x*180/960,y*150/540,x*100/960,x*100/960,"",null));
 			//System.out.println(Test.test.keys[i]);
-/**/			keySelect.add(new ImageButton(x*i*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + "A" + ".png"));
+/**/			keySelect.add(new ImageButton(x*i*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + Test.test.keys[i] + ".png"));
 		}
 		setKeySelectActions();
 	}
 	
+	/**
+	 * Recreates the letters based off the newly
+	 * assigned keys on the keySelect buttons
+	 * 
+	 * Basically removes the old letter and recreates
+	 * the new letters and adds it back onto the screen
+	 */
+	public void updateKeySelect() {
+		for(int i = 0; i < 4; i++) {
+			parentScreen.remove(keySelect.get(i));
+			parentScreen.addObject(keySelect.get(i));
+		}
+	}
+	public void recreateKey(int x1) {
+		parentScreen.remove(keySelect.get(x1));
+		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + "A" + ".png"));
+		parentScreen.addObject(keySelect.get(x1));
+	}
 
+	/**
+	 * Sets the keySelect actions manually for each one
+	 * because within Action() there can't be any outside
+	 * influence (i) that will be saved onto the button itself
+	 */
 	public void setKeySelectActions() {
 		hiddenKeyButtons.get(0).setAction(new Action() {
 			public void act() {
@@ -170,8 +191,6 @@ public class OptionsContainer{
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
-				
-				
 				toggleButtons(false);
 			}
 		});
@@ -182,8 +201,6 @@ public class OptionsContainer{
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
-				
-				
 				toggleButtons(false);
 			}
 		});
@@ -194,8 +211,6 @@ public class OptionsContainer{
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
-				
-				
 				toggleButtons(false);
 			}
 		});
@@ -206,37 +221,57 @@ public class OptionsContainer{
 				
 				createSelectingKeyPopUp("Words");
 				parentScreen.addObject(selectingKeyScreen);
-				
-				
 				toggleButtons(false);
 			}
 		});
 
 		
 	}
-	
+	//--ERROR: When new key is set on Test, it is saved as an Integer value <- probably why recreateKey doesn't work
+	/**
+	 * Basically the method that is called within
+	 * other screens whenever keyPress is called since
+	 * all screens will be FullFunctionScreen (thus having
+	 * KeyListener and keyPressed/Released)
+	 * 
+	 * Needs to pass in the KeyEvent from the master method
+	 * 
+	 * Checks if the key pressed is not one of the already
+	 * selected keys and then goes into a state where it waits
+	 * for another key press if the key is invalid, or sets it
+	 * automatically into the new keys within Test.test
+	 */
+	boolean validKey;
 	public void readKey(KeyEvent e) {
+		int tempX = e.getKeyCode();
+		
 		if(selectingKeyPhase == 0) {
-			boolean validKey = true;
+			validKey = true;
 			for(String s: Test.test.keys) {
-				if(e.getKeyCode() == (int) s.charAt(0)) {
+				System.out.println((char) tempX + " is it equal to " + s.charAt(0));
+				if((char) tempX == s.charAt(0)) {
 					validKey = false; break;
 				}
 			}
+			
 			if(validKey) {
-				//selectingKeyPhase = 1;
-				Test.test.keys[columnButtonSelected] = Integer.toString(e.getKeyCode());
-				//System.out.println(Test.test.keys[columnButtonSelected]);
+				//Where ERROR would be
+				String tempS = (String) String.valueOf(tempX);
+				Test.test.keys[columnButtonSelected] = tempS;
+				
 				selectingKeyPhase = -1;
-				//System.out.println("Valid");
-				for(String s: Test.test.keys) {
-					System.out.println(s);
-				}
-				System.out.println("Key set to " + Integer.toString(e.getKeyCode()));
+				recreateKey(columnButtonSelected);
+				//updateKeySelect();
+				
 				parentScreen.remove(selectingKeyScreen);
 				toggleButtons(true);
+				
+				System.out.println("Key set to " + (char) tempX);
+				
 			}else {
+				
 				selectingKeyPhase = 0;
+				
 				System.out.println("Reselect key");
 			}
 		}
@@ -244,6 +279,21 @@ public class OptionsContainer{
 	/** --KEY SELECTION SCREEN--
 	 * Will always be recreated as there will be different
 	 * text depending on what the user selected for the key
+	 */
+	/**The pixel back is always constant, but can be
+	 * changed depending on the text length
+	 * 
+	 * Creates the text that will be displayed such as:
+	 * "Press a key" as it waits for user to select a key
+	 * "Key is already in use" or
+	 * "Invalid key" when user presses a bad key
+	 * and finally "Key set to --" when they successfully change it
+	 * 
+	 * The text will be set in an ArrayList in order to prevent
+	 * overcrowding and multiple lines of CustomText
+	 * 
+	 * The length is yet to be determined
+	 * @param s
 	 */
 	public void createSelectingKeyPopUp(String s) {
 		selectingKeyScreen = new ScalablePixelBack(x*330/960, y*100/540, x*300/960, y*200/540, 1);
@@ -258,6 +308,15 @@ public class OptionsContainer{
 	
 	/** --VOLUME TOGGLE--
 	 * 
+	 * User clicks the volume icon for it to toggle
+	 * between stages, each stage represents a volume
+	 */
+	/**
+	 * Recreates toggleVolume based on the new stage,
+	 * sets the action for the next stage as well.
+	 * 
+	 * Basically removes old toggleVolume, recreates it,
+	 * then puts it back in the screen
 	 */
 	public void updateVolumeToggle() {
 		toggleVolume = new ImageButton(200, 300, 50, 50, "resources\\ui\\volume\\v" + Test.test.volume + ".png");
@@ -273,7 +332,7 @@ public class OptionsContainer{
 				parentScreen.remove(toggleVolume);
 				updateVolumeToggle();
 				parentScreen.addObject(toggleVolume);
-				System.out.println("resources\\ui\\volume\\v" + Test.test.volume + ".png");
+				//System.out.println("resources\\ui\\volume\\v" + Test.test.volume + ".png");
 			}
 		});
 	}
