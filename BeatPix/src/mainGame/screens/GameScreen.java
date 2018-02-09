@@ -540,7 +540,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		addKeystrokeIndicator(viewObjects);
 		setUpGearButton(viewObjects);
 		spawnOptionButtons();
-		spawnRobot();
+		spawnRobot(viewObjects);
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -574,11 +574,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		displayScore = new CustomText(550,400,200,200,"0000000",true);
 		viewObjects.add(displayScore);
 		gamescore.update();  
-		
-		fightScene = new FightPaneG(this, 500,200);
-		fightScene.update();
-		fightScene.setVisible(true);
-		viewObjects.add(fightScene);
+	
 	}
 	
 	/**
@@ -586,9 +582,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public void spawnRobot() {
-		//FightPaneG robot = new FightPaneG(this, 600, 200);
-		//addObject(robot);
+	public void spawnRobot(List<Visible> viewObjects) {
+		fightScene = new FightPaneG(this, 500,200);
+		fightScene.update();
+		fightScene.setVisible(true);
+		viewObjects.add(fightScene);
 	}
 	
 	/**
