@@ -111,6 +111,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
 	
+	FightPaneG fightScene;
+	
 	//Steven
 	private Timing timing;
 	private TextArea visual;
@@ -573,7 +575,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(displayScore);
 		gamescore.update();  
 		
-		
+		fightScene = new FightPaneG(this, 500,200);
+		fightScene.update();
+		fightScene.setVisible(true);
+		viewObjects.add(fightScene);
 	}
 	
 	/**
@@ -986,6 +991,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		for(OptionButton btn: optBTN) {
 			addObject(btn);
 		}
+		fightScene.pause();
 	}
 	
 	/**
@@ -1006,6 +1012,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		for(OptionButton btn: optBTN) {
 			remove(btn);
 		}
+		fightScene.resume();
 	}
 	
 	/**
