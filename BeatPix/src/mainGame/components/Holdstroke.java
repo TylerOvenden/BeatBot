@@ -396,7 +396,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public boolean isBeyondGoal(int goal) {
-		return (getY() + (height) - 35) > goal;
+		return (getY() + (height) - 64 - GameScreen.distanceAAfterGoal) > goal;
 	}
 
 	/**
