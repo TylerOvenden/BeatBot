@@ -16,7 +16,6 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
-import gui.userInterfaces.Screen;
 import highscore.TempSongSelect;
 import mainGame.MainGUI;
 import mainGame.MainGUI;
@@ -44,7 +43,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	/*P*/ // <- indicate that there are folder path specific parameters
 	
 	private static final long serialVersionUID = -7197187517418245951L;
-
 	
 	public Timer time;
 	private int screenPhase;
@@ -220,7 +218,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Character Screen Clicked");
 						buttons.get(CHARACTER_IDX).unhoverAction();
-						//Test.test.setScreen();
+						//Test.test.setScreen(shop.CharacterSelectionScreen);
 					}
 				});
 				buttons.get(UNLOCK_IDX).setAction(new Action() {

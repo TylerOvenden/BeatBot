@@ -144,10 +144,10 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		}
 		
 		 //create all the things 
-		 border = new CustomRectangle(280, 180, 220, 120, Color.BLACK, 3);
-		 textKev = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
-		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
-		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
+		 border = new CustomRectangle(380, 180, 220, 120, Color.BLACK, 3);
+		 textKev = new TextLabel(400, 200, 200, 100, "Do you wish to unlock this?");
+		 border2 = new CustomRectangle(380, 80, 220, 420, Color.BLACK, 3);
+		 unlock = new TextLabel(400, 100, 200, 400, "You have unlocked this. Enjoy");
 		 
 		 noButton = new Button(400, 250, 50, 50, "no", Color.RED, new Action() {
 			
