@@ -174,7 +174,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
-						MainGUI.test.setScreen(MainGUI.level);
+						//MainGUI.test.setScreen(MainGUI.level);
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
