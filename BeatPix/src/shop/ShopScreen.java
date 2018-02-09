@@ -104,7 +104,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		changeCredits(getCredits()+1500);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		credits = 15000;
+		credits = 1000;
 		
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
