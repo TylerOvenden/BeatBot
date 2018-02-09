@@ -28,7 +28,7 @@ import screens.components.ImageButton;
 
 public class ShopScreen extends FullFunctionScreen implements CreditChanger
 {
-
+	//Daniel Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	private static final long serialVersionUID = 1L;
 
 	private CustomRectangle songArea;
@@ -60,7 +60,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText text;
 
 	
-	//kevin
+	//Kevin Fields-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	private TextLabel textKev;
 	private TextLabel unlock;
 	
@@ -103,6 +103,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 
 		changeCredits(getCredits()+1500);
 		credits = getCredits();
+		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		credits = 15000;
 		
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
@@ -266,7 +268,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 //		scrollBorder = new Graphic(90,175,350,325,"resources//shop//border.png");
 //		viewObjects.add(scrollBorder);
 		
-		// kevin
+		//Kevin Components------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
 		//
 		buttonList = new ArrayList<Button>();
@@ -276,7 +278,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		images = new ArrayList<ImageButton>();
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		for(int i = 0; i < imageNames.length; i ++) {
-			images.add(new ImageButton(290, 180, 200, 300, imageNames[i]));
+			images.add(new ImageButton(390, 180, 200, 300, imageNames[i]));
 		}
 		//the ten should be number chars that the player should unlock
 		numChars = 3;
@@ -315,7 +317,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of YesButtons
 		for(int k = 0; k < numChars; k++) {
 			final int z = k;
-			yesButton.add(new Button(300, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
+			yesButton.add(new Button(400, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
 				int j = z;
 				@Override
 				public void act() {
@@ -332,7 +334,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of confirmButtons
 		for(int l = 0; l < numChars; l ++) {
 			final int y = l;
-			confirmButton.add(new Button(370, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
+			confirmButton.add(new Button(470, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
 				int a = y;
 				@Override
 				public void act() {
@@ -355,12 +357,12 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		}
 		
 		 //create all the things 
-		 border = new CustomRectangle(280, 180, 220, 120, Color.BLACK, 3);
-		 textKev = new TextLabel(300, 200, 200, 100, "Do you wish to unlock this?");
+		 border = new CustomRectangle(380, 180, 220, 120, Color.BLACK, 3);
+		 textKev = new TextLabel(400, 200, 200, 100, "Do you wish to unlock this?");
 		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
 		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
 		 
-		 noButton = new Button(400, 250, 50, 50, "no", Color.RED, new Action() {
+		 noButton = new Button(500, 250, 50, 50, "no", Color.RED, new Action() {
 			
 			@Override
 			public void act() {
@@ -497,7 +499,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	
 	
 	
-	// kevin methods
+	// kevin methods----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public void createIntList(int a) {
 		for(int i = 0; i < a; i++) {
 			indexList.add(i);
