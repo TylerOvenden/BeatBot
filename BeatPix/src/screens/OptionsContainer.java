@@ -174,7 +174,7 @@ public class OptionsContainer{
 	}
 	public void recreateKey(int x1) {
 		parentScreen.remove(keySelect.get(x1));
-		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + "A" + ".png"));
+		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + Test.test.keys[x1] + ".png"));
 		parentScreen.addObject(keySelect.get(x1));
 	}
 
@@ -256,7 +256,9 @@ public class OptionsContainer{
 			
 			if(validKey) {
 				//Where ERROR would be
-				String tempS = (String) String.valueOf(tempX);
+				String tempS = ""+ (char) tempX;
+
+				System.out.println(tempS);
 				Test.test.keys[columnButtonSelected] = tempS;
 				
 				selectingKeyPhase = -1;
