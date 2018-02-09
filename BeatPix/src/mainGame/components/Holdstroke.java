@@ -43,12 +43,12 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public Holdstroke(int x, int y, int h, int sTime, String path) {
-		super(x,y,64, h + 65);
+		super(x,y,64, h + 35);
 		switchEnd = false;
 		startingTime = sTime;
 		tooBig = false;
 		fallSpeed = 5;
-		height = h + 64;
+		height = h + 35;
 		prevHeight = 0;
 		this.path = path;
 		update();
@@ -97,7 +97,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getFirstClickTime() {
-		return startingTime + (GameScreen.columnHeight * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + 35) * fallSpeed);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int getEndClickTime() {
-		return startingTime + ((GameScreen.columnHeight + height - GameScreen.distanceAAfterGoal) * fallSpeed);
+		return startingTime + ((GameScreen.columnHeight + height) * fallSpeed);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public int distanceFromGoal() {
-		return (GameScreen.columnHeight + GameScreen.columnY) - (getY() + currentHeight - 64) ;
+		return (GameScreen.columnHeight + GameScreen.columnY) - (getY() + currentHeight - 35) ;
 	}
 	
 	/**
@@ -204,11 +204,11 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			topHeight = getY() + prevHeight;
 		}
 		int bottomHeightFromStart = topHeight - GameScreen.columnY;
-		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + 64 + GameScreen.distanceAAfterGoal - topHeight;
+		int bottomHeightFromBottom = GameScreen.columnY + GameScreen.columnHeight + 35 + GameScreen.distanceAAfterGoal - topHeight;
 		if(bottomHeightFromStart <= 0) {
 			return 1;
 		}
-		else if(height - 64 >= bottomHeightFromStart && !switchEnd) {
+		else if(height - 35 >= bottomHeightFromStart && !switchEnd) {
 			return determineBeginningHeight(bottomHeightFromStart);
 		}
 		//Above works
@@ -228,12 +228,12 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	public int determineBeginningHeight(int bottomHeightFromStart) {
 		if(height > GameScreen.columnHeight) {
 			tooBig = true;
-			return 64 + prevHeight++;
+			return 35 + prevHeight++;
 		}
 		if(switchEnd) {
 			return height;
 		}
-		return bottomHeightFromStart + 64;
+		return bottomHeightFromStart + 35;
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			handleRemove();
 			return 1;
 		}
-		return bottomHeightFromBottom - 64 - GameScreen.distanceAAfterGoal;
+		return bottomHeightFromBottom - 35 - GameScreen.distanceAAfterGoal;
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 			Graphics2D g2d = nImg.createGraphics();
 			g2d.drawImage(dest, 0, 0, width, height, null);
 			g2d.dispose();
-			prevHeight = height - 64;
+			prevHeight = height - 35;
 			frameSet(i, nImg);
 		}
 	}
@@ -342,7 +342,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 */
 	public void moveOneDown() {
 		setY(getY() + 1);
-		if(determineCurrentHeightFromY() == (height) || (tooBig && prevHeight >= (GameScreen.columnHeight - 64 + GameScreen.distanceAAfterGoal))) {
+		if(determineCurrentHeightFromY() == (height) || (tooBig && prevHeight >= (GameScreen.columnHeight - 35 + GameScreen.distanceAAfterGoal))) {
 			switchEnd = true;
 		}
 		int cHeight = determineCurrentHeightFromY();
@@ -404,7 +404,7 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	 * @author Justin Yau
 	 */
 	public boolean isBeyondGoal(int goal) {
-		return (getY() + height - 64) > goal;
+		return (getY() + (height) - 64 - GameScreen.distanceAAfterGoal) > goal;
 	}
 
 	/**

@@ -9,7 +9,7 @@ public class ShopKevinGUI extends GUIApplication {
 	 * 
 	 */
 	private static final long serialVersionUID = -1943768449913434317L;
-	private ShopScreenKevin shop;
+	private CharacterSelectionScreen shop;
 
 	public static void main(String[] args) 
 	{
@@ -25,7 +25,7 @@ public class ShopKevinGUI extends GUIApplication {
 	}
 	public void initScreen() 
 	{
-		shop = new ShopScreenKevin(getWidth(), getHeight());
+		shop = new CharacterSelectionScreen(getWidth(), getHeight());
 		setScreen(shop);
 	}
 

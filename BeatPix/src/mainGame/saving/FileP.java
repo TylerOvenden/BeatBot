@@ -75,7 +75,9 @@ public class FileP implements FileProcessor {
 	 * @author Justin Yau
 	 */
 	public static void save(String title, int BPM, String artist, int offSet, ArrayList<int[]> list) {
-		String fileName = title + artist + ".csv";
+		String name = title;
+		new File("resources/maps/" + name).mkdirs();
+		String fileName = "resources/maps/" + name + "/"+ name + ".csv";
 		try{    
 			
 			FileWriter fw=new FileWriter(fileName);
@@ -241,13 +243,13 @@ public class FileP implements FileProcessor {
 			BufferedReader br = new BufferedReader(fileReader);
 			
 			//Keep reading till it hit [MetaData]
-			if(!keepReadingTillYouReach(br, "[MetaData]")) { return false; }
+			if(!keepReadingTillYouReach(br, "[Metadata]")) { return false; }
 			
 			//Retrieve title information
 			tempTitle = sSplitLine(br);
 			
 			br.readLine(); //Skip other title information
-			
+
 			//Retrieve artist information
 			tempArtist = sSplitLine(br);
 			
@@ -255,7 +257,7 @@ public class FileP implements FileProcessor {
 			if(!keepReadingTillYouReach(br, "[HitObjects]")) { return false; }
 			
 			while ((line = br.readLine()) != null) {
-
+				
 				int[] beat = new int[3];
 				String[] param = line.split(",");
 				beat[0] = getColumn(param[0]);

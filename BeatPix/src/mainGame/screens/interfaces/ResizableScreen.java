@@ -13,6 +13,7 @@ import java.util.List;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import gui.userInterfaces.FullFunctionScreen;
 
 /**
  * This class is for when you want to make a clickable screen resizeable with all the components scaling to how much the <br>
@@ -21,12 +22,14 @@ import gui.userInterfaces.ClickableScreen;
  * @author Justin Yau
  *
  */
-public abstract class ResizableScreen extends ClickableScreen {
+public abstract class ResizableScreen extends FullFunctionScreen {
 
 	private int originalWidth; //The original width of the screen will be stored here
 	private int originalHeight; //The original height of the screen will be stored here
 	private double xScale; //The x scaling factor will be stored in this variable
 	private double yScale; //the y scaling factor will be stored in this variable
+	
+	private ComponentAdapter adapter; //The adapter of the screen will be stored here
 	
 	/**
 	 * Constructer creates a resizeable clickable screen with all the components scaling to how much the <br>
@@ -54,7 +57,16 @@ public abstract class ResizableScreen extends ClickableScreen {
 	 * @author Justin Yau
 	 */
 	public void setUpComponentListener() {
-		addComponentListener(getComponentAdapter());
+		adapter = getComponentAdapter();
+		addComponentListener(adapter);
+	}
+	
+	/**
+	 * This method will return the current adapter in the screen
+	 * @return - The current adapter in the screen
+	 */
+	public ComponentAdapter getCAdapter() {
+		return adapter;
 	}
 	
 	/**
@@ -136,6 +148,19 @@ public abstract class ResizableScreen extends ClickableScreen {
 	 */
 	public double getYScale() {
 		return yScale;
+	}
+	
+	/**
+	 * This method updates the scalings in case the screen was resized before the screen was made
+	 * 
+	 * @param width - The previous width of the screen before this screen
+	 * @param height - The previous height of the screen before this screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
 	}
 	
 	public void update(Graphics2D g){

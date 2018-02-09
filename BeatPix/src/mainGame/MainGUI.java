@@ -11,9 +11,14 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.*;
 import screens.LevelSelectG;
 import screens.MainMenuScreenG;
+import screens.OptionsContainer;
 import screens.StartScreenG;
 import shop.ShopScreen;
 
+import screens.LevelScreenG;
+import mainGame.components.Song;
+import mainGame.saving.FileP;
+import mainGame.screens.*;
 
 public class MainGUI extends GUIApplication {
 
@@ -27,6 +32,9 @@ public class MainGUI extends GUIApplication {
 	public static int START = 0;
 	public static int MENU = 1;
 	public static int CHARACTER = 1;
+//	public static OptionsContainer options;
+	public static final int screenWidth = 960;
+	public static final int screenHeight = 540;
 	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
@@ -72,7 +80,7 @@ public class MainGUI extends GUIApplication {
 	}
 
 	public static void main(String[] args) {
-		test = new MainGUI(960,540);
+		test = new MainGUI(screenWidth,screenHeight);
 		Thread s = new Thread(test);
 		s.run();
 	}

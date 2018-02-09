@@ -14,7 +14,6 @@ public class ShopGUI extends GUIApplication {
 		Thread runner = new Thread(s);
 		runner.start();
 	}
-	
 	public ShopGUI(int width, int height) 
 	{
 		super(width, height);

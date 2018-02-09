@@ -1,5 +1,7 @@
 package highscore;
 
+import java.io.IOException;
+
 import gui.GUIApplication;
 
 public class HighscoreGui extends GUIApplication{
@@ -8,7 +10,7 @@ public class HighscoreGui extends GUIApplication{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private HighscoreScreen highscore;
+	private TempSongSelect highscore;
 	
 	public static void main(String[] args) 
 	{
@@ -24,7 +26,12 @@ public class HighscoreGui extends GUIApplication{
 
 	@Override
 	public void initScreen() {
-		highscore = new HighscoreScreen(getWidth(), getHeight(),true,1000000,99.99,null);
+		try {
+			highscore = new TempSongSelect(getWidth(), getHeight());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setScreen(highscore);
 		
 	}

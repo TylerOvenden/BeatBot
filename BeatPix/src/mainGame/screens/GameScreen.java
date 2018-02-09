@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,8 +32,11 @@ import gui.components.Graphic;
 import gui.components.TextArea;
 import gui.interfaces.Clickable;
 import gui.interfaces.FocusController;
+import gui.interfaces.KeyedComponent;
+import gui.interfaces.Scrollable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import highscore.HighscoreScreen;
 import mainGame.MainGUI;
 import mainGame.actions.Escape;
 import mainGame.actions.Press;
@@ -40,6 +44,7 @@ import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 import screens.components.FightPaneG;
+
 
 /**
  * This screen is for the actual game play of the map for a song
@@ -64,6 +69,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private String artist; //Artist of the beatmap
 	private int offSet; //Offset of the beatmap
 	private ArrayList<int[]> beats; //Beats that will be majorly utilized by this screen
+	private ArrayList<int[]> originalBeats; //All the original beats will be stored here
 	private Song mainSong; //The song of the game will be stored here
 	
 	private long startTime; //The starting time in ms
@@ -89,7 +95,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 10; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 12; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
@@ -98,11 +104,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
     private Thread gameThread; //This is the thread that will make the game spawn objects
     private boolean gameRunning; //This boolean will tell us if the game is currently running or not
     
+    private boolean exited; //This boolean will track whether or not the game was exited
     private String backgroundPath; //The path to the background image will be stored here
 	
 	public static final String[] arrowPaths = {"larrow", "darrow", "uarrow","rarrow"}; //Img file names for the sprite sheets
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
+	
+	FightPaneG fightScene;
 	
 	//Steven
 	private Timing timing;
@@ -119,6 +128,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	//tyler
 	private Scoring gamescore;
 	private float score =0;
+	private float health = 100;
+	private int bScore;
 	private CustomText displayScore;
 	//tyler
 	
@@ -133,13 +144,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song) {
-		super(width, height);
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
 		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		startResize(width, height);
+		update();
 		
 		game = this;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -149,6 +161,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		offSet = song.getOffSet();
 		beats = song.getBeats();
 		
+		originalBeats = beats;
 		setUpBindings();
 		
 		totalAcc=new float[beats.size()];
@@ -159,6 +172,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		accuracy=100;
 		
 		gameRunning = false;
+	
 		start();
 	}
 	
@@ -174,14 +188,15 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Tyler Ovenden
 	 */
 	public GameScreen(int width, int height, Song song, String backPath) {
-		super(width, height);
-		
-		setFixedSize(false);
-		setPreferredSize(new Dimension(width, height));
+		super(MainGUI.screenWidth, MainGUI.screenHeight);
+
+		startResize(width, height);
+		update();
 		
 		game = this;
 		backgroundPath = backPath;
 		player = new PlaySong();
+		exited = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -190,6 +205,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		originalBeats = beats;
 		
 		setUpBindings();
 		
@@ -203,7 +219,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gameRunning = false;
 		start();
 	}
-
+	
 	/**
 	 * This method creates a new thread and starts it
 	 * 
@@ -253,6 +269,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	/**
+	 * Overrides the method such that the clickable components are clickable aswell
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
+		escapeGear.setY((int) (escapeGear.getOY() - (6 * getYScale())));
+		escapeGear.updateScales(getXScale(), getYScale());
+		for(OptionButton btn: optBTN) {
+			btn.updateScales(getXScale(), getYScale());
+		}
+	}
+	
+	/**
 	 * This method overrides the default adapter to resize clickable components 
 	 * @return The New Component Adapter to suit our needs
 	 * 
@@ -285,7 +316,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void setUpBindings() {
 		bindings = MainGUI.bindings;
-		//updateKeyStrokes("D", "F", "J", "K");
+		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -400,6 +431,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public Visible getFirstInLane(int lane) {
+		/*
 		int startingTime = getFirstStrokeStartingTime();
 		if(strokes.size() > 0 && startingTime >= 0) {
 			Visible firstStroke = strokes.get(0);
@@ -418,6 +450,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				}
 			}
 			return firstStroke;
+		}
+		*/
+		for(Visible stroke: strokes) {
+			if(stroke instanceof Keystroke) {
+				Keystroke str = ((Keystroke)stroke);
+				if(str.getColumnLane() == lane) {
+					return stroke;
+				}
+			}
+			if(stroke instanceof Holdstroke) {
+				Holdstroke str = ((Holdstroke)stroke);
+				if(str.getColumnLane() == lane) {
+					return stroke;
+				}
+			}
 		}
 		return null;
 	}
@@ -508,7 +555,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		addKeystrokeIndicator(viewObjects);
 		setUpGearButton(viewObjects);
 		spawnOptionButtons();
-		spawnRobot();
+		spawnRobot(viewObjects);
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -531,19 +578,18 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		viewObjects.add(accDisplay);
 		accDisplay.update();
 		*/
-		combo=new CustomText(215,100, 50, 50,"0");
+		combo=new CustomText(215,100, 50, 50,"0",true);
 		viewObjects.add(combo);
 
-		ctext=new CustomText(550,450,200,200,"100%");
+		ctext=new CustomText(550,450,200,200,"100%",true);
 		viewObjects.add(ctext);
 		gamescore = new Scoring(500,40,400,400);
 		viewObjects.add(gamescore);
 
-		displayScore = new CustomText(550,400,200,200,"0000000");
+		displayScore = new CustomText(550,400,200,200,"0000000",true);
 		viewObjects.add(displayScore);
 		gamescore.update();  
-		
-		
+	
 	}
 	
 	/**
@@ -551,9 +597,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * 
 	 * @author Justin Yau
 	 */
-	public void spawnRobot() {
-		//FightPaneG robot = new FightPaneG(, 600, 200);
-		//addObject(robot);
+	public void spawnRobot(List<Visible> viewObjects) {
+		fightScene = new FightPaneG(this, 500,200);
+		fightScene.update();
+		fightScene.setVisible(true);
+		viewObjects.add(fightScene);
 	}
 	
 	/**
@@ -580,7 +628,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		double scale = 1;
 		try {
 			BufferedImage img = ImageIO.read(new File(backgroundPath));
-			scale = ((double)getWidth())/img.getWidth();
+			scale = ((double)MainGUI.screenWidth)/img.getWidth();
 		} catch (IOException e) {
 		}
 		return scale;
@@ -731,28 +779,77 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			return ;
 		}
 	}*/
+
 	public void calcScore(double timing) {
+		
+		if(beats.size() == 0) {
+			return;
+		}
 		if(timing==1) {
-			score+=1000000/beats.size()*1;
+			score+=1000000/bScore;
 		}
 		if(timing==.95) {
-			score+=1000000/beats.size()*.95;
+			score+=1000000/bScore*.95;
 		}
 		if(timing==.66) {
-			score+=1000000/beats.size()*.66;
+			score+=1000000/bScore*.66;
 		}
 		if(timing==.5) {
-			score+=1000000/beats.size()*.5;
+			score+=1000000/bScore*.5;
 		}
 		if(timing==.33) {
-			score+=1000000/beats.size()*.33;
+			score+=1000000/bScore*.33;
+			health= health-1;
+		//	System.out.println(health);			
 		}
 		if(timing==0) {
 			score+=0;
+			health = health-3;
+		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
-		String display = String.valueOf(tScore);
-		displayScore.setText(display);
+		/*String display = String.valueOf(tScore);
+		
+		int[] scoreA = {0,0,0,0,0,0};
+		for(int i = 0; i<display.length();i++) {
+		
+			scoreA[scoreA.length-i-1] = display.charAt(i);
+			
+		} 
+	//	scoreA[scoreA.length-2] = 2;
+		//scoreA[scoreA.length-2] = display.charAt();
+	//	System.out.println(Arrays.toString(scoreA));
+		//System.out.println(display.charAt(0));*/
+		if(tScore>=1000000) {
+			displayScore.setText(""+tScore);
+			return ;
+		}
+		if(tScore>=100000) {
+			displayScore.setText("0"+tScore);
+			return ; 
+		}
+		if(tScore>=10000) {
+			displayScore.setText("00"+tScore);
+			return ; 
+		}
+		if(tScore>=1000) {
+			displayScore.setText("000"+tScore);
+			return ; 
+		}
+		if(tScore>=100) {
+			displayScore.setText("0000"+tScore);
+			return ; 
+		}
+		if(tScore>=10) {
+			displayScore.setText("00000"+tScore);
+			return ; 
+		}
+	   if(tScore==0) {
+			displayScore.setText("000000"+tScore);
+			return ; 
+		}
+		
+		//displayScore.setText(tScore+"");
 	} 
 
 	public void calcAcc(double timing) {
@@ -907,6 +1004,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		for(OptionButton btn: optBTN) {
 			addObject(btn);
 		}
+		fightScene.pause();
 	}
 	
 	/**
@@ -927,6 +1025,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		for(OptionButton btn: optBTN) {
 			remove(btn);
 		}
+		fightScene.resume();
 	}
 	
 	/**
@@ -957,6 +1056,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			public void act() {
 				//Exit Action Button will be here
 				stop();
+				exited = true;
 				//Switch to a different screen below
 				MainGUI.test.setScreen(MainGUI.test.mainMenu);
 			}
@@ -1032,6 +1132,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public int getFallTime() {
+		return fallTime;
+	}
+	
+	/**
 	 * This method calculates the fall time from BPM and sets it to the fall time variable
 	 * 
 	 * @author Justin Yau
@@ -1101,6 +1209,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void playSong() {
 
 		String fileName = title + artist;
+		bScore = beats.size();
 		Thread play = new Thread(new Runnable() {
 			
 			@Override
@@ -1123,8 +1232,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		int lane = beat[0] - 1;
 		if(beat[2] != 0) {
 			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-			if(height >= columnHeight - 20) {
-				height = columnHeight - 20;
+			if(height + 35 >= columnHeight) {
+				height = columnHeight - 60;
 			}
 			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 					"resources/arrows/"+ arrowPaths[lane] + "h.png");
@@ -1137,6 +1246,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			handleKeystroke(str);
 		}
 		//strokes.add(str);
+	}
+	
+	/**
+	 * This method handles the end of the game
+	 * 
+	 * @author Justin Yau
+	 * @author Steven Li
+	 */
+	public void handleEnd() {
+		player.stopSong();
+		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		mainSong.setBeats(originalBeats);
+		if(!exited) {
+			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+		}
 	}
 	
 	/**
@@ -1157,8 +1281,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				spawnBeat();
 			}
 		}
-		player.stopSong();
-		mainSong.addScoreAndAccuracy((int) score, accuracy);
+		handleEnd();
 	}
 
 	public Timing getTiming() {
