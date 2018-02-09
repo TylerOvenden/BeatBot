@@ -161,7 +161,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		offSet = song.getOffSet();
 		beats = song.getBeats();
 		
-		originalBeats = beats;
+		originalBeats = new ArrayList<int[]>(beats);
 		setUpBindings();
 		
 		totalAcc=new float[beats.size()];
@@ -205,8 +205,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
-		originalBeats = beats;
 		
+		originalBeats = new ArrayList<int[]>(beats);
 		setUpBindings();
 		
 		totalAcc=new float[beats.size()];
