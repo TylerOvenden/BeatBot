@@ -104,7 +104,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		changeCredits(getCredits()+1500);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		credits = 1000;
 		
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
@@ -140,6 +139,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		
 		//scroll bar, contains the songs
 		scroll = new ScrollablePane(this, 110,195,220,260);		
+		scroll.setBackground(new Color(0,0,0));
+		scroll.update();
 		textBorder = new Graphic(340,160,305,405,"resources//shop//TransparentButtonB.png");	
 		viewObjects.add(textBorder);
 		//when user clicks yes to buy song
@@ -249,6 +250,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			public void act() 
 			{
 				setInvis(false);
+				textBorder.setVisible(false);
 			}
 		});
 		no.setEnabled(true);
