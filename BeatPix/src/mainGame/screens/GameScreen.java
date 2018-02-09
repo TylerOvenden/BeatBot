@@ -215,19 +215,6 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gameRunning = false;
 		start();
 	}
-
-	/**
-	 * This method updates the scalings in case the screen was resized before the screen was made
-	 * 
-	 * @param width - The previous width of the screen before this screen
-	 * @param height - The previous height of the screen before this screen
-	 * 
-	 * @author Justin Yau
-	 */
-	public void startResize(int width, int height) {
-		setXScale(((double) width)/getOWidth());
-		setYScale(((double) height)/getOHeight());
-	}
 	
 	/**
 	 * This method creates a new thread and starts it
