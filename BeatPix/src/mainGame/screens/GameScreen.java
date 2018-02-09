@@ -127,6 +127,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private Scoring gamescore;
 	private float score =0;
 	private float health = 100;
+	private int bScore;
 	private CustomText displayScore;
 	//tyler
 	
@@ -157,8 +158,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
-		originalBeats = beats;
 		
+		originalBeats = beats;
 		setUpBindings();
 		
 		totalAcc=new float[beats.size()];
@@ -169,6 +170,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		accuracy=100;
 		
 		gameRunning = false;
+	
 		start();
 	}
 	
@@ -761,23 +763,24 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}*/
 
 	public void calcScore(double timing) {
+		System.out.println(bScore);
 		if(beats.size() == 0) {
 			return;
 		}
 		if(timing==1) {
-			score+=1000000/beats.size()*1;
+			score+=1000000/bScore;
 		}
 		if(timing==.95) {
-			score+=1000000/beats.size()*.95;
+			score+=1000000/bScore*.95;
 		}
 		if(timing==.66) {
-			score+=1000000/beats.size()*.66;
+			score+=1000000/bScore*.66;
 		}
 		if(timing==.5) {
-			score+=1000000/beats.size()*.5;
+			score+=1000000/bScore*.5;
 		}
 		if(timing==.33) {
-			score+=1000000/beats.size()*.33;
+			score+=1000000/bScore*.33;
 			health= health-1;
 		//	System.out.println(health);			
 		}
@@ -1186,6 +1189,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void playSong() {
 
 		String fileName = title + artist;
+		bScore = beats.size();
 		Thread play = new Thread(new Runnable() {
 			
 			@Override

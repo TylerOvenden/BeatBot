@@ -82,21 +82,22 @@ public class PlaySong implements JustinPlaySongInterface {
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
-
 	@Override
 	public void pauseSong() {
-				
-	}
-
-	@Override
-	public void resumeSong() {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
+	public void resumeSong() {
+
+	}
+
+	@Override
 	public void stopSong() {
-//		audioLine.stop();		
+			
 	}
  
 }
+
+	
