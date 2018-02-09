@@ -40,6 +40,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	private int numChars;
 	private int index;
 	public String imageName;
+	private CharacterSelectionScreen ab;
 	
 
 	public ShopScreenKevin(int width, int height) 
@@ -51,6 +52,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 	public void initAllObjects(List<Visible> viewObjects) 
 	{	
 		//instantiate the variables
+		ab = new CharacterSelectionScreen(getWidth(), getHeight());
 		buttonList = new ArrayList<Button>();
 		yesButton = new ArrayList<Button>();
 		confirmButton = new ArrayList<Button>();
@@ -135,6 +137,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 					//buttonList.get(a).setVisible(false);
 					charScroll.update();
 					indexList.remove(index);
+					ab.unlock(a);
 					
 				}
 			}));
