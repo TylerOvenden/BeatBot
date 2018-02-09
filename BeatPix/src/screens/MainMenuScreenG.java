@@ -1,6 +1,7 @@
 package screens;
 
 import java.awt.Cursor;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -18,11 +19,9 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import highscore.TempSongSelect;
 import mainGame.MainGUI;
-import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
 import shop.ShopScreen;
-import shop.CharacterSelectionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
@@ -76,37 +75,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		
 
 		// Set button actions
-		buttons.get(LEVEL_IDX).setAction(new Action() {
-			public void act(){
-
-				buttons.get(0).unhoverAction();
-				Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
-/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
-				
-				try {
-					MainGUI.test.setScreen(new TempSongSelect(getWidth(), getHeight()));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		
-		
-		buttons.get(CHARACTER_IDX).setAction(new Action() {
-			public void act(){
-				buttons.get(1).unhoverAction();
-			}
-		});
-		
-		buttons.get(UNLOCK_IDX).setAction(new Action() {
-			public void act(){
-				System.out.println("Select Unlocks Screen Clicked");
-				buttons.get(UNLOCK_IDX).unhoverAction();
-				MainGUI.test.setScreen(MainGUI.shop);
-			}
-		});
+		setButtonsActions();
 		
 		//viewObjects adding
 		viewObjects.add(background);
@@ -192,7 +161,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			int buttonY = getHeight()*100/540*(i+1) + getHeight();
 			int buttonW = getWidth()*399/960;
 			int buttonH = getHeight()*100/540;
-			System.out.println(buttonY);
+			
 /*P D*/		buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
 			buttons.get(i).setIdxArray(i);
 			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
@@ -211,7 +180,16 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
-						Test.test.setScreen(Test.level);
+						//MainGUI.setScreen(MainGUI.level);
+						Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
+						/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
+										
+										try {
+											MainGUI.test.setScreen(new TempSongSelect(getWidth(), getHeight()));
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
@@ -225,18 +203,18 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Unlocks Screen Clicked");
 						buttons.get(UNLOCK_IDX).unhoverAction();
-						Test.test.setScreen(Test.shop);
+						MainGUI.test.setScreen(MainGUI.test.shop);
 					}
 				});
 				
 				//NEED TO TEST OPTIONS AND FINISH
-				
 				buttons.get(OPTIONS_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
 						toggleButtons(false);
-						Test.options.addObjects();
+	
+						MainGUI.options.addObjects();
 					}
 				});
 				//
@@ -287,7 +265,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					buttons.get(b.getIdxArray()).setAlpha(1f);
-					System.out.println("unhover");
+					//System.out.println("unhover");
 				}
 			});
 			x++;
@@ -407,7 +385,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		background.setY(-background.getHeight()+getHeight());
 		background.setEnabled(false);
 /*D*/	idleCharacter.setY(getHeight()*200/540);
-		System.out.println(buttonTexts.get(0).getX() + "," + buttonTexts.get(0).getY());
+		//System.out.println(buttonTexts.get(0).getX() + "," + buttonTexts.get(0).getY());
 		for(int i = 0; i < buttons.size(); i++) {
 /*D*/		buttons.get(i).setY(getHeight()*100/540*(i+1));
 /*D*/		buttons.get(i).setX(getWidth()*480/960);
@@ -445,6 +423,22 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 /*D*/		buttons.get(i).setY(i);
 /*D*/		buttons.get(i).setX(i);
 		}
+	}
+
+	
+	@Override
+	public boolean inOptions() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void passKeyCodeIntoOptions(KeyEvent e) {
+		MainGUI.options.readKey(e);
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		passKeyCodeIntoOptions(e);
 	}
 	
 }

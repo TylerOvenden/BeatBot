@@ -13,7 +13,6 @@ import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
 import mainGame.MainGUI;
-import mainGame.MainGUI;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
@@ -213,7 +212,6 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		background.setY(-background.getHeight() + getHeight());
 //		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 		background.setY(-background.getHeight() + getHeight()*2);
-		System.out.println(MainGUI.test.x+"s END START");
 
 						
 /*Screen switch*/		MainGUI.test.setScreen(MainGUI.test.mainMenu);
