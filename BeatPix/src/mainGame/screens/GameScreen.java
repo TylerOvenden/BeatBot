@@ -269,6 +269,21 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	/**
+	 * Overrides the method such that the clickable components are clickable aswell
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
+		escapeGear.setY((int) (escapeGear.getOY() - (6 * getYScale())));
+		escapeGear.updateScales(getXScale(), getYScale());
+		for(OptionButton btn: optBTN) {
+			btn.updateScales(getXScale(), getYScale());
+		}
+	}
+	
+	/**
 	 * This method overrides the default adapter to resize clickable components 
 	 * @return The New Component Adapter to suit our needs
 	 * 
