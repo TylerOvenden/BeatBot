@@ -64,8 +64,6 @@ public class Timing extends Component implements JustinTimingInterface {
 		
 	}
 	public void checkAcc(Stroke stroke, boolean start) {
-		int goal = GameScreen.columnHeight;
-		int difference = goal - stroke.getY();
 		if(start) {
 			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())< GameScreen.game.getFallTime() * 5) {
 				changeImg("resources/perfect.png");
@@ -112,8 +110,6 @@ public class Timing extends Component implements JustinTimingInterface {
 			return ;
 		}else {
 			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 5) {
-			difference = goal - stroke.getBottomPosition();
-			if(Math.abs(difference)< 3) {
 				changeImg("resources/perfect.png");
 				update();
 				GameScreen.game.calcAcc(1);
