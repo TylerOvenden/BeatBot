@@ -174,7 +174,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
-						MainGUI.test.setScreen(MainGUI.test.level);
+						MainGUI.test.setScreen(MainGUI.level);
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
@@ -193,7 +193,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				});
 				
 				//NEED TO TEST OPTIONS AND FINISH
-				
 				buttons.get(OPTIONS_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Options Screen Clicked");
