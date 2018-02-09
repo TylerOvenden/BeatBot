@@ -148,6 +148,7 @@ public class Timing extends Component implements JustinTimingInterface {
 			calculations(0,"resources/miss.png");
 			return ;
 		}
+		}
 	}
 	
 	public void calculations(double score,String image) {
