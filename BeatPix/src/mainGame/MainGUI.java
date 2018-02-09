@@ -30,6 +30,9 @@ public class MainGUI extends GUIApplication {
 	/**
 	 * 
 	 */
+	public static final int screenWidth = 960;
+	public static final int screenHeight = 540;
+	
 	private static final long serialVersionUID = 6557376208612089301L;
 	
 	private Screen currentScreen;
