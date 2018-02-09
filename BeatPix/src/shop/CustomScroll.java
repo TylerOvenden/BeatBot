@@ -17,7 +17,13 @@ import gui.interfaces.Visible;
 
 public class CustomScroll extends ScrollablePane {
 
-	public CustomScroll(FocusController focusController, int x, int y, int w, int h) {
+	public CustomScroll(FocusController focusController, ArrayList<Visible> initWithObjects, int x, int y, int w,
+			int h) {
+		super(focusController, initWithObjects, x, y, w, h);
+		// TODO Auto-generated constructor stub
+	}
+
+	/*public CustomScroll(FocusController focusController, int x, int y, int w, int h) {
 		super(focusController, x, y, w, h);
 		this.x = x;
 		this.y = y;
@@ -58,7 +64,7 @@ public class CustomScroll extends ScrollablePane {
 
 	/**
 	 * calculates maximum x and y value, given all components
-	 */
+	 
 	public void setUpContentImage(){
 		contentX = 0;
 		contentY=0;
@@ -90,7 +96,7 @@ public class CustomScroll extends ScrollablePane {
 	/**
 	 * override by subclasses to add objects manually
 	 * @param viewObjects
-	 */
+	 
 	public void initAllObjects(List<Visible> viewObjects){
 
 	}
@@ -336,6 +342,6 @@ public class CustomScroll extends ScrollablePane {
 		Visible.move(this, newX, newY, durationMS);
 	}
 	
-	
+	*/
 
 }
