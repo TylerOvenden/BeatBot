@@ -250,7 +250,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			public void act() 
 			{
 				setInvis(false);
-				textBorder.setVisible(false);
+				textBorder.setVisible(false); //
 			}
 		});
 		no.setEnabled(true);
