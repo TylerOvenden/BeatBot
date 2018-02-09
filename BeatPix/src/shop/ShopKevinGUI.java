@@ -8,12 +8,14 @@ public class ShopKevinGUI extends GUIApplication {
 	/**
 	 * 
 	 */
+	public static ShopKevinGUI  s;
 	private static final long serialVersionUID = -1943768449913434317L;
-	private CharacterSelectionScreen shop;
+	public CharacterSelectionScreen shop;
+	public ShopScreen shop2;
 
 	public static void main(String[] args) 
 	{
-		ShopKevinGUI s = new ShopKevinGUI(960,540);
+		s = new ShopKevinGUI(960,540);
 		Thread runner = new Thread(s);
 		runner.start();
 	}
@@ -26,6 +28,7 @@ public class ShopKevinGUI extends GUIApplication {
 	public void initScreen() 
 	{
 		shop = new CharacterSelectionScreen(getWidth(), getHeight());
+		shop2 = new ShopScreen(getWidth(),getHeight());
 		setScreen(shop);
 	}
 
