@@ -15,6 +15,7 @@ import gui.components.Action;
 import gui.components.Button;
 import gui.components.Component;
 import gui.userInterfaces.Screen;
+import mainGame.MainGUI;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
@@ -153,8 +154,8 @@ public class OptionsContainer{
 		for(int i = 0; i < 4; i ++) {
 			keyBackground.add(new ScalablePixelBack(x*i*110/960 + x*180/960,y*150/540,x*100/960,x*100/960,1.3));
 			hiddenKeyButtons.add(new Button(x*i*110/960 + x*180/960,y*150/540,x*100/960,x*100/960,"",null));
-			//System.out.println(Test.test.keys[i]);
-/**/			keySelect.add(new ImageButton(x*i*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + Test.test.keys[i] + ".png"));
+			System.out.println(MainGUI.getKeys(2) + "");
+/**/		keySelect.add(new ImageButton(x*i*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + MainGUI.getKeys(i) + ".png"));
 		}
 		setKeySelectActions();
 	}
@@ -174,7 +175,7 @@ public class OptionsContainer{
 	}
 	public void recreateKey(int x1) {
 		parentScreen.remove(keySelect.get(x1));
-		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + Test.test.keys[x1] + ".png"));
+		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,y*170/540,x*80/960,x*40/960, "resources\\text\\" + MainGUI.getKeys(x1) + ".png"));
 		parentScreen.addObject(keySelect.get(x1));
 	}
 
@@ -247,8 +248,8 @@ public class OptionsContainer{
 		
 		if(selectingKeyPhase == 0) {
 			validKey = true;
-			for(String s: Test.test.keys) {
-				System.out.println((char) tempX + " is it equal to " + s.charAt(0));
+			for(String s: MainGUI.getKeys()) {
+				//System.out.println((char) tempX + " is it equal to " + s.charAt(0));
 				if((char) tempX == s.charAt(0)) {
 					validKey = false; break;
 				}
@@ -259,7 +260,7 @@ public class OptionsContainer{
 				String tempS = ""+ (char) tempX;
 
 				System.out.println(tempS);
-				Test.test.keys[columnButtonSelected] = tempS;
+				MainGUI.setKeys(columnButtonSelected, tempS);
 				
 				selectingKeyPhase = -1;
 				recreateKey(columnButtonSelected);
@@ -321,14 +322,14 @@ public class OptionsContainer{
 	 * then puts it back in the screen
 	 */
 	public void updateVolumeToggle() {
-		toggleVolume = new ImageButton(200, 300, 50, 50, "resources\\ui\\volume\\v" + Test.test.volume + ".png");
+		toggleVolume = new ImageButton(200, 300, 50, 50, "resources\\ui\\volume\\v" + MainGUI.getVolume() + ".png");
 		toggleVolume.setEnabled(true);
 		toggleVolume.setAction(new Action() {
 			public void act() {
-				if(Test.test.volume - 1 == -1) {
-					Test.test.volume = 3;
+				if(MainGUI.getVolume() - 1 == -1) {
+					MainGUI.setVolume(3);
 				}else {
-					Test.test.volume -= 1;
+					MainGUI.setVolume(MainGUI.getVolume()-1);
 				}
 
 				parentScreen.remove(toggleVolume);

@@ -16,6 +16,7 @@ import gui.components.*;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.MainGUI;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
@@ -173,7 +174,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
-						Test.test.setScreen(Test.test.level);
+						MainGUI.test.setScreen(MainGUI.test.level);
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
@@ -187,7 +188,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Unlocks Screen Clicked");
 						buttons.get(UNLOCK_IDX).unhoverAction();
-						Test.test.setScreen(Test.test.shop);
+						MainGUI.test.setScreen(MainGUI.test.shop);
 					}
 				});
 				
@@ -198,7 +199,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 						System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
 						toggleButtons(false);
-						Test.test.options.addObjects();
+						MainGUI.test.options.addObjects();
 					}
 				});
 				//
@@ -418,7 +419,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	@Override
 	public void passKeyCodeIntoOptions(KeyEvent e) {
-		Test.test.options.readKey(e);
+		MainGUI.test.options.readKey(e);
 	}
 	
 	public void keyPressed(KeyEvent e) {

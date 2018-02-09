@@ -25,7 +25,7 @@ public class Test extends GUIApplication {
 	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
-	public static LevelSelectG level;
+	//public static LevelSelectG level;
 	public static ShopScreen shop;
 	public static OptionsContainer options;
 	
@@ -71,7 +71,7 @@ public class Test extends GUIApplication {
 	public void initScreen() {
 		start = new StartScreenG(getWidth(),getHeight());
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
-		level = new LevelSelectG(getWidth(),getHeight());
+		//level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
 
 		setScreen(start);
