@@ -15,7 +15,7 @@
  *   License along with this program; if not, write to the Free Software
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package mainGame.saving.resource;
+package mainGame.saving.resources;
 
 /**
  * FFT stands for Fast Fourier Transform. It is an efficient way to calculate the Complex 
