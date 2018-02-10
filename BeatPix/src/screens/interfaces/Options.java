@@ -7,17 +7,18 @@ import screens.components.ScalablePixelBack;
 
 public interface Options{
 
-	/**
+	/**Called Alongside MainGUI.options.addObjects()
+	 * 
 	 * Disables or enables all the clickables of the screen
 	 * so the option pop up is the only enabled clickables
 	 * @param b
 	 */
 	void toggleButtons(boolean b);
 
-	/*
+	/*--OPTIONAL--
 	 * Returns if the options is being used on the screen
 	 * 
-	 * !!!THIS IS OPTIONAL!!!
+	 * USE ONLY
 	 * Only if keyPressed isn't used elsewhere on the screen
 	 */
 	boolean inOptions();
@@ -41,7 +42,12 @@ public interface Options{
 	 */
 	void passKeyCodeIntoOptions(KeyEvent e);
 	
-	//FullFunctionScreen Methods that are used
+	/**--SHOULD ALREADY EXIST--
+	 * 
+	 * The below methods should already exist
+	 * within FullFunctionScreen so do not override
+	 * 
+	 */
 	void addObject(Visible a);
 
 	void remove(Visible a);

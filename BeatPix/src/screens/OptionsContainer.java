@@ -13,6 +13,7 @@ import gui.components.Action;
 import gui.components.Button;
 import gui.components.Component;
 import mainGame.MainGUI;
+import mainGame.screens.GameScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
@@ -31,7 +32,6 @@ public class OptionsContainer{
 	 * WIDTH: x * x1 / 960
 	 * HEIGHT: y * y1 / 540
 	 */
-	
 	private Component blackBack; // Black out previous screen
 	private ScalablePixelBack background; // Pop-up background
 	private ArrayList<CustomText> labelText; // Basic texts
@@ -51,6 +51,14 @@ public class OptionsContainer{
 	
 	private int selectingKeyPhase; // User not selecting key or selecting (-1,0)
 	private int columnButtonSelected; // keySelect user has chosen
+
+	/*public static void main(String[] args) {
+		OptionsContainer a = new OptionsContainer(200,200,null);
+		System.out.println(a.positionOfLastLetterOfLongestWordComboWithinBoundary("I AM Av ery long sentence",8));
+		for(String b: a.arrayOfBrokenUpStrings("Please select a key", 10)) {
+			System.out.println(b);
+		}
+	}*/
 	
 	/**Constructor**
 	 * 
@@ -83,9 +91,9 @@ public class OptionsContainer{
 	public void addObjects() {
 		parentScreen.addObject(blackBack);
 		parentScreen.addObject(background);
-		/*for(CustomText c: labelText) {
+		for(CustomText c: labelText) {
 			parentScreen.addObject(c);
-		}*/
+		}
 		
 		parentScreen.addObject(back);
 		parentScreen.addObject(backText);
@@ -101,11 +109,14 @@ public class OptionsContainer{
 		toggleButtons(true);
 	}
 	public void removeObjects() {
+		if(parentScreen instanceof GameScreen) {
+			//((GameScreen)parentScreen).setInOptions(false);
+		}
 		parentScreen.remove(blackBack);
 		parentScreen.remove(background);
-		/*for(CustomText c: labelText) {
+		for(CustomText c: labelText) {
 			parentScreen.remove(c);
-		}*/
+		}
 		
 		parentScreen.remove(back);
 		parentScreen.remove(backText);
@@ -158,7 +169,25 @@ public class OptionsContainer{
 	 * 
 	 */
 	public void createLabelText() {
+		labelText = new ArrayList<CustomText>();
 		
+		String s1 = "KEY SELECT";
+		CustomText temp = new CustomText(x/960*	150, 
+											y/540*	100, 
+												x/960*	400, 
+													y/540*	580,
+														"KEY SELECT",
+															true);
+		labelText.add(temp);
+		
+		String s2 = "VOLUME CONTROL";
+		CustomText temp2 = new CustomText(x/960*	150, 
+												y/540*	280, 
+													x/960*	500, 
+														y/540*	700,
+															"VOLUME CONTROL", 
+																true);
+		labelText.add(temp2);
 	}
 	
 	 /**--BACK BUTTON--
@@ -169,16 +198,16 @@ public class OptionsContainer{
 	  * Option's components
 	  */
 	public void createBackButton() {
-		back = new ImageButton(x*600/960,
-									y*180/540, 
+		back = new ImageButton(x*630/960,
+									y*420/540, 
 										x*200/960, 
 											y*50/540,
 												"resources\\ui\\buttons\\buttongeneral.png");
 		
-		backText = new CustomText(x*620/960, 
-									y*200/540, 
-										x*150/960, 
-											y*40/540,
+		backText = new CustomText(x*670/960, 
+									y*430/540, 
+										x*100/960, 
+											y*80/540,
 												"Back",
 													true, true, false);
 		back.setAction(new Action() {
@@ -205,20 +234,20 @@ public class OptionsContainer{
 		hiddenKeyButtons = new ArrayList<Button>();
 		
 		for(int i = 0; i < 4; i ++) {
-			keyBackground.add(new ScalablePixelBack(x*i*110/960 + x*180/960,
-														y*150/540,
+			keyBackground.add(new ScalablePixelBack(x*i*130/960 + x*180/960,
+														y*170/540,
 															x*100/960,
 																x*100/960, 
 																	1.3));
 			
-			hiddenKeyButtons.add(new Button(x*i*110/960 + x*180/960,
-												y*150/540,
+			hiddenKeyButtons.add(new Button(x*i*130/960 + x*180/960,
+												y*170/540,
 													x*100/960,
 														x*100/960, 
 															"", null));
 			
-/**/		keySelect.add(new ImageButton(x*i*110/960 + x*200/960,
-												y*170/540,
+/**/		keySelect.add(new ImageButton(x*i*130/960 + x*205/960,
+												y*190/540,
 													x*80/960,
 														x*40/960, 
 															"resources\\text\\" + MainGUI.getKeys(i) + ".png"));
@@ -233,8 +262,8 @@ public class OptionsContainer{
 	 */
 	public void recreateKey(int x1) {
 		parentScreen.remove(keySelect.get(x1));
-		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,
-												y*170/540, 
+		keySelect.set(x1, new ImageButton(x*x1*130/960 + x*205/960,
+												y*190/540, 
 													x*80/960, 
 														x*40/960, 
 															"resources\\text\\" + MainGUI.getKeys(x1) + ".png"));
@@ -369,34 +398,78 @@ public class OptionsContainer{
 	 * Also adds it onto the parentScreen
 	 */
 	public void createSelectingKeyPopUp(String s) {
-		
-		parentScreen.remove(selectingKeyScreen);
-		
-		selectingKeyScreen = new ScalablePixelBack(x*330/960,
-														y*100/540, 
-															x*300/960, 
-																y*200/540, 
+		removeSelectingKeyPopUp();
+
+		selectingKeyScreenText = new ArrayList<CustomText>();
+		selectingKeyScreen = new ScalablePixelBack(x/960*	330,
+														y/540	*100, 
+															x/960	*300, 
+																y/540	*200, 
 																	1);
 		
-		selectingKeyScreenText = new ArrayList<CustomText>();
-		for(int i = 0; i < s.length(); i ++) {
-			if(i < 10) {
-				
-			}
+		ArrayList<String> temp = arrayOfBrokenUpStrings(s, 10);
+		for(int i = 0; i< temp.size(); i++) {
+			CustomText ct = new CustomText(x/960*	340,
+														50*i  + y/540*	120, 
+															x/960*	280, 
+																y/540*	300, 
+																	temp.get(i), true, true, false);
+			selectingKeyScreenText.add(ct);
 		}
 		
 		parentScreen.addObject(selectingKeyScreen);
-		/*for(CustomText c: selectingKeyScreenText) {
+		for(CustomText c: selectingKeyScreenText) {
 			parentScreen.addObject(c);
-		}*/
+		}
 	}
 	public void removeSelectingKeyPopUp() {
 		parentScreen.remove(selectingKeyScreen);
-		/*for(CustomText c: selectingKeyScreenText) {
-			parentScreen.remove(c);
-		}*/
+		if(selectingKeyScreenText != null)
+			for(CustomText c: selectingKeyScreenText) {
+				parentScreen.remove(c);
+			}
 	}
 	
+	/**
+	 * 
+	 * @param s
+	 * @param boundary
+	 * @return
+	 */
+	public int positionOfLastLetterOfLongestWordComboWithinBoundary(String s, int boundary) {
+		int idx = boundary;
+		for(int i = boundary; i > 0; i--) {
+			if(s.length() <= boundary) {
+				return s.length()-1;
+			}
+			if(s.substring(i-1, i).equals(" ") || i == 0) {
+				idx = i;
+				break;
+			}else {
+				idx --;
+			}
+		}
+		return idx;
+	}
+	public ArrayList<String> arrayOfBrokenUpStrings(String s, int boundary) {
+		String temps = s;
+		ArrayList<String> arrayTemp = new ArrayList<String>();
+		while(temps.length() > 0) {
+			if(positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary) == 0)
+				break;
+			
+			int tempx = positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary);
+			String tempSub = temps.substring(0,tempx+1);
+			
+			while(tempSub.length()<boundary) {
+				tempSub += " ";
+			}
+			
+			arrayTemp.add(tempSub);
+			temps = temps.substring(tempx,temps.length());
+		}
+		return arrayTemp;
+	}
 	/** --VOLUME TOGGLE--
 	 *
 	 * User clicks button to toggle between 4 stages
@@ -408,10 +481,10 @@ public class OptionsContainer{
 	 */
 	public void updateVolumeToggle() {
 		
-		toggleVolume = new ImageButton(200, 
-											300, 
-												50, 
-													50, 
+		toggleVolume = new ImageButton(x*200/960, 
+											y*350/540, 
+												x*75/960, 
+													y*75/540, 
 														"resources\\ui\\volume\\v" + MainGUI.getVolume() + ".png");
 		toggleVolume.setEnabled(true);
 		
@@ -454,4 +527,5 @@ public class OptionsContainer{
 	public void setParentScreen(Options screen) {
 		this.parentScreen = screen;
 	}
+
 }
