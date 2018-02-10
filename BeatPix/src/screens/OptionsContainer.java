@@ -97,6 +97,8 @@ public class OptionsContainer{
 		}
 		
 		parentScreen.addObject(toggleVolume);
+		
+		toggleButtons(true);
 	}
 	public void removeObjects() {
 		parentScreen.remove(blackBack);
