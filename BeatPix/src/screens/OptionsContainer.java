@@ -134,12 +134,11 @@ public class OptionsContainer{
 		blackBack.update();
 		blackBack.setAlpha(0.7f);
 		
-		background = new ScalablePixelBack(
-								x/10, 
-									y/10, 
-										x*8/10, 
-											y*8/10, 
-												1.5);
+		background = new ScalablePixelBack(x/10,
+												y/10,
+													x*8/10,
+														y*8/10,
+															1.5);
 		createLabelText();
 		
 		createBackButton();
@@ -166,19 +165,18 @@ public class OptionsContainer{
 	  * Option's components
 	  */
 	public void createBackButton() {
-		back = new ImageButton(
-							x*600/960,
-								y*180/540, 
-									x*200/960, 
-										y*50/540,
-											"resources\\ui\\buttons\\buttongeneral.png");
-		backText = new CustomText( 
-							x*620/960, 
-								y*200/540, 
-									x*150/960, 
-										y*40/540,
-											"Back",
-												true, true);
+		back = new ImageButton(x*600/960,
+									y*180/540, 
+										x*200/960, 
+											y*50/540,
+												"resources\\ui\\buttons\\buttongeneral.png");
+		
+		backText = new CustomText(x*620/960, 
+									y*200/540, 
+										x*150/960, 
+											y*40/540,
+												"Back",
+													true, true);
 		back.setAction(new Action() {
 			public void act() {
 				removeObjects();
@@ -203,24 +201,23 @@ public class OptionsContainer{
 		hiddenKeyButtons = new ArrayList<Button>();
 		
 		for(int i = 0; i < 4; i ++) {
-			keyBackground.add(new ScalablePixelBack( 
-										x*i*110/960 + x*180/960,
-											y*150/540,
-												x*100/960,
-													x*100/960, 
-														1.3));
-			hiddenKeyButtons.add(new Button( 
-										x*i*110/960 + x*180/960,
-											y*150/540,
-												x*100/960,
-													x*100/960, 
-														"", null));
-/**/		keySelect.add(new ImageButton( 
-									x*i*110/960 + x*200/960,
-										y*170/540,
-											x*80/960,
-												x*40/960, 
-													"resources\\text\\" + MainGUI.getKeys(i) + ".png"));
+			keyBackground.add(new ScalablePixelBack(x*i*110/960 + x*180/960,
+														y*150/540,
+															x*100/960,
+																x*100/960, 
+																	1.3));
+			
+			hiddenKeyButtons.add(new Button(x*i*110/960 + x*180/960,
+												y*150/540,
+													x*100/960,
+														x*100/960, 
+															"", null));
+			
+/**/		keySelect.add(new ImageButton(x*i*110/960 + x*200/960,
+												y*170/540,
+													x*80/960,
+														x*40/960, 
+															"resources\\text\\" + MainGUI.getKeys(i) + ".png"));
 		}
 		setKeySelectActions();
 	}
@@ -232,12 +229,11 @@ public class OptionsContainer{
 	 */
 	public void recreateKey(int x1) {
 		parentScreen.remove(keySelect.get(x1));
-		keySelect.set(x1, new ImageButton( 
-									x*x1*110/960 + x*200/960,
-										y*170/540, 
-											x*80/960, 
-												x*40/960, 
-													"resources\\text\\" + MainGUI.getKeys(x1) + ".png"));
+		keySelect.set(x1, new ImageButton(x*x1*110/960 + x*200/960,
+												y*170/540, 
+													x*80/960, 
+														x*40/960, 
+															"resources\\text\\" + MainGUI.getKeys(x1) + ".png"));
 		parentScreen.addObject(keySelect.get(x1));
 	}
 
@@ -369,12 +365,11 @@ public class OptionsContainer{
 	 */
 	public void createSelectingKeyPopUp(String s) {
 		
-		selectingKeyScreen = new ScalablePixelBack( 
-											x*330/960,
-												y*100/540, 
-													x*300/960, 
-														y*200/540, 
-															1);
+		selectingKeyScreen = new ScalablePixelBack(x*330/960,
+														y*100/540, 
+															x*300/960, 
+																y*200/540, 
+																	1);
 		
 		selectingKeyScreenText = new ArrayList<CustomText>();
 		for(int i = 0; i < s.length(); i ++) {
@@ -406,12 +401,11 @@ public class OptionsContainer{
 	 */
 	public void updateVolumeToggle() {
 		
-		toggleVolume = new ImageButton(
-						200, 
-							300, 
-								50, 
-									50, 
-										"resources\\ui\\volume\\v" + MainGUI.getVolume() + ".png");
+		toggleVolume = new ImageButton(200, 
+											300, 
+												50, 
+													50, 
+														"resources\\ui\\volume\\v" + MainGUI.getVolume() + ".png");
 		toggleVolume.setEnabled(true);
 		
 		toggleVolume.setAction(new Action() {
