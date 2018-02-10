@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
@@ -32,15 +33,17 @@ public class WavMusicFileConverter {
 	//private int channelsNum;
 	//private byte[] data;
 	//private int[] previousData;
-	private long framesCount;
+	//private long framesCount;
 	private AudioInputStream audioInputStream;
 	private FileInputStream fileInputStream;
 	//private DataInputStream dataInputStream;
 	private WavDecode waveInputStream;
 	private AudioFormat audioFormat;
 	//private ArrayList<float[]> samples;
-	private ArrayList<int[]> beats;
+	private ArrayList<Long> timings;
+	private List<Float> beats;
 	private List<Float> fluxes;
+	private ArrayList<int[]> processedBeats;
 	private FFT fft;
 	
 	public WavMusicFileConverter(String path) {
@@ -55,7 +58,9 @@ public class WavMusicFileConverter {
 			fft = new FFT(1024, audioFormat.getSampleRate());
 			
 			fluxes = getSample();
-			detectBeats(fluxes, 1.3f);
+			beats = detectBeats(fluxes, 1.7f);
+			timings = getTimeOfBeats(beats);
+			addBeats();
 			
 			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
@@ -148,6 +153,13 @@ public class WavMusicFileConverter {
     	return finalBeats;
     }
     
+    /**
+     * This method calculates the local average given the array list of fluxes
+     * @param localAverageEnergyThreshold - The arraylist you would like to store the local averages in
+     * @param sensitivity - The sensitivity of beat detection (1 being HIGH, 1.7 being LOW)
+     * 
+     * @author Justin Yau
+     */
     public void calculateAverageLocal(ArrayList<Float> localAverageEnergyThreshold, float sensitivity) {
     	//Calculate average energy locally every 10 fluxes
     	for(int i = 0; i < fluxes.size(); i++) {
@@ -162,6 +174,13 @@ public class WavMusicFileConverter {
     	}
     }
     
+    /**
+     * This method compares the flux values to their local averages and if they're greater, save them
+     * @param localAverageEnergyThreshold - The list of avgs
+     * @param beats - The list you would like to store the value of beats in
+     * 
+     * @author Justin Yau
+     */
     public void determineBeats(ArrayList<Float> localAverageEnergyThreshold, ArrayList<Float> beats) {
     	//Compare the flux value of the beat to the local avg
     	for(int i = 0; i < localAverageEnergyThreshold.size(); i++) {
@@ -173,6 +192,13 @@ public class WavMusicFileConverter {
     	}
     }
     
+    /**
+     * This method removes any beats that are close to each other (like a ms together)
+     * @param beats - The beats with their calculated values
+     * @param finalBeats - The list you would like to store the final values in
+     * 
+     * @author Justin Yau
+     */
     public void removeCloseBeats(ArrayList<Float> beats, List<Float> finalBeats) {
     	//Removes consecutive beats so we get the real beats
     	for(int i = 0; i < beats.size() - 1; i++) {
@@ -183,20 +209,35 @@ public class WavMusicFileConverter {
     	}
     }
     
-    public void getTimeOfBeats(ArrayList<Long> times, List<Float> beats) {
-    	times = new ArrayList<Long>();
+    /**
+     * This method goes through each beat and then calculate the time of the beat that it occurred in the list
+     * @param beats - The list of beats with their values calculated
+     * @return - The final list with all the timings of the beats
+     * 
+     * @author Justin Yau
+     */
+    public ArrayList<Long> getTimeOfBeats(List<Float> beats) {
+    	ArrayList<Long> times = new ArrayList<Long>();
     	for(int i = 0; i < beats.size(); i++) {
     		if(beats.get(i) > 0) {
-                long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f);
+                long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f); //This is the formula to determine the time the beat occurred
                 times.add(timeInMillis);
     		}
     	}
+    	return times;
     }
     
+    /**
+     * Converts the beats into the beat array that we could use 
+     * 
+     * @author Justin Yau
+     */
 	public void addBeats() {
-		beats = new ArrayList<int[]>();
-        for (int i = 1024; i < framesCount - 1024; i++) {
-        	//int time = (int) ((i / audioFormat.getFrameRate()) * 1000); //Divides the current frame by the frame rate to get the time in seconds and then multiply by 1000 to convert to milliseconds
+		processedBeats = new ArrayList<int[]>();
+        for(int i = 0; i < timings.size(); i++) {
+        	int[] temp = {getRandomNumber(1,4), timings.get(i).intValue(), 0};
+        	System.out.println(Arrays.toString(temp));
+        	processedBeats.add(temp);
         }
 	}
 	
