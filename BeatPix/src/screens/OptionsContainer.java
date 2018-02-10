@@ -338,12 +338,13 @@ public class OptionsContainer{
 				Timer t = new Timer();
 				t.schedule(new TimerTask() {
 					public void run() {
-						parentScreen.remove(selectingKeyScreen);
-						recreateKey(columnButtonSelected); // needs to recreate that specific letter
 						removeSelectingKeyPopUp();
 						toggleButtons(true);
+
+						recreateKey(columnButtonSelected); // needs to recreate that specific letter
 					}
-				}, 500);
+				}, 1000);
+				
 			}else {
 				selectingKeyPhase = 0;
 				
@@ -372,6 +373,8 @@ public class OptionsContainer{
 	 */
 	public void createSelectingKeyPopUp(String s) {
 		
+		parentScreen.remove(selectingKeyScreen);
+		
 		selectingKeyScreen = new ScalablePixelBack(x*330/960,
 														y*100/540, 
 															x*300/960, 
@@ -384,8 +387,13 @@ public class OptionsContainer{
 				
 			}
 		}
+<<<<<<< HEAD
 		
 		parentScreen.addObject(selectingKeyScreen);
+=======
+		
+		parentScreen.addObject(selectingKeyScreen);
+>>>>>>> refs/heads/graphics
 		/*for(CustomText c: selectingKeyScreenText) {
 			parentScreen.addObject(c);
 		}*/
