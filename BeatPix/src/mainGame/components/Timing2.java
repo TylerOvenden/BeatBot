@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import gui.components.Component;
 import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.screens.GameScreen;
-import mainGame.screens.MainScreen;
 
 public class Timing2 extends Component implements Runnable,JustinTimingInterface {
 	
