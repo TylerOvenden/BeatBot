@@ -103,7 +103,29 @@ public class ImportScreen extends ResizableScreen {
 		addTextBoxes(f, viewObjects);
 		addImportButton(viewObjects);
 		addConvertButton(viewObjects);
+		addBackButton(viewObjects);
 		
+	}
+	
+	/**
+	 * This method adds the back button to the screen
+	 * @param viewObjects - The list of visible objects on the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addBackButton(List<Visible> viewObjects) {
+		OptionButton btn = new OptionButton(getWidth() - 100, 25, 75, 50, "Back", this);
+		btn.setAction(new Action() {
+			
+			@Override
+			public void act() {
+				
+				MainGUI.test.setScreen(MainGUI.shop);
+				
+			}
+		});
+		optBTN.add(btn);
+		viewObjects.add(btn);
 	}
 	
 	/**
