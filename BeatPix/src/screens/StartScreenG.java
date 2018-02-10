@@ -268,6 +268,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	public void scrollOutEnd() {
 		screenPhase = 4;
 		time.cancel();
+		
 		background.setY(-background.getHeight() + getHeight());
 		background.setY(-background.getHeight() + getHeight()*2);
 

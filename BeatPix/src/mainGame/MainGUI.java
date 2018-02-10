@@ -6,6 +6,8 @@ import java.util.TimerTask;
 import gui.GUIApplication;
 import gui.userInterfaces.*;
 
+import screens.InformationContainer;
+
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
@@ -32,6 +34,7 @@ public class MainGUI extends GUIApplication {
 	//public static LevelSelectG level;
 	public static ShopScreen shop;
 	public static OptionsContainer options;
+	public static InformationContainer information;
 	
 	public int x;
 	
@@ -41,13 +44,6 @@ public class MainGUI extends GUIApplication {
 	public MainGUI(int width, int height) {
 		super(width, height);
 		setVisible(true);
-		
-		String[] temp = {"D","F","J","K"};
-		keys = temp;
-		
-		setVolume(2);
-		
-		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
 		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
@@ -71,11 +67,20 @@ public class MainGUI extends GUIApplication {
 
 	@Override
 	public void initScreen() {
+		
+		String[] temp = {"D","F","J","K"};
+		keys = temp;
+		
+		setVolume(2);
+		
 		start = new StartScreenG(getWidth(),getHeight());
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		//level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
 
+		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
+		information = new InformationContainer((Options) mainMenu);
+		
 		setScreen(start);
 		start.scrollIn();
 	}

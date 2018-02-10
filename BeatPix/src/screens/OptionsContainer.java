@@ -31,23 +31,22 @@ public class OptionsContainer{
 	 * WIDTH: x * x1 / 960
 	 * HEIGHT: y * y1 / 540
 	 */
+	private Component blackBack; // Black out previous screen
+	private ScalablePixelBack background; // Pop-up background
+	private ArrayList<CustomText> labelText; // Basic texts
 	
-	Component blackBack; // Black out previous screen
-	ScalablePixelBack background; // Pop-up background
-	ArrayList<CustomText> labelText; // Basic texts
+	private ImageButton back; // Back button
+	private CustomText backText; // Text for back button
 	
-	ImageButton back; // Back button
-	CustomText backText; // Text for back button
-	
-	ArrayList<ImageButton> keySelect; // Letters of key select
-	ArrayList<Button> hiddenKeyButtons; // Hidden buttons behind keySelect
-	ArrayList<ScalablePixelBack> keyBackground; //Background for hidden buttons
+	private ArrayList<ImageButton> keySelect; // Letters of key select
+	private ArrayList<Button> hiddenKeyButtons; // Hidden buttons behind keySelect
+	private ArrayList<ScalablePixelBack> keyBackground; //Background for hidden buttons
 	
 	
-	ImageButton toggleVolume; // Volume toggle button
+	private ImageButton toggleVolume; // Volume toggle button
 	
-	ScalablePixelBack selectingKeyScreen; // Pop-up when selecting key
-	ArrayList<CustomText> selectingKeyScreenText; // Text for pop-up
+	private ScalablePixelBack selectingKeyScreen; // Pop-up when selecting key
+	private ArrayList<CustomText> selectingKeyScreenText; // Text for pop-up
 	
 	private int selectingKeyPhase; // User not selecting key or selecting (-1,0)
 	private int columnButtonSelected; // keySelect user has chosen
@@ -178,7 +177,7 @@ public class OptionsContainer{
 										x*150/960, 
 											y*40/540,
 												"Back",
-													true, true);
+													true, true, false);
 		back.setAction(new Action() {
 			public void act() {
 				removeObjects();
@@ -325,7 +324,6 @@ public class OptionsContainer{
 				MainGUI.setKeys(columnButtonSelected, tempS);
 				
 				selectingKeyPhase = -1;
-				recreateKey(columnButtonSelected); // needs to recreate that specific letter
 				
 				createSelectingKeyPopUp("Key set to " + (char) tempX);
 				System.out.println("Key set to " + (char) tempX);
@@ -334,11 +332,12 @@ public class OptionsContainer{
 				Timer t = new Timer();
 				t.schedule(new TimerTask() {
 					public void run() {
+						parentScreen.remove(selectingKeyScreen);
+						recreateKey(columnButtonSelected); // needs to recreate that specific letter
 						removeSelectingKeyPopUp();
 						toggleButtons(true);
 					}
-				}, 200);
-				
+				}, 500);
 			}else {
 				selectingKeyPhase = 0;
 				
@@ -441,5 +440,12 @@ public class OptionsContainer{
 		for(int i = 0; i < 4; i++) {
 			hiddenKeyButtons.get(i).setEnabled(b);
 		}
+	}
+	
+	/**Set ParentScreen Whenever SetScreen is caleld**
+	 * 
+	 */
+	public void setParentScreen(Options screen) {
+		this.parentScreen = screen;
 	}
 }
