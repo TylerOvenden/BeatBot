@@ -19,37 +19,42 @@ import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import mainGame.saving.resources.FFT;
+import mainGame.saving.resources.WavDecode;
 
 /**
  * This class will be able to process music files and detect beats and place them into an array list for processing by the file saver
  * 
  * @author Justin Yau
  */
-public class MusicFileConverter {
+public class WavMusicFileConverter {
 	
-	private int sampleSize;
-	private int channelsNum;
-	private byte[] data;
-	private int[] previousData;
+	//private int sampleSize;
+	//private int channelsNum;
+	//private byte[] data;
+	//private int[] previousData;
 	private long framesCount;
 	private AudioInputStream audioInputStream;
 	private FileInputStream fileInputStream;
-	private DataInputStream dataInputStream;
+	//private DataInputStream dataInputStream;
+	private WavDecode waveInputStream;
 	private AudioFormat audioFormat;
-	private ArrayList<float[]> samples;
+	//private ArrayList<float[]> samples;
 	private ArrayList<int[]> beats;
+	private List<Float> fluxes;
 	private FFT fft;
 	
-	public MusicFileConverter() {
-		File file = new File("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.wav");
+	public WavMusicFileConverter(String path) {
+		File file = new File(path);
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
 			fileInputStream = new FileInputStream(file);
-			dataInputStream = new DataInputStream(fileInputStream);
+			//dataInputStream = new DataInputStream(fileInputStream);
+			waveInputStream = new WavDecode(fileInputStream);
 
 			audioFormat = audioInputStream.getFormat();
 			fft = new FFT(1024, audioFormat.getSampleRate());
 			
+			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
 		    channelsNum = audioFormat.getChannels();
 		    
@@ -62,6 +67,7 @@ public class MusicFileConverter {
 	        
 	        System.out.println(getSampleNumber(132000));
 	        //addBeats();
+	        */
 	        
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -72,27 +78,50 @@ public class MusicFileConverter {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) {
-		MusicFileConverter p = new MusicFileConverter();
+		WavMusicFileConverter p = new WavMusicFileConverter("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.wav");
 	}
 	
 	//Frame rate is the number of samples per second
 	
+    public List<Float> getSample() throws Exception {
+        float[] samples = new float[1024];
+        float[] spectrum = new float[1024 / 2 + 1];
+        float[] lastSpectrum = new float[1024 / 2 + 1];
+        List<Float> spectralFlux = new ArrayList<Float>();
+
+        while (waveInputStream.readSamples(samples) > 0) {
+            fft.forward(samples);
+            System.arraycopy(spectrum, 0, lastSpectrum, 0, spectrum.length);
+            System.arraycopy(fft.getSpectrum(), 0, spectrum, 0, spectrum.length);
+
+            float flux = 0;
+            for (int i = 0; i < spectrum.length; i++)
+                flux += (spectrum[i] - lastSpectrum[i]);
+            spectralFlux.add(flux);
+        }
+        
+        return spectralFlux;
+    }
+	
 	public void addBeats() {
 		beats = new ArrayList<int[]>();
-		previousData = new int[2];
         for (int i = 1024; i < framesCount - 1024; i++) {
-        	if(determineInstantEnergy(i) >= (determineAverageLocalEnergy(i) * 1.3)) {
-        		System.out.println(true);
-        	}
-        	//float d = getSampleFloat(i);
         	//int time = (int) ((i / audioFormat.getFrameRate()) * 1000); //Divides the current frame by the frame rate to get the time in seconds and then multiply by 1000 to convert to milliseconds
         }
 	}
 	
+	public int getRandomNumber(int low, int high) {
+		return low + (int)(Math.random() * ((high - low) + 1));
+	}
+	
+	/*
 	public float determineAverageLocalEnergy(int start) {
 		float sum = 0;
 		for(int i = 0; i < 43; i++) {
@@ -107,12 +136,8 @@ public class MusicFileConverter {
 			//value += Math.pow(getSampleNumber(i)[0], 2) + Math.pow(getSampleNumber(i)[1], 2);
 		}
 		return value;
-	}
-	
-	public int getRandomNumber(int low, int high) {
-		return low + (int)(Math.random() * ((high - low) + 1));
-	}
-	
+	} 
+	 
     public void getSamples() {
 
     	samples = new ArrayList<float[]>();
@@ -147,23 +172,6 @@ public class MusicFileConverter {
         int sample = ByteBuffer.wrap(sampleBytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
         return sample;
     }
-    
-    public void getSample() throws Exception {
-        byte[] samples = new byte[1024];
-        float[] spectrum = new float[1024 / 2 + 1];
-        float[] lastSpectrum = new float[1024 / 2 + 1];
-        List<Float> spectralFlux = new ArrayList<Float>();
-
-        while (audioInputStream.read(samples) > 0) {
-            //fft.forward(samples);
-            System.arraycopy(spectrum, 0, lastSpectrum, 0, spectrum.length);
-            System.arraycopy(fft.getSpectrum(), 0, spectrum, 0, spectrum.length);
-
-            float flux = 0;
-            for (int i = 0; i < spectrum.length; i++)
-                flux += (spectrum[i] - lastSpectrum[i]);
-            spectralFlux.add(flux);
-        }
-    }
+    */
     
 }
