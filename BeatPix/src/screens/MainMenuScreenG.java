@@ -195,7 +195,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			buttons.get(i).setIdxArray(i);
 			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
 												buttonY + getHeight()*25/540,
-													buttonW - buttonW*100/399,
+													(buttonW - buttonW*100/399)/buttonT[i].length(),
 														buttonH - buttonH*70/100,
 															buttonT[i] ,false , true, false));
 		}

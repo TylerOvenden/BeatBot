@@ -52,10 +52,14 @@ public class OptionsContainer{
 	private int selectingKeyPhase; // User not selecting key or selecting (-1,0)
 	private int columnButtonSelected; // keySelect user has chosen
 
-	static void main(String[] args) {
+	/*public static void main(String[] args) {
 		OptionsContainer a = new OptionsContainer(200,200,null);
-		System.out.println(a.positionOfLastLetterOfLongestWordComboWithinBoundary("12345678 90",8));
-	}
+		System.out.println(a.positionOfLastLetterOfLongestWordComboWithinBoundary("I AM Av ery long sentence",8));
+		for(String b: a.arrayOfBrokenUpStrings("Please select a key", 10)) {
+			System.out.println(b);
+		}
+	}*/
+	
 	/**Constructor**
 	 * 
 	 * selectingKeyPhase set to default state (-1)
@@ -394,8 +398,9 @@ public class OptionsContainer{
 	 * Also adds it onto the parentScreen
 	 */
 	public void createSelectingKeyPopUp(String s) {
-		selectingKeyScreenText = new ArrayList<CustomText>();
+		
 		removeSelectingKeyPopUp();
+
 		selectingKeyScreenText = new ArrayList<CustomText>();
 		selectingKeyScreen = new ScalablePixelBack(x/960*	330,
 														y/540	*100, 
@@ -403,16 +408,15 @@ public class OptionsContainer{
 																y/540	*200, 
 																	1);
 		
-		int linesOfText = s.length()%7;
-		
-		selectingKeyScreenText.add(new CustomText(x/960*	340,
-														y/540*	120, 
+		ArrayList<String> temp = arrayOfBrokenUpStrings(s, 10);
+		for(int i = 0; i< temp.size(); i++) {
+			CustomText ct = new CustomText(x/960*	340,
+														50*i  + y/540*	120, 
 															x/960*	280, 
 																y/540*	300, 
-																	"1234567890", true));
-		for(int i = 0; i < s.length(); i ++) {
+																	temp.get(i), true, true, false);
+			selectingKeyScreenText.add(ct);
 		}
-		
 		parentScreen.addObject(selectingKeyScreen);
 		for(CustomText c: selectingKeyScreenText) {
 			parentScreen.addObject(c);
@@ -420,9 +424,10 @@ public class OptionsContainer{
 	}
 	public void removeSelectingKeyPopUp() {
 		parentScreen.remove(selectingKeyScreen);
-		for(CustomText c: selectingKeyScreenText) {
-			parentScreen.remove(c);
-		}
+		if(selectingKeyScreenText != null)
+			for(CustomText c: selectingKeyScreenText) {
+				parentScreen.remove(c);
+			}
 	}
 	
 	/**
@@ -434,7 +439,10 @@ public class OptionsContainer{
 	public int positionOfLastLetterOfLongestWordComboWithinBoundary(String s, int boundary) {
 		int idx = boundary;
 		for(int i = boundary; i > 0; i--) {
-			if(s.substring(i, i+1).equals(" ")) {
+			if(s.length() <= boundary) {
+				return s.length()-1;
+			}
+			if(s.substring(i-1, i).equals(" ") || i == 0) {
 				idx = i;
 				break;
 			}else {
@@ -443,7 +451,25 @@ public class OptionsContainer{
 		}
 		return idx;
 	}
-	
+	public ArrayList<String> arrayOfBrokenUpStrings(String s, int boundary) {
+		String temps = s;
+		ArrayList<String> arrayTemp = new ArrayList<String>();
+		while(temps.length() > 0) {
+			if(positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary) == 0)
+				break;
+			
+			int tempx = positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary);
+			String tempSub = temps.substring(0,tempx+1);
+			
+			while(tempSub.length()<boundary) {
+				tempSub += " ";
+			}
+			
+			arrayTemp.add(tempSub);
+			temps = temps.substring(tempx,temps.length());
+		}
+		return arrayTemp;
+	}
 	/** --VOLUME TOGGLE--
 	 *
 	 * User clicks button to toggle between 4 stages
@@ -501,5 +527,4 @@ public class OptionsContainer{
 	public void setParentScreen(Options screen) {
 		this.parentScreen = screen;
 	}
-
 }
