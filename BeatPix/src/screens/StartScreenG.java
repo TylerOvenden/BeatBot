@@ -182,6 +182,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			public void run() {
 				if(title.getAlpha() > 0.7f) {
 					if(start.getAlpha() < 0.99f) { //begins the fade in for startbutton
+
+						allowClick = true; GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
 						start.setAlpha(start.getAlpha() + 0.01f);
 					}
 				}
@@ -196,7 +198,6 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	}
 	public void fadeInsEnd() {
 		time.cancel();
-		allowClick = true; GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		title.setAlpha(1f);start.setAlpha(1f);
 		screenPhase = 2;
 	}
