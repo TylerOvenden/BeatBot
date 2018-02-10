@@ -128,7 +128,7 @@ public class OptionsContainer{
 	  */
 	public void createBackButton() {
 		back = new ImageButton( x*600/960, y*180/540, x*200/960, y*50/540, "resources\\ui\\buttons\\buttongeneral.png");
-		backText = new CustomText(x*620/960, y*200/540, x*150/960, y*40/540,"Back",true,true);
+		backText = new CustomText(x*620/960, y*200/540, x*150/960, y*40/540,"Back",true,false,false);
 		back.setAction(new Action() {
 			public void act() {
 				removeObjects();
@@ -306,7 +306,7 @@ public class OptionsContainer{
 				
 			}
 		}
-		selectingKeyScreenText.add(new CustomText(330, 50, 1000,  200, s, true ,false));
+		selectingKeyScreenText.add(new CustomText(330, 50, 1000,  200, s, true,false,false));
 	}
 	
 	/** --VOLUME TOGGLE--

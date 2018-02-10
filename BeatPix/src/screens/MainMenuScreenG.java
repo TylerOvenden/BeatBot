@@ -162,7 +162,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
-															buttonT[i] ,false , true));
+															buttonT[i] ,false , true, false));
 		}
 		
 		setButtonsActions();
