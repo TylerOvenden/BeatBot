@@ -25,6 +25,11 @@ public class PlaySong implements JustinPlaySongInterface {
     private boolean pause;
     private boolean cancel;
      
+    public PlaySong() {
+        pause = false;
+        cancel = false;
+    }
+    
     /**
      * Play a given audio file.
      * @param audioFilePath Path of the audio file.
@@ -58,8 +63,6 @@ public class PlaySong implements JustinPlaySongInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            pause = false;
-            cancel = false;
             while ((bytesRead = audioStream.read(bytesBuffer)) != -1 && !cancel) {
             	while(pause) {
             		try {
