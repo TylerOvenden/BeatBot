@@ -14,6 +14,7 @@ import gui.GUIApplication;
 import gui.components.*;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+
 import highscore.TempSongSelect;
 import mainGame.MainGUI;
 import mainGame.components.Song;
@@ -46,20 +47,24 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	
 	private static final long serialVersionUID = -7197187517418245951L;
 	
-	public Timer time; // timer for events
+	private Timer time; // timer for events
 	private int screenPhase; // phases for events
 	
-	public ImageButton background; // background image
+	private ImageButton background; // background image
+
+	private AnimatedComponent idleCharacter; // animated character
 	
-	public AnimatedComponent idleCharacter; // animated character
+	private static int BUTTON_COUNT = 4;
+	private ArrayList<ImageButton> buttons; // main 4 buttons
+	private ArrayList<CustomText> buttonTexts; // text for 4 buttons
+	private static String[] buttonT = {"Level Select","Character","Unlocks","Options","Custom Song"};
+	private static int LEVEL_IDX = 0;
+	private static int CHARACTER_IDX = 1;
+	private static int UNLOCK_IDX = 2;
+	private static int OPTIONS_IDX = 3;
+	//private static int CUSTOM_SONG = 4;
 	
-	public ArrayList<ImageButton> buttons; // main 4 buttons
-	public ArrayList<CustomText> buttonTexts; // text for 4 buttons
-	public static String[] buttonT = {"Level Select","Character","Unlocks","Options"};
-	public static int LEVEL_IDX = 0;
-	public static int CHARACTER_IDX = 1;
-	public static int UNLOCK_IDX = 2;
-	public static int OPTIONS_IDX = 3;
+	private static ImageButton instructions;
 	
 	/**Constructor**
 	 * 
@@ -178,7 +183,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	public void createButtons() {
 		buttons = new ArrayList<ImageButton>();
 		buttonTexts = new ArrayList<CustomText>();
-		for(int i=0; i<4; i++) {
+		for(int i=0; i<BUTTON_COUNT; i++) {
 			int buttonX = getHeight()*160/540 + getWidth();
 			int buttonY = getHeight()*100/540*(i+1) + getHeight();
 			int buttonW = getWidth()*399/960;
@@ -191,7 +196,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 												buttonY + getHeight()*25/540,
 													buttonW - buttonW*100/399,
 														buttonH - buttonH*70/100,
-															buttonT[i] ,false , true));
+															buttonT[i] ,false , true, false));
 		}
 		
 		setButtonsActions();
@@ -202,6 +207,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
+
 						//MainGUI.setScreen(MainGUI.level);
 						Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).csv");
 						/**/			MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
@@ -234,11 +240,20 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
-						toggleButtons(false);
-	
+						
 						MainGUI.options.addObjects();
+						toggleButtons(false);
 					}
 				});
+				
+				/*buttons.get(CUSTOM_SONG).setAction(new Action() {
+					public void act() {
+						buttons.get(CUSTOM_SONG).unhoverAction();
+						toggleButtons(false);
+						
+						MainGUI.information.addObjects();
+					}
+				});*/
 	}
 	
 	//!!!!NEEDS SOME WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -246,7 +261,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	public void setButtonsHoverAction() {
 		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
 		x = 0;
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < BUTTON_COUNT; i++) {
 			buttons.get(i).setHoverAction(new Action() {
 				
 				ImageButton b = buttons.get(x);
@@ -384,8 +399,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 //--OPTIONS INTERFACE METHODS--//
 	public void toggleButtons(boolean b) {
-		for(int i=0; i<4; i++) {
-			buttons.get(i).setEnabled(b);
+		for(ImageButton button: buttons) {
+			button.setEnabled(b);
 		}
 	}
 	public void passKeyCodeIntoOptions(KeyEvent e) {
