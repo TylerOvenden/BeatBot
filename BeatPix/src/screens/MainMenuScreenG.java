@@ -77,7 +77,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	 */
 	public void initAllObjects(List<Visible> viewObjects) {
 		createBackground();
-		
 		createButtons();
 		setButtonsActions();
 		

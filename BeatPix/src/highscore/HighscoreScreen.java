@@ -117,7 +117,7 @@ public class HighscoreScreen extends ResizableScreen {
 			
 			@Override
 			public void act() {
-				MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(),song));
+				MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(),song, "resources/sample_bg.gif"));
 				
 			}
 		});

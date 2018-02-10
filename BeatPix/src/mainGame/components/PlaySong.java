@@ -21,13 +21,15 @@ public class PlaySong implements JustinPlaySongInterface {
 	
     // size of the byte buffer used to read/write the audio stream
     private static final int BUFFER_SIZE = 4000;
+    
+    private boolean pause;
+    private boolean cancel;
      
     /**
      * Play a given audio file.
      * @param audioFilePath Path of the audio file.
      * Tyler
      */
-    boolean paused;
     Long audioPosition;
     Clip clip;
     
@@ -56,14 +58,24 @@ public class PlaySong implements JustinPlaySongInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            while ((bytesRead = audioStream.read(bytesBuffer)) != -1) {
+            pause = false;
+            cancel = false;
+            while ((bytesRead = audioStream.read(bytesBuffer)) != -1 && !cancel) {
+            	while(pause) {
+            		try {
+						Thread.sleep(0);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	}
                 audioLine.write(bytesBuffer, 0, bytesRead);
             }
              
             audioLine.drain();
             audioLine.close();
             audioStream.close();
-             
+            
            // System.out.println("Playback completed.");
              
         } catch (UnsupportedAudioFileException ex) {
@@ -85,17 +97,20 @@ public class PlaySong implements JustinPlaySongInterface {
 	@Override
 	public void pauseSong() {
 	
+		pause = true;
 		
 	}
 
-	@Override
 	public void resumeSong() {
 
+		pause = false;
+		
 	}
 
-	@Override
 	public void stopSong() {
-			
+		
+		cancel = true;
+		
 	}
  
 }
