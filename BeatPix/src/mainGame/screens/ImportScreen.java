@@ -4,6 +4,7 @@ import java.util.List;
 
 import gui.interfaces.Visible;
 import mainGame.MainGUI;
+import mainGame.components.CustomText;
 import mainGame.screens.interfaces.ResizableScreen;
 
 public class ImportScreen extends ResizableScreen {
@@ -16,8 +17,10 @@ public class ImportScreen extends ResizableScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		// TODO Auto-generated method stub
-
+		
+		CustomText txt = new CustomText(200, 50, 300, 100, "Import", true);
+		viewObjects.add(txt);
+		
 	}
 
 }
