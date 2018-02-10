@@ -46,7 +46,7 @@ public class WavMusicBeatDetector {
 	private ArrayList<int[]> processedBeats;
 	private FFT fft;
 	
-	public WavMusicBeatDetector(String path) {
+	public WavMusicBeatDetector(String title, String artist, String path) {
 		File file = new File(path);
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
@@ -62,7 +62,7 @@ public class WavMusicBeatDetector {
 			timings = getTimeOfBeats(beats);
 			addBeats();
 			
-			FileP.save("Dreadnought", 192, "Mastermind(xi+nora2r)", 0, processedBeats);
+			FileP.save(title, 192, artist, 0, processedBeats);
 			
 			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
@@ -95,7 +95,7 @@ public class WavMusicBeatDetector {
 	}
 
 	public static void main(String[] args) {
-		WavMusicBeatDetector p = new WavMusicBeatDetector("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav");
+		WavMusicBeatDetector p = new WavMusicBeatDetector("Dreadnought", "Mastermind(xi+nora2r)", "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav");
 	}
 	
 	//Frame rate is the number of samples per second
