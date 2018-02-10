@@ -44,6 +44,7 @@ import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 import screens.components.FightPaneG;
+import screens.interfaces.Options;
 
 
 /**
@@ -54,7 +55,7 @@ import screens.components.FightPaneG;
  * @author Tyler Ovenden
  *
  */
-public class GameScreen extends ResizableScreen implements Runnable {
+public class GameScreen extends ResizableScreen implements Runnable, Options {
 
 	/**
 	 * 
@@ -1307,6 +1308,20 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 		for(int i=0;i<timings.size();i++) {
 			addObject(timings.get(i));
+		}
+	}
+
+	/**
+	 * This method toggles the button according to the given boolean value
+	 * 
+	 * @param b - A boolean to enable buttons or disable them
+	 * 
+	 * @author Justin Yau
+	 */
+	public void toggleButtons(boolean b) {
+		escapeGear.setEnabled(b);
+		for(OptionButton btn: optBTN) {
+			btn.setEnabled(b);
 		}
 	}
 	
