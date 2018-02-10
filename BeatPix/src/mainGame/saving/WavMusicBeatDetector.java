@@ -34,18 +34,28 @@ public class WavMusicBeatDetector {
 	//private byte[] data;
 	//private int[] previousData;
 	//private long framesCount;
-	private AudioInputStream audioInputStream;
-	private FileInputStream fileInputStream;
-	//private DataInputStream dataInputStream;
-	private WavDecode waveInputStream;
-	private AudioFormat audioFormat;
-	//private ArrayList<float[]> samples;
-	private ArrayList<Long> timings;
-	private List<Float> beats;
-	private List<Float> fluxes;
-	private ArrayList<int[]> processedBeats;
-	private FFT fft;
+	private AudioInputStream audioInputStream; //The audio input stream to retrieve the audio format
+	private FileInputStream fileInputStream; //The file input stream to get information about the file
+	//private DataInputStream dataInputStream; 
+	private WavDecode waveInputStream; //Custom input stream to enable us to get information as a float
+	private AudioFormat audioFormat; //The audio format of the stream will be stored here
+	//private ArrayList<float[]> samples; 
+	private ArrayList<Long> timings; //The times of the beats will be stored here
+	private List<Float> beats; //The list of unprocessed beats will be stored here
+	private List<Float> fluxes; //The spectral fluxes (Signal changes) will be stored here
+	private ArrayList<int[]> processedBeats; //All the finished beats will be stored here to be saved into our custom format
+	private FFT fft; //The Fast Fourier Transform object will be stored here
 	
+	/**
+	 * Constructor retrieves beat information from the WAV file as given by the path <br>
+	 * Afterwards, it saves it in a directory as follows: <br>
+	 * resources/maps/(title+artist)/(title+artist).csv 
+	 * @param title - Title of the song
+	 * @param artist - Artist of the song
+	 * @param path - The path to the WAV file of the song
+	 * 
+	 * @author Justin Yau
+	 */
 	public WavMusicBeatDetector(String title, String artist, String path) {
 		File file = new File(path);
 		try {
