@@ -322,7 +322,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 */
 	public void setUpBindings() {
 		bindings = MainGUI.getKeys();
-		updateKeyStrokes("D", "F", "J", "K");
+		//updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -633,7 +633,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public double determineScale(String path) {
 		double scale = 1;
 		try {
-			BufferedImage img = ImageIO.read(new File(backgroundPath));
+			BufferedImage img = ImageIO.read(new File(path));
 			scale = ((double)MainGUI.screenWidth)/img.getWidth();
 		} catch (IOException e) {
 		}
@@ -1070,7 +1070,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 			}
 		}};
 		for(int i = 0; i < btnTypes.length; i++) {
-			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i]);
+			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i], this);
 			bt.setAction(act[i]);
 			optBTN.add(bt);
 		}
