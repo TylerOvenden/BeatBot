@@ -27,7 +27,7 @@ import mainGame.saving.resources.WavDecode;
  * 
  * @author Justin Yau
  */
-public class WavMusicFileConverter {
+public class WavMusicBeatDetector {
 	
 	//private int sampleSize;
 	//private int channelsNum;
@@ -46,7 +46,7 @@ public class WavMusicFileConverter {
 	private ArrayList<int[]> processedBeats;
 	private FFT fft;
 	
-	public WavMusicFileConverter(String path) {
+	public WavMusicBeatDetector(String path) {
 		File file = new File(path);
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
@@ -93,7 +93,7 @@ public class WavMusicFileConverter {
 	}
 
 	public static void main(String[] args) {
-		WavMusicFileConverter p = new WavMusicFileConverter("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav");
+		WavMusicBeatDetector p = new WavMusicBeatDetector("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav");
 	}
 	
 	//Frame rate is the number of samples per second
