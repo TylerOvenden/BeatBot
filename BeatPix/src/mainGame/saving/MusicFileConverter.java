@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -17,18 +18,14 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import mainGame.saving.resources.FFT;
+
 /**
  * This class will be able to process music files and detect beats and place them into an array list for processing by the file saver
  * 
  * @author Justin Yau
  */
 public class MusicFileConverter {
-
-	//Algorithm is derived by http://archive.gamedev.net/archive/reference/programming/features/beatdetection/index.html
-	/*
-	 * 44032 - About one second - Call the .getFrameRate() to get exact rate per second to be sure
-	 * 
-	 */
 	
 	private int sampleSize;
 	private int channelsNum;
@@ -41,6 +38,7 @@ public class MusicFileConverter {
 	private AudioFormat audioFormat;
 	private ArrayList<float[]> samples;
 	private ArrayList<int[]> beats;
+	private FFT fft;
 	
 	public MusicFileConverter() {
 		File file = new File("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.wav");
@@ -48,8 +46,10 @@ public class MusicFileConverter {
 			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
 			fileInputStream = new FileInputStream(file);
 			dataInputStream = new DataInputStream(fileInputStream);
-			
+
 			audioFormat = audioInputStream.getFormat();
+			fft = new FFT(1024, audioFormat.getSampleRate());
+			
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
 		    channelsNum = audioFormat.getChannels();
 		    
@@ -147,5 +147,23 @@ public class MusicFileConverter {
         int sample = ByteBuffer.wrap(sampleBytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
         return sample;
     }
-	
+    
+    public void getSample() throws Exception {
+        byte[] samples = new byte[1024];
+        float[] spectrum = new float[1024 / 2 + 1];
+        float[] lastSpectrum = new float[1024 / 2 + 1];
+        List<Float> spectralFlux = new ArrayList<Float>();
+
+        while (audioInputStream.read(samples) > 0) {
+            //fft.forward(samples);
+            System.arraycopy(spectrum, 0, lastSpectrum, 0, spectrum.length);
+            System.arraycopy(fft.getSpectrum(), 0, spectrum, 0, spectrum.length);
+
+            float flux = 0;
+            for (int i = 0; i < spectrum.length; i++)
+                flux += (spectrum[i] - lastSpectrum[i]);
+            spectralFlux.add(flux);
+        }
+    }
+    
 }
