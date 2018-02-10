@@ -1054,8 +1054,9 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 			@Override
 			public void act() {
 				//Options Action Button will be here
-				//inOptions = true;
-				//MainGUI.options.addObjects();
+				inOptions = true;
+				MainGUI.options.setParentScreen(GameScreen.game);
+				MainGUI.options.addObjects();
 			}
 		}, new Action() {
 			
