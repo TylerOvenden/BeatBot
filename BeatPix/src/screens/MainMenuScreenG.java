@@ -82,7 +82,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	 */
 	public void initAllObjects(List<Visible> viewObjects) {
 		createBackground();
-		
 		createButtons();
 		setButtonsActions();
 		
@@ -207,6 +206,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
+
 						//MainGUI.setScreen(MainGUI.level);
 						Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
 						/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
@@ -238,9 +238,9 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
-						toggleButtons(false);
-	
+						
 						MainGUI.options.addObjects();
+						toggleButtons(false);
 					}
 				});
 				
