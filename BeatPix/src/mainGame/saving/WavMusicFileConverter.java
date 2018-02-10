@@ -54,6 +54,8 @@ public class WavMusicFileConverter {
 			audioFormat = audioInputStream.getFormat();
 			fft = new FFT(1024, audioFormat.getSampleRate());
 			
+			fluxes = getSample();
+			
 			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
 		    channelsNum = audioFormat.getChannels();
@@ -85,11 +87,18 @@ public class WavMusicFileConverter {
 	}
 
 	public static void main(String[] args) {
-		WavMusicFileConverter p = new WavMusicFileConverter("resources/maps/adrenaline!!! -TV Ver-TrySail/adrenaline!!! -TV Ver-TrySail.wav");
+		WavMusicFileConverter p = new WavMusicFileConverter("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav");
 	}
 	
 	//Frame rate is the number of samples per second
 	
+	/**
+	 * This method calculates the spectral fluxes (signal change) of the audio file and saves them into a list of floats
+	 * @return Returns the list of spectral fluxes of the audio file
+	 * @throws Exception 
+	 * 
+	 * @author Justin Yau
+	 */
     public List<Float> getSample() throws Exception {
         float[] samples = new float[1024];
         float[] spectrum = new float[1024 / 2 + 1];
@@ -117,6 +126,14 @@ public class WavMusicFileConverter {
         }
 	}
 	
+	/**
+	 * This method generates a number between the specified low and highs of the set
+	 * @param low - The lowest number to generate
+	 * @param high - The highest number to generate
+	 * @return - A random number between the specified set
+	 * 
+	 * @author Justin Yau
+	 */
 	public int getRandomNumber(int low, int high) {
 		return low + (int)(Math.random() * ((high - low) + 1));
 	}

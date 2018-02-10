@@ -30,6 +30,7 @@ public class WavDecode {
 	 * @param stream - The data input stream you would like to read information from
 	 * 
 	 * @see See how waves are formatted at http://soundfile.sapp.org/doc/WaveFormat/ 
+	 * @see https://ist.uwaterloo.ca/~schepers/formats/WAV.TXT
 	 * 
 	 * @author Justin Yau
 	 * @throws Exception 
@@ -78,9 +79,9 @@ public class WavDecode {
 		if(fmt != 16) {//Checks and makes sure WAV is 16 bits 
 			throw new IllegalArgumentException("This decoder only supports 16-bit signed");
 		}
-		
-		if(!in.readNext4BytesString().equals("data")) { //Next subchunk in the wav file formatting
-			throw new RuntimeException("Expected data subchunk");
+
+		if(!in.readNext4BytesString().equalsIgnoreCase("LIST")) { //Next subchunk in the wav file formatting
+			throw new RuntimeException("Expected list subchunk");
 		}
 		
 		in.intReadLittleEndian(); //We don't need the Subchunk2Size
