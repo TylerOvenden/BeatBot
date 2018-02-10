@@ -55,6 +55,7 @@ public class WavMusicFileConverter {
 			fft = new FFT(1024, audioFormat.getSampleRate());
 			
 			fluxes = getSample();
+			detectBeats(fluxes, 1.3f);
 			
 			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
@@ -119,6 +120,79 @@ public class WavMusicFileConverter {
         return spectralFlux;
     }
 	
+    /**
+     * This method will use a beat detection algorithm's concept to detect beats 
+     * 
+     * @param fluxes - The arraylist of fluxes
+     * @param sensitivity - The sensitivity of the beat detection
+     * @return - All the peaks found among the fluxes
+     * 
+     * @see http://archive.gamedev.net/archive/reference/programming/features/beatdetection/index.html 
+     * 
+     * @author Justin Yau
+     */
+    public List<Float> detectBeats(List<Float> fluxes, float sensitivity) {
+    	
+    	ArrayList<Float> localAverageEnergyThreshold = new ArrayList<Float>();
+    	
+    	calculateAverageLocal(localAverageEnergyThreshold, sensitivity);
+    	
+    	ArrayList<Float> beats = new ArrayList<Float>();
+    	
+    	determineBeats(localAverageEnergyThreshold, beats);
+    	
+    	List<Float> finalBeats = new ArrayList<Float>();
+     	
+    	removeCloseBeats(beats, finalBeats);
+    	
+    	return finalBeats;
+    }
+    
+    public void calculateAverageLocal(ArrayList<Float> localAverageEnergyThreshold, float sensitivity) {
+    	//Calculate average energy locally every 10 fluxes
+    	for(int i = 0; i < fluxes.size(); i++) {
+    		int start = Math.max(0, i - 10); //Such that we do not get an index out of bounds exception
+    		int end = Math.min(fluxes.size() - 1, i + 10); //Such that we do not get an index out of bounds exception
+    		float mean = 0;
+    		for(int j = start; j <= end; j++) {
+    			mean += fluxes.get(j); //Get the sum of all the local fluxes
+    		}
+    		mean /= (end - start); //Get the average
+    		localAverageEnergyThreshold.add(mean * sensitivity); //Add the calculated local average into the list
+    	}
+    }
+    
+    public void determineBeats(ArrayList<Float> localAverageEnergyThreshold, ArrayList<Float> beats) {
+    	//Compare the flux value of the beat to the local avg
+    	for(int i = 0; i < localAverageEnergyThreshold.size(); i++) {
+    		float flux = fluxes.get(i); //Get the flux value at the specified i
+    		float lavg = localAverageEnergyThreshold.get(i); //Get local avg at that flux value
+    		float value = flux >= lavg ? flux - lavg: 0; //If flux value is greater than the local average, it can be considered a beat 
+    		//We save the value if it is a beat. We save the value as 0 if it not the beat
+    		beats.add(value); //Add the value into the beat arraylist
+    	}
+    }
+    
+    public void removeCloseBeats(ArrayList<Float> beats, List<Float> finalBeats) {
+    	//Removes consecutive beats so we get the real beats
+    	for(int i = 0; i < beats.size() - 1; i++) {
+    		float flux = beats.get(i); //Get the beat value at the index
+    		float nflux = beats.get(i + 1); //Get the next beat value at the index
+    		float value = flux > nflux ? flux : 0; //Compares the two values: Save the flux value if it is greater than the next value and if not, save as 0
+    		finalBeats.add(value);
+    	}
+    }
+    
+    public void getTimeOfBeats(ArrayList<Long> times, List<Float> beats) {
+    	times = new ArrayList<Long>();
+    	for(int i = 0; i < beats.size(); i++) {
+    		if(beats.get(i) > 0) {
+                long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f);
+                times.add(timeInMillis);
+    		}
+    	}
+    }
+    
 	public void addBeats() {
 		beats = new ArrayList<int[]>();
         for (int i = 1024; i < framesCount - 1024; i++) {
