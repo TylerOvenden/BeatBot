@@ -16,9 +16,6 @@ import mainGame.MainGUI;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6794226819818369625L;
 	/**Design:
 	 * -Background - will be a basic static image
@@ -210,7 +207,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 4;
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight()*2);
-		System.out.println(MainGUI.test.x+"ms END START");
+		//System.out.println(MainGUI.test.x+"ms END START");
 
 						
 /*Screen switch*/		MainGUI.test.setScreen(MainGUI.test.mainMenu);
