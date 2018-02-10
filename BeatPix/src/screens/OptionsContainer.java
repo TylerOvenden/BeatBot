@@ -387,13 +387,8 @@ public class OptionsContainer{
 				
 			}
 		}
-<<<<<<< HEAD
 		
 		parentScreen.addObject(selectingKeyScreen);
-=======
-		
-		parentScreen.addObject(selectingKeyScreen);
->>>>>>> refs/heads/graphics
 		/*for(CustomText c: selectingKeyScreenText) {
 			parentScreen.addObject(c);
 		}*/
