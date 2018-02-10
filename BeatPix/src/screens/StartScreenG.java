@@ -13,13 +13,9 @@ import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
 import mainGame.MainGUI;
-import mainGame.MainGUI;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6794226819818369625L;
 	/**Design:
 	 * -Background - will be a basic static image
@@ -30,21 +26,34 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 *   get to Main Menu background image
 	 */
 	
-	private Timer time;
-	private int screenPhase;
+	private Timer time; // timer for events
+	private int screenPhase; // phases for events
 	
-	private Graphic background;
+	private Graphic background; // background image
 	
-	private Graphic title;
-	private Graphic start;
+	private Graphic title; // title graphic
+	private Graphic start; // start graphic
 	
+	//Something old for when user could only click when start fades in
+	//basically useless now
 	private boolean allowClick = false;
-
+	
+	/**Constructor**
+	 * 
+	 * @param width
+	 * @param height
+	 */
 	public StartScreenG(int width, int height) {
 		super(width, height);
 		screenPhase = 0;
 	}
-
+	
+	/**User Clicks to Skip**
+	 * 
+	 * Each user click will move the user
+	 * to the next screen phase
+	 * 
+	 */
 	public void mouseClicked(MouseEvent e) {
 		if(!allowClick) {
 			if(screenPhase == 0) {
@@ -63,7 +72,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		}
 	}
 	
-	@Override
+	/**Adds Components to Screen**
+	 * 
+	 */
 	public void initAllObjects(List<Visible> viewObjects) {
 		
 		background = updateBackground("resources\\backgrounds\\start.jpg");
@@ -79,7 +90,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		viewObjects.add(title);
 		viewObjects.add(start);
 	}
-//--Start ( [START] )--//
+	
+//--START ( [START] )--//
 	private Graphic updateStart(String path) {
 		ImageIcon icon = new ImageIcon(path);
 		int w; int h; int x; int y;
@@ -102,7 +114,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		return new Graphic(x,y,w,h,path);
 	}
 	
-//--BACKGROUND (background)--//
+//--BACKGROUND ([])--//
 	private Graphic updateBackground(String path) {
 		ImageIcon icon = new ImageIcon(path);
 		int w; int h; // 0 for either will use original image size/width
@@ -110,13 +122,22 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		if(background != null) {
 			x = background.getX(); y = background.getY();
 		}
+		
 		w = getWidth();
-		//GUIApp scales the height last *needs fixing as other images don't work with it
 		h = (int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100); //makes the width of background always match the screen
+		
 		return new Graphic(x,y,w,h,path);
 	}
 	
 //--EVENTS--//
+	/**Scrolls Background SCREENPHASE 0**
+	 * 
+	 * Initial State:
+	 * -Top of background matches top of screen (0,0)
+	 * 
+	 * Final State:
+	 * -Background half matches bottom of screen
+	 */
 	public void scrollIn() {
 		
 		background.setX(0); background.setY(0);
@@ -139,6 +160,18 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 1;
 	}
 	
+	/**Fade In Title and Start SCREENPHASE 1**
+	 * 
+	 * Initial State:
+	 * -SCREENPHASE 0 final state
+	 * -Title and start are invisible (0.0f alpha)
+	 * 
+	 * Final State:
+	 * -Title and start are solid (1.0f alpha)
+	 * 
+	 * Start starts to fade in once Title is 
+	 * 70% solid (0.7f alpha)
+	 */
 	public void fadeIns() {
 		
 		background.setY(-background.getHeight()/2+getHeight());
@@ -167,7 +200,17 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		title.setAlpha(1f);start.setAlpha(1f);
 		screenPhase = 2;
 	}
-	
+
+	/**Fades Out Title and Start SCREENPHASE 2**
+	 * 
+	 * Initial State:
+	 * -SCREENPHASE 1 final state
+	 * -Title and start are solid (1.0f alpha)
+	 * 
+	 * Final State:
+	 * -Title and start are invisible (0,0f alpha)
+	 * 
+	 */
 	public void fadeOuts() {
 		
 		title.setAlpha(1f);start.setAlpha(1f);
@@ -192,6 +235,21 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 3;
 	}
 	
+	/**Scrolls Down SCREENPHASE 3**
+	 * 
+	 * Initial State:
+	 * -SCREENPHASE 2 final state
+	 * -Title and start are invisible (0,0f alpha)
+	 * 
+	 * Final State:
+	 * -Background is set so the screen is two
+	 *  of the screen height up (bottom of background image
+	 *  + 2 of the screen height)
+	 *  
+	 *  Once it reaches its final state the screen switches
+	 *  to the main menu screen
+	 * 
+	 */
 	public void scrollOut() {
 		
 		title.setAlpha(0f);start.setAlpha(0f);
@@ -211,9 +269,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		screenPhase = 4;
 		time.cancel();
 		background.setY(-background.getHeight() + getHeight());
-//		MainGUI.test.setScreen(new MainMenuScreenG(getWidth(),getHeight()));
 		background.setY(-background.getHeight() + getHeight()*2);
-		System.out.println(MainGUI.test.x+"s END START");
 
 						
 /*Screen switch*/		MainGUI.test.setScreen(MainGUI.test.mainMenu);
