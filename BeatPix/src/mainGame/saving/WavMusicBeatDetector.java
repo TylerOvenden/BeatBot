@@ -103,6 +103,63 @@ public class WavMusicBeatDetector {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Constructor retrieves beat information from the WAV file as given by the path <br>
+	 * Afterwards, it saves it in a directory as follows: <br>
+	 * resources/maps/(title+artist)/(title+artist).csv 
+	 * @param title - Title of the song
+	 * @param artist - Artist of the song
+	 * @file - The actual file of the WAV
+	 * 
+	 * @author Justin Yau
+	 */
+	public WavMusicBeatDetector(String title, String artist, File file) {
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+			fileInputStream = new FileInputStream(file);
+			//dataInputStream = new DataInputStream(fileInputStream);
+			waveInputStream = new WavDecode(fileInputStream);
+
+			audioFormat = audioInputStream.getFormat();
+			fft = new FFT(1024, audioFormat.getSampleRate());
+			
+			fluxes = getSample();
+			beats = detectBeats(fluxes, 1.7f);
+			timings = getTimeOfBeats(beats);
+			addBeats();
+			
+			FileP.save(title, 192, artist, 0, processedBeats);
+			
+			/*
+			sampleSize = audioFormat.getSampleSizeInBits()/8;
+		    channelsNum = audioFormat.getChannels();
+		    
+		    framesCount = audioInputStream.getFrameLength();
+		    
+	        long dataLength = framesCount * audioFormat.getSampleSizeInBits() * audioFormat.getChannels() / 8;
+
+	        data = new byte[(int) dataLength];
+	        //System.out.println(audioFormat.getFrameRate());
+	        
+	        System.out.println(getSampleNumber(132000));
+	        //addBeats();
+	        */
+	        
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public static void main(String[] args) {
 		WavMusicBeatDetector p = new WavMusicBeatDetector("Dreadnought", "Mastermind(xi+nora2r)", "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav");

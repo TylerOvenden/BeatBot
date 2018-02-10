@@ -7,7 +7,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,15 +22,29 @@ import gui.components.*;
 import gui.interfaces.Visible;
 import mainGame.MainGUI;
 import mainGame.components.*;
+import mainGame.saving.WavMusicBeatDetector;
 import mainGame.screens.interfaces.ResizableScreen;
 
+/**
+ * A screen where users can import WAV audio files that get analyzed for beats that are converted into our own game!
+ * 
+ * @author Justin Yau
+ */
 public class ImportScreen extends ResizableScreen {
 	
-	private ArrayList<TextBox> boxes;
-	private ArrayList<OptionButton> optBTN;
-	private File importedFile;
-	private TextLabel fileName;
+	private ArrayList<TextBox> boxes; //Arraylist of all the text boxes will be stored here
+	private ArrayList<OptionButton> optBTN; //Arraylist of all the buttons will be stored here
+	private File importedFile; //The imported file will be stored here
+	private TextLabel fileName; //The file name textlabel will be stored here
+	private TextLabel status; //The text label for the status of the converter will be stored here
 	
+	/**
+	 * Constructor creates a screen where users can import WAV audio files into our own game!
+	 * @param width - Width of the screen
+	 * @param height - Height of the screen
+	 * 
+	 * @author Justin Yau
+	 */
 	public ImportScreen(int width, int height) {
 		super(MainGUI.screenWidth, MainGUI.screenHeight);
 		
@@ -85,9 +102,70 @@ public class ImportScreen extends ResizableScreen {
 		addTextLabels(f, viewObjects);
 		addTextBoxes(f, viewObjects);
 		addImportButton(viewObjects);
+		addConvertButton(viewObjects);
 		
 	}
 	
+	/**
+	 * This method adds the convert button to process all the information to the screen
+	 * @param viewObjects - The list of visible objects for the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addConvertButton(List<Visible> viewObjects) {
+		OptionButton btn = new OptionButton(430, 350, 75, 50, "Convert", this);
+		btn.setAction(new Action() {
+			
+			@Override
+			public void act() {
+				String title = boxes.get(0).getText();
+				String artist = boxes.get(1).getText();
+				if(title != null && !(title.equals("")) 
+						&& artist != null && !(artist.equals(""))
+						&& importedFile != null) {
+					processInformation(title, artist);
+					status.setText("Success!");
+					status.update();
+				}
+				else {
+					status.setText("Input all required fields!");
+					status.update();
+				}
+			}
+		});
+		optBTN.add(btn);
+		viewObjects.add(btn);
+	}
+	
+	/**
+	 * This method processes all the inputted information and uses the beat detector to create a song file under our format style
+	 * @param title - Title of the song
+	 * @param artist - Artist of the song
+	 * 
+	 * @author Justin Yau
+	 */
+	public void processInformation(String title, String artist) {
+		WavMusicBeatDetector detect = new WavMusicBeatDetector(title, artist, importedFile);
+		FileOutputStream out;
+		try {
+			out = new FileOutputStream(new File("resources/maps/" + title + artist + "/" + title + artist + ".wav"));
+			Files.copy(importedFile.toPath(), out);
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+ 	/**
+ 	 * This method adds the import button to the screen
+ 	 * @param viewObjects The list of visible objects for the screen
+ 	 * 
+ 	 * @author Justin Yau
+ 	 */
 	public void addImportButton(List<Visible> viewObjects) {
 		OptionButton btn = new OptionButton(430, 300, 75, 50, "Import", this);
 		btn.setAction(new Action() {
@@ -109,6 +187,13 @@ public class ImportScreen extends ResizableScreen {
 		viewObjects.add(btn);
 	}
 	
+ 	/**
+ 	 * This method adds the text labels to the screen
+ 	 * @param f Custom font you would like to have these text boxes to have
+ 	 * @param viewObjects The list of visible objects for the screen
+ 	 * 
+ 	 * @author Justin Yau
+ 	 */
  	public void addTextLabels(Font f, List<Visible> viewObjects) {
 		ArrayList<TextLabel> text = new ArrayList<TextLabel>();
 		TextLabel instruction = new TextLabel(125, 125, 800, 50, "Input the title and artist that you would like and import your WAV file to get started!");
@@ -123,6 +208,9 @@ public class ImportScreen extends ResizableScreen {
 		fileName = new TextLabel(515, 315, 300, 50, "None");
 		text.add(fileName);
 		
+		status = new TextLabel(515, 365, 300, 50, "Status: nothing");
+		text.add(status);
+		
 		for(TextLabel t: text) {
 			t.setCustomTextColor(Color.LIGHT_GRAY);
 			t.setFont(f);
@@ -132,8 +220,10 @@ public class ImportScreen extends ResizableScreen {
  	
  	/**
  	 * This method adds the text boxes to the screen
- 	 * @param f 
- 	 * @param viewObjects
+ 	 * @param f Custom font you would like to have these text boxes to have
+ 	 * @param viewObjects The list of visible objects for the screen
+ 	 * 
+ 	 * @author Justin Yau
  	 */
  	public void addTextBoxes(Font f, List<Visible> viewObjects) {
  		
