@@ -62,9 +62,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	private static int CHARACTER_IDX = 1;
 	private static int UNLOCK_IDX = 2;
 	private static int OPTIONS_IDX = 3;
-	//private static int CUSTOM_SONG = 4;
 	
-	private static ImageButton instructions;
+	private static ImageButton information;
 	
 	/**Constructor**
 	 * 
@@ -87,6 +86,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		setButtonsActions();
 		
 		createIdleCharacter();
+		createInformationButton();
 		
 		//viewObjects adding
 		viewObjects.add(background);
@@ -95,6 +95,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			viewObjects.add(buttonTexts.get(i));
 		}
 		viewObjects.add(idleCharacter);
+		viewObjects.add(information);
 	}
 	
 //--COMPONENTS--//
@@ -285,6 +286,25 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		}
 	}
 
+	/** --INFORMATION--
+	 * 
+	 * Button that leads to the information popup
+	 */
+	public void createInformationButton() {
+		information = new ImageButton(50,
+										50, 
+											50,
+												50,
+													"resources\\WhiteFont\\I_White_Transparent.png");
+		information.setAction(new Action() {
+			public void act() {
+				toggleButtons(false);
+				MainGUI.information.addObjects();
+			}
+		});
+
+		information.setAlpha(0.0f);
+	}
 	
 //--EVENTS--//
 	/**SCROLL DOWN METHODS COMMENTED HERE**
@@ -377,7 +397,9 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		time.cancel();
 		
 		background.setY(-background.getHeight()+getHeight());
-		background.setEnabled(false);
+		background.setEnabled(false); 
+		
+		information.setAlpha(1.0f);
 		
 		idleCharacter.setY(getHeight()*200/540); // DIMENSIONS!!!!!!!!
 		
@@ -386,10 +408,9 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			buttons.get(i).setX(getWidth()*480/960); // DIMENSIONS!!!!!!!!
 			buttonTexts.get(i).setY(getHeight()*100/540*(i+1) + getHeight()*25/540); // DIMENSIONS!!!!!!!!
 			buttonTexts.get(i).setX(getWidth()*480/960 + getWidth()*70/960); // DIMENSIONS!!!!!!!!
-			
-			buttons.get(i).setEnabled(true);
-
 		}
+		
+		toggleButtons(true);
 		
 		screenPhase = 1;
 	}
@@ -399,6 +420,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 //--OPTIONS INTERFACE METHODS--//
 	public void toggleButtons(boolean b) {
+		information.setEnabled(b);
 		for(ImageButton button: buttons) {
 			button.setEnabled(b);
 		}

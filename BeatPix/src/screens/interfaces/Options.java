@@ -45,6 +45,10 @@ public interface Options{
 	void addObject(Visible a);
 
 	void remove(Visible a);
+
+	int getWidth();
+
+	int getHeight();
 	
 	
 }
