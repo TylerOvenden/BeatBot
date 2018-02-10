@@ -13,6 +13,8 @@ import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
 import screens.components.ImageButton;
+import shop.ShopScreen;
+
 import java.util.List;
 
 import gui.interfaces.Visible;
@@ -37,13 +39,19 @@ public class LevelSelectG extends FullFunctionScreen{
 		unseenButtons= new ArrayList<ImageButton>();
 		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
 		buttons = new ArrayList<ImageButton>();
-		for(int i=0; i<5; i++) {
-/*P D*/		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
-				
+		for(int i=0; i<ShopScreen.getSongs().size(); i++) {
+/*P D*/ 		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
+			//ShopScreen.getSongs();
+			buttons.get(i).setAction(new Action() {
+				public void act(){
 		
+					Test.test.setScreen(new GameScreen(getWidth(),getHeight(),ShopScreen.getSongs().get(i)));
+				}
+			});
 		
 		}
 		buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
+<<<<<<< HEAD
 		buttons.get(2).setAction(new Action() {
 			public void act(){
 
@@ -54,6 +62,9 @@ public class LevelSelectG extends FullFunctionScreen{
 
 			}
 	});
+=======
+
+>>>>>>> refs/heads/graphics
 		buttons.get(2).setEnabled(true);
 		
 		ImageButton left = new ImageButton( getWidth()-900, getHeight()-300, icon.getIconWidth(), 100 ,"resources\\LeftArrow-small.jpg");

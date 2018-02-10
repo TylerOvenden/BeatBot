@@ -49,7 +49,7 @@ import screens.interfaces.Options;
 
 /**
  * This screen is for the actual game play of the map for a song
- * 
+ *
  * @author Justin Yau
  * @author Steven Li
  * @author Tyler Ovenden
@@ -316,7 +316,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @author Justin Yau
 	 */
 	public void setUpBindings() {
-		bindings = MainGUI.bindings;
+		bindings = MainGUI.getKeys();
 		updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
