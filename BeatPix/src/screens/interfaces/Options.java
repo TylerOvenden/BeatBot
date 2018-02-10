@@ -16,12 +16,28 @@ public interface Options{
 
 	/*
 	 * Returns if the options is being used on the screen
+	 * 
+	 * !!!THIS IS OPTIONAL!!!
+	 * Only if keyPressed isn't used elsewhere on the screen
 	 */
 	boolean inOptions();
 	
-	/**
-	 * Will give the keycode to Test.test.options.readKey();
+	/**Method Called by Other Screens**
 	 * 
+	 * Method called by other screens whenever
+	 * kepPress/keyReleased is called in order
+	 * to determine which key the user chose
+	 * 
+	 * Example:
+	   	public void keyPressed(KeyEvent e) {
+			passKeyCodeIntoOptions(e);
+		}
+	 * 
+	 * Checks if key pressed is not in use:
+	 * -If in unavailable, it will stay phase 0
+	 *  where it will wait for another key press
+	 * -If available, it will auto set it and
+	 *  go into the non selecting phase
 	 */
 	void passKeyCodeIntoOptions(KeyEvent e);
 	

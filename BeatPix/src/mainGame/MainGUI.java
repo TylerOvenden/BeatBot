@@ -10,6 +10,7 @@ import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.*;
 import mainGame.screens.ShopScreen;
+import screens.InformationContainer;
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
@@ -31,6 +32,7 @@ public class MainGUI extends GUIApplication {
 	//public static LevelSelectG level;
 	public static ShopScreen shop;
 	public static OptionsContainer options;
+	public static InformationContainer information;
 	
 	public int x;
 	
@@ -76,6 +78,7 @@ public class MainGUI extends GUIApplication {
 		shop = new ShopScreen(getWidth(),getHeight());
 
 		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
+		information = new InformationContainer((Options) mainMenu);
 		
 		setScreen(start);
 		start.scrollIn();
