@@ -75,7 +75,7 @@ public class FileP implements FileProcessor {
 	 * @author Justin Yau
 	 */
 	public static void save(String title, int BPM, String artist, int offSet, ArrayList<int[]> list) {
-		String name = title;
+		String name = title + artist;
 		new File("resources/maps/" + name).mkdirs();
 		String fileName = "resources/maps/" + name + "/"+ name + ".csv";
 		try{    

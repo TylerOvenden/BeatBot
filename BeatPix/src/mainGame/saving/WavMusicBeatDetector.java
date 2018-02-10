@@ -62,6 +62,8 @@ public class WavMusicBeatDetector {
 			timings = getTimeOfBeats(beats);
 			addBeats();
 			
+			FileP.save("Dreadnought", 192, "Mastermind(xi+nora2r)", 0, processedBeats);
+			
 			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;
 		    channelsNum = audioFormat.getChannels();
@@ -219,7 +221,7 @@ public class WavMusicBeatDetector {
     public ArrayList<Long> getTimeOfBeats(List<Float> beats) {
     	ArrayList<Long> times = new ArrayList<Long>();
     	for(int i = 0; i < beats.size(); i++) {
-    		if(beats.get(i) > 0) {
+    		if(beats.get(i) > 225) {
                 long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f); //This is the formula to determine the time the beat occurred
                 times.add(timeInMillis);
     		}
@@ -236,7 +238,6 @@ public class WavMusicBeatDetector {
 		processedBeats = new ArrayList<int[]>();
         for(int i = 0; i < timings.size(); i++) {
         	int[] temp = {getRandomNumber(1,4), timings.get(i).intValue(), 0};
-        	System.out.println(Arrays.toString(temp));
         	processedBeats.add(temp);
         }
 	}

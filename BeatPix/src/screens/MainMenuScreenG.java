@@ -80,16 +80,16 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			public void act(){
 
 				buttons.get(0).unhoverAction();
-				Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
-/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
-				
+				Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).csv");
+/**/			MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
+				/*
 				try {
 					MainGUI.test.setScreen(new TempSongSelect(getWidth(), getHeight()));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				*/
 			}
 		});
 		
