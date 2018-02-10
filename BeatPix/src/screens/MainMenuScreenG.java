@@ -2,8 +2,7 @@ package screens;
 
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -13,18 +12,18 @@ import javax.swing.ImageIcon;
 
 import gui.GUIApplication;
 import gui.components.*;
-import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+//import highscore.TempSongSelect;
 import mainGame.MainGUI;
+import mainGame.components.Song;
 import screens.components.CustomText;
 import screens.components.ImageButton;
-import screens.components.ScalablePixelBack;
 import screens.interfaces.Options;
-
 public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	/**Design:
+	 * 
 	 * 	-Background - based off where StartScreen left its background
 	 * 				- scroll down similarly to in StartScreen
 	 * 	-Idle Character - will be at the left side of screen
@@ -33,43 +32,56 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	 * 			 - takes up most of the screen space
 	 * 			 - will slide in along with the background
 	 * 			 - will slide in from the right
+	 * 
+	 *  IMPORTANT FOR DIMENSIONS:
+	 *  
+	 * x1 and y1 are determined through trial and error on the basic
+	 * 960 x 540 dimensions. Multiplying by the new screen's x by the
+	 * original ratio would result in proper scaling.
+	 * 
+	 * WIDTH: x * x1 / 960
+	 * HEIGHT: y * y1 / 540
 	 */
-	/*D*/ // <- indicate that there are parameters where dimensions are pixel specific
-	/*P*/ // <- indicate that there are folder path specific parameters
 	
 	private static final long serialVersionUID = -7197187517418245951L;
 	
-	public Timer time;
-	private int screenPhase;
+	public Timer time; // timer for events
+	private int screenPhase; // phases for events
 	
-	public ImageButton background;
+	public ImageButton background; // background image
 	
-	public AnimatedComponent idleCharacter;
+	public AnimatedComponent idleCharacter; // animated character
 	
-	public ArrayList<ImageButton> buttons;
-	public ArrayList<CustomText> buttonTexts;
+	public ArrayList<ImageButton> buttons; // main 4 buttons
+	public ArrayList<CustomText> buttonTexts; // text for 4 buttons
 	public static String[] buttonT = {"Level Select","Character","Unlocks","Options"};
 	public static int LEVEL_IDX = 0;
 	public static int CHARACTER_IDX = 1;
 	public static int UNLOCK_IDX = 2;
 	public static int OPTIONS_IDX = 3;
 	
-	public boolean optionsOn;
-	
+	/**Constructor**
+	 * 
+	 * screenPhase set to default
+	 * 
+	 * @param width
+	 * @param height
+	 */
 	public MainMenuScreenG(int width, int height) {
 		super(width, height);
 		screenPhase = 0;
 	}
 	
+	/**Adds Components to Screen**
+	 * 
+	 */
 	public void initAllObjects(List<Visible> viewObjects) {
-		//--BACKGROUND
 		createBackground();
-		//--BUTTONS
+		
 		createButtons();
-		//--IDLE CHARACTER ANIMATION 
+		setButtonsActions();
+		
 		createIdleCharacter();
-		
-		
 		
 		//viewObjects adding
 		viewObjects.add(background);
@@ -78,12 +90,11 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			viewObjects.add(buttonTexts.get(i));
 		}
 		viewObjects.add(idleCharacter);
-		
-/**/		//System.out.println(Test.test.x+"s START MAIN");
 	}
+	
 //--COMPONENTS--//
-	/** --COMPLETE--
-	 * Creates a background that scales to the screens width resolution
+	/** --BACKGROUND--
+	 * Creates a background that scales to the screen's width
 	 * 
 	 * The y of the background is set at 2 times the screen's pixel above
 	 * the bottom of the background image's height (where StartScreen leaves it off)
@@ -93,10 +104,16 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	 * uses a MouseListener)
 	 */
 	public void createBackground() {
-/*P*/	ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
-/*P D*/	background = new ImageButton(0,0,getWidth(),(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100),"resources\\backgrounds\\start.jpg");
-		background.setEnabled(true);
+		ImageIcon icon = new ImageIcon("resources\\backgrounds\\start.jpg");
+		background = new ImageButton(0, 
+										0, 
+											getWidth(), 
+												(int) ((getWidth()/icon.getIconWidth())*icon.getIconHeight()+100), 
+													"resources\\backgrounds\\start.jpg");
+		
 		background.setY(-background.getHeight()+getHeight()*2);
+		
+		background.setEnabled(true);
 		background.setHoverAction(null); background.setUnhoverAction(null);
 		background.setAction(new Action() {
 			public void act() {
@@ -107,7 +124,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		});
 	}
 	
-	/** --COMPLETE--
+	
+	/**--IDLE CHARACTER--
 	 * Creates an animation of the idle character with SPECIFIC dimensions
 	 * that are not scalable
 	 * 
@@ -132,14 +150,24 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	 * be modified in any of the events
 	 * */
 	public void createIdleCharacter() {
-/*D*/	idleCharacter = new AnimatedComponent(getWidth()/10, getHeight()*200/540 + getHeight(), getWidth()*400/960, getHeight()*300/540);
-/*P*/	idleCharacter.addSequence("resources/sprites/defaultSprite_Transparent.png", 500, 0, 0, 39, 33, 2);
+		idleCharacter = new AnimatedComponent(
+				getWidth()/10, 
+					getHeight()*200/540 + getHeight(), 
+						getWidth()*400/960, 
+							getHeight()*300/540);
+		
+		idleCharacter.addSequence("resources/sprites/defaultSprite_Transparent.png", 500, 0, 0, 39, 33, 2);
+		
 		Thread run = new Thread(idleCharacter);
 		run.start();
 	}
+	public void getNewCharacter() {
+		//Placeholder method so the idleCharacter changes to the character selected by user, info will be pulled from MainGUI
+		//will change the idleCharacter.addSequence part
+	}
 	
-	/** --COMPLETE--
-	 * Creates a series of buttons on the screen that is not scaled whatsover
+	/** --BUTTONS--
+	 * Creates a series of buttons on the screen that is not scaled
 	 * using the original image dimensions
 	 * 
 	 * For the y parameter each button is 100 pixel below the previous button
@@ -156,7 +184,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			int buttonW = getWidth()*399/960;
 			int buttonH = getHeight()*100/540;
 			
-/*P D*/		buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			buttons.add(new ImageButton(buttonX,buttonY,buttonW,buttonH,"resources\\ui\\buttons\\buttonwithrivet.png"));
+			
 			buttons.get(i).setIdxArray(i);
 			buttonTexts.add(new CustomText(buttonX + getWidth()*70/960,
 												buttonY + getHeight()*25/540,
@@ -169,19 +198,27 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		setButtonsHoverAction();
 	}
 	public void setButtonsActions() {
-		// Set button actions
 				buttons.get(LEVEL_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
-						//MainGUI.test.setScreen(MainGUI.level);
+						//MainGUI.setScreen(MainGUI.level);
+						Song song = new Song("resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r)-NM.csv");
+						/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
+										
+										/*try {
+											MainGUI.test.setScreen(new TempSongSelect(getWidth(), getHeight()));
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}*/
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Character Screen Clicked");
 						buttons.get(CHARACTER_IDX).unhoverAction();
-						//Test.test.setScreen(screen);
+						//Test.test.setScreen(shop.CharacterSelectionScreen);
 					}
 				});
 				buttons.get(UNLOCK_IDX).setAction(new Action() {
@@ -192,18 +229,18 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					}
 				});
 				
-				//NEED TO TEST OPTIONS AND FINISH
 				buttons.get(OPTIONS_IDX).setAction(new Action() {
 					public void act(){
 						System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
 						toggleButtons(false);
-						MainGUI.test.options.addObjects();
+	
+						MainGUI.options.addObjects();
 					}
 				});
-				//
 	}
 	
+	//!!!!NEEDS SOME WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	int x;
 	public void setButtonsHoverAction() {
 		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
@@ -216,30 +253,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				public void act() {
 					GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					buttons.get(b.getIdxArray()).setAlpha(0.3f);
-					/*b.setOn(true);
-					if(buttons.get(b.getIdxArray()).getOn()) {
-						buttons.get(b.getIdxArray()).setHoverAction(new Action() {
-							
-							@Override
-							public void act() {
-								System.out.println("Good");
-							}
-						});
-					}*/
-					
-					/*Test.test.mainMenu.remove(buttons.get(b.getIdxArray()));
-					Test.test.mainMenu.remove(buttonTexts.get(b.getIdxArray()));
-					int tempx = b.getIdxArray();
-
-					System.out.println(tempx);
-					buttons.set(tempx, new ImageButton(getWidth()*480/960,getHeight()*100/540*(tempx+1),getWidth()*399/960,getHeight()*100/540,"resources\\ui\\buttons\\buttongeneral.png"));
-					buttons.get(tempx).setIdxArray(tempx);
-					
-					Test.test.mainMenu.addObject(buttons.get(b.getIdxArray()));
-					Test.test.mainMenu.addObject(buttonTexts.get(b.getIdxArray()));*/
-					//System.out.println("hover");
-					//setButtonsHoverAction();
-					//setButtonsActions();
 				}
 			});
 			buttons.get(i).setUnhoverAction(new Action() {
@@ -255,16 +268,11 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 			x++;
 		}
 	}
-	
-	//--OPTIONS INTERFACE METHODS
-	public void toggleButtons(boolean b) {
-		for(int i=0; i<4; i++) {
-			buttons.get(i).setEnabled(b);
-		}
-	}
+
 	
 //--EVENTS--//
-	/**
+	/**SCROLL DOWN METHODS COMMENTED HERE**
+	 * 
 	 * Returns true if the final status is incomplete
 	 * Returns false when its done
 	 * 
@@ -302,25 +310,11 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					}else {
 						scrollDownEnd();
 					}
-				/*
-					//-- SCROLL BACKGROUND UP
-					moveBackground();
-					//-- SCROLL IDLE CHRACTER UP
-					moveIdleCharacter();
-					
-					//-- SCROLL BUTTONS UP
-					moveButtonsY();
-					//will begin sliding in buttons from left once the background reaches point where the button is visible
-					if(background.getY() > -background.getHeight() && buttons.get(0).getX() > getWidth()*5/10) {
-						moveButtonsX();
-				}else {
-					scrollDownEnd();
-				}*/
 			}
 		}, 0, 2);
 	}
 	
-	//--SCROLL DOWN METHODS
+	//--SCROLL DOWN METHODS--//
 	public void moveBackground() {
 		if(!isBackgroundFinal()) {
 			background.setY(background.getY() - 1);
@@ -336,7 +330,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		}
 	}
 	public boolean isIdleFinal() {
-		return !(idleCharacter.getY() > getHeight()*200/540);
+		return !(idleCharacter.getY() > getHeight()*200/540); // DIMENSIONS!!!!!!!!
 	}
 	
 	public void moveButtonsX() {
@@ -348,7 +342,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		}
 	}
 	public boolean isButtonXFinal() {
-		return !(buttons.get(0).getX() > getWidth()*480/960);
+		return !(buttons.get(0).getX() > getWidth()*480/960); // DIMENSIONS!!!!!!!!
 	}
 	
 	public void moveButtonsY() {
@@ -360,7 +354,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		}
 	}
 	public boolean isButtonYFinal() {
-		return !(buttons.get(0).getY() > getHeight()*100/540);
+		return !(buttons.get(0).getY() > getHeight()*100/540); // DIMENSIONS!!!!!!!!
 	}
 	
 	public void scrollDownEnd() {
@@ -368,61 +362,43 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		
 		background.setY(-background.getHeight()+getHeight());
 		background.setEnabled(false);
-/*D*/	idleCharacter.setY(getHeight()*200/540);
-		//System.out.println(buttonTexts.get(0).getX() + "," + buttonTexts.get(0).getY());
+		
+		idleCharacter.setY(getHeight()*200/540); // DIMENSIONS!!!!!!!!
+		
 		for(int i = 0; i < buttons.size(); i++) {
-/*D*/		buttons.get(i).setY(getHeight()*100/540*(i+1));
-/*D*/		buttons.get(i).setX(getWidth()*480/960);
-			buttonTexts.get(i).setY(getHeight()*100/540*(i+1) + getHeight()*25/540);
-			buttonTexts.get(i).setX(getWidth()*480/960 + getWidth()*70/960);
+			buttons.get(i).setY(getHeight()*100/540*(i+1)); // DIMENSIONS!!!!!!!!
+			buttons.get(i).setX(getWidth()*480/960); // DIMENSIONS!!!!!!!!
+			buttonTexts.get(i).setY(getHeight()*100/540*(i+1) + getHeight()*25/540); // DIMENSIONS!!!!!!!!
+			buttonTexts.get(i).setX(getWidth()*480/960 + getWidth()*70/960); // DIMENSIONS!!!!!!!!
+			
+			buttons.get(i).setEnabled(true);
 
 		}
-		for(ImageButton b: buttons) {
-			b.setEnabled(true);
-		}
+		
 		screenPhase = 1;
 	}
 	
-	//--IGNORE
-	public void slideInButtons() {
-		time = new Timer();
-		time.scheduleAtFixedRate(new TimerTask() {
-			public void run() {
-				if(buttons.get(0).getX() > getWidth()-buttons.get(0).getWidth()-100) {
-					for(ImageButton b: buttons) {
-						b.setX(b.getX()-5);
-					}
-				}else {
-					slideInButtonsEnd();
-				}
-			}
-		}, 0, 10);
-	}
-	public void slideInButtonsEnd() {
-		time.cancel();
-		for(ImageButton b: buttons) {
-			b.setEnabled(true);
-		}
-		for(int i = 0; i < buttons.size(); i++) {
-/*D*/		buttons.get(i).setY(i);
-/*D*/		buttons.get(i).setX(i);
+
+
+
+//--OPTIONS INTERFACE METHODS--//
+	public void toggleButtons(boolean b) {
+		for(int i=0; i<4; i++) {
+			buttons.get(i).setEnabled(b);
 		}
 	}
-
-	
-	@Override
-	public boolean inOptions() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public void passKeyCodeIntoOptions(KeyEvent e) {
-		MainGUI.test.options.readKey(e);
+		MainGUI.options.readKey(e);
 	}
-	
 	public void keyPressed(KeyEvent e) {
 		passKeyCodeIntoOptions(e);
 	}
-	
+	/**
+	 * This method is optional only if the user is using
+	 * keyPressed for anything else, if not, something
+	 * simple such as above will suffice
+	 */
+	public boolean inOptions() {
+		return false;
+	}
 }

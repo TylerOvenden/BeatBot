@@ -41,13 +41,6 @@ public class MainGUI extends GUIApplication {
 		super(width, height);
 		setVisible(true);
 		
-		//keys = new String[4];
-		String[] temp = {"D","F","J","K"};
-		keys = temp;
-		
-		setVolume(2);
-		
-		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
 		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
@@ -71,11 +64,19 @@ public class MainGUI extends GUIApplication {
 
 	@Override
 	public void initScreen() {
+		
+		String[] temp = {"D","F","J","K"};
+		keys = temp;
+		
+		setVolume(2);
+		
 		start = new StartScreenG(getWidth(),getHeight());
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		//level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
 
+		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
+		
 		setScreen(start);
 		start.scrollIn();
 	}
