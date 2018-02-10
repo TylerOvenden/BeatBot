@@ -271,7 +271,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	
 //--EVENTS--//
-	/**BELOW METHODS COMMENTED HERE**
+	/**SCROLL DOWN METHODS COMMENTED HERE**
 	 * 
 	 * Returns true if the final status is incomplete
 	 * Returns false when its done

@@ -114,6 +114,8 @@ public class OptionsContainer{
 			parentScreen.remove(keySelect.get(i));
 		}
 		
+		parentScreen.remove(toggleVolume);
+		
 		//Reenables clickables on parentScreen and returns cursor to arrow
 		parentScreen.toggleButtons(true);
 		GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
