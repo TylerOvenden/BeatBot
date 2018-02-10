@@ -10,6 +10,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -75,6 +77,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	
 	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
+	private boolean inOptions; //This boolean will track whether or not the screen has an option pane up or not
 	
 	private PlaySong player; //The current player will be stored here
 	
@@ -153,6 +156,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		game = this;
 		player = new PlaySong();
 		exited = false;
+		inOptions = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -198,6 +202,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		backgroundPath = backPath;
 		player = new PlaySong();
 		exited = false;
+		inOptions = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -1049,7 +1054,8 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 			@Override
 			public void act() {
 				//Options Action Button will be here
-				System.out.println("Options");
+				//inOptions = true;
+				//MainGUI.options.addObjects();
 			}
 		}, new Action() {
 			
@@ -1059,7 +1065,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 				stop();
 				exited = true;
 				//Switch to a different screen below
-				MainGUI.test.setScreen(MainGUI.test.mainMenu);
+				MainGUI.test.setScreen(MainGUI.mainMenu);
 			}
 		}};
 		for(int i = 0; i < btnTypes.length; i++) {
@@ -1323,6 +1329,42 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		for(OptionButton btn: optBTN) {
 			btn.setEnabled(b);
 		}
+	}
+
+	/**
+	 * This method returns whether or not the option pane is up
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean inOptions() {
+		// TODO Auto-generated method stub
+		return inOptions;
+	}
+	
+	/**
+	 * This method updates the status of the in options boolean that tracks whether or not the option pane is on the screen
+	 * 
+	 * @param b - The status of the options pane
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setInOptions(boolean b) {
+		inOptions = b;
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if(inOptions) {
+			passKeyCodeIntoOptions(e);
+		}
+	}
+	
+	/**
+	 * This method will pass the key event when the option menu is open and key is pressed
+	 * 
+	 * @author Justin Yau
+	 */
+	public void passKeyCodeIntoOptions(KeyEvent e) {
+		MainGUI.options.readKey(e);
 	}
 	
 }

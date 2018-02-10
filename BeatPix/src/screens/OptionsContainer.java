@@ -13,6 +13,7 @@ import gui.components.Action;
 import gui.components.Button;
 import gui.components.Component;
 import mainGame.MainGUI;
+import mainGame.screens.GameScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.components.ScalablePixelBack;
@@ -99,6 +100,9 @@ public class OptionsContainer{
 		parentScreen.addObject(toggleVolume);
 	}
 	public void removeObjects() {
+		if(parentScreen instanceof GameScreen) {
+			((GameScreen)parentScreen).setInOptions(false);
+		}
 		parentScreen.remove(blackBack);
 		parentScreen.remove(background);
 		/*for(CustomText c: labelText) {
