@@ -2,8 +2,6 @@ package screens;
 
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +12,13 @@ import javax.swing.ImageIcon;
 
 import gui.GUIApplication;
 import gui.components.*;
-import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import highscore.TempSongSelect;
 import mainGame.MainGUI;
 import mainGame.components.Song;
-import mainGame.screens.GameScreen;
-import shop.ShopScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
-import screens.components.ScalablePixelBack;
 import screens.interfaces.Options;
 public class MainMenuScreenG extends FullFunctionScreen implements Options{
 

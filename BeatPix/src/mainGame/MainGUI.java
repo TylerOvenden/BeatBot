@@ -1,28 +1,16 @@
 package mainGame;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import gui.GUIApplication;
-import gui.interfaces.FocusController;
-import gui.interfaces.Visible;
 import gui.userInterfaces.*;
 
-import screens.LevelSelectG;
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
 import shop.ShopScreen;
 
-import screens.LevelScreenG;
-import mainGame.components.Song;
-import mainGame.saving.FileP;
-import mainGame.screens.*;
-import screens.MainMenuScreenG;
-import screens.OptionsContainer;
-import screens.StartScreenG;
 import screens.interfaces.Options;
 
 public class MainGUI extends GUIApplication {
