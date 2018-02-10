@@ -424,9 +424,10 @@ public class OptionsContainer{
 	}
 	public void removeSelectingKeyPopUp() {
 		parentScreen.remove(selectingKeyScreen);
-		for(CustomText c: selectingKeyScreenText) {
-			parentScreen.remove(c);
-		}
+		if(selectingKeyScreenText != null)
+			for(CustomText c: selectingKeyScreenText) {
+				parentScreen.remove(c);
+			}
 	}
 	
 	/**
