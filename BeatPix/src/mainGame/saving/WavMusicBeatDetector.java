@@ -304,7 +304,7 @@ public class WavMusicBeatDetector {
     	ArrayList<Long> times = new ArrayList<Long>();
     	float average = determineAverage(beats);
     	for(int i = 0; i < beats.size(); i++) {
-    		if(beats.get(i) > average + 100) {
+    		if(beats.get(i) > average + 120) {
                 long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f); //This is the formula to determine the time the beat occurred
                 if(times.size() > 0 && (timeInMillis - times.get(times.size() - 1)) > 100) {
                     times.add(timeInMillis);
