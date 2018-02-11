@@ -14,36 +14,96 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import gui.components.Component;
+import mainGame.components.interfaces.JustinPlaySongInterface;
 import mainGame.saving.resources.FFT;
 import mainGame.saving.resources.WavDecode;
 import mainGame.screens.GameScreen;
 
-public class AudioVisualizer extends Component {
+/**
+ * Audio Visualizer is a visual that helps you picture the frequencies of a given audio file at the given moment
+ * 
+ * @author Justin Yau
+ */
+public class AudioVisualizer extends Component implements JustinPlaySongInterface {
 
-	private float[] spectrums;
-	private boolean pause;
-	private boolean cancel;
+	private float[] spectrums; //All the band amplitudes of the audio will be stored here
+	private final Color[] colors = {Color.RED, Color.GRAY, Color.YELLOW, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.WHITE}; 
+	//All the colors the visualizer can be will be stored here
+	private Color color; //The final color of the visualizer will be stored here
+	private boolean pause; //This boolean will track whether or not the visualizer is paused
+	private boolean cancel; //The boolean will track whether or not to cancel the visualizer processes
 	
+	/**
+	 * Constructor creates an audio visualizer that helps the user visualize what is happening to the frequencies at a given time
+	 * @param x - The x coordinate of the visualizer
+	 * @param y - The y coordinate of the visualizer
+	 * @param w - The width of the visualizer
+	 * @param h - The height of the visualizer
+	 */
 	public AudioVisualizer(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		spectrums = new float[0];
 		pause = false;
 		cancel = false;
+		color = getRandomColor();
 		update();
 	}
 	
+	/**
+	 * This method selects a random color from the preset color array and returns it
+	 * @return - A random color from the preset color array
+	 * 
+	 * @author Justin Yau
+	 */
+	public Color getRandomColor() {
+		return colors[getRandomNumber(0, colors.length - 1)];
+	}
+	
+	/**
+	 * This method generates a number between the specified low and highs of the set
+	 * @param low - The lowest number to generate
+	 * @param high - The highest number to generate
+	 * @return - A random number between the specified set
+	 * 
+	 * @author Justin Yau
+	 */
+	public int getRandomNumber(int low, int high) {
+		return low + (int)(Math.random() * ((high - low) + 1));
+	}
+	
+	/**
+	 * This method makes the boolean responsible for pausing operations true
+	 * 
+	 * @author Justin Yau
+	 */
 	public void pauseSong() {
 		pause = true;
 	}
 	
+	/**
+	 * This method makes the boolean responsible for pausing operations false
+	 * 
+	 * @author Justin Yau
+	 */
 	public void resumeSong() {
 		pause = false;
 	}
 	
+	/**
+	 * This method makes the boolean responsible for canceling operations true
+	 * 
+	 * @author Justin Yau
+	 */
 	public void stopSong() {
 		cancel = true;
 	}
 	
+	/**
+	 * This method loads the song and it gets analyzed over time to visualize the frequencies 
+	 * @param audioPath - The path of the audio file to be analyzed
+	 * 
+	 * @author Justin Yau
+	 */
 	public void loadSong(String audioPath) {
 		AudioInputStream audioInputStream;
 		try {
@@ -90,7 +150,7 @@ public class AudioVisualizer extends Component {
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
-		g.setColor(Color.CYAN);
+		g.setColor(color);
 		g.drawLine(0, 0, getWidth(), 0);
 		for(int i = 0; i < spectrums.length; i++) {
 			float amplitude = spectrums[i];
