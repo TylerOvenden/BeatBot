@@ -2,9 +2,12 @@ package mainGame.saving;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -103,6 +106,63 @@ public class FileP implements FileProcessor {
 		}
 	}
 
+	/**
+	 * This method will create a CSV file named after the title and artist.
+	 * 
+	 * @param title - Name of the map 
+	 * @param BPM - Beats per minute
+	 * @param artist - Arist that created the map
+	 * @param offSet - Offset 
+	 * @param list - Integer Array that will 
+	 * 
+	 * @author Justin Yau
+	 */
+	public static void cSave(String title, int BPM, String artist, int offSet, ArrayList<int[]> list) {
+		String name = title + artist;
+		new File("resources/maps/" + name).mkdirs();
+		String fileName = "resources/maps/" + name + "/"+ name + ".csv";
+		try{    
+			
+			FileWriter fw=new FileWriter(fileName);
+			fw.write("Title:" + title + "\n");
+			fw.write("BPM:" + BPM + "\n");
+			fw.write("Artist:" + artist + "\n");
+			fw.write("Offset:" + offSet + "\n");
+			fw.write("\n");
+			
+			for(int[] arr: list) {
+				for(int num: arr) {
+					fw.write(num + ",");
+				}
+				fw.write("\n");    	
+			}
+
+			fw.close();  
+			
+		}catch(IOException e){
+			
+			System.out.println("An IOException was thrown. \nCheck to see that the directory where you tried to save the file actually exists.");
+			
+		}
+		File f = new File(fileName);
+		copyFile(f, name);
+	}
+	
+	public static void copyFile(File f, String name) {
+		FileOutputStream out;
+		try {
+			out = new FileOutputStream(new File("resources/realMaps/" + name + ".csv"));
+			Files.copy(f.toPath(), out);
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * This helper method will read the next line of the BufferedReader and split it by a colon as per our map file format. 
 	 * It will retrieve a piece of metadata and return it.
