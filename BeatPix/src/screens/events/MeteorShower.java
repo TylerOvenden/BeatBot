@@ -23,15 +23,14 @@ public class MeteorShower {
 	int timeCount = 0;
 	public MeteorShower(StartScreenG screen) {
 		this.s = screen;
-		time = new Timer();
+		time = new Timer(); createStartTop();
 		time.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
 			public void run() { timeCount++;
 				
 			
-			
-			
+				
 				if(timeCount > 3000 && timeCount < 6500) { //screenshake at 3s
 					screenShake();
 				}
@@ -50,6 +49,18 @@ public class MeteorShower {
 		}, 0, 1);
 	}
 	
+	Graphic actualStartTop; Graphic building;
+	public void createStartTop(){
+		//ImageIcon icon = new ImageIcon("resources\\backgrounds\\start_top.png");
+		actualStartTop = new Graphic(300,100,300, 200,
+				"resources\\backgrounds\\cloud1.png");
+		ImageIcon icon = new ImageIcon("resources\\backgrounds\\building.png");
+		building = new Graphic(0,0,s.getWidth(), icon.getIconHeight()*s.getWidth()/icon.getIconWidth()
+							,"resources\\backgrounds\\building.png");
+		s.addObject(actualStartTop);
+		s.addObject(building);
+		
+	}
 	public void screenShake() {
 		if(StartScreenG.background.getX()== 0) {
 			if(Math.random() < 0.5) {
@@ -72,23 +83,18 @@ public class MeteorShower {
 	}
 
 	AnimatedComponent theShip;
-	Graphic startTop; int currentCloud = 1;
+	int currentCloud = 1;
 	boolean spaceShipFallStart; Timer personal;
 	public void spaceShipFalling() {
 		if(!spaceShipFallStart) {
 			spaceShipFallStart = true;
-			theShip = new AnimatedComponent(500, 0, 150, 150);
-			theShip.addSequence("resources\\backgrounds\\fireball_0.png", 8, 0, 0, 64, 54, 8);
-			
-			ImageIcon icon = new ImageIcon("resources\\backgrounds\\building.png");
-			startTop = new Graphic(0,0,s.getWidth(), icon.getIconHeight()*s.getWidth()/icon.getIconWidth()
-								,"resources\\backgrounds\\building.png");
+			theShip = new AnimatedComponent(500, -150, 150, 150);
+			theShip.addSequence("resources\\backgrounds\\test.png", 8, 0, 0, 74, 68, 4);
 			
 			Thread run = new Thread(theShip);
 			run.start();
 			System.out.println("Object added");
 			s.addObject(theShip);
-			s.addObject(startTop);
 		}
 		
 		personal = new Timer();

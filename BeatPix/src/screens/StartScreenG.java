@@ -143,7 +143,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	
 	private MeteorShower ms;
 	public void start() {
-		ms = new MeteorShower(this);
+		//ms = new MeteorShower(this);
+		scrollIn();
 	}
 	
 	public void scrollIn() {
@@ -159,7 +160,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 					scrollInEnd();
 				}
 			}
-		}, 0, 6); //set FPS
+		}, 0, 2); //set FPS
 	}
 	public void scrollInEnd() {
 		time.cancel();
