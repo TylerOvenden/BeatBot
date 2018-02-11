@@ -87,10 +87,15 @@ public class MainGUI extends GUIApplication {
 
 	public static void main(String[] args) {
 		test = new MainGUI(960,540);
+		test.setTitle("BeatBot");
 		Thread s = new Thread(test);
 		s.run();
 	}
 
+	public void setFrameTitle(String s) {
+		setTitle(s);
+	}
+	
 	public static String[] getKeys() {
 		return keys;
 	}

@@ -149,7 +149,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 */
 	public GameScreen(int width, int height, Song song) {
 		super(MainGUI.screenWidth, MainGUI.screenHeight);
-		
+	
 		startResize(width, height);
 		update();
 		
@@ -165,6 +165,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		MainGUI.test.setFrameTitle("BeatBot - Now playing: " + title);
 		
 		originalBeats = new ArrayList<int[]>(beats);
 		setUpBindings();
@@ -211,6 +212,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		MainGUI.test.setFrameTitle("BeatBot - Now playing: " + title);
 		
 		originalBeats = new ArrayList<int[]>(beats);
 		setUpBindings();
@@ -1298,6 +1300,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 				spawnBeat();
 			}
 		}
+		MainGUI.test.setTitle("BeatBot");
 		handleEnd();
 	}
 
