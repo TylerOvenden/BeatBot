@@ -1191,6 +1191,9 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void handleKeystroke(Keystroke s) {
 		strokes.add(s);
 		addObject(s);
+		if(pause) {
+			handlePause();
+		}
 		Thread tr = new Thread(new Runnable() {
 			
 			@Override
@@ -1215,6 +1218,9 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void handleHoldstroke(Holdstroke s) {
 		strokes.add(s);
 		addObject(s);
+		if(pause) {
+			handlePause();
+		}
 		Thread tr = new Thread(new Runnable() {
 			
 			@Override
