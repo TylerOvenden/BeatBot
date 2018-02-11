@@ -156,6 +156,9 @@ public class AudioVisualizer extends Component implements JustinPlaySongInterfac
 		g.drawLine(0, 0, getWidth(), 0);
 		for(int i = 0; i < spectrums.length; i++) {
 			float amplitude = spectrums[i];
+			if(i != 0) {
+				amplitude = (0.9f) * spectrums[i-1] + (.1f) * spectrums[i];
+			}
 			g.drawLine(i, 0, i, (int) amplitude);
 		}
 	}
