@@ -1275,6 +1275,22 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	}
 	
 	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * This method will be used to spawn the strokes in according to the time that has elapsed. 
 	 * 
 	 * @author Justin Yau
@@ -1282,22 +1298,20 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void playMap() {
 		playSong();
 		while(playing) {
-			if(pause) {
-				handlePause();
-			}
-			if(beats.size() == 0) {
-				while(strokes.size() != 0 || holds.size() != 0) {
-					try {
-						Thread.sleep(0);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+			sleep(0);
+			if(!pause) {
+				if(beats.size() == 0) {
+					while(strokes.size() != 0 || holds.size() != 0) {
+						sleep(0);
 					}
+					playing = false;
 				}
-				playing = false;
+				else if(timePass() >= beats.get(0)[1]) {
+					spawnBeat();
+				}
 			}
-			else if(timePass() >= beats.get(0)[1] && !pause) {
-				spawnBeat();
+			else {
+				handlePause();
 			}
 		}
 		MainGUI.test.setTitle("BeatBot");

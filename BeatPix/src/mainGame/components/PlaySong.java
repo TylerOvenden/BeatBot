@@ -58,19 +58,18 @@ public class PlaySong implements JustinPlaySongInterface {
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
             try {
-				Thread.sleep(GameScreen.game.calculateTotalFallTime());
+            
+            	while(GameScreen.game.timePass() <= GameScreen.game.calculateTotalFallTime()) {
+    				Thread.sleep(0);
+            	}
+            	
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             while ((bytesRead = audioStream.read(bytesBuffer)) != -1 && !cancel) {
             	while(pause) {
-            		try {
-						Thread.sleep(0);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+            		sleep(0);
             	}
                 audioLine.write(bytesBuffer, 0, bytesRead);
             }
@@ -92,6 +91,23 @@ public class PlaySong implements JustinPlaySongInterface {
             ex.printStackTrace();
         }      
     }
+    
+	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
     public static void main(String[] args) {
         String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
