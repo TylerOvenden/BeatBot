@@ -1284,7 +1284,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 				handlePause();
 			}
 			if(beats.size() == 0) {
-				while(strokes.size() != 0) {
+				while(strokes.size() != 0 && holds.size() != 0) {
 					try {
 						Thread.sleep(0);
 					} catch (InterruptedException e) {
