@@ -80,6 +80,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	private boolean inOptions; //This boolean will track whether or not the screen has an option pane up or not
 	
 	private PlaySong player; //The current player will be stored here
+	private AudioVisualizer visualizer; //The current audio visualizer will be stored here
 	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
@@ -250,6 +251,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		gameRunning = false;
 		playing = false;
 		player.stopSong();
+		visualizer.stopSong();
 		resumeGame();
 		cancelAllFalls();
 	}
@@ -564,6 +566,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		setUpGearButton(viewObjects);
 		spawnOptionButtons();
 		spawnRobot(viewObjects);
+		addVisualizer(viewObjects);
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -598,6 +601,11 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		viewObjects.add(displayScore);
 		gamescore.update();  
 	
+	}
+	
+	public void addVisualizer(List<Visible> viewObjects) { 
+		visualizer = new AudioVisualizer(500,400,200,100);
+		viewObjects.add(visualizer);
 	}
 	
 	/**
@@ -1003,6 +1011,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void pauseGame() {
 		pause = true;
 		player.pauseSong();
+		visualizer.pauseSong();
 		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
@@ -1023,6 +1032,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void resumeGame() {
 		pause = false;
 		player.resumeSong();
+		visualizer.resumeSong();
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
@@ -1220,15 +1230,24 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void playSong() {
 
 		String fileName = title + artist;
+		String path = "resources/maps/" + fileName + "/" + fileName + ".wav";
 		bScore = beats.size();
 		Thread play = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
+				player.play(path);
 			}
 			
 		});
+		Thread visual = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				visualizer.loadSong(path);
+			}
+		});
+		visual.start();
 		play.start();
 		
 	}
@@ -1267,6 +1286,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 */
 	public void handleEnd() {
 		player.stopSong();
+		visualizer.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {

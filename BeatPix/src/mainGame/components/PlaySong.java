@@ -21,7 +21,7 @@ public class PlaySong implements JustinPlaySongInterface {
 	
 	
     // size of the byte buffer used to read/write the audio stream
-    private static final int BUFFER_SIZE = 4000;
+    private static final int BUFFER_SIZE = 1024;
     
     private boolean pause;
     private boolean cancel;
