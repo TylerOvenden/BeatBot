@@ -138,6 +138,18 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 * Final State:
 	 * -Background half matches bottom of screen
 	 */
+	public void start() {
+	}
+	public void startScene() {
+		time = new Timer();
+		time.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				// TODO Auto-generated method stub
+				
+			}
+		}, 200, 2);
+	}
+	
 	public void scrollIn() {
 		
 		background.setX(0); background.setY(0);

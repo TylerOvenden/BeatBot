@@ -81,7 +81,7 @@ public class MainGUI extends GUIApplication {
 		information = new InformationContainer((Options) mainMenu);
 		
 		setScreen(start);
-		start.scrollIn();
+		start.start();
 	}
 
 	public static void main(String[] args) {
