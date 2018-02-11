@@ -12,6 +12,7 @@ import gui.components.AnimatedComponent;
 import gui.components.FullFunctionPane;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
+import mainGame.MainGUI;
 
 public class FightPaneG extends FullFunctionPane{
 
@@ -97,7 +98,8 @@ public class FightPaneG extends FullFunctionPane{
 	public void keyPressed(KeyEvent e)
 	{	
 		miss = false;
-		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false) && (isPaused == false)) {
+		String pressedKey = "" + (char) e.getKeyCode(); 
+		if((pressedKey.equalsIgnoreCase(MainGUI.getKeys(0)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(1)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(2)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(3))) && (animationRunning == false) && (isPaused == false)) {
 			if(!miss) {
 				robotIdle.setVisible(false);
 				robotHit1.setVisible(false);
