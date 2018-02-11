@@ -279,6 +279,21 @@ public class WavMusicBeatDetector {
     }
     
     /**
+     * This method determines the beat values and calculate the average
+     * @param beats - The beats you would like to find the average value for
+     * @return - The average of the beat values from the given list
+     * 
+     * @author Justin Yau
+     */
+    public float determineAverage(List<Float> beats) {
+    	float value = 0;
+    	for(int i = 0; i < beats.size(); i++) {
+    		value += beats.get(i);
+    	}
+    	return value / beats.size();
+    }
+    
+    /**
      * This method goes through each beat and then calculate the time of the beat that it occurred in the list
      * @param beats - The list of beats with their values calculated
      * @return - The final list with all the timings of the beats
@@ -287,10 +302,11 @@ public class WavMusicBeatDetector {
      */
     public ArrayList<Long> getTimeOfBeats(List<Float> beats) {
     	ArrayList<Long> times = new ArrayList<Long>();
+    	float average = determineAverage(beats);
     	for(int i = 0; i < beats.size(); i++) {
-    		if(beats.get(i) > 225) {
+    		if(beats.get(i) > average + 100) {
                 long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f); //This is the formula to determine the time the beat occurred
-                if(times.size() > 0 && (timeInMillis - times.get(times.size() - 1)) > 50) {
+                if(times.size() > 0 && (timeInMillis - times.get(times.size() - 1)) > 100) {
                     times.add(timeInMillis);
                 }
                 if(times.size() == 0) {
