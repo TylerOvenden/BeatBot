@@ -29,6 +29,7 @@ public class AudioVisualizer extends Component {
 		spectrums = new float[0];
 		pause = false;
 		cancel = false;
+		update();
 	}
 	
 	public void pauseSong() {
