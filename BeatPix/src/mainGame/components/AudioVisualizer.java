@@ -22,6 +22,8 @@ import mainGame.screens.GameScreen;
 /**
  * Audio Visualizer is a visual that helps you picture the frequencies of a given audio file at the given moment
  * 
+ * @see https://www.youtube.com/watch?v=2O3nm0Nvbi4&t=182s
+ * 
  * @author Justin Yau
  */
 public class AudioVisualizer extends Component implements JustinPlaySongInterface {
