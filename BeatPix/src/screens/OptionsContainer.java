@@ -353,7 +353,11 @@ public class OptionsContainer{
 			
 			if(validKey) {
 				String tempS = ""+ (char) tempX;
+				String oldKey = MainGUI.getKeys(columnButtonSelected);
 				MainGUI.setKeys(columnButtonSelected, tempS);
+				if(GameScreen.game != null) {
+					GameScreen.game.rebindKey(tempS, oldKey);
+				}
 				
 				selectingKeyPhase = -1;
 				
