@@ -78,6 +78,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private Button noButton;
 	private int numChars;
 	private int index;
+	
+	private CustomText back;
 
 	private Graphic creditBorder;
 
@@ -276,6 +278,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		confirmButton = new ArrayList<Button>();
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
+		back = new CustomText(110,58,200,200, "Back",true);
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		for(int i = 0; i < imageNames.length; i ++) {
 			images.add(new ImageButton(390, 180, 200, 300, imageNames[i]));
@@ -317,7 +320,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of YesButtons
 		for(int k = 0; k < numChars; k++) {
 			final int z = k;
-			yesButton.add(new Button(400, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
+			yesButton.add(new Button(400, 400, 50, 50, "yes "+ k, Color.GREEN, new Action() {
 				int j = z;
 				@Override
 				public void act() {
@@ -334,7 +337,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of confirmButtons
 		for(int l = 0; l < numChars; l ++) {
 			final int y = l;
-			confirmButton.add(new Button(470, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
+			confirmButton.add(new Button(470, 250, 50, 50, "Okay" + l, Color.blue, new Action() {
 				int a = y;
 				@Override
 				public void act() {
@@ -357,12 +360,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		}
 		
 		 //create all the things 
-		 border = new CustomRectangle(380, 180, 220, 120, Color.BLACK, 3);
-		 textKev = new TextLabel(400, 200, 200, 100, "Do you wish to unlock this?");
-		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
-		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
+		 border2 = new CustomRectangle(380, 180, 220, 120, Color.BLACK, 3);
+		 unlock = new TextLabel(400, 200, 200, 100, "Do you wish to unlock this?");
 		 
-		 noButton = new Button(500, 250, 50, 50, "no", Color.RED, new Action() {
+		 border = new CustomRectangle(380, 80, 220, 420, Color.BLACK, 3);
+		 textKev = new TextLabel(400, 100, 200, 400, "You have unlocked this. Enjoy");
+		 
+		 noButton = new Button(500, 400, 50, 50, "no", Color.RED, new Action() {
 			
 			@Override
 			public void act() {
@@ -537,6 +541,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	public void setAllYesButVisFalse() {
 		for(int i = 0; i < yesButton.size(); i ++) {
 			yesButton.get(i).setVisible(false);
+			images.get(i).setVisible(false);
 		}
 	}
 	//turn all  yes button visibility that are false except for the  chosen one
@@ -544,16 +549,17 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int x = 0; x < yesButton.size(); x++) {
 			if(x != i) {
 				yesButton.get(x).setVisible(false);
+				images.get(x).setVisible(false);
 			}
 			yesButton.get(i).setVisible(true);
+			images.get(i).setVisible(true);
 		}
 	}
 	
-	 //turn all confirmButtons with the images, visibility = false;
+	 //turn all confirmButtons, visibility = false;
 	public void setAllConfButVisFalse() {
 		for(int i = 0; i < confirmButton.size(); i ++) {
 			confirmButton.get(i).setVisible(false);
-			images.get(i).setVisible(false);
 		}
 	}
 	//turn all  confirm button and respected image visibility that are false except for de chosen one
@@ -561,10 +567,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int x = 0; x < confirmButton.size(); x++) {
 			if(x != i) {
 				confirmButton.get(x).setVisible(false);
-				images.get(x).setVisible(false);
 			}
 			confirmButton.get(i).setVisible(true);
-			images.get(i).setVisible(true);
 		}
 	}
 	public ArrayList<Song> getSongs()
