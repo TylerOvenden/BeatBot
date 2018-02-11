@@ -603,6 +603,12 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	
 	}
 	
+	/**
+	 * This methodd adds the audio visualizer to the screen
+	 * @param viewObjects - The list of viewable objects on the screen
+	 * 
+	 * @author Justin Yau
+	 */
 	public void addVisualizer(List<Visible> viewObjects) { 
 		visualizer = new AudioVisualizer(500,400,200,100);
 		viewObjects.add(visualizer);
