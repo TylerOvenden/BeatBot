@@ -1412,6 +1412,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	}
 
 	public void keyPressed(KeyEvent e) {
+		fightScene.keyPressed(e);
 		if(inOptions) {
 			passKeyCodeIntoOptions(e);
 		}
