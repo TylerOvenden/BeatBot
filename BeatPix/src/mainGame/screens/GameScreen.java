@@ -1272,7 +1272,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void spawnBeat() {
 		int[] beat = beats.remove(0);
 		int lane = beat[0] - 1;
-		if(beat[2] != 0) {
+		if(beat[2] != 0 && beat[2] - beat[1] >= 0) {
 			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
 			if(height + 35 >= columnHeight) {
 				height = columnHeight - 60;
