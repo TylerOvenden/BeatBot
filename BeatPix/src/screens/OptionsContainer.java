@@ -53,11 +53,9 @@ public class OptionsContainer{
 	private int columnButtonSelected; // keySelect user has chosen
 
 	/*public static void main(String[] args) {
-		OptionsContainer a = new OptionsContainer(200,200,null);
-		System.out.println(a.positionOfLastLetterOfLongestWordComboWithinBoundary("I AM Av ery long sentence",8));
-		for(String b: a.arrayOfBrokenUpStrings("Please select a key", 10)) {
-			System.out.println(b);
-		}
+		String s = "Dotcor of doom";
+		System.out.println(longestWordLength(s));
+		System.out.println(indexOfLongestSentence("DOctor",4));
 	}*/
 	
 	/**Constructor**
@@ -358,7 +356,6 @@ public class OptionsContainer{
 				selectingKeyPhase = -1;
 				
 				createSelectingKeyPopUp("Key set to " + (char) tempX);
-				System.out.println("Key set to " + (char) tempX);
 				
 				// will remove the popup after specified time and re-enable options
 				Timer t = new Timer();
@@ -374,8 +371,7 @@ public class OptionsContainer{
 			}else {
 				selectingKeyPhase = 0;
 				
-				createSelectingKeyPopUp("Reselect key");
-				System.out.println("Reselect key");
+				createSelectingKeyPopUp("Reselect key for I am an extra long sentence that will be usefeul to test");
 			}
 		}
 	}
@@ -400,14 +396,12 @@ public class OptionsContainer{
 	public void createSelectingKeyPopUp(String s) {
 		removeSelectingKeyPopUp();
 
-		selectingKeyScreenText = new ArrayList<CustomText>();
-		selectingKeyScreen = new ScalablePixelBack(x/960*	330,
-														y/540	*100, 
-															x/960	*300, 
-																y/540	*200, 
-																	1);
+		int rowLength = 10;
+		if(rowLength <longestWordLength(s))
+			rowLength = longestWordLength(s);
 		
-		ArrayList<String> temp = arrayOfBrokenUpStrings(s, 10);
+		selectingKeyScreenText = new ArrayList<CustomText>();
+		ArrayList<String> temp = arrayOfBrokenUpStrings(s, rowLength);
 		for(int i = 0; i< temp.size(); i++) {
 			CustomText ct = new CustomText(x/960*	340,
 														50*i  + y/540*	120, 
@@ -416,6 +410,12 @@ public class OptionsContainer{
 																	temp.get(i), true, true, false);
 			selectingKeyScreenText.add(ct);
 		}
+		
+		selectingKeyScreen = new ScalablePixelBack(x/960*	330,
+														y/540*	100, 
+															x/960*	28*rowLength, 
+																y/540*	60*selectingKeyScreenText.size(), 
+																	1);
 		
 		parentScreen.addObject(selectingKeyScreen);
 		for(CustomText c: selectingKeyScreenText) {
@@ -429,20 +429,35 @@ public class OptionsContainer{
 				parentScreen.remove(c);
 			}
 	}
-	
-	/**
+//--HELPER METHODS FOR STRING MANIPULATION TO TRANSLATE TO CUSTOMTEXT--	
+	public static int longestWordLength(String s) {
+		int longest = 0;
+		String[] s1= s.split(" ");
+		for(String x: s1) {
+			if(x.length() > longest) {
+				longest = x.length();
+			}
+		}
+		return longest;
+	}
+	/**Returns idx of the last word where there are full words
+	 * within a certain boundary:
+	 * 
+	 * indexOfLongestSentence("Doctor of Doom", 10)
+	 * should return 8, -> "Doctor of" is the longest
+	 * full word combo within 10 letters
 	 * 
 	 * @param s
 	 * @param boundary
 	 * @return
 	 */
-	public int positionOfLastLetterOfLongestWordComboWithinBoundary(String s, int boundary) {
+	public static int indexOfLongestSentence(String s, int boundary) {
 		int idx = boundary;
+		if(s.length() <= boundary) {
+			return s.length()-1;
+		}
 		for(int i = boundary; i > 0; i--) {
-			if(s.length() <= boundary) {
-				return s.length()-1;
-			}
-			if(s.substring(i-1, i).equals(" ") || i == 0) {
+			if(s.substring(i, i+1).equals(" ") || i == 0) {
 				idx = i;
 				break;
 			}else {
@@ -451,25 +466,36 @@ public class OptionsContainer{
 		}
 		return idx;
 	}
-	public ArrayList<String> arrayOfBrokenUpStrings(String s, int boundary) {
+	/**Breaks up the string to create strings of a certain length
+	 * 
+	 * @param s
+	 * @param boundary
+	 * @return
+	 */
+	public static ArrayList<String> arrayOfBrokenUpStrings(String s, int boundary) {
 		String temps = s;
 		ArrayList<String> arrayTemp = new ArrayList<String>();
-		while(temps.length() > 0) {
-			if(positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary) == 0)
-				break;
-			
-			int tempx = positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary);
-			String tempSub = temps.substring(0,tempx+1);
-			
-			while(tempSub.length()<boundary) {
-				tempSub += " ";
+		while(temps.length() > 1) {
+			if(indexOfLongestSentence(temps, boundary) == 0) {
+				System.out.println(temps); break;
 			}
 			
+			int tempx = indexOfLongestSentence(temps, boundary);
+			String tempSub = temps.substring(0,tempx+1);
+
+			if(tempSub.substring(0, 1).equals(" "))
+				tempSub = tempSub.substring(1,tempSub.length());
+
+			while(tempSub.length() < boundary) {
+				tempSub += " ";
+			}
+				
 			arrayTemp.add(tempSub);
 			temps = temps.substring(tempx,temps.length());
 		}
 		return arrayTemp;
 	}
+	
 	/** --VOLUME TOGGLE--
 	 *
 	 * User clicks button to toggle between 4 stages
