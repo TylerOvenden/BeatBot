@@ -80,8 +80,9 @@ public class MeteorShower {
 			theShip = new AnimatedComponent(500, 0, 150, 150);
 			theShip.addSequence("resources\\backgrounds\\fireball_0.png", 8, 0, 0, 64, 54, 8);
 			
-			ImageIcon icon = new ImageIcon("resources\\backgrounds\\start_top.jpg");
-			startTop = new Graphic(s.getWidth(),icon.getIconHeight(),"resources\\backgrounds\\start_top.jpg");
+			ImageIcon icon = new ImageIcon("resources\\backgrounds\\building.png");
+			startTop = new Graphic(0,0,s.getWidth(), icon.getIconHeight()*s.getWidth()/icon.getIconWidth()
+								,"resources\\backgrounds\\building.png");
 			
 			Thread run = new Thread(theShip);
 			run.start();
@@ -94,7 +95,7 @@ public class MeteorShower {
 		personal.scheduleAtFixedRate(new TimerTask() {
 			public void run() {
 				theShip.setY(theShip.getY() + 8);
-				theShip.setX(theShip.getX() - 1);
+				theShip.setX(theShip.getX() - 8);
 			}
 		}, 0, 40);
 	}
