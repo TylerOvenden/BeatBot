@@ -290,7 +290,12 @@ public class WavMusicBeatDetector {
     	for(int i = 0; i < beats.size(); i++) {
     		if(beats.get(i) > 225) {
                 long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f); //This is the formula to determine the time the beat occurred
-                times.add(timeInMillis);
+                if(times.size() > 0 && (timeInMillis - times.get(times.size() - 1)) > 50) {
+                    times.add(timeInMillis);
+                }
+                if(times.size() == 0) {
+                	times.add(timeInMillis);
+                }
     		}
     	}
     	return times;
