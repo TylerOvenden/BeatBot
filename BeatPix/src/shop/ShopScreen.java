@@ -49,6 +49,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private static ArrayList<Song> songs;
 	private ArrayList<ImageButton> buttons;
 	private ArrayList<CustomText> customText;
+	private ArrayList<MultiLineCustomText> multiText;
 
 	private ImageButton yes;
 	private ImageButton no;
@@ -115,6 +116,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
 		customText = new ArrayList<CustomText>();
+		multiText = new ArrayList<MultiLineCustomText>();
 		
 		songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
 
@@ -481,7 +483,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				
 				b.setEnabled(true);
 				buttons.add(b);
-				customText.add(new CustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 210*100/399, 120, texts[i],false));
+				multiText.add(new MultiLineCustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 50,texts[i],scroll, 12));
+		//		customText.add(new CustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 210*100/399, 120, texts[i],false));
 			
 				buttons.get(i).setUnhoverAction(new Action()
 				{
@@ -503,7 +506,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for (int i = 0; i < buttons.size(); i++)
 		{
 			scroll.addObject(buttons.get(i));
-			scroll.addObject(customText.get(i));
+		//	scroll.addObject(customText.get(i));
+			multiText.get(i).addToScreen();
 		}
 	}
 
@@ -611,6 +615,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			confirmButton.get(i).setVisible(true);
 		}
 	}
+	
+	
+	
 	public ArrayList<Song> getSongs()
 	{
 		return songs;
