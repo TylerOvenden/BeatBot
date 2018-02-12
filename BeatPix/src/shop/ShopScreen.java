@@ -56,6 +56,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	
 	private int credits;
 	private int price;
+	private int idx;
 	
 	private CustomText text;
 	private Graphic creditBorder;
@@ -63,6 +64,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private Graphic scrollBorder;
 
 	private Graphic textBorder;
+	
+	private String[] texts; 
 
 	
 	//Kevin Fields-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -103,7 +106,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) 
 	{
-
+	
+		
 		changeCredits(getCredits()+1500);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,10 +169,12 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 						{
 							try
 							{
+								//purchase of song
 								credits -= 1500;
 								credit.setText("Credits: "+ credits);
 								credit.update();
 								
+								//set components invisible after pressing button
 								setInvis(false);
 								
 								
@@ -182,13 +188,15 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 								
 								removeButton();
 								
-								scroll.update();							
+								scroll.update();	
+								// transfer of song
+									
 							}
 							catch (InterruptedException e)
 							{
 								
 							}
-							//add transfer of song later
+							
 						}
 
 						//
@@ -299,6 +307,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			
 			@Override
 			public void act() {
+				
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 			
 			}
@@ -417,15 +426,16 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	//daniel methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public void removeButton()
 	{
-		int index = buttons.indexOf(clickedButton);
+		
+		idx = buttons.indexOf(clickedButton);
 
 		scroll.remove(clickedButton);				
 		buttons.remove(clickedButton);
-		scroll.remove(customText.get(index));
-		customText.remove(index);
+		scroll.remove(customText.get(idx));
+		customText.remove(idx);
 		scroll.update();
 		
-		for (int i = index; i < buttons.size(); i++)
+		for (int i = idx; i < buttons.size(); i++)
 		{
 			
 			if (buttons.get(i).getY() != 0)
@@ -438,14 +448,16 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			scroll.update();
 		}
 		
+		MainGUI.test.mySongs.get(idx).setUnlock(true);
 	}
 	public void addButtons()
 	{
-		String[] texts = {"Adrenaline","Neptune","Blow Out","Hime Hime","Hitorigoto"};
+		String[] texts = {"Adrenaline","Blow Out","Carribean Pirates","Summer Vibes","Waiting for Love","Fairy Tail Theme","One Piece Theme","Shingeki No Kyogin","Hitorigoto","I Love You","Hime Hime","Neptune"};
 		
 		for(int i = 0; i < texts.length; i++)
 		{ 
 
+			final int j = i;
 				ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png");
 				b.setAction(new Action() 
 				{
@@ -454,7 +466,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 					public void act() 
 					{
 						clickedButton = b;				
-						setInvis(true);				
+						setInvis(true);	
+						buttonList.get(j).setEnabled(false);
 					}
 				});
 				
