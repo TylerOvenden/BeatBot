@@ -848,9 +848,9 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		for(int i = 0; i<display.length();i++) {
 		
 			//scoreA[(scoreA.length-i)-1] = Integer.parseInt();
-			System.out.println(display.charAt(i));
+			//System.out.println(display.charAt(i));
 		} 
-		System.out.println(Arrays.toString(scoreA));
+	//	System.out.println(Arrays.toString(scoreA));
 		if(tScore>=1000000) {
 			displayScore.setText(""+tScore);
 			return ;
