@@ -15,8 +15,9 @@ import gui.interfaces.Visible;
 import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
+import screens.interfaces.robotActionInterface;
 
-public class Timing extends Component implements JustinTimingInterface {
+public class Timing extends Component implements JustinTimingInterface,robotActionInterface {
 	
 	private String img="";
 	private float lastTiming=0;
@@ -76,7 +77,11 @@ public class Timing extends Component implements JustinTimingInterface {
 			difference = goal - stroke.getY();
 		}
 		for(int i=0;i<6;i++) {
-			if(Math.abs(difference)< i*5+5) {
+			if(i==5) {
+				calculations(0,"resources/miss.png");
+				break;
+			}
+			if(Math.abs(difference)<i*5+5) {
 				calculations(times[i],tim[i]);
 				break;
 			}
@@ -131,10 +136,15 @@ public class Timing extends Component implements JustinTimingInterface {
 		update();
 		GameScreen.game.calcAcc(score);
 		GameScreen.game.calcScore(score);
+		GameScreen.game.fightScene.hit(score);
+		if(score==.33) {
+			GameScreen.game.getHealthBar().applyHealth(-1);
+		}
 		if(score>0) {
 			GameScreen.game.calcCombo(false);
 		}else {
 			GameScreen.game.calcCombo(true);
+			GameScreen.game.getHealthBar().applyHealth(-3);
 		}
 	}
 	
@@ -145,6 +155,11 @@ public class Timing extends Component implements JustinTimingInterface {
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
 		//System.out.println("b");
+	}
+
+	@Override
+	public boolean isHit() {
+		return false;
 	}
 
 }
