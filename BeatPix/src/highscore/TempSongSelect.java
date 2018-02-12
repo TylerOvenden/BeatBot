@@ -1,3 +1,9 @@
+/**
+ * Temporary until Yonathan finishes his screen
+ * 
+ * @author Steven
+ */
+
 package highscore;
 
 import java.io.File;
@@ -26,14 +32,16 @@ public class TempSongSelect extends FullFunctionScreen {
 		Button temp;
 		for(int i=0;i<MainGUI.test.mySongs.size();i++) {
 			int tempint=i;
-			temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
-				@Override
-				public void act() {
-					MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.test.mySongs.get(tempint-1),"resources/sample_bg.gif"));
-					
-				}
-			});
-			viewObjects.add(temp);
+			if(MainGUI.test.mySongs.get(tempint).isUnlock()) {
+				temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
+					@Override
+					public void act() {
+						MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.test.mySongs.get(tempint),"resources/sample_bg.gif"));
+						
+					}
+				});
+				viewObjects.add(temp);
+			}
 		}
 	}
 
