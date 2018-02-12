@@ -68,7 +68,7 @@ public class PlaySong implements JustinPlaySongInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            while ((bytesRead = audioStream.read(bytesBuffer)) != -1 && !cancel) {
+            while ((bytesRead = audioStream.read(bytesBuffer)) > 0 && !cancel) {
             	while(pause) {
             		sleep(0);
             	}
