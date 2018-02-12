@@ -1,3 +1,9 @@
+/**
+ * Temporary until Yonathan finishes his screen
+ * 
+ * @author Steven
+ */
+
 package highscore;
 
 import java.io.File;
