@@ -146,7 +146,7 @@ public class FightPaneG extends FullFunctionPane{
 			}
 		}, s);
 	}
-	 
+	  
 	public void pause() {
 		robotIdle.setVisible(true);
 		robotHit1.setVisible(false);
