@@ -20,7 +20,8 @@ public class Timing extends Component implements JustinTimingInterface {
 	
 	private String img="";
 	private float lastTiming=0;
-
+	public static final String[] tim= {"resources/perfect.png","resources/great.png","resources/good.png","resources/ok.png","resources/bad.png","resources/miss.png"};
+	public static final double[] times= {1,.95,.66,.5,.33,0};
 	public Timing(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
@@ -74,7 +75,14 @@ public class Timing extends Component implements JustinTimingInterface {
 		if(!start) {
 			difference = goal - stroke.getY();
 		}
-		if(Math.abs(difference)< 5) {
+		for(int i=0;i<6;i++) {
+			if(Math.abs(difference)< i*5+5) {
+				calculations(times[i],tim[i]);
+				break;
+			}
+		}
+		
+		/*if(Math.abs(difference)< 5) {
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
@@ -115,7 +123,7 @@ public class Timing extends Component implements JustinTimingInterface {
 			return ;
 		}
 		calculations(0,"resources/miss.png");
-		return ;
+		return ;*/
 	}
 	
 	public void calculations(double score,String image) {
