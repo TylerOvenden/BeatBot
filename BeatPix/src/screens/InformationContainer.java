@@ -9,13 +9,14 @@ import gui.components.Component;
 import gui.userInterfaces.FullFunctionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
+import screens.components.MultiLineCustomText;
 import screens.interfaces.Options;
 
 public class InformationContainer {
 
 	Options parentScreen; // Screen for popup 
 	private Component blackBack;
-	private ArrayList<CustomText> information;
+	private MultiLineCustomText information;
 	private ImageButton back;
 	
 	
@@ -26,9 +27,7 @@ public class InformationContainer {
 	public void addObjects() {
 		parentScreen.addObject(blackBack);
 		parentScreen.addObject(back);
-		for(CustomText c: information) {
-			parentScreen.addObject(c);
-		}
+		information.addToScreen();
 	}
 	
 	public void createObjects() {
@@ -47,15 +46,12 @@ public class InformationContainer {
 				parentScreen.remove(back);
 				parentScreen.remove(blackBack);
 				
-				for(CustomText c: information) {
-					parentScreen.remove(c);
-				}
-				
 				parentScreen.toggleButtons(true);
+				information.removeFromScreen();
 			}
 		});
 		
-		createInstructions("I am a long line of instructions, I don't know how well this will appear, but it doesn't matter cus how much in struction"
+		createInformation("I am a long line of instructions, I don't know how well this will appear, but it doesn't matter cus how much instruction"
 				+ " you need anyways?");
 	}
 	
@@ -96,16 +92,7 @@ public class InformationContainer {
 		return arrayTemp;
 	}
 	
-	public void createInstructions(String s) {
-		information = new ArrayList<CustomText>();
-		ArrayList<String> temp = arrayOfBrokenUpStrings(s, 10);
-		for(int i = 0; i< temp.size(); i++) {
-			CustomText ct = new CustomText(parentScreen.getWidth()/960*	340,
-														50*i  + parentScreen.getHeight()/540*	120, 
-														parentScreen.getWidth()/960*	280, 
-														parentScreen.getHeight()/540*	300, 
-																	temp.get(i), true, true, true);
-			information.add(ct);
-		}
+	public void createInformation(String s) {
+		information = new MultiLineCustomText(50, 50, 900, 500, s, (FullFunctionScreen) parentScreen, 30);
 	}
 }
