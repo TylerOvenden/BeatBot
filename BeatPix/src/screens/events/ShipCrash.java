@@ -33,21 +33,21 @@ public class ShipCrash {
 				createStartTop();
 			}
 				
-				if(timeCount > 3000 && timeCount < 6500) { //screenshake at 3s
+				if(timeCount > 2000 && timeCount < 4500) { //screenshake at 3s
 					screenShake();
 				}
-				if(timeCount == 3300) {
+				if(timeCount == 2500) {
 					spaceShipFalling();
 					createStartTop();
 				}
-				if(timeCount == 7000){
+				if(timeCount == 4500){
 					s.remove(actualStartTop);
 					s.remove(building);
 				}
-				if(timeCount > 7000) {
+				if(timeCount > 4500) {
 					spaceShipCrash();
 				}
-				if(timeCount == 8000) {
+				if(timeCount == 5000) {
 					time.cancel();
 					afterFlash();
 				}
@@ -130,7 +130,7 @@ public class ShipCrash {
 			crashActivated = true;
 		}
 		
-		if(timeCount > 7000 && timeCount < 7200) {
+		if(timeCount > 4500 && timeCount < 4700) {
 			if(crashFlash.getAlpha() == 0.5f) {
 				crashFlash.setAlpha(1.0f);
 			}else {
