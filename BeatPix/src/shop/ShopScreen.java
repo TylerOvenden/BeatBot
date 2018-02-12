@@ -66,7 +66,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 
 	
 	//Kevin Fields-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	private TextLabel textKev;
 	private TextLabel unlock;
 	
 	private ArrayList<Button> buttonList;
@@ -87,6 +86,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText back;
 	private CustomText yesK;
 	private CustomText noK;
+	private CustomText textKev;
 	
 	private Graphic backBorder;
 	
@@ -373,7 +373,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		 
 		 
 		 border = new Graphic(380, 80, 230, 430, "resources//TransparentButtonC.png");
-		 textKev = new TextLabel(400, 100, 200, 400, "Do you wish to unlock this?");
+		 textKev = new CustomText(390, 110, 200, 370, "Unlock" ,true);
 
 		 noButton = new Button(500, 400, 55, 35, "", Color.GRAY, new Action() {
 			
