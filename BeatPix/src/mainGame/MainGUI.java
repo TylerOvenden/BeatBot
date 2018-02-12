@@ -11,6 +11,7 @@ import screens.InformationContainer;
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
+import shop.CharacterSelectionScreen;
 import shop.ShopScreen;
 
 import screens.interfaces.Options;
@@ -35,6 +36,7 @@ public class MainGUI extends GUIApplication {
 	public static ShopScreen shop;
 	public static OptionsContainer options;
 	public static InformationContainer information;
+	public static CharacterSelectionScreen character;
 	
 	public int x;
 	
@@ -77,7 +79,8 @@ public class MainGUI extends GUIApplication {
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		//level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
-
+		character = new CharacterSelectionScreen(getWidth(),getHeight());
+		
 		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
 		information = new InformationContainer((Options) mainMenu);
 		
