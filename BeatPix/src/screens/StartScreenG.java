@@ -12,7 +12,9 @@ import gui.GUIApplication;
 import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
+
 import mainGame.MainGUI;
+import screens.events.ShipCrash;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
@@ -29,7 +31,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	private Timer time; // timer for events
 	private int screenPhase; // phases for events
 	
-	private Graphic background; // background image
+	public static Graphic background; // background image
 	
 	private Graphic title; // title graphic
 	private Graphic start; // start graphic
@@ -45,7 +47,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 */
 	public StartScreenG(int width, int height) {
 		super(width, height);
-		screenPhase = 0;
+		screenPhase = -1;
 	}
 	
 	/**User Clicks to Skip**
@@ -67,7 +69,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 			}
 		}
 		if(allowClick) {
-			allowClick = false; GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			allowClick = false;
+			GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			fadeOuts();
 		}
 	}
@@ -138,6 +141,13 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 * Final State:
 	 * -Background half matches bottom of screen
 	 */
+	
+	private ShipCrash ms;
+	public void start() {
+		ms = new ShipCrash(this); screenPhase = -1;
+		//scrollIn(); screenPhase = 0;
+	}
+	
 	public void scrollIn() {
 		
 		background.setX(0); background.setY(0);
