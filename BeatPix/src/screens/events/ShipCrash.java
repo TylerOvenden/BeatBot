@@ -32,7 +32,7 @@ public class ShipCrash {
 				createStartTop();
 			}
 				
-				if(timeCount > 2000 && timeCount < 4500) { //screenshake at 3s
+				if(timeCount > 2000 && timeCount < 4100) { //screenshake at 3s
 					screenShake();
 				}
 				if(timeCount == 2500) {
