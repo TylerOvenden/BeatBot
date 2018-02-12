@@ -11,7 +11,6 @@ import gui.components.AnimatedComponent;
 import gui.components.Component;
 import gui.components.Graphic;
 import gui.userInterfaces.FullFunctionScreen;
-import mainGame.screens.MainScreen;
 import screens.MainMenuScreenG;
 import screens.StartScreenG;
 
