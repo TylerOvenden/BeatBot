@@ -621,7 +621,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @author Justin Yau
 	 */
 	public void addVisualizer(List<Visible> viewObjects) { 
-		visualizer = new AudioVisualizer(480,350,200,100);
+		visualizer = new AudioVisualizer(480,350,400,100);
 		viewObjects.add(visualizer);
 	}
 	

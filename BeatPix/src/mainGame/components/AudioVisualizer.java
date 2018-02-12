@@ -2,6 +2,7 @@ package mainGame.components;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,6 +35,7 @@ public class AudioVisualizer extends Component implements JustinPlaySongInterfac
 	private Color color; //The final color of the visualizer will be stored here
 	private boolean pause; //This boolean will track whether or not the visualizer is paused
 	private boolean cancel; //The boolean will track whether or not to cancel the visualizer processes
+	private int bandWidth; //The widths of the band will be stored here
 	
 	/**
 	 * Constructor creates an audio visualizer that helps the user visualize what is happening to the frequencies at a given time
@@ -45,6 +47,7 @@ public class AudioVisualizer extends Component implements JustinPlaySongInterfac
 	public AudioVisualizer(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		spectrums = new float[0];
+		bandWidth = 3;
 		pause = false;
 		cancel = false;
 		color = getRandomColor();
@@ -152,6 +155,7 @@ public class AudioVisualizer extends Component implements JustinPlaySongInterfac
 	@Override
 	public void update(Graphics2D g) {
 		super.clear();
+		g.scale(.8, .8);
 		g.setColor(color);
 		g.drawLine(0, 0, getWidth(), 0);
 		for(int i = 0; i < spectrums.length; i++) {
@@ -159,7 +163,13 @@ public class AudioVisualizer extends Component implements JustinPlaySongInterfac
 			if(i != 0) {
 				amplitude = (0.9f) * spectrums[i-1] + (.1f) * spectrums[i];
 			}
-			g.drawLine(i, 0, i, (int) amplitude);
+			g.setColor(color);
+			Rectangle band = new Rectangle((i * bandWidth), 0, bandWidth, (int) amplitude);
+			g.draw(band);
+			g.fill(band);
+			g.setColor(Color.BLACK);
+			g.draw(band);
+			//g.drawLine(i, 0, i, (int) amplitude);
 		}
 	}
 
