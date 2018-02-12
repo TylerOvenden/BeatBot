@@ -4,5 +4,5 @@ package shop;
 public interface unlocker{
 	void unlock(int i);
 	
-	String getSkin();
+	String getSkin();//red, green, default, white
 }
