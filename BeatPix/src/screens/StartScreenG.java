@@ -13,7 +13,7 @@ import gui.components.Graphic;
 import gui.interfaces.*;
 import gui.userInterfaces.*;
 import mainGame.MainGUI;
-import screens.events.MeteorShower;
+import screens.events.ShipCrash;
 
 public class StartScreenG extends FullFunctionScreen implements MouseListener{
 
@@ -141,9 +141,9 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	 * -Background half matches bottom of screen
 	 */
 	
-	private MeteorShower ms;
+	private ShipCrash ms;
 	public void start() {
-		ms = new MeteorShower(this); screenPhase = -1;
+		ms = new ShipCrash(this); screenPhase = -1;
 		//scrollIn(); screenPhase = 0;
 	}
 	

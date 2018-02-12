@@ -15,13 +15,13 @@ import mainGame.screens.MainScreen;
 import screens.MainMenuScreenG;
 import screens.StartScreenG;
 
-public class MeteorShower {
+public class ShipCrash {
 
 	Timer time;
 	StartScreenG s;
 
 	int timeCount = 0;
-	public MeteorShower(StartScreenG screen) {
+	public ShipCrash(StartScreenG screen) {
 		this.s = screen;
 		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
