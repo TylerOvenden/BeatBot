@@ -141,7 +141,7 @@ public class ImportScreen extends ResizableScreen {
 	 * @author Justin Yau
 	 */
 	public void addConvertButton(List<Visible> viewObjects) {
-		OptionButton btn = new OptionButton(430, 350, 75, 50, "Convert", this);
+		OptionButton btn = new OptionButton(430, 351, 75, 50, "Convert", this);
 		btn.setAction(new Action() {
 			
 			@Override
