@@ -620,7 +620,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @author Justin Yau
 	 */
 	public void spawnRobot(List<Visible> viewObjects) {
-		fightScene = new FightPaneG(this, 500,200);
+		fightScene = new FightPaneG(this, 480,150);
 		fightScene.update();
 		fightScene.setVisible(true);
 		viewObjects.add(fightScene);
