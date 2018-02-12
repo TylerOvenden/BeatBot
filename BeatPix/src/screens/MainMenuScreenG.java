@@ -431,7 +431,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	}
 
 
-//--OPTIONS INTERFACE METHODS--//
+//--OPTIONS INTERFACE METHODS--////
 	public void toggleButtons(boolean b) {
 		information.setEnabled(b);
 		for(ImageButton button: buttons) {
