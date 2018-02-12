@@ -23,20 +23,26 @@ public class MeteorShower {
 	int timeCount = 0;
 	public MeteorShower(StartScreenG screen) {
 		this.s = screen;
-		time = new Timer(); createStartTop();
+		time = new Timer();
 		time.scheduleAtFixedRate(new TimerTask() {
 			
 			@Override
 			public void run() { timeCount++;
 				
-			
+			if(timeCount == 3) {
+				createStartTop();
+			}
 				
 				if(timeCount > 3000 && timeCount < 6500) { //screenshake at 3s
 					screenShake();
 				}
 				if(timeCount == 3300) {
-					System.out.println("method called");
 					spaceShipFalling();
+					createStartTop();
+				}
+				if(timeCount == 7000){
+					s.remove(actualStartTop);
+					s.remove(building);
 				}
 				if(timeCount > 7000) {
 					spaceShipCrash();
@@ -46,11 +52,15 @@ public class MeteorShower {
 					afterFlash();
 				}
 			}
-		}, 0, 1);
+		}, 0, 2);
 	}
 	
 	Graphic actualStartTop; Graphic building;
 	public void createStartTop(){
+		if(actualStartTop!= null) {
+			s.remove(actualStartTop);
+			s.remove(building);
+		}
 		//ImageIcon icon = new ImageIcon("resources\\backgrounds\\start_top.png");
 		actualStartTop = new Graphic(300,100,300, 200,
 				"resources\\backgrounds\\cloud1.png");
@@ -88,12 +98,11 @@ public class MeteorShower {
 	public void spaceShipFalling() {
 		if(!spaceShipFallStart) {
 			spaceShipFallStart = true;
-			theShip = new AnimatedComponent(500, -150, 150, 150);
+			theShip = new AnimatedComponent(400, 90, 150, 150);
 			theShip.addSequence("resources\\backgrounds\\test.png", 8, 0, 0, 74, 68, 4);
 			
 			Thread run = new Thread(theShip);
 			run.start();
-			System.out.println("Object added");
 			s.addObject(theShip);
 		}
 		

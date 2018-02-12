@@ -77,10 +77,11 @@ public class MultiLineCustomText {
 		customTextArr = new ArrayList<CustomText>();
 		ArrayList<String> temp = arrayOfBrokenUpStrings(s, rowLength);
 		for(int i = 0; i< temp.size(); i++) {
+			int lineSpacing = 30;
 			CustomText ct = new CustomText(x,
-												y + h/temp.size()*i, 
+												y + h/temp.size()*i + lineSpacing*i, 
 													w, 
-														h/temp.size(), 
+														h/(temp.size()+1), 
 															temp.get(i),
 																false, true, white);
 			customTextArr.add(ct);

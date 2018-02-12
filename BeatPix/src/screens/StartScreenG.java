@@ -143,8 +143,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	
 	private MeteorShower ms;
 	public void start() {
-		//ms = new MeteorShower(this);
-		scrollIn(); screenPhase = 0;
+		ms = new MeteorShower(this); screenPhase = -1;
+		//scrollIn(); screenPhase = 0;
 	}
 	
 	public void scrollIn() {
