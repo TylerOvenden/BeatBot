@@ -1,16 +1,19 @@
 package mainGame;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import gui.GUIApplication;
 import gui.userInterfaces.*;
-
+import mainGame.components.Song;
 import screens.InformationContainer;
 
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
+import shop.CharacterSelectionScreen;
 import shop.ShopScreen;
 
 import screens.interfaces.Options;
@@ -29,12 +32,15 @@ public class MainGUI extends GUIApplication {
 	
 	public static MainGUI test;
 	
+	public ArrayList<Song> mySongs;
+	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
 	//public static LevelSelectG level;
 	public static ShopScreen shop;
 	public static OptionsContainer options;
 	public static InformationContainer information;
+	public static CharacterSelectionScreen character;
 	
 	public int x;
 	
@@ -44,6 +50,8 @@ public class MainGUI extends GUIApplication {
 	public MainGUI(int width, int height) {
 		super(width, height);
 		setVisible(true);
+		
+		mySongs=new ArrayList<Song>();
 		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
@@ -68,6 +76,7 @@ public class MainGUI extends GUIApplication {
 	@Override
 	public void initScreen() {
 		
+		
 		String[] temp = {"D","F","J","K"};
 		keys = temp;
 		
@@ -77,7 +86,8 @@ public class MainGUI extends GUIApplication {
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		//level = new LevelSelectG(getWidth(),getHeight());
 		shop = new ShopScreen(getWidth(),getHeight());
-
+		character = new CharacterSelectionScreen(getWidth(),getHeight());
+		
 		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
 		information = new InformationContainer((Options) mainMenu);
 		
@@ -88,6 +98,7 @@ public class MainGUI extends GUIApplication {
 	public static void main(String[] args) {
 		test = new MainGUI(960,540);
 		test.setTitle("BeatBot");
+		test.addMaps();
 		Thread s = new Thread(test);
 		s.run();
 	}
@@ -114,6 +125,19 @@ public class MainGUI extends GUIApplication {
 
 	public static void setVolume(int volume) {
 		MainGUI.volume = volume;
+	}
+	
+	
+	/**
+	 * DO NOT REMOVE!
+	 * Adds maps to mySongs
+	 * 
+	 * @author Steven 
+	 */
+	public void addMaps() {
+		for(int i=0;i<new File("resources/realMaps").listFiles().length;i++) {
+			mySongs.add(new Song(new File("resources/realMaps").listFiles()[i].getPath()));
+		}
 	}
 	
 	//testing

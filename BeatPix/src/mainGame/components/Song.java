@@ -26,6 +26,8 @@ public class Song implements SongInterface, Highscore {
 	private ArrayList<Integer> scores;
 	private ArrayList<Float> accuracy;
 	
+	private boolean unlock;
+	
 	/**
 	 * This constructor will load the file utilizing a file loader and then update the metadata and beats in fields. <br>
 	 * Retrieve these fields utilizing the get methods.
@@ -44,6 +46,19 @@ public class Song implements SongInterface, Highscore {
 		beats = map.getBeats();
 		scores = new ArrayList<Integer>();
 		accuracy = new ArrayList<Float>();
+		if(title.equals("Dreadnought")) {
+			unlock=true;
+		}else {
+			unlock=false;
+		}
+	}
+
+	public boolean isUnlock() {
+		return unlock;
+	}
+
+	public void setUnlock(boolean unlock) {
+		this.unlock = unlock;
 	}
 
 	/**
