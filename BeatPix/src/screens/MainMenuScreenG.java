@@ -210,7 +210,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 						buttons.get(LEVEL_IDX).unhoverAction();
 
 						//MainGUI.setScreen(MainGUI.level);
-						Song song = new Song("resources/maps/Elektronomia Summer Vibes/Elektronomia Summer Vibes.csv");
+						//Song song = new Song("resources/maps/Elektronomia Summer Vibes/Elektronomia Summer Vibes.csv");
 						/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
 										
 										try {

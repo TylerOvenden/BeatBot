@@ -76,7 +76,6 @@ public class MainGUI extends GUIApplication {
 	@Override
 	public void initScreen() {
 		
-		
 		String[] temp = {"D","F","J","K"};
 		keys = temp;
 		
