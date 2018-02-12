@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,5 +29,10 @@ public class MainController implements Initializable {
 		width.bind(Bindings.selectDouble(mv.sceneProperty(), "width"));
 		height.bind(Bindings.selectDouble(mv.sceneProperty(), "height"));
 	}
-
+	public void play(ActionEvent event) {
+		mp.play();
+	}
+	public void pause(ActionEvent event) {
+		mp.pause();
+	}
 }
