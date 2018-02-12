@@ -127,6 +127,13 @@ public class MainGUI extends GUIApplication {
 		MainGUI.volume = volume;
 	}
 	
+	
+	/**
+	 * DO NOT REMOVE!
+	 * Adds maps to mySongs
+	 * 
+	 * @author Steven 
+	 */
 	public void addMaps() {
 		for(int i=0;i<new File("resources/realMaps").listFiles().length;i++) {
 			mySongs.add(new Song(new File("resources/realMaps").listFiles()[i].getPath()));
