@@ -329,6 +329,10 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 					setThings1VisTrue();
 					setYesButVisExceptThis(j);
 					index = indexList.indexOf(j);
+					buttonList.get(j).setEnabled(false);
+					for(int i = 0; i < buttons.size(); i++) {
+						buttons.get(i).setEnabled(false);
+					}
 				}
 			}));
 			charScroll.addObject(buttonList.get(i));
@@ -392,6 +396,10 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			public void act() {
 				 setThings1VisFalse();
 				 setAllYesButVisFalse();
+				 //buttonList.get(j).setEnabled(true);
+				 for(int i = 0; i < buttons.size(); i++) {
+					buttons.get(i).setEnabled(true);
+				 }
 			}
 		});
 		 

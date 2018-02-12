@@ -610,7 +610,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @author Justin Yau
 	 */
 	public void addVisualizer(List<Visible> viewObjects) { 
-		visualizer = new AudioVisualizer(500,400,200,100);
+		visualizer = new AudioVisualizer(480,350,200,100);
 		viewObjects.add(visualizer);
 	}
 	
@@ -620,7 +620,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @author Justin Yau
 	 */
 	public void spawnRobot(List<Visible> viewObjects) {
-		fightScene = new FightPaneG(this, 500,200);
+		fightScene = new FightPaneG(this, 480,150);
 		fightScene.update();
 		fightScene.setVisible(true);
 		viewObjects.add(fightScene);
@@ -1300,7 +1300,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {
-			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,(double)accuracy,mainSong,mainSong));
 		}
 	}
 	
