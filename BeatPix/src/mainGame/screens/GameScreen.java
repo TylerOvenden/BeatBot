@@ -1283,8 +1283,8 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		int lane = beat[0] - 1;
 		if(beat[2] != 0 && beat[2] - beat[1] >= 0) {
 			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-			if(height + 35 >= columnHeight) {
-				height = columnHeight - 60;
+			if(height + 64 >= columnHeight) {
+				height = columnHeight - 64;
 			}
 			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 					"resources/arrows/"+ arrowPaths[lane] + "h.png");
