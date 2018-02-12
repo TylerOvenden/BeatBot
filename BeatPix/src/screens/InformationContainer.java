@@ -9,13 +9,14 @@ import gui.components.Component;
 import gui.userInterfaces.FullFunctionScreen;
 import screens.components.CustomText;
 import screens.components.ImageButton;
+import screens.components.MultiLineCustomText;
 import screens.interfaces.Options;
 
 public class InformationContainer {
 
 	Options parentScreen; // Screen for popup 
 	private Component blackBack;
-	private ArrayList<CustomText> information;
+	private MultiLineCustomText information;
 	private ImageButton back;
 	
 	
@@ -26,6 +27,7 @@ public class InformationContainer {
 	public void addObjects() {
 		parentScreen.addObject(blackBack);
 		parentScreen.addObject(back);
+		information.addToScreen();
 	}
 	
 	public void createObjects() {
@@ -45,11 +47,52 @@ public class InformationContainer {
 				parentScreen.remove(blackBack);
 				
 				parentScreen.toggleButtons(true);
+				information.removeFromScreen();
 			}
 		});
+		
+		createInformation("I am a long line of instructions, I don't know how well this will appear, but it doesn't matter cus how much instruction"
+				+ " you need anyways?");
 	}
 	
-	public void createInstructions(String s) {
-		
+	
+	
+	public int positionOfLastLetterOfLongestWordComboWithinBoundary(String s, int boundary) {
+		int idx = boundary;
+		for(int i = boundary; i > 0; i--) {
+			if(s.length() <= boundary) {
+				return s.length()-1;
+			}
+			if(s.substring(i-1, i).equals(" ") || i == 0) {
+				idx = i;
+				break;
+			}else {
+				idx --;
+			}
+		}
+		return idx;
+	}
+	public ArrayList<String> arrayOfBrokenUpStrings(String s, int boundary) {
+		String temps = s;
+		ArrayList<String> arrayTemp = new ArrayList<String>();
+		while(temps.length() > 0) {
+			if(positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary) == 0)
+				break;
+			
+			int tempx = positionOfLastLetterOfLongestWordComboWithinBoundary(temps, boundary);
+			String tempSub = temps.substring(0,tempx+1);
+			
+			while(tempSub.length()<boundary) {
+				tempSub += " ";
+			}
+			
+			arrayTemp.add(tempSub);
+			temps = temps.substring(tempx,temps.length());
+		}
+		return arrayTemp;
+	}
+	
+	public void createInformation(String s) {
+		information = new MultiLineCustomText(50, 50, 900, 500, s, (FullFunctionScreen) parentScreen, 30);
 	}
 }

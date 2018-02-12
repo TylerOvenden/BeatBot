@@ -830,18 +830,16 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
-		/*String display = String.valueOf(tScore);
+		String display = String.valueOf(tScore);
 		
 		int[] scoreA = {0,0,0,0,0,0};
+		
 		for(int i = 0; i<display.length();i++) {
 		
-			scoreA[scoreA.length-i-1] = display.charAt(i);
-			
+			//scoreA[(scoreA.length-i)-1] = Integer.parseInt();
+			System.out.println(display.charAt(i));
 		} 
-	//	scoreA[scoreA.length-2] = 2;
-		//scoreA[scoreA.length-2] = display.charAt();
-	//	System.out.println(Arrays.toString(scoreA));
-		//System.out.println(display.charAt(0));*/
+		System.out.println(Arrays.toString(scoreA));
 		if(tScore>=1000000) {
 			displayScore.setText(""+tScore);
 			return ;
