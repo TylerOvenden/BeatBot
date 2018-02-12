@@ -146,6 +146,7 @@ public class Timing extends Component implements JustinTimingInterface,robotActi
 			GameScreen.game.calcCombo(true);
 			GameScreen.game.getHealthBar().applyHealth(-3);
 		}
+		System.out.println(GameScreen.game.getHealthBar().getHealth());
 	}
 	
 	@Override
@@ -154,7 +155,8 @@ public class Timing extends Component implements JustinTimingInterface,robotActi
 		update();
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
-		//System.out.println("b");
+		GameScreen.game.getHealthBar().applyHealth(-3);
+		System.out.println(GameScreen.game.getHealthBar().getHealth());
 	}
 
 	@Override
