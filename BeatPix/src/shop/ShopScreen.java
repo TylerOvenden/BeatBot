@@ -66,7 +66,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 
 	
 	//Kevin Fields-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	private TextLabel unlock;
 	
 	private ArrayList<Button> buttonList;
 	private ArrayList <Button> confirmButton;
@@ -87,6 +86,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText yesK;
 	private CustomText noK;
 	private CustomText textKev;
+	private CustomText unlockedText;
 	
 	private Graphic backBorder;
 	
@@ -351,8 +351,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				public void act() {
 					setThings2VisFalse();
 					setAllConfButVisFalse();
-					buttonList.get(a).setVisible(false);
-					indexList.remove(index);
 					for (int i = index; i < buttonList.size(); i++)
 					{
 						if (buttonList.get(i).getY() != 0)
@@ -362,14 +360,18 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 						}
 
 					}
+					charScroll.remove(buttonList.get(a));
+					//buttonList.get(a).setVisible(false);
+					charScroll.update();
+					indexList.remove(index);
 					
 				}
 			}));
 		}
 		
 		 //create all the things 
-		 border2 = new Graphic(380, 180, 220, 120, "resources//TransparentButtonA.png");
-		 unlock = new TextLabel(400, 200, 200, 100, "You have unlocked this. Enjoy");
+		 border2 = new Graphic(337, 180, 305,305,"resources//shop//TransparentButtonB.png");
+		 unlockedText = new CustomText(390, 210, 200, 370, "UnLocked",false);
 		 
 		 
 		 border = new Graphic(380, 80, 230, 430, "resources//TransparentButtonC.png");
@@ -407,7 +409,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			viewObjects.add(yesButton.get(a));
 		}
 		viewObjects.add(border2);
-		viewObjects.add(unlock);
+		viewObjects.add(unlockedText);
 		viewObjects.add(back);
 		viewObjects.add(yesK);
 		viewObjects.add(noK);
@@ -544,13 +546,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	//things that things1 doesnt consist of, visibility = false
 	public void setThings2VisFalse() {
 		 border2.setVisible(false);
-		 unlock.setVisible(false);
+		 unlockedText.setVisible(false);
 		 //confirmButton.setVisible(false);
 	}
 	//things that things1 doesnt consist of, visibility = false
 	public void setThings2VisTrue() {
 		 border2.setVisible(true);
-		 unlock.setVisible(true);
+		 unlockedText.setVisible(true);
 		 //confirmButton.setVisible(true);
 	}
 	
