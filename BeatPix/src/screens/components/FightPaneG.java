@@ -1,9 +1,6 @@
 package screens.components;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,6 +9,7 @@ import gui.components.AnimatedComponent;
 import gui.components.FullFunctionPane;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
+import mainGame.MainGUI;
 
 public class FightPaneG extends FullFunctionPane{
 
@@ -24,6 +22,7 @@ public class FightPaneG extends FullFunctionPane{
 	private AnimatedComponent robotHit3;
 	private AnimatedComponent robotHit2;
 	private AnimatedComponent robotMiss;
+	private AnimatedComponent enemyIdle;
 	private AnimatedComponent enemyHit;
 	private AnimatedComponent enemyMiss;
 
@@ -32,15 +31,16 @@ public class FightPaneG extends FullFunctionPane{
 	private Thread hit2Thread;
 	private Thread hit3Thread;
 	private Thread missThread;
+	private Thread enemyIdleThread;
 	private Thread enemyHitThread;
 	private Thread enemyMissThread;
 	
-	private ArrayList<AnimatedComponent> poweredUp; // the attacks are improved and stronger if the combo is > 10 //Or DO HATS but have to change a lot of the art
 	private int combo;
-	private String skin = "default"; //Skins will just be recolors of the robot, maybe;
 	private boolean animationRunning = false;
 	private boolean miss;
 	private int pastRand;
+	private boolean isPaused;
+	private String rsrcFile;
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
@@ -48,13 +48,14 @@ public class FightPaneG extends FullFunctionPane{
 	}
 
 	public void initAllObjects(List<Visible> viewObjects){
-		String rsrcFile = "resources/sprites/defaultSprite.bmp";
+		rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
+		changeSkin();
 		robotIdle = new AnimatedComponent(30, 100, 117, 84);
-		 robotHit1 = new AnimatedComponent(30, 100, 117, 84);
+		robotHit1 = new AnimatedComponent(30, 100, 117, 84);
 		robotHit3 = new AnimatedComponent(30, 100, 117, 84);
 		robotHit2 = new AnimatedComponent(30, 100, 117, 84);
 		robotMiss = new AnimatedComponent(30, 100, 117, 84);
-		robotIdle.addSequence("resources/sprites/defaultSprite.bmp", 200, 0, 0, 39, 28, 2);
+		robotIdle.addSequence(rsrcFile, 200, 0, 0, 39, 28, 2);
 		robotHit1.addSequence(rsrcFile, 200, 0, 105, 39, 28, 4);
 		robotHit1.setVisible(false);
 		robotHit2.addSequence(rsrcFile, 200, 0, 34, 39, 27, 5);
@@ -83,7 +84,7 @@ public class FightPaneG extends FullFunctionPane{
 		addKeyListener(this);
 		setFocusable(true);
 		
-		
+		setOpaque(false);
 		viewObjects.add(robotIdle);
 		viewObjects.add(robotHit1);
 		viewObjects.add(robotHit2);
@@ -96,7 +97,8 @@ public class FightPaneG extends FullFunctionPane{
 	public void keyPressed(KeyEvent e)
 	{	
 		miss = false;
-		if((e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_F || e.getKeyCode() == KeyEvent.VK_J || e.getKeyCode() == KeyEvent.VK_K) && (animationRunning == false)) {
+		String pressedKey = "" + (char) e.getKeyCode(); 
+		if((pressedKey.equalsIgnoreCase(MainGUI.getKeys(0)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(1)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(2)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(3))) && (animationRunning == false) && (isPaused == false)) {
 			if(!miss) {
 				robotIdle.setVisible(false);
 				robotHit1.setVisible(false);
@@ -142,7 +144,36 @@ public class FightPaneG extends FullFunctionPane{
 				a.setRunning(false);
 				animationRunning = false;
 			}
-		}, s                );
+		}, s);
+	}
+	  
+	public void pause() {
+		robotIdle.setVisible(true);
+		robotHit1.setVisible(false);
+		robotHit2.setVisible(false);
+		robotHit3.setVisible(false);
+		robotMiss.setVisible(false);
+		robotIdle.setRunning(false);
+		isPaused = true;
+	}
+	
+	public void resume()
+	{
+		isPaused = false;
+		robotIdle.setRunning(true);
+	}
+	
+	public void changeSkin()
+	{
+		String skin = MainGUI.test.character.getSkin();
+		if(skin == "default")
+			rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
+		if(skin == "red")
+			rsrcFile = "resources/sprites/redSprite_Transparent.png";
+		if(skin == "white")
+			rsrcFile = "resources/sprites/whiteSprite_Transparent.png";
+		if(skin == "green")
+			rsrcFile = "resources/sprites/greenSprite_Transparent.png";
 	}
 	
 }

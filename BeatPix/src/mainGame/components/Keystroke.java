@@ -303,4 +303,14 @@ public class Keystroke extends AnimatedComponent implements KeystrokeInterface, 
 		return 0;
 	}
 	
+	/**
+	 * This method returns the bottom of the hold stroke
+	 * @return - The bottom position of the stroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public int getBottomPosition() {
+		return getY();
+	}
+	
 }

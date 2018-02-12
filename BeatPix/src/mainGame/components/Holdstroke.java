@@ -101,6 +101,16 @@ public class Holdstroke extends AnimatedComponent implements HoldstrokeInterface
 	}
 	
 	/**
+	 * This method returns the bottom of the hold stroke
+	 * @return - The bottom position of the stroke
+	 * 
+	 * @author Justin Yau
+	 */
+	public int getBottomPosition() {
+		return getY() + height - 35;
+	}
+	
+	/**
 	 * This method calculates the time, in ms, the end stroke should've been pressed since the game started 
 	 * @return Returns the time, in ms, the end stroke should've been pressed since the game started 
 	 * @author Justin Yau

@@ -60,12 +60,6 @@ public class Press extends AbstractAction {
 	 */
 	public void handleKeystroke(Keystroke str) {
 		if(str.distanceFromGoal() <= GameScreen.distanceG) {
-			if(str.getColumnLane() != columnLane) {
-				GameScreen.game.removeStroke(str);
-				//Calculate Miss Accuracy Here
-				GameScreen.game.getTiming().missAccuracy();
-				return;
-			}
 			GameScreen.game.removeStroke(str);
 			//Calculate Accuracy
 			GameScreen.game.getTiming().calculateAccuracy(str);
@@ -81,12 +75,6 @@ public class Press extends AbstractAction {
 	 */
 	public void handleHoldstroke(Holdstroke str) {
 		if(str.distanceFromGoal() <= GameScreen.distanceG) {
-			if(str.getColumnLane() != columnLane) {
-				GameScreen.game.removeHoldStroke(str);
-				//Calculate Miss
-				GameScreen.game.getTiming().missAccuracy();
-				return;
-			}
 			GameScreen.game.removeFromStrokes(str);
 			GameScreen.game.addHold(str);
 			str.setHeld(true);

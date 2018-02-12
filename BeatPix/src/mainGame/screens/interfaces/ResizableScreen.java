@@ -13,6 +13,7 @@ import java.util.List;
 import gui.interfaces.Clickable;
 import gui.interfaces.Visible;
 import gui.userInterfaces.ClickableScreen;
+import gui.userInterfaces.FullFunctionScreen;
 
 /**
  * This class is for when you want to make a clickable screen resizeable with all the components scaling to how much the <br>
@@ -21,7 +22,7 @@ import gui.userInterfaces.ClickableScreen;
  * @author Justin Yau
  *
  */
-public abstract class ResizableScreen extends ClickableScreen {
+public abstract class ResizableScreen extends FullFunctionScreen {
 
 	private int originalWidth; //The original width of the screen will be stored here
 	private int originalHeight; //The original height of the screen will be stored here
@@ -147,6 +148,19 @@ public abstract class ResizableScreen extends ClickableScreen {
 	 */
 	public double getYScale() {
 		return yScale;
+	}
+	
+	/**
+	 * This method updates the scalings in case the screen was resized before the screen was made
+	 * 
+	 * @param width - The previous width of the screen before this screen
+	 * @param height - The previous height of the screen before this screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void startResize(int width, int height) {
+		setXScale(((double) width)/getOWidth());
+		setYScale(((double) height)/getOHeight());
 	}
 	
 	public void update(Graphics2D g){
