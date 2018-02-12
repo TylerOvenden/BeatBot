@@ -11,11 +11,11 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
 import mainGame.components.Song;
+import mainGame.components.interfaces.SongInterface;
 import mainGame.screens.GameScreen;
 
 public class TempSongSelect extends FullFunctionScreen {
 
-	private ArrayList<Song> s;
 	
 	public TempSongSelect(int width, int height) throws IOException {
 		super(width, height);
@@ -23,17 +23,13 @@ public class TempSongSelect extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		s=new ArrayList<Song>();
-		for(int i=0;i<new File("resources/realMaps").listFiles().length;i++) {
-			s.add(new Song(new File("resources/realMaps").listFiles()[i].getPath()));
-		}
 		Button temp;
-		for(int i=0;i<s.size();i++) {
+		for(int i=0;i<MainGUI.test.mySongs.size();i++) {
 			int tempint=i;
 			temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
 				@Override
 				public void act() {
-					MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),s.get(tempint - 1),"resources/sample_bg.gif"));
+					MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.test.mySongs.get(tempint-1),"resources/sample_bg.gif"));
 					
 				}
 			});

@@ -1,11 +1,13 @@
 package mainGame;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import gui.GUIApplication;
 import gui.userInterfaces.*;
-
+import mainGame.components.Song;
 import screens.InformationContainer;
 
 import screens.MainMenuScreenG;
@@ -29,6 +31,8 @@ public class MainGUI extends GUIApplication {
 	
 	public static MainGUI test;
 	
+	public ArrayList<Song> mySongs;
+	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
 	//public static LevelSelectG level;
@@ -44,6 +48,8 @@ public class MainGUI extends GUIApplication {
 	public MainGUI(int width, int height) {
 		super(width, height);
 		setVisible(true);
+		
+		mySongs=new ArrayList<Song>();
 		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
@@ -68,6 +74,7 @@ public class MainGUI extends GUIApplication {
 	@Override
 	public void initScreen() {
 		
+		
 		String[] temp = {"D","F","J","K"};
 		keys = temp;
 		
@@ -88,6 +95,7 @@ public class MainGUI extends GUIApplication {
 	public static void main(String[] args) {
 		test = new MainGUI(960,540);
 		test.setTitle("BeatBot");
+		test.addMaps();
 		Thread s = new Thread(test);
 		s.run();
 	}
@@ -114,6 +122,12 @@ public class MainGUI extends GUIApplication {
 
 	public static void setVolume(int volume) {
 		MainGUI.volume = volume;
+	}
+	
+	public void addMaps() {
+		for(int i=0;i<new File("resources/realMaps").listFiles().length;i++) {
+			mySongs.add(new Song(new File("resources/realMaps").listFiles()[i].getPath()));
+		}
 	}
 	
 	//testing
