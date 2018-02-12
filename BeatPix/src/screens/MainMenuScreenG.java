@@ -415,7 +415,20 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		screenPhase = 1;
 	}
 	
-
+	public void changeIdle() {
+		this.remove(idleCharacter);
+		idleCharacter = new AnimatedComponent(
+				getWidth()/10, 
+					getHeight()*200/540, 
+						getWidth()*400/960, 
+							getHeight()*300/540);
+		String sprite = "resources//sprites//" + MainGUI.test.character.getSkin() + "Sprite_Transparent.png";
+		//String sprite = "resources//sprites//" + "green" + "Sprite_Transparent.png";
+		idleCharacter.addSequence(sprite, 500, 0, 0, 39, 33, 2);
+		
+		Thread run = new Thread(idleCharacter);
+		run.start();
+	}
 
 
 //--OPTIONS INTERFACE METHODS--//
