@@ -126,7 +126,7 @@ public class CustomText extends Component {
 				ImageIcon newIcon = new ImageIcon(newimg);
 				g.drawImage(newIcon.getImage(), i*w/text.length(), 0, null);		
 			}catch(Exception e){
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 		}

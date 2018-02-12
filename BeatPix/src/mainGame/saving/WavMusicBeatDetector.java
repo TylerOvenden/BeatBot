@@ -304,9 +304,9 @@ public class WavMusicBeatDetector {
     	ArrayList<Long> times = new ArrayList<Long>();
     	float average = determineAverage(beats);
     	for(int i = 0; i < beats.size(); i++) {
-    		if(beats.get(i) > average + 120) {
+    		if(beats.get(i) > average + 120) { //Determine if the beat meets the mininum flux value from the average to be considered a beat
                 long timeInMillis = (long) (((float) i * (1024f / 44100f)) * 1000f); //This is the formula to determine the time the beat occurred
-                if(times.size() > 0 && (timeInMillis - times.get(times.size() - 1)) > 250) {
+                if(times.size() > 0 && (timeInMillis - times.get(times.size() - 1)) > 250) { //How far apart the strokes should be in ms
                     times.add(timeInMillis);
                 }
                 if(times.size() == 0) {
