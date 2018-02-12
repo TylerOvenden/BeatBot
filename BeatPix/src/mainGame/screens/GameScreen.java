@@ -116,7 +116,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
 	
-	FightPaneG fightScene;
+	public FightPaneG fightScene;
 	
 	//Steven
 	private Timing timing;

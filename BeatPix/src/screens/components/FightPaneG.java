@@ -10,8 +10,9 @@ import gui.components.FullFunctionPane;
 import gui.interfaces.FocusController;
 import gui.interfaces.Visible;
 import mainGame.MainGUI;
+import mainGame.components.interfaces.robotAct;
 
-public class FightPaneG extends FullFunctionPane{
+public class FightPaneG extends FullFunctionPane implements robotAct{
 
 	/**
 	 * 
@@ -174,6 +175,18 @@ public class FightPaneG extends FullFunctionPane{
 			rsrcFile = "resources/sprites/whiteSprite_Transparent.png";
 		if(skin == "green")
 			rsrcFile = "resources/sprites/greenSprite_Transparent.png";
+	}
+
+	@Override
+	public void hit(double score) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void miss(double score) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
