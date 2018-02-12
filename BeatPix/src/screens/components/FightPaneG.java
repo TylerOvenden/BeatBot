@@ -165,7 +165,7 @@ public class FightPaneG extends FullFunctionPane{
 	
 	public void changeSkin()
 	{
-		String skin = "green";
+		String skin = MainGUI.test.character.getSkin();
 		if(skin == "default")
 			rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
 		if(skin == "red")
