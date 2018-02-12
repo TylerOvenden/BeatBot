@@ -81,6 +81,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	
 	private PlaySong player; //The current player will be stored here
 	private AudioVisualizer visualizer; //The current audio visualizer will be stored here
+	private HealthBar healthBar; //The current health bar will be stored here
 	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
@@ -567,6 +568,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		spawnOptionButtons();
 		spawnRobot(viewObjects);
 		addVisualizer(viewObjects);
+		addHealthBar(viewObjects);
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -604,7 +606,16 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	}
 	
 	/**
-	 * This methodd adds the audio visualizer to the screen
+	 * This method adds the health bar to the screen
+	 * @param viewObjects - The list of viewable objects on the screen
+	 */
+	public void addHealthBar(List<Visible> viewObjects) {
+		healthBar = new HealthBar(375, 65, 25, 437);
+		viewObjects.add(healthBar);
+	}
+	
+	/**
+	 * This method adds the audio visualizer to the screen
 	 * @param viewObjects - The list of viewable objects on the screen
 	 * 
 	 * @author Justin Yau
@@ -1336,6 +1347,9 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 					}
 					playing = false;
 				}
+				else if(healthBar.getHealth() <= 0) {
+					playing = false;
+				}
 				else if(timePass() >= beats.get(0)[1]) {
 					spawnBeat();
 				}
@@ -1348,6 +1362,10 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		handleEnd();
 	}
 
+	public HealthBar getHealthBar()  {
+		return healthBar;
+	}
+	
 	public Timing getTiming() {
 		// TODO Auto-generated method stub
 		return timing;
