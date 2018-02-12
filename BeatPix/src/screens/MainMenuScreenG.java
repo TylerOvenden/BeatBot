@@ -226,7 +226,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Character Screen Clicked");
 						buttons.get(CHARACTER_IDX).unhoverAction();
-						//Test.test.setScreen(shop.CharacterSelectionScreen);
+						MainGUI.test.setScreen(MainGUI.character);
 					}
 				});
 				buttons.get(UNLOCK_IDX).setAction(new Action() {
