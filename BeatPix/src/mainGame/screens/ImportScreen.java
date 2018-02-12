@@ -32,7 +32,7 @@ import mainGame.screens.interfaces.ResizableScreen;
  */
 public class ImportScreen extends ResizableScreen {
 	
-	private ArrayList<TextBox> boxes; //Arraylist of all the text boxes will be stored here
+	private ArrayList<ResizeableTextBox> boxes; //Arraylist of all the text boxes will be stored here
 	private ArrayList<OptionButton> optBTN; //Arraylist of all the buttons will be stored here
 	private File importedFile; //The imported file will be stored here
 	private TextLabel fileName; //The file name textlabel will be stored here
@@ -62,6 +62,9 @@ public class ImportScreen extends ResizableScreen {
 		for(OptionButton btn: optBTN) {
 			btn.updateScales(getXScale(), getYScale());
 		}
+		for(ResizeableTextBox box: boxes) {
+			box.updateScales(getXScale(), getYScale());
+		}
 	}
 	
 	/**
@@ -82,6 +85,9 @@ public class ImportScreen extends ResizableScreen {
 				setYScale(((double) height)/getOHeight());
 				for(OptionButton btn: optBTN) {
 					btn.updateScales(getXScale(), getYScale());
+				}
+				for(ResizeableTextBox box: boxes) {
+					box.updateScales(getXScale(), getYScale());
 				}
 			}
 			
@@ -249,11 +255,11 @@ public class ImportScreen extends ResizableScreen {
  	 */
  	public void addTextBoxes(Font f, List<Visible> viewObjects) {
  		
-		boxes = new ArrayList<TextBox>();
-		TextBox titleB = new TextBox(375,200,200,35,"");
+		boxes = new ArrayList<ResizeableTextBox>();
+		ResizeableTextBox titleB = new ResizeableTextBox(375,200,200,35,"",this);
 		boxes.add(titleB);
 		
-		TextBox artistB = new TextBox(375,250,200,35,"");
+		ResizeableTextBox artistB = new ResizeableTextBox(375,250,200,35,"",this);
 		boxes.add(artistB);
 		
 		for(TextBox box: boxes) {
