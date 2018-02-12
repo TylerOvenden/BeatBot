@@ -83,6 +83,7 @@ public class HealthBar extends Component {
 	
 	@Override
 	public void update(Graphics2D g) {
+		super.clear();
 		currentHealthColor = determineColor();
 		g.setColor(currentHealthColor);
 		g.setStroke(new BasicStroke(1));
