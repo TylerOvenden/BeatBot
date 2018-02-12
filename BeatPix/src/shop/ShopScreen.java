@@ -58,6 +58,11 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private int price;
 	
 	private CustomText text;
+	private Graphic creditBorder;
+
+	private Graphic scrollBorder;
+
+	private Graphic textBorder;
 
 	
 	//Kevin Fields-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -78,16 +83,10 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private Button noButton;
 	private int numChars;
 	private int index;
-
-	private Graphic creditBorder;
-
-	private Graphic scrollBorder;
-
-	private Graphic textBorder;
-
-
 	
-	
+	private CustomText back;
+	private Graphic backBorder;
+
 	public ShopScreen(int width, int height) 
 	{
 		super(width, height);
@@ -278,15 +277,17 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		confirmButton = new ArrayList<Button>();
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
+		back = new CustomText(750, 60, 95, 50, "Back", true);
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		for(int i = 0; i < imageNames.length; i ++) {
 			images.add(new ImageButton(390, 180, 200, 300, imageNames[i]));
 		}
+		backBorder = new Graphic(700,45,200,200,"resources//TransparentButtonA.png");
 		//the ten should be number chars that the player should unlock
 		numChars = 3;
 		//create the back button
 		createIntList(numChars);
-		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
+		Button backButton = new Button(705, 50, 190, 30, null, Color.GRAY, new Action() {
 			
 			@Override
 			public void act() {
@@ -319,7 +320,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of YesButtons
 		for(int k = 0; k < numChars; k++) {
 			final int z = k;
-			yesButton.add(new Button(400, 250, 50, 50, "yes "+ k, Color.GREEN, new Action() {
+			yesButton.add(new Button(400, 400, 50, 50, "yes "+ k, Color.GREEN, new Action() {
 				int j = z;
 				@Override
 				public void act() {
@@ -359,12 +360,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		}
 		
 		 //create all the things 
-		 border = new CustomRectangle(380, 180, 220, 120, Color.BLACK, 3);
-		 textKev = new TextLabel(400, 200, 200, 100, "Do you wish to unlock this?");
-		 border2 = new CustomRectangle(280, 80, 220, 420, Color.BLACK, 3);
-		 unlock = new TextLabel(300, 100, 200, 400, "You have unlocked this. Enjoy");
+		 border2 = new CustomRectangle(380, 180, 220, 120, Color.BLACK, 3);
+		 unlock = new TextLabel(400, 200, 200, 100, "Do you wish to unlock this?");
 		 
-		 noButton = new Button(500, 250, 50, 50, "no", Color.RED, new Action() {
+		 border = new CustomRectangle(380, 80, 220, 420, Color.BLACK, 3);
+		 textKev = new TextLabel(400, 100, 200, 400, "You have unlocked this. Enjoy");
+		 
+		 noButton = new Button(500, 400, 50, 50, "no", Color.RED, new Action() {
 			
 			@Override
 			public void act() {
@@ -384,18 +386,20 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		
 		//add the objects
 		viewObjects.add(backButton);
+		viewObjects.add(backBorder);
 		viewObjects.add(border);
 		viewObjects.add(textKev);
 		charScroll.update();
 		viewObjects.add(charScroll);
 		viewObjects.add(noButton);
 		for(int a = 0; a < numChars; a++) {
-			viewObjects.add(yesButton.get(a));
 			viewObjects.add(confirmButton.get(a));
 			viewObjects.add(images.get(a));
+			viewObjects.add(yesButton.get(a));
 		}
 		viewObjects.add(border2);
 		viewObjects.add(unlock);
+		viewObjects.add(back);
 	}	
 	//daniel methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public void removeButton()
@@ -539,6 +543,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	public void setAllYesButVisFalse() {
 		for(int i = 0; i < yesButton.size(); i ++) {
 			yesButton.get(i).setVisible(false);
+			images.get(i).setVisible(false);
 		}
 	}
 	//turn all  yes button visibility that are false except for the  chosen one
@@ -546,8 +551,10 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int x = 0; x < yesButton.size(); x++) {
 			if(x != i) {
 				yesButton.get(x).setVisible(false);
+				images.get(x).setVisible(false);
 			}
 			yesButton.get(i).setVisible(true);
+			images.get(i).setVisible(true);
 		}
 	}
 	
@@ -555,7 +562,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	public void setAllConfButVisFalse() {
 		for(int i = 0; i < confirmButton.size(); i ++) {
 			confirmButton.get(i).setVisible(false);
-			images.get(i).setVisible(false);
 		}
 	}
 	//turn all  confirm button and respected image visibility that are false except for de chosen one
@@ -563,10 +569,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int x = 0; x < confirmButton.size(); x++) {
 			if(x != i) {
 				confirmButton.get(x).setVisible(false);
-				images.get(x).setVisible(false);
 			}
 			confirmButton.get(i).setVisible(true);
-			images.get(i).setVisible(true);
 		}
 	}
 	public ArrayList<Song> getSongs()
