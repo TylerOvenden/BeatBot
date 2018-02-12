@@ -15,12 +15,14 @@ import gui.interfaces.Visible;
 import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
+import screens.interfaces.robotActionInterface;
 
-public class Timing extends Component implements JustinTimingInterface {
+public class Timing extends Component implements JustinTimingInterface,robotActionInterface {
 	
 	private String img="";
 	private float lastTiming=0;
-
+	public static final String[] tim= {"resources/perfect.png","resources/great.png","resources/good.png","resources/ok.png","resources/bad.png","resources/miss.png"};
+	public static final double[] times= {1,.95,.66,.5,.33,0};
 	public Timing(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
@@ -74,7 +76,18 @@ public class Timing extends Component implements JustinTimingInterface {
 		if(!start) {
 			difference = goal - stroke.getY();
 		}
-		if(Math.abs(difference)< 5) {
+		for(int i=0;i<6;i++) {
+			if(i==5) {
+				calculations(0,"resources/miss.png");
+				break;
+			}
+			if(Math.abs(difference)<i*5+5) {
+				calculations(times[i],tim[i]);
+				break;
+			}
+		}
+		
+		/*if(Math.abs(difference)< 5) {
 			changeImg("resources/perfect.png");
 			update();
 			GameScreen.game.calcAcc(1);
@@ -115,7 +128,7 @@ public class Timing extends Component implements JustinTimingInterface {
 			return ;
 		}
 		calculations(0,"resources/miss.png");
-		return ;
+		return ;*/
 	}
 	
 	public void calculations(double score,String image) {
@@ -123,6 +136,8 @@ public class Timing extends Component implements JustinTimingInterface {
 		update();
 		GameScreen.game.calcAcc(score);
 		GameScreen.game.calcScore(score);
+		GameScreen.game.fightScene.hit(score);
+		//GameScreen.game.
 		if(score>0) {
 			GameScreen.game.calcCombo(false);
 		}else {
@@ -137,6 +152,11 @@ public class Timing extends Component implements JustinTimingInterface {
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
 		//System.out.println("b");
+	}
+
+	@Override
+	public boolean isHit() {
+		return false;
 	}
 
 }
