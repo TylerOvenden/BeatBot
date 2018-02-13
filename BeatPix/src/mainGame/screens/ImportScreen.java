@@ -154,12 +154,20 @@ public class ImportScreen extends ResizableScreen {
 						&& artist != null && !(artist.equals("")) && !anySpecialCharacters(artist) && !anySpaceAtEnd(artist)
 						&& importedFile != null) {
 					processInformation(title, artist);
-					status.setText("Success!");
-					status.update();
+					status.setText("Success! -5000 credits!");
+					/*
+					if(MainGUI.shop.getCredits() >= 5000) {
+						processInformation(title, artist);
+						status.setText("Success! -5000 credits!");
+					}
+					else {
+						status.setText("Insufficient credits!");
+						MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
+					}
+					*/
 				}
 				else {
 					status.setText("Input all required fields correctly!");
-					status.update();
 				}
 			}
 		});
