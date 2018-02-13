@@ -50,7 +50,6 @@ public class PlaySong implements JustinPlaySongInterface {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
  
             audioLine = AudioSystem.getClip();
-            updateVolume();
            // System.out.println("Playback started.");
             
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
@@ -67,6 +66,7 @@ public class PlaySong implements JustinPlaySongInterface {
 			}
             
             audioLine.open(audioStream);
+            updateVolume();
             audioLine.start();
             
             while(!cancel) {
@@ -138,7 +138,7 @@ public class PlaySong implements JustinPlaySongInterface {
     	float[] volumeArr= {-80f,-50f,-20f,6f};
     	float finalValue = volumeArr[index];  
     	if(audioLine!=null) {
-    		if(audioLine.getControl(FloatControl.Type.MASTER_GAIN)!=null) {
+    		if(audioLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
     			FloatControl volume = (FloatControl) audioLine.getControl(FloatControl.Type.MASTER_GAIN);
     			volume.setValue(finalValue);	
     		}
