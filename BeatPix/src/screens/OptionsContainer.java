@@ -210,6 +210,9 @@ public class OptionsContainer{
 													true, true, false);
 		back.setAction(new Action() {
 			public void act() {
+				if(GameScreen.game != null) {
+					GameScreen.game.getPlayer().setVolume();
+				}
 				removeObjects();
 			}
 		});
