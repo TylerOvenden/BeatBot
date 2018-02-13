@@ -33,7 +33,7 @@ public class TempSongSelect extends FullFunctionScreen {
 		for(int i=0;i<MainGUI.test.mySongs.size();i++) {
 			int tempint=i;
 			if((MainGUI.test.mySongs.get(tempint).isUnlock())) {
-				temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
+				temp=new Button(0,30*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
 					@Override
 					public void act() {
 						MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.test.mySongs.get(tempint),"resources/sample_bg.gif"));
