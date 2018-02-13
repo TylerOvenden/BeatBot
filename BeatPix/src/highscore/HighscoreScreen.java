@@ -53,6 +53,7 @@ public class HighscoreScreen extends ResizableScreen {
 		if(isWin) {
 			condition.setText("You Win");
 			MainGUI.test.shop.changeCredits(MainGUI.test.shop.getCredits()+score/1000);
+			MainGUI.test.shop.updateCredits();
 		}
 		int temp;
 		int idx=0;

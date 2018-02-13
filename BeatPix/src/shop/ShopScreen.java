@@ -23,6 +23,7 @@ import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
 import mainGame.components.CustomText;
 import mainGame.components.Song;
+import mainGame.screens.ImportScreen;
 import screens.Test;
 
 public class ShopScreen extends FullFunctionScreen implements CreditChanger
@@ -42,6 +43,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText yesText;
 	private CustomText purchasedTextLine1;
 	private CustomText purchasedTextLine2;
+	private CustomText importText;
 	
 	private static ArrayList<Song> songs;
 	private ArrayList<ImageButton> buttons;
@@ -51,6 +53,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private ImageButton yes;
 	private ImageButton no;
 	private ImageButton clickedButton;
+	private ImageButton importButton;
 	
 	private int credits;
 	private int price;
@@ -109,7 +112,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	{
 	
 		
-		changeCredits(getCredits()+40000);
+	//	changeCredits(getCredits()+40000);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
@@ -279,8 +282,25 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			
 		scroll.update();
 		viewObjects.add(scroll);
+		
+		
+		
+		
+		importButton = new ImageButton(360, 430, 260,195,"resources//TransparentButtonA.png","");
+		importButton.setAction(new Action() {
+			
+			@Override
+			public void act() {
+				MainGUI.test.setScreen(new ImportScreen(getWidth(), getHeight()));
 				
-	
+			}
+		});
+		importButton.setEnabled(true);
+		viewObjects.add(importButton);
+		
+		importText = new CustomText(370, 445, 243, 243, "Import Song", true);
+		viewObjects.add(importText);
+		
 //		scrollBorder = new Graphic(90,175,350,325,"resources//shop//border.png");
 //		viewObjects.add(scrollBorder);
 		
@@ -680,6 +700,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		credits = c;
 	}
 
-
+	public void updateCredits()
+	{
+		credit.update();
+	}
 }
 
