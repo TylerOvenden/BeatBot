@@ -1,6 +1,7 @@
 package screens.components;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,12 +37,14 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	private Thread enemyHitThread;
 	private Thread enemyMissThread;
 	
-	private int combo;
+	private ArrayList<EnemyRobot> enemies;
 	private boolean animationRunning = false;
 	private boolean miss;
 	private int pastRand;
 	private boolean isPaused;
 	private String rsrcFile;
+	private String enemyFile;
+	private String skin;
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
@@ -49,7 +52,8 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	}
 
 	public void initAllObjects(List<Visible> viewObjects){
-		rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
+		rsrcFile = "resources/sprites/defaultSprite.bmp";
+		enemyFile = "resources/sprites/EnemySprite.png";
 		changeSkin();
 		robotIdle = new AnimatedComponent(30, 100, 117, 84);
 		robotHit1 = new AnimatedComponent(30, 100, 117, 84);
@@ -67,32 +71,45 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		robotMiss = new AnimatedComponent(30,100,117,84);
 		robotMiss.addSequence(rsrcFile, 200, 0, 146, 39, 27, 2);
 		robotMiss.setVisible(false);
-		
-		
+		enemyIdle = new AnimatedComponent(240,100,117,84);
+		enemyIdle.addSequence(enemyFile, 200, 0, 0, 39, 27, 2);
+		enemyHit = new AnimatedComponent(240,100,117,84);
+		enemyHit.addSequence(enemyFile, 200, 0, 33, 39, 27, 5);
+		enemyMiss = new AnimatedComponent(240,100,117,84);
+		enemyMiss.addSequence(enemyFile, 200, 0, 69, 39, 27, 2);
 		
 		hit1Thread = new Thread(robotHit1);
 		hit2Thread = new Thread(robotHit2);
 		hit3Thread = new Thread(robotHit3);
 		missThread = new Thread(robotMiss);
 		idleThread = new Thread(robotIdle);
+		enemyIdleThread = new Thread(enemyIdle);
+		enemyHitThread = new Thread(enemyHit);
+		enemyMissThread = new Thread(enemyMiss);
 		
 		missThread.start();
 		hit1Thread.start();
 		hit2Thread.start();
 		hit3Thread.start();
 		idleThread.start();
+		enemyIdleThread.start();
+		enemyHitThread.start();
+		enemyMissThread.start();
 		
 		addKeyListener(this);
 		setFocusable(true);
 		
-		setOpaque(false);
 		viewObjects.add(robotIdle);
 		viewObjects.add(robotHit1);
 		viewObjects.add(robotHit2);
 		viewObjects.add(robotHit3);
 		viewObjects.add(robotMiss);
+		viewObjects.add(enemyHit);
+		viewObjects.add(enemyMiss);
+		viewObjects.add(enemyIdle);
 
 		robotIdle.setVisible(true);
+		enemyIdle.setVisible(true);
 	}
 	
 	public void keyPressed(KeyEvent e)
@@ -106,6 +123,9 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 				robotHit2.setVisible(false);
 				robotHit3.setVisible(false);
 				robotMiss.setVisible(false);
+				enemyIdle.setVisible(false);
+				enemyHit.setVisible(false);
+				enemyMiss.setVisible(false);
 				animationRunning = true;
 				
 				
@@ -116,18 +136,37 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 				
 				if(rand == 0) {
 					setAnimation(robotHit1, 700);
+					setAnimation(enemyMiss, 700);
 				} 
 				else if(rand == 1) {
 					setAnimation(robotHit2, 900);
+					setAnimation(enemyMiss, 900);
 				} 
 				else if(rand == 2) {
 					setAnimation(robotHit3, 500);
+					setAnimation(enemyMiss, 900);
 				}
 			} //End if miss statement
 			else
 			{
 				setAnimation(robotMiss, 300);
+				setAnimation(enemyHit, 300);
 			}
+		}
+		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			int randX = (int) Math.random() * 100 + 200; 
+			int randY = (int) Math.random() * 100 + 200; 
+
+			enemies.add(new EnemyRobot(randX, randY, 58, 42, enemyFile));
+			updateScreen();
+		}
+	}
+	
+	public void updateScreen() {
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			this.remove(enemies.get(i));
+			this.addObject(enemies.get(i));
 		}
 	}
 	
@@ -140,6 +179,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
+				enemyIdle.setVisible(true);
 				robotIdle.setVisible(true);
 				a.setVisible(false);
 				a.setRunning(false);
@@ -147,7 +187,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 			}
 		}, s);
 	}
-	  
+	 
 	public void pause() {
 		robotIdle.setVisible(true);
 		robotHit1.setVisible(false);
@@ -155,6 +195,10 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		robotHit3.setVisible(false);
 		robotMiss.setVisible(false);
 		robotIdle.setRunning(false);
+		robotIdle.setVisible(true);
+		enemyIdle.setRunning(false);
+		enemyHit.setVisible(false);
+		enemyMiss.setVisible(false);
 		isPaused = true;
 	}
 	
@@ -162,11 +206,12 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	{
 		isPaused = false;
 		robotIdle.setRunning(true);
+		enemyIdle.setRunning(true);
 	}
 	
 	public void changeSkin()
 	{
-		String skin = MainGUI.test.character.getSkin();
+		skin = MainGUI.test.character.getSkin();
 		if(skin == "default")
 			rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
 		if(skin == "red")
