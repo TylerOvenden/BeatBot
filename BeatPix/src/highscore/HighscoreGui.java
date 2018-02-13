@@ -3,6 +3,7 @@ package highscore;
 import java.io.IOException;
 
 import gui.GUIApplication;
+import mainGame.components.Song;
 
 public class HighscoreGui extends GUIApplication{
 
@@ -10,7 +11,7 @@ public class HighscoreGui extends GUIApplication{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private TempSongSelect highscore;
+	private HighscoreScreen highscore;
 	
 	public static void main(String[] args) 
 	{
@@ -26,12 +27,11 @@ public class HighscoreGui extends GUIApplication{
 
 	@Override
 	public void initScreen() {
-		try {
-			highscore = new TempSongSelect(getWidth(), getHeight());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Song a=new Song("resources/realMaps/DreadnoughtMastermind(xi+nora2r)-HD.csv");
+		a.addScoreAndAccuracy(444, (float) 4.53);
+		a.addScoreAndAccuracy(999999, (float) 43);
+		a.addScoreAndAccuracy(999299, (float) 43);
+		highscore = new HighscoreScreen(getWidth(), getHeight(), false, 999999, 49.27, a, a);
 		setScreen(highscore);
 		
 	}

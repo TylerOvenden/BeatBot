@@ -1311,7 +1311,11 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {
-			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,(double)accuracy,mainSong,mainSong));
+			if(healthBar.getHealth()>0) {
+				MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,(double)accuracy,mainSong,mainSong));
+			}else {
+				MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),false,(int)score,(double)accuracy,mainSong,mainSong));
+			}
 		}
 	}
 	
