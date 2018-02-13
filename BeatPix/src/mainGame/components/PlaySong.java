@@ -140,7 +140,6 @@ public class PlaySong implements JustinPlaySongInterface {
     	if(audioLine!=null) {
     		if(audioLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
     			FloatControl volume = (FloatControl) audioLine.getControl(FloatControl.Type.MASTER_GAIN);
-    			System.out.println(index);
     			volume.setValue(finalValue);	
     		}
     	} 
