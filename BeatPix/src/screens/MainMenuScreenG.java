@@ -65,6 +65,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	//private static int CUSTOM_SONG = 4;
 	
 	private static ImageButton information;
+	
 	private static BottleClick bottle;
 	
 	/**Constructor**
@@ -76,7 +77,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	 */
 	public MainMenuScreenG(int width, int height) {
 		super(width, height);
-		screenPhase = 0;
+		screenPhase = 0; 
+		createBottle();
 	}
 	
 	/**Adds Components to Screen**
@@ -99,6 +101,11 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		}
 		viewObjects.add(idleCharacter);
 		viewObjects.add(information);
+	}
+	
+	public void createBottle() {
+		bottle = new BottleClick(this);	
+		bottle.getBottleOnSill().setY(120 + getHeight());
 	}
 	
 //--COMPONENTS--//
@@ -364,6 +371,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	public void moveIdleCharacter() {
 		if(!isIdleFinal()) {
 			idleCharacter.setY(idleCharacter.getY() - 1);
+			if(bottle.getBottleOnSill()!=null)
+				bottle.getBottleOnSill().setY(bottle.getBottleOnSill().getY() - 1);
 		}
 	}
 	public boolean isIdleFinal() {
@@ -415,8 +424,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		
 		screenPhase = 1;
 		
-		bottle = new BottleClick(this);
-		bottle.addObjects();
 		
 	}
 	
