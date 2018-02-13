@@ -13,6 +13,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import mainGame.MainGUI;
 import mainGame.components.interfaces.JustinPlaySongInterface;
 import mainGame.screens.GameScreen;
  
@@ -127,10 +128,20 @@ public class PlaySong implements JustinPlaySongInterface {
 	}
     
     public static void main(String[] args) {
-        String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
+        MainGUI.getVolume();
+    	String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
+    public void volumeChange(int volume) {
+    		
+    	if(volume == 0) {
+    		MainGUI.setVolume(-80);
+    	}
+    	if(volume == 100) {
+    		MainGUI.setVolume(6);
+    	}
+    }  
 	@Override
 	public void pauseSong() {
 	
