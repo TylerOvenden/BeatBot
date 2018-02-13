@@ -412,6 +412,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		information.setAlpha(1.0f);
 		
 		idleCharacter.setY(getHeight()*200/540); // DIMENSIONS!!!!!!!!
+		this.bottle.getBottleOnSill().setY(getHeight()*120/540);
 		
 		for(int i = 0; i < buttons.size(); i++) {
 			buttons.get(i).setY(getHeight()*100/540*(i+1)); // DIMENSIONS!!!!!!!!
