@@ -7,17 +7,18 @@ import java.util.TimerTask;
 
 import gui.components.Action;
 import gui.userInterfaces.FullFunctionScreen;
+import screens.interfaces.Options;
 
 public class BottleClick {
 
-	FullFunctionScreen parentScreen;
+	Options parentScreen;
 	ArrayList<Bottle> bottleStack;
 	private Bottle bottleOnSill;
 	
 	Timer time; int count;
 	
 	
-	public BottleClick(FullFunctionScreen parentScreen) {
+	public BottleClick(Options parentScreen) {
 		this.parentScreen = parentScreen;
 		bottleStack = new ArrayList<Bottle>();
 		createBottleOnSill();
@@ -46,7 +47,7 @@ public class BottleClick {
 		getBottleOnSill().setAction(new Action() {
 			public void act() {
 				time = new Timer(); 
-				
+				parentScreen.toggleButtons(false);
 				bottleShake();
 				bottleFlyOff();
 				
@@ -65,7 +66,7 @@ public class BottleClick {
 						if(getBottleOnSill().nextSequence()) {
 						}else {
 							time.cancel();
-
+							parentScreen.toggleButtons(true);
 							createBottleOnSill();
 							parentScreen.addObject(getBottleOnSill());
 						}
