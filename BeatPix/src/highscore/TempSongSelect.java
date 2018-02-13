@@ -32,6 +32,7 @@ public class TempSongSelect extends FullFunctionScreen {
 		Button temp;
 		for(int i=0;i<MainGUI.test.mySongs.size();i++) {
 			int tempint=i;
+
 			if(!(MainGUI.test.mySongs.get(tempint).isUnlock())) {
 				temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
 					@Override
