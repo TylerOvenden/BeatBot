@@ -135,11 +135,12 @@ public class PlaySong implements JustinPlaySongInterface {
     }
     public void updateVolume() {
     	int index = MainGUI.getVolume();
-    	float[] volumeArr= {-80f,-50f,-20f,6f};
+    	float[] volumeArr= {-80f,6f,-5f,-10f};
     	float finalValue = volumeArr[index];  
     	if(audioLine!=null) {
     		if(audioLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
     			FloatControl volume = (FloatControl) audioLine.getControl(FloatControl.Type.MASTER_GAIN);
+    			System.out.println(index);
     			volume.setValue(finalValue);	
     		}
     	} 
