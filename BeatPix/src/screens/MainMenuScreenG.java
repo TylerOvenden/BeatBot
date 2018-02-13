@@ -222,12 +222,12 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 						//Song song = new Song("resources/maps/Elektronomia Summer Vibes/Elektronomia Summer Vibes.csv");
 						/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
 										
-										//try {
-											MainGUI.test.setScreen(new LevelSelectG(getWidth(), getHeight()));
-										//} catch (IOException e) {
-											// TODO Auto-generated catch block
-										//	e.printStackTrace();
-										//}
+										try {
+											MainGUI.test.setScreen(new TempSongSelect(getWidth(), getHeight()));
+										} catch (IOException e) {
+											//TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 										
 					}
 				});
