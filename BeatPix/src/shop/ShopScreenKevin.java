@@ -60,7 +60,7 @@ public class ShopScreenKevin extends FullFunctionScreen {
 		images = new ArrayList<ImageButton>();
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		for(int i = 0; i < imageNames.length; i ++) {
-			images.add(new ImageButton(290, 180, 200, 300, imageNames[i], null, null));
+			images.add(new ImageButton(290, 180, 200, 300, imageNames[i], null));
 		}
 		//the ten should be number chars that the player should unlock
 		numChars = 3;
