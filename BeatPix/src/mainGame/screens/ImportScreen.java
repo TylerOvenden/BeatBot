@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -148,21 +150,45 @@ public class ImportScreen extends ResizableScreen {
 			public void act() {
 				String title = boxes.get(0).getText();
 				String artist = boxes.get(1).getText();
-				if(title != null && !(title.equals("")) 
-						&& artist != null && !(artist.equals(""))
+				if(title != null && !(title.equals("")) && !anySpecialCharacters(title)
+						&& artist != null && !(artist.equals("")) && !anySpecialCharacters(artist) && !anySpaceAtEnd(artist)
 						&& importedFile != null) {
 					processInformation(title, artist);
 					status.setText("Success!");
 					status.update();
 				}
 				else {
-					status.setText("Input all required fields!");
+					status.setText("Input all required fields correctly!");
 					status.update();
 				}
 			}
 		});
 		optBTN.add(btn);
 		viewObjects.add(btn);
+	}
+	
+	/**
+	 * This method takes in a string and detects if there is a space at the end
+	 * @param s - The string to check
+	 * @return - Whether or not there is a string at the end
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean anySpaceAtEnd(String s) {
+		return s.substring(s.length() - 1, s.length()).equals(" ");
+	}
+	
+	/**
+	 * This method looks at the string an detects if there are any special characters in the string
+	 * @param s - The string to check
+	 * @return - Whether or not there are any special characters in the string
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean anySpecialCharacters(String s) {
+		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(s);
+		return m.find();
 	}
 	
 	/**
