@@ -2,7 +2,9 @@ package mainGame.components;
 
 import java.io.File;
 import java.io.IOException;
- 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -135,6 +137,14 @@ public class PlaySong implements JustinPlaySongInterface {
     }
     public void updateVolume() {
     	int index = MainGUI.getVolume();
+    
+	/*	ArrayList <Float> volumeL = new ArrayList<Float>();
+    	volumeL.add(-80f);
+    	volumeL.add(-6f);
+    	volumeL.add(-5f);
+    	volumeL.add(-10f);
+    			 */
+    			 //	Arrays.asList(-80f),-6f ,-5f,-10f));
     	float[] volumeArr= {-80f,6f,-5f,-10f};
     	float finalValue = volumeArr[index];  
     	if(audioLine!=null) {
