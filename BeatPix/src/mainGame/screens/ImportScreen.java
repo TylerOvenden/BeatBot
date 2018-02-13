@@ -241,7 +241,7 @@ public class ImportScreen extends ResizableScreen {
 		WavMusicBeatDetector detect = new WavMusicBeatDetector(title, artist, importedFile);
 		FileOutputStream out;
 		try {
-			out = new FileOutputStream(new File("resources/maps/" + title + "/" + title + artist + ".wav"));
+			out = new FileOutputStream(new File("resources/maps/" + title + "/" + title + " " + artist + ".wav"));
 			Files.copy(importedFile.toPath(), out);
 			out.close();
 		} catch (FileNotFoundException e) {

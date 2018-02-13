@@ -57,8 +57,8 @@ public class HighscoreScreen extends ResizableScreen {
 		}
 		int temp;
 		int idx=0;
-		ArrayList<Integer> ints=song.getScores();
-		ArrayList<Float> arrayList=song.getAccuracies();
+		ArrayList<Integer> ints= new ArrayList<Integer>(song.getScores());
+		ArrayList<Float> arrayList= new ArrayList<Float>(song.getAccuracies());
 		temp=ints.get(0);
 		for(int i=0;i<ints.size();i++) {
 			if(ints.get(i)>temp) {
