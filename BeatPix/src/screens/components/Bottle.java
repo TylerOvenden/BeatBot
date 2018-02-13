@@ -14,6 +14,7 @@ public class Bottle extends ImageButton {
 	private int currentSequence;
 	
 	private int bottleIdx;
+	private int finalY;
 	
 	public Bottle(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
@@ -41,6 +42,12 @@ public class Bottle extends ImageButton {
 	}
 	public int getBottleIdx() {
 		return bottleIdx;
+	}
+	public void setFinalY(int x) {
+		finalY = x;
+	}
+	public int getFinalY() {
+		return finalY;
 	}
 	
 	public void playSequence() {
