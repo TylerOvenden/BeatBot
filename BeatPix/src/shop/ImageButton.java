@@ -5,6 +5,9 @@ import java.awt.Cursor;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
@@ -20,6 +23,7 @@ public class ImageButton extends Graphic implements Clickable{
 	 * Basically a CustomButton, but the user can set the hover actions
 	 * as they want as well as easier implementation of images
 	 * */
+	private String song;
 	
 	Action action;
 	
@@ -33,13 +37,44 @@ public class ImageButton extends Graphic implements Clickable{
 
 	private boolean enabled;
 	
-	public ImageButton(int x, int y, int w, int h, String imageLocation, String label,Action action) {
+	private BufferedImage image;
+	private boolean loadedImages;
+	
+	private int idxArray;
+	private boolean on;
+	
+	public ImageButton(int x, int y, int w, int h, String imageLocation, String song) {
 		super(x, y, w, h, imageLocation);
-		hoverAction = null;
-		unhoverAction = null;
+		unhoverAction = new Action() {
+			public void act() {
+				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		};
+		hoverAction = new Action() {
+			public void act() {
+				GUIApplication.mainFrame.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		};
+		this.song = song;
 	}
 
+	public String getSong()
+	{
+		return song;
+	}
+	public void setIdxArray(int x) {
+		idxArray = x;
+	}
+	public int getIdxArray() {
+		return idxArray;
+	}
 	
+	public void setOn(boolean x) {
+		on = x;
+	}
+	public boolean getOn() {
+		return on;
+	}
 
 	public void act(){
 		if(action != null) action.act();
@@ -77,24 +112,20 @@ public class ImageButton extends Graphic implements Clickable{
 		if(unhoverAction != null)
 			unhoverAction.act();
 	}
-	
 	public void setUnhoverAction(Action a) {
 		unhoverAction = a;
 	}
-	
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 		if(!enabled)hovered = false;
 	}
-	
+	//--Text Label--//
 	public boolean hasLeft() {
 		return left;
 	} 
-	
 	public void setLeft(boolean left) {
 		this.left = left;
 	}

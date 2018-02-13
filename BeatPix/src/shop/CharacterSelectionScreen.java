@@ -37,8 +37,8 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		colorArray = new String[] {"default", "red", "green" , "white"};
 		for(int i = 0; i < imageNames.length; i ++) {
 			final int x = i;	
-			selectImage.add(new ImageButton(290, 180, 200, 300, imageNames[i], null, null));
-			imagesButton.add(new ImageButton((125*i), 50, 100, 300, imageNames[i], null, null));
+			selectImage.add(new ImageButton(290, 180, 200, 300, imageNames[i], ""));
+			imagesButton.add(new ImageButton((125*i), 50, 100, 300, imageNames[i], ""));
 			buttons.add(new Button(125*i, 50, 100, 300, "", new Action() {
 				
 				@Override
@@ -60,7 +60,6 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 			
 			@Override
 			public void act() {
-				ShopKevinGUI.s.setScreen(ShopKevinGUI.s.shop2);
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 				
 			}

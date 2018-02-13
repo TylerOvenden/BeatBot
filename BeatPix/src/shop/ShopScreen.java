@@ -24,14 +24,11 @@ import mainGame.MainGUI;
 import mainGame.components.CustomText;
 import mainGame.components.Song;
 import screens.Test;
-import screens.components.ImageButton;
 
 public class ShopScreen extends FullFunctionScreen implements CreditChanger
 {
 	//Daniel Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	private static final long serialVersionUID = 1L;
-
-	private CustomRectangle songArea;
 	
 	private Graphic background;	
 	
@@ -91,7 +88,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText noK;
 	private CustomText textKev;
 	private CustomText unlockedText;
-	private CustomText okay;
 	
 	private Graphic backBorder;
 	
@@ -110,16 +106,16 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	{
 	
 		
-		changeCredits(getCredits()+1500);
+		changeCredits(getCredits()+40000);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
-		songs = new ArrayList<Song>();
+	//	songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
 		customText = new ArrayList<CustomText>();
 		multiText = new ArrayList<MultiLineCustomText>();
 		
-		songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
+	//	songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
 
 		//graphics
 			
@@ -138,7 +134,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		
 		String s = "Credits:"+getCredits(); 
 		credit = new CustomText(110,58,200,200, s,true);
+		credit.update();
 		viewObjects.add(credit);
+		
 		
 		
 		textLine1 = new CustomText(370,195,250,280, "Do you want to",true); 			
@@ -154,7 +152,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		textBorder = new Graphic(340,160,305,405,"resources//shop//TransparentButtonB.png");	
 		viewObjects.add(textBorder);
 		//when user clicks yes to buy song
-		yes = new ImageButton(360,255,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
+		yes = new ImageButton(360,255,125,50, "resources\\ui\\buttons\\buttonwithrivet.png","");
 		yesText = new CustomText(390,258,60,60, "yes",false); 	
 		
 		yes.setAction(new Action() 
@@ -256,7 +254,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		textLine1.setVisible(false);
 		textLine2.setVisible(false);
 		
-		no = new ImageButton(500,255,125,50, "resources\\ui\\buttons\\buttonwithrivet.png");
+		no = new ImageButton(500,255,125,50, "resources\\ui\\buttons\\buttonwithrivet.png","");
 		noText = new CustomText(540,258,50,40, "no",false);
 		no.setAction(new Action()
 		{
@@ -290,19 +288,16 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		buttonList = new ArrayList<Button>();
 		yesButton = new ArrayList<Button>();
 		confirmButton = new ArrayList<Button>();
-		
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
 		back = new CustomText(750, 60, 95, 50, "Back", true);
 		
 		yesK = new CustomText(405,405,50,75,"Yes", true);
 		noK = new CustomText(507,405,45,50,"No", false);
-		okay = new CustomText(460, 270, 40, 100,"Okay",true);
 		
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
-		
 		for(int i = 0; i < imageNames.length; i ++) {
-			images.add(new ImageButton(390, 180, 190, 300, imageNames[i]));
+			images.add(new ImageButton(390, 180, 190, 300, imageNames[i],""));
 		}
 		backBorder = new Graphic(700,45,200,200,"resources//TransparentButtonA.png");
 		//the ten should be number chars that the player should unlock
@@ -315,12 +310,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			public void act() {
 				
 				MainGUI.test.setScreen(MainGUI.mainMenu);
-				setButEnable(true);
-				MainGUI.mainMenu.changeIdle();
-				setThings1Vis(false);
-				setAllYesButVisFalse();
-				setThings2Vis(false);
-				setAllConfButVisFalse();
 			
 			}
 		});
@@ -338,10 +327,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				@Override
 				public void act() {
 					
-					setThings1Vis(true);
+					setThings1VisTrue();
 					setYesButVisExceptThis(j);
 					index = indexList.indexOf(j);
-					setButEnable(false);
+					buttonList.get(j).setEnabled(false);
+					for(int i = 0; i < buttons.size(); i++) {
+						buttons.get(i).setEnabled(false);
+					}
 				}
 			}));
 			charScroll.addObject(buttonList.get(i));
@@ -355,8 +347,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				@Override
 				public void act() {
 					// i guess to have the images, and set the a boolean to true and a textfield says unlock
-					 setThings2Vis(true);
-					 setThings1Vis(false);
+					 setThings2VisTrue();
+					 setThings1VisFalse();
 					 setAllYesButVisFalse();
 					 setConfButVisExceptThis(j);
 					 
@@ -367,11 +359,11 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of confirmButtons
 		for(int l = 0; l < numChars; l ++) {
 			final int y = l;
-			confirmButton.add(new Button(450, 265, 55, 35, "", Color.GRAY, new Action() {
+			confirmButton.add(new Button(470, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
 				int a = y;
 				@Override
 				public void act() {
-					setThings2Vis(false);
+					setThings2VisFalse();
 					setAllConfButVisFalse();
 					for (int i = index; i < buttonList.size(); i++)
 					{
@@ -380,7 +372,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 							buttonList.get(i).move(buttonList.get(i).getX(), (buttonList.get(i).getY()-30), 10);
 							charScroll.update();
 						}
-					setButEnable(true);
 
 					}
 					charScroll.remove(buttonList.get(a));
@@ -404,17 +395,20 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			
 			@Override
 			public void act() {
-				 setThings1Vis(false);
+				 setThings1VisFalse();
 				 setAllYesButVisFalse();
-				 setButEnable(true);
+				 //buttonList.get(j).setEnabled(true);
+				 for(int i = 0; i < buttons.size(); i++) {
+					buttons.get(i).setEnabled(true);
+				 }
 			}
 		});
 		 
 		 
 		 //visible all the things
-		 setThings1Vis(false);
+		 setThings1VisFalse();
 		 setAllYesButVisFalse();
-		 setThings2Vis(false);
+		 setThings2VisFalse();
 		 setAllConfButVisFalse();
 		 
 		 
@@ -422,9 +416,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//add the objects
 		viewObjects.add(backButton);
 		viewObjects.add(backBorder);
-		viewObjects.add(back);
 		viewObjects.add(border);
-		viewObjects.add(border2);
 		viewObjects.add(textKev);
 		charScroll.update();
 		viewObjects.add(charScroll);
@@ -434,20 +426,88 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			viewObjects.add(images.get(a));
 			viewObjects.add(yesButton.get(a));
 		}
+		viewObjects.add(border2);
 		viewObjects.add(unlockedText);
+		viewObjects.add(back);
 		viewObjects.add(yesK);
 		viewObjects.add(noK);
-		viewObjects.add(okay);
 	}	
 	//daniel methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public void removeButton()
 	{
-		
+		int filler = 3;
 		idx = buttons.indexOf(clickedButton);
-
+		
+		System.out.println(buttons.get(idx).getSong());	
+		ArrayList<Integer> a = new ArrayList<Integer>();
+		int temp = 0;
+		String title = "";
+		for (int i = 0; i < MainGUI.test.mySongs.size(); i++)
+		{
+			title = MainGUI.test.mySongs.get(i).getTitle();
+			if (i+1 < MainGUI.test.mySongs.size())
+			{		
+				if (title.equals(MainGUI.test.mySongs.get(i+1).getTitle().toLowerCase()))
+				{
+					temp++;
+				}	
+				else
+				{
+					a.add(temp);
+					temp = 0;
+				}
+			}
+		}
+		
+		for (int i = 0; i<MainGUI.test.mySongs.size(); i++)
+		{
+			if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.mySongs.get(i).getTitle().toLowerCase()))
+			{
+				MainGUI.test.mySongs.get(i+a.get(i)).setUnlock(true);
+			}
+		}
+	/*	
+		if (buttons.get(idx).getSong().equals("Adrenaline"))
+		{
+			for (int i = 0; i < 4; i++)
+			MainGUI.test.mySongs.get(i).setUnlock(true);
+		}
+		
+		if (buttons.get(idx).getSong().equals("Blow Out"))
+		{
+			for (int i = 4; i < 8; i++)
+			MainGUI.test.mySongs.get(i).setUnlock(true);
+		}
+		
+		if (buttons.get(idx).getSong().equals("Carribean"))
+		{
+			MainGUI.test.mySongs.get(9).setUnlock(true);
+		}
+		
+		if (buttons.get(idx).getSong().equals("Summer Vibes"))
+		{
+			MainGUI.test.mySongs.get(10).setUnlock(true);
+		}
+		
+		if (buttons.get(idx).getSong().equals("Waiting for Love"))
+		{
+			MainGUI.test.mySongs.get(10+filler).setUnlock(true);
+		}
+		
+		if (buttons.get(idx).getSong().equals("Fairy Tail"))
+		{
+			MainGUI.test.mySongs.get(11+filler).setUnlock(true);
+		}
+		
+		if (buttons.get(idx).getSong().equals("One Piece"))
+		{
+			MainGUI.test.mySongs.get(12+filler).setUnlock(true);
+		}
+	*/	
 		scroll.remove(clickedButton);				
 		buttons.remove(clickedButton);
 		scroll.remove(customText.get(idx));
+	//	multiText.get(idx).removeFromScreen();
 		customText.remove(idx);
 		scroll.update();
 		
@@ -464,33 +524,86 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			scroll.update();
 		}
 		
-		MainGUI.test.mySongs.get(idx).setUnlock(true);
+		
+	
+		
+		
+	//	ArrayList<Song> songs = MainGUI.test.mySongs;
+	/*			
+		if (idx == 0 || idx == 1 || idx == 8 || idx == 10)
+		{
+			for (int i = idx*4; i < ((idx*4)+4); i++)
+			{
+				MainGUI.test.mySongs.get(i).setUnlock(true);
+			}
+		}
+	*/
+
+	/*	
+		if (idx == 2)
+		{
+			MainGUI.test.mySongs.get(8).setUnlock(true);
+		}
+		
+		if (idx == 3)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				MainGUI.test.mySongs.get(9+i).setUnlock(true);
+			}
+		}
+		
+		if (idx == 4)
+		{
+			MainGUI.test.mySongs.get(11).setUnlock(true);
+		}
+		
+		if (idx == 5)
+		{
+			MainGUI.test.mySongs.get(12).setUnlock(true);
+		}
+		
+		if (idx == 6)
+		{
+			MainGUI.test.mySongs.get(13).setUnlock(true);
+		}
+	*/	
+		
+		
 	}
 	public void addButtons()
 	{
-		String[] texts = {"Adrenaline","Blow Out","Carribean Pirates","Summer Vibes","Waiting for Love","Fairy Tail Theme","One Piece Theme","Shingeki No Kyogin","Hitorigoto","I Love You","Hime Hime","Neptune"};
+		String[] texts = {"Adrenaline","Blow Out","Carribean","Summer Vibes","Waiting for Love","Fairy Tail","One Piece","Kyogin","Hitorigoto","I Love You","Hime Hime","Neptune"};
 		
 		for(int i = 0; i < texts.length; i++)
 		{ 
 
 			final int j = i;
-				ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png");
+				ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png",texts[i]);
 				b.setAction(new Action() 
 				{
 					
 					@Override
 					public void act() 
 					{
-						clickedButton = b;				
+						clickedButton = b;
 						setInvis(true);	
-						buttonList.get(j).setEnabled(false);
+				//		buttonList.get(j).setEnabled(false);
 					}
 				});
 				
 				b.setEnabled(true);
 				buttons.add(b);
-				multiText.add(new MultiLineCustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 50,texts[i],scroll, 12));
-		//		customText.add(new CustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200 - 210*100/399, 120, texts[i],false));
+		//		multiText.add(new MultiLineCustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 50,texts[i],scroll, 12));
+				
+				if (texts[i].length() < 15)
+				{
+					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 250, texts[i],false));
+				}
+				else
+				{
+					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200, 250, texts[i],false));
+				}
 			
 				buttons.get(i).setUnhoverAction(new Action()
 				{
@@ -512,8 +625,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for (int i = 0; i < buttons.size(); i++)
 		{
 			scroll.addObject(buttons.get(i));
-		//	scroll.addObject(customText.get(i));
-			multiText.get(i).addToScreen();
+			scroll.addObject(customText.get(i));
+		//	multiText.get(i).addToScreen();
 		}
 	}
 
@@ -534,7 +647,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		}
 		else
 		{
-		//	textBorder.setVisible(true);
 			noText.setVisible(false);
 			yesText.setVisible(false);
 			textLine1.setVisible(false);
@@ -557,20 +669,34 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	}
 	//helper methods
 
-	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = b
-	public void setThings1Vis(boolean b) {
-		 border.setVisible(b);
-		 textKev.setVisible(b);
-		 noButton.setVisible(b);
-		 yesK.setVisible(b);
-		 noK.setVisible(b);
+	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = false
+	public void setThings1VisFalse() {
+		 border.setVisible(false);
+		 textKev.setVisible(false);
+		 noButton.setVisible(false);
+		 yesK.setVisible(false);
+		 noK.setVisible(false);
+	}
+	//same things as Things1false but, visibility = true
+	public void setThings1VisTrue() {
+		 border.setVisible(true);
+		 textKev.setVisible(true);
+		 noButton.setVisible(true);
+		 yesK.setVisible(true);
+		 noK.setVisible(true);
 	}
 	
-	//things that things1 doesnt consist of, visibility = b
-	public void setThings2Vis(boolean b) {
-		 border2.setVisible(b);
-		 unlockedText.setVisible(b);
-		 okay.setVisible(b);
+	//things that things1 doesnt consist of, visibility = false
+	public void setThings2VisFalse() {
+		 border2.setVisible(false);
+		 unlockedText.setVisible(false);
+		 //confirmButton.setVisible(false);
+	}
+	//things that things1 doesnt consist of, visibility = false
+	public void setThings2VisTrue() {
+		 border2.setVisible(true);
+		 unlockedText.setVisible(true);
+		 //confirmButton.setVisible(true);
 	}
 	
 	 //turn all yesButtons, visibility = false;
@@ -607,14 +733,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			confirmButton.get(i).setVisible(true);
 		}
 	}
-	public void setButEnable(boolean b) {
-		for(int i = 0; i < buttons.size(); i ++) {
-			buttons.get(i).setEnabled(b);
-		}
-		for(int z = 0; z < buttonList.size(); z++) {
-			buttonList.get(z).setEnabled(b);		
-		}
-	}
+	
 	
 	
 	public ArrayList<Song> getSongs()
@@ -634,3 +753,4 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 
 
 }
+
