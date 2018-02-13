@@ -129,7 +129,7 @@ public class WavMusicBeatDetector {
 			timings = getTimeOfBeats(beats);
 			addBeats();
 			
-			FileP.cSave(title, 192, artist, 0, processedBeats);
+			FileP.save(title, 192, artist, 0, processedBeats);
 			
 			/*
 			sampleSize = audioFormat.getSampleSizeInBits()/8;

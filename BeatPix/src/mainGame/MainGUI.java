@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import gui.GUIApplication;
 import gui.userInterfaces.*;
 import mainGame.components.Song;
+import mainGame.components.SongBundle;
 import screens.InformationContainer;
 import screens.LevelSelectG;
 import screens.MainMenuScreenG;
@@ -32,7 +33,7 @@ public class MainGUI extends GUIApplication {
 	
 	public static MainGUI test;
 	
-	public ArrayList<Song> mySongs;
+	public ArrayList<SongBundle> songs;
 	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
@@ -52,7 +53,7 @@ public class MainGUI extends GUIApplication {
 		super(width, height);
 		setVisible(true);
 		
-		mySongs=new ArrayList<Song>();
+		songs=new ArrayList<SongBundle>();
 		
 		Timer time = new Timer(); x = 0;
 		time.scheduleAtFixedRate(new TimerTask() {
@@ -134,10 +135,12 @@ public class MainGUI extends GUIApplication {
 	 * Adds maps to mySongs
 	 * 
 	 * @author Steven 
+	 * @author Justin Yau
 	 */
 	public void addMaps() {
-		for(int i=0;i<new File("resources/realMaps").listFiles().length;i++) {
-			mySongs.add(new Song(new File("resources/realMaps").listFiles()[i].getPath()));
+		File[] f = new File("resources/maps").listFiles();
+		for(int i=0;i< f.length;i++) {
+			songs.add(new SongBundle(f[i].getName(), f[i].getPath()));
 		}
 	}
 	

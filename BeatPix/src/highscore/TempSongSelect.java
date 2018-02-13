@@ -7,6 +7,7 @@
 package highscore;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
 import mainGame.components.Song;
+import mainGame.components.SongBundle;
 import mainGame.components.interfaces.SongInterface;
 import mainGame.screens.GameScreen;
 
@@ -30,17 +32,30 @@ public class TempSongSelect extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		Button temp;
-		for(int i=0;i<MainGUI.test.mySongs.size();i++) {
+		int count = 0;
+		for(int i=0;i<MainGUI.test.songs.size();i++) {
 			int tempint=i;
-			if(!(MainGUI.test.mySongs.get(tempint).isUnlock())) {
-				temp=new Button(0,20*i+40,300,20,new File("resources/realMaps").listFiles()[i].getName(),new Action() {
-					@Override
-					public void act() {
-						MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.test.mySongs.get(tempint),"resources/sample_bg.gif"));
-						
-					}
-				});
-				viewObjects.add(temp);
+			SongBundle songBundle = MainGUI.test.songs.get(i);
+			if(!(MainGUI.test.songs.get(tempint).isUnlock())) {
+				File[] songList = new File(songBundle.getPath()).listFiles(new FileFilter() {
+		            @Override
+		            public boolean accept(File pathname) {
+		                return pathname.getName().toLowerCase().endsWith(".csv") 
+		                    || pathname.isDirectory();
+		            }
+		        });
+				for(int j = 0; j < songList.length; j++) {
+					Song song = new Song(songList[j].getPath());
+					temp=new Button(0,20*count+40,300,20, songList[j].getName() ,new Action() {
+						@Override
+						public void act() {
+							MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
+							
+						}
+					});
+					count++;
+					viewObjects.add(temp);
+				}
 			}
 		}
 	}

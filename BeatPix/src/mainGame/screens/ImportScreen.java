@@ -150,7 +150,7 @@ public class ImportScreen extends ResizableScreen {
 			public void act() {
 				String title = boxes.get(0).getText();
 				String artist = boxes.get(1).getText();
-				if(title != null && !(title.equals("")) && !anySpecialCharacters(title)
+				if(title != null && !(title.equals("")) && !anySpecialCharacters(title) && !anySpaceAtEnd(title)
 						&& artist != null && !(artist.equals("")) && !anySpecialCharacters(artist) && !anySpaceAtEnd(artist)
 						&& importedFile != null) {
 					processInformation(title, artist);
@@ -192,6 +192,21 @@ public class ImportScreen extends ResizableScreen {
 	}
 	
 	/**
+	 * This method returns the string without any spaces at the end
+	 * @param s - The string to apply the method to
+	 * @return - String without spaces at the end
+	 * 
+	 * @author Justin Yau
+	 */
+	public String checkForEndSpace(String s) {
+		while(anySpaceAtEnd(s)) {
+			s = s.substring(0, s.length() - 1);
+		}
+		System.out.println(s);
+		return s;
+	}
+	
+	/**
 	 * This method takes in a string and detects if there is a space at the end
 	 * @param s - The string to check
 	 * @return - Whether or not there is a string at the end
@@ -226,7 +241,7 @@ public class ImportScreen extends ResizableScreen {
 		WavMusicBeatDetector detect = new WavMusicBeatDetector(title, artist, importedFile);
 		FileOutputStream out;
 		try {
-			out = new FileOutputStream(new File("resources/maps/" + title + artist + "/" + title + artist + ".wav"));
+			out = new FileOutputStream(new File("resources/maps/" + title + "/" + title + artist + ".wav"));
 			Files.copy(importedFile.toPath(), out);
 			out.close();
 		} catch (FileNotFoundException e) {

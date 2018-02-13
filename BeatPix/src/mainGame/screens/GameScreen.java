@@ -866,10 +866,6 @@ public void calcScore(double timing) {
 		    intList.add(i);
 		    
 		}
-		for (int i : intList) {
-			//displayScore.setText(""+i);
-			System.out.println(i);
-		} 
 		intList.clear();
 	//	System.out.println(Arrays.toString(scoreA));
 		
@@ -1273,8 +1269,8 @@ public void calcScore(double timing) {
 	 */
 	public void playSong() {
 
-		String fileName = title + artist;
-		String path = "resources/maps/" + fileName + "/" + fileName + ".wav";
+		String fileName = title + " " + artist;
+		String path = "resources/maps/" + title + "/" + fileName + ".wav";
 		bScore = beats.size();
 		Thread play = new Thread(new Runnable() {
 			
