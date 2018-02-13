@@ -39,7 +39,7 @@ public class MultiLineCustomText {
 		this.parentScreen = screen;
 		white = true;
 		createCustomTextArray(text);
-		this.lengthOfLine = 0;
+		this.lengthOfLine = 0; lineSpacing = 10;
 	}
 	
 	public MultiLineCustomText(int xTopLeft, int yTopLeft, int width, int height, String s, FullFunctionScreen screen, int lengthOfLine) {
@@ -49,10 +49,25 @@ public class MultiLineCustomText {
 		customTextArr = new ArrayList<CustomText>();
 		this.parentScreen = screen;
 		white = true;
-		this.lengthOfLine = lengthOfLine;
+		this.lengthOfLine = lengthOfLine; lineSpacing = 10;
 		createCustomTextArray(text);
 	}
 	
+	
+	public MultiLineCustomText(int xTopLeft, int yTopLeft, int width, int height, String s, FullFunctionScreen screen, int lengthOfLine, int ls) {
+		this.text = s;
+		this.x = xTopLeft; this.w = width;
+		this.y = yTopLeft; this.h = height;
+		customTextArr = new ArrayList<CustomText>();
+		this.parentScreen = screen;
+		white = true;
+		this.lengthOfLine = lengthOfLine; lineSpacing = ls;
+		createCustomTextArray(text);
+	}
+	
+	public void setLineSpacing(int x) {
+		lineSpacing = x;
+	}
 	public void addToScreen() {
 		for(CustomText c: customTextArr) {
 			parentScreen.addObject(c);
@@ -65,6 +80,7 @@ public class MultiLineCustomText {
 		}
 	}
 	
+	int lineSpacing;
 	public void createCustomTextArray(String s) {
 
 		int rowLength = lengthOfLine;
@@ -77,7 +93,7 @@ public class MultiLineCustomText {
 		customTextArr = new ArrayList<CustomText>();
 		ArrayList<String> temp = arrayOfBrokenUpStrings(s, rowLength);
 		for(int i = 0; i< temp.size(); i++) {
-			int lineSpacing = 30;
+			
 			CustomText ct = new CustomText(x,
 												y + h/temp.size()*i + lineSpacing*i, 
 													w, 
