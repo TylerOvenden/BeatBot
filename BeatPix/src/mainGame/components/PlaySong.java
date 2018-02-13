@@ -38,7 +38,7 @@ public class PlaySong implements JustinPlaySongInterface {
      * Tyler
      */
     Long audioPosition;
-    Clip clip;
+    private Clip audioLine;
     
     /**
      * @author Justin Yau
@@ -49,8 +49,8 @@ public class PlaySong implements JustinPlaySongInterface {
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
  
-            Clip audioLine = AudioSystem.getClip();
- 
+            audioLine = AudioSystem.getClip();
+            updateVolume();
            // System.out.println("Playback started.");
             
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
@@ -128,20 +128,23 @@ public class PlaySong implements JustinPlaySongInterface {
 	}
     
     public static void main(String[] args) {
-        MainGUI.getVolume();
+      
     	String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
-    public void volumeChange(int volume) {
-    		
-    	if(volume == 0) {
-    		MainGUI.setVolume(-80);
-    	}
-    	if(volume == 100) {
-    		MainGUI.setVolume(6);
-    	}
-    }  
+    public void updateVolume() {
+    	int index = MainGUI.getVolume();
+    	float[] volumeArr= {-80f,-50f,-20f,6f};
+    	float finalValue = volumeArr[index];  
+    	if(audioLine!=null) {
+    		if(audioLine.getControl(FloatControl.Type.MASTER_GAIN)!=null) {
+    			FloatControl volume = (FloatControl) audioLine.getControl(FloatControl.Type.MASTER_GAIN);
+    			volume.setValue(finalValue);	
+    		}
+    	} 
+    }
+    
 	@Override
 	public void pauseSong() {
 	
