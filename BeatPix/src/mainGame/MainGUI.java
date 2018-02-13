@@ -28,7 +28,7 @@ public class MainGUI extends GUIApplication {
 	
 	private static final long serialVersionUID = 6557376208612089301L;
 	
-	private Screen currentScreen;
+	private Screen currentScreen; 
 	
 	public static MainGUI test;
 	

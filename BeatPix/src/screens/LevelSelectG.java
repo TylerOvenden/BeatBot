@@ -141,7 +141,7 @@ public class LevelSelectG extends FullFunctionScreen{
 		return new Graphic(x,y,w,h,path);
 	}
 	// change to game screen calling with the appropriate songs
-/*	private void moveLeft() {
+/*	private v oid moveLeft() {
 		try {
 		
 	} catch (IOException e) {}

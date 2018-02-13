@@ -218,7 +218,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 						System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
 
-						//MainGUI.setScreen(MainGUI.level);
+						//MainGUI.setS creen(MainGUI.level);
 						//Song song = new Song("resources/maps/Elektronomia Summer Vibes/Elektronomia Summer Vibes.csv");
 						/**/			//MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(), song, "resources/sample_bg.gif"));
 										
