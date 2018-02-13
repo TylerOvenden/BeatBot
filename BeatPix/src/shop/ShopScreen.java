@@ -84,8 +84,11 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private int index;
 	
 	private CustomText back;
+	
+	//the yesk, nok, and okayk are the custom text
 	private CustomText yesK;
 	private CustomText noK;
+	private CustomText okayK;
 	private CustomText textKev;
 	private CustomText unlockedText;
 	
@@ -290,7 +293,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
 		back = new CustomText(750, 60, 95, 50, "Back", true);
-		
+		okayK = new CustomText(463, 277, 50, 30,"Ok",true);
 		yesK = new CustomText(405,405,50,75,"Yes", true);
 		noK = new CustomText(507,405,45,50,"No", false);
 		
@@ -309,6 +312,11 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			public void act() {
 				
 				MainGUI.test.setScreen(MainGUI.mainMenu);
+				setThings1Vis(false);
+				setAllYesButVisFalse();
+				setThings2Vis(false);
+				setAllConfButVisFalse();
+				enableButton(true);
 			
 			}
 		});
@@ -326,13 +334,10 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				@Override
 				public void act() {
 					
-					setThings1VisTrue();
+					setThings1Vis(true);
 					setYesButVisExceptThis(j);
 					index = indexList.indexOf(j);
-					buttonList.get(j).setEnabled(false);
-					for(int i = 0; i < buttons.size(); i++) {
-						buttons.get(i).setEnabled(false);
-					}
+					enableButton(false);
 				}
 			}));
 			charScroll.addObject(buttonList.get(i));
@@ -346,8 +351,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				@Override
 				public void act() {
 					// i guess to have the images, and set the a boolean to true and a textfield says unlock
-					 setThings2VisTrue();
-					 setThings1VisFalse();
+					 setThings2Vis(true);
+					 setThings1Vis(false);
 					 setAllYesButVisFalse();
 					 setConfButVisExceptThis(j);
 					 
@@ -358,11 +363,11 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		//create arrayList of confirmButtons
 		for(int l = 0; l < numChars; l ++) {
 			final int y = l;
-			confirmButton.add(new Button(470, 400, 50, 50, "Okay" + l, Color.blue, new Action() {
+			confirmButton.add(new Button(460, 270, 50, 30, "", Color.GRAY, new Action() {
 				int a = y;
 				@Override
 				public void act() {
-					setThings2VisFalse();
+					setThings2Vis(false);
 					setAllConfButVisFalse();
 					for (int i = index; i < buttonList.size(); i++)
 					{
@@ -374,9 +379,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 
 					}
 					charScroll.remove(buttonList.get(a));
-					//buttonList.get(a).setVisible(false);
 					charScroll.update();
 					indexList.remove(index);
+					enableButton(true);
 					
 				}
 			}));
@@ -394,20 +399,17 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			
 			@Override
 			public void act() {
-				 setThings1VisFalse();
+				 setThings1Vis(false);
 				 setAllYesButVisFalse();
-				 //buttonList.get(j).setEnabled(true);
-				 for(int i = 0; i < buttons.size(); i++) {
-					buttons.get(i).setEnabled(true);
-				 }
+				 enableButton(true);
 			}
 		});
 		 
 		 
 		 //visible all the things
-		 setThings1VisFalse();
+		 setThings1Vis(false);
 		 setAllYesButVisFalse();
-		 setThings2VisFalse();
+		 setThings2Vis(false);
 		 setAllConfButVisFalse();
 		 
 		 
@@ -416,6 +418,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		viewObjects.add(backButton);
 		viewObjects.add(backBorder);
 		viewObjects.add(border);
+		viewObjects.add(border2);
 		viewObjects.add(textKev);
 		charScroll.update();
 		viewObjects.add(charScroll);
@@ -425,11 +428,11 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			viewObjects.add(images.get(a));
 			viewObjects.add(yesButton.get(a));
 		}
-		viewObjects.add(border2);
 		viewObjects.add(unlockedText);
 		viewObjects.add(back);
 		viewObjects.add(yesK);
 		viewObjects.add(noK);
+		viewObjects.add(okayK);
 	}	
 	//daniel methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public void removeButton()
@@ -602,34 +605,19 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	}
 	//helper methods
 
-	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = false
-	public void setThings1VisFalse() {
-		 border.setVisible(false);
-		 textKev.setVisible(false);
-		 noButton.setVisible(false);
-		 yesK.setVisible(false);
-		 noK.setVisible(false);
+	//things that are not buttons doesnt not consist of the unlock and confirm button and soon images, visibility = b
+	public void setThings1Vis(boolean b) {
+		 border.setVisible(b);
+		 textKev.setVisible(b);
+		 noButton.setVisible(b);
+		 yesK.setVisible(b);
+		 noK.setVisible(b);
 	}
-	//same things as Things1false but, visibility = true
-	public void setThings1VisTrue() {
-		 border.setVisible(true);
-		 textKev.setVisible(true);
-		 noButton.setVisible(true);
-		 yesK.setVisible(true);
-		 noK.setVisible(true);
-	}
-	
-	//things that things1 doesnt consist of, visibility = false
-	public void setThings2VisFalse() {
-		 border2.setVisible(false);
-		 unlockedText.setVisible(false);
-		 //confirmButton.setVisible(false);
-	}
-	//things that things1 doesnt consist of, visibility = false
-	public void setThings2VisTrue() {
-		 border2.setVisible(true);
-		 unlockedText.setVisible(true);
-		 //confirmButton.setVisible(true);
+	//things that things1 doesnt consist of, visibility = b
+	public void setThings2Vis(boolean b) {
+		 border2.setVisible(b);
+		 unlockedText.setVisible(b);
+		 okayK.setVisible(b);
 	}
 	
 	 //turn all yesButtons, visibility = false;
@@ -666,9 +654,17 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			confirmButton.get(i).setVisible(true);
 		}
 	}
+	public void enableButton(boolean b) {
+		for(int i = 0; i < buttons.size(); i ++) {
+			buttons.get(i).setEnabled(b);
+		}
+		for(int z = 0; z < buttonList.size(); z++) {
+			buttonList.get(z).setEnabled(b);
+		}
+	}
 	
 	
-	
+	//interface methods
 	public ArrayList<Song> getSongs()
 	{
 		return songs;
