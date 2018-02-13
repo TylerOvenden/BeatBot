@@ -153,9 +153,8 @@ public class ImportScreen extends ResizableScreen {
 				if(title != null && !(title.equals("")) && !anySpecialCharacters(title) && !anySpaceAtEnd(title)
 						&& artist != null && !(artist.equals("")) && !anySpecialCharacters(artist) && !anySpaceAtEnd(artist)
 						&& importedFile != null) {
-					processInformation(title, artist);
-					status.setText("Success! -5000 credits!");
-					/*
+					//processInformation(title, artist);
+					//status.setText("Success! -5000 credits!");
 					if(MainGUI.shop.getCredits() >= 5000) {
 						processInformation(title, artist);
 						status.setText("Success! -5000 credits!");
@@ -164,7 +163,6 @@ public class ImportScreen extends ResizableScreen {
 						status.setText("Insufficient credits!");
 						MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
 					}
-					*/
 				}
 				else {
 					status.setText("Input all required fields correctly!");
@@ -289,7 +287,7 @@ public class ImportScreen extends ResizableScreen {
  	 */
  	public void addTextLabels(Font f, List<Visible> viewObjects) {
 		ArrayList<TextLabel> text = new ArrayList<TextLabel>();
-		TextLabel instruction = new TextLabel(125, 125, 800, 50, "Input the title and artist that you would like and import your WAV file to get started!");
+		TextLabel instruction = new TextLabel(125, 125, 960, 50, "Enter the fields and import your WAV file to get started! It's 5000 credits per custom song!");
 		text.add(instruction);
 		
 		TextLabel title = new TextLabel(325, 200, 50, 50, "Title");
