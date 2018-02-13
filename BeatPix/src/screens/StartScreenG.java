@@ -70,6 +70,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 		if(allowClick) {
 			allowClick = false;
 			GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			fadeInsEnd();
 			fadeOuts();
 		}
 	}
@@ -143,8 +144,8 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	
 	private ShipCrash ms;
 	public void start() {
-		ms = new ShipCrash(this); screenPhase = -1;
-		//scrollIn(); screenPhase = 0;
+		//ms = new ShipCrash(this); screenPhase = -1;
+		scrollIn(); screenPhase = 0;
 	}
 	
 	public void scrollIn() {
@@ -208,6 +209,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	public void fadeInsEnd() {
 		time.cancel();
 		title.setAlpha(1f);start.setAlpha(1f);
+		allowClick = true;
 		screenPhase = 2;
 	}
 
