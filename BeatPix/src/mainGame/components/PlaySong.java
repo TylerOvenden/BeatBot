@@ -158,7 +158,7 @@ public class PlaySong implements JustinPlaySongInterface {
 		
 	}
 
-	public void stopSong() {
+	public void stopSong() { 
 		
 		cancel = true;
 		
