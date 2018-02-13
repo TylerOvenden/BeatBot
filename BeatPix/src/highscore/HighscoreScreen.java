@@ -18,7 +18,9 @@ import screens.components.ImageButton;
 public class HighscoreScreen extends ResizableScreen {
 
 	/**
+	 * Highscore Display Screen
 	 * 
+	 * @author Steven
 	 */
 	private static final long serialVersionUID = 1L;
 	private boolean isWin;
@@ -45,7 +47,8 @@ public class HighscoreScreen extends ResizableScreen {
 		this.acc=acc;
 		this.song=song;
 		this.hs=hs;
-		currentAcc.setText("Accuracy "+acc+"%");
+		//System.out.println(Math.round(this.acc*100.0)/100.0);
+		currentAcc.setText("Accuracy "+Math.round(this.acc*100.0)/100.0+"%");
 		currentScore.setText("Score "+score);
 		if(isWin) {
 			condition.setText("You Win");
