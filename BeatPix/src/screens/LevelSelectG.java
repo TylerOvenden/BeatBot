@@ -9,6 +9,7 @@ import gui.components.Action;
 import gui.components.Graphic;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
+import mainGame.MainGUI;
 import mainGame.components.Song;
 import mainGame.screens.GameScreen;
 import screens.components.ImageButton;
@@ -25,6 +26,7 @@ public class LevelSelectG extends FullFunctionScreen{
 	private static final long serialVersionUID = 6265786684466337399L;
 	public ArrayList<ImageButton> buttons;
 	public ArrayList<ImageButton> unseenButtons;
+	public ArrayList<Song> songs;
 	private Graphic background;
 	
 	public LevelSelectG(int width, int height) {
@@ -33,25 +35,33 @@ public class LevelSelectG extends FullFunctionScreen{
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
+		System.out.println(MainGUI.test.mySongs.size());
+		for(int i=0;i<MainGUI.test.mySongs.size()-1;i++) {
+			if(MainGUI.test.mySongs.get(i).isUnlock()) {
+				songs.add(MainGUI.test.mySongs.get(i));
+			}
+		}
+		System.out.println(songs.size());
+		
 		background = updateBackground("resources\\mop.png");
 		viewObjects.add(background);
 		unseenButtons= new ArrayList<ImageButton>();
 		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
 		buttons = new ArrayList<ImageButton>();
-		for(int i=0; i<ShopScreen.getSongs().size(); i++) {
+		for(int i=0; i<MainGUI.shop.getSongs().size(); i++) {
 /*P D*/ 		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
 			//ShopScreen.getSongs();
+				int x=i;
 			buttons.get(i).setAction(new Action() {
 				public void act(){
-		
-					Test.test.setScreen(new GameScreen(getWidth(),getHeight(),ShopScreen.getSongs().get(i)));
+					System.out.println("button clicked");
+					MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.shop.getSongs().get(x)));
 				}
 			});
 		
 		}
-		buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
-
-		buttons.get(2).setEnabled(true);
+	
+		buttons.get(0).setEnabled(true);
 		
 		ImageButton left = new ImageButton( getWidth()-900, getHeight()-300, icon.getIconWidth(), 100 ,"resources\\LeftArrow-small.jpg");
 		viewObjects.add(left);
@@ -62,23 +72,28 @@ public class LevelSelectG extends FullFunctionScreen{
 				
 				System.out.println("asd");
 				
-				unseenButtons.add(buttons.get(4));
+				//unseenButtons.add(buttons.get(4));
 				System.out.println("asd");
-				buttons.set(4, buttons.get(3));
-				buttons.set(3, buttons.get(2));
-				buttons.set(2, buttons.get(1));
-				buttons.set(1, buttons.get(0));
-				buttons.set(0, unseenButtons.get(0));
-				unseenButtons.remove(0);
-				for(int i=0; i<5; i++) {
+				moveLeft();
+				//buttons.set(4, buttons.get(3));
+				//buttons.set(3, buttons.get(2));
+				//buttons.set(2, buttons.get(1));
+				//buttons.set(1, buttons.get(0));
+				//buttons.set(0, unseenButtons.get(0));
+				//unseenButtons.remove(0);
+				for(int i=0; i<buttons.size(); i++) {
 					buttons.get(i).setX(180*(-i-1)+getWidth()-10);
 					buttons.get(i).setY(80*(i+1) + getHeight()-580);
 				}
-				buttons.get(2).setEnabled(true);
-				buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
+				buttons.get(0).setEnabled(true);
+				buttons.get(0).loadImages("resources\\tester1.jpg", buttons.get(0).getWidth()+25, buttons.get(0).getHeight()+25);
+				try {
+					buttons.get(1).setEnabled(false);
+					buttons.get(1).loadImages("resources\\tester2.jpg", buttons.get(1).getWidth()-25, buttons.get(1).getHeight()-25);
+					} catch (java.lang.IndexOutOfBoundsException e) {
+						System.out.println("caught");
+					}
 				
-				buttons.get(3).setEnabled(false);
-				buttons.get(3).loadImages("resources\\tester2.jpg", buttons.get(3).getWidth()-25, buttons.get(3).getHeight()-25);
 				
 			}
 			
@@ -93,27 +108,31 @@ public class LevelSelectG extends FullFunctionScreen{
 				System.out.println("asd");
 				unseenButtons.add(buttons.get(0));
 				System.out.println("asd");
-				buttons.set(0, buttons.get(1));
-				buttons.set(1, buttons.get(2));
-				buttons.set(2, buttons.get(3));
-				buttons.set(3, buttons.get(4));
-				buttons.set(4, unseenButtons.get(unseenButtons.size()-1));
-				unseenButtons.remove(unseenButtons.size()-1);
-				for(int i=0; i<5; i++) {
+				
+				//buttons.set(0, buttons.get(1));
+				//buttons.set(1, buttons.get(2));
+				//buttons.set(2, buttons.get(3));
+				//buttons.set(3, buttons.get(4));
+				//buttons.set(4, unseenButtons.get(unseenButtons.size()-1));
+				//unseenButtons.remove(unseenButtons.size()-1);
+				for(int i=0; i<buttons.size(); i++) {
 					buttons.get(i).setX(180*(-i-1)+getWidth()-10);
 					buttons.get(i).setY(80*(i+1) + getHeight()-580);
 				}
-				buttons.get(2).setEnabled(true);
-				buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
-				
-				buttons.get(1).setEnabled(false);
-				buttons.get(1).loadImages("resources\\tester2.jpg", buttons.get(1).getWidth()-25, buttons.get(1).getHeight()-25);
+				buttons.get(0).setEnabled(true);
+				buttons.get(0).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
+				try {
+					buttons.get(1).setEnabled(false);
+					buttons.get(1).loadImages("resources\\tester2.jpg", buttons.get(1).getWidth()-25, buttons.get(1).getHeight()-25);
+					} catch (java.lang.IndexOutOfBoundsException e) {
+						System.out.println("caught");
+					}
 				
 			}
 			
 	});
 		
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<buttons.size(); i++) {
 			viewObjects.add(buttons.get(i));
 		}
 	}
@@ -131,4 +150,12 @@ public class LevelSelectG extends FullFunctionScreen{
 		return new Graphic(x,y,w,h,path);
 	}
 	// change to game screen calling with the appropriate songs
+
+	private void moveLeft() {
+		try {
+			buttons.set(0, buttons.get(1));
+			} catch (java.lang.IndexOutOfBoundsException e) {
+				System.out.println("caught");
+			}
+	}
 }
