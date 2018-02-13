@@ -49,9 +49,8 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 							selectImage.get(z).setVisible(false);
 						}
 						selectImage.get(j).setVisible(true);
-						
+						color = colorArray[j];
 					}
-					color = colorArray[j];
 					//need to be in the if statement
 				}
 			}));
@@ -60,7 +59,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 			
 			@Override
 			public void act() {
-				MainGUI.test.setScreen(MainGUI.mainMenu);
+				ShopKevinGUI.s.setScreen(ShopKevinGUI.s.shop2);
 				
 			}
 		});
@@ -68,6 +67,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		for(int z = 0; z < numChars; z++) {
 			selectImage.get(z).setVisible(false);
 		}
+		selectImage.get(0).setVisible(true);
 		
 		//viewobjects
 		viewObjects.add(backButton);
