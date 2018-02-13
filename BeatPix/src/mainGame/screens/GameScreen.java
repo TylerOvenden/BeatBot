@@ -97,11 +97,11 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
-	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
+	public static final int columnY = 65; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 12; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 26; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
@@ -611,7 +611,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @param viewObjects - The list of viewable objects on the screen
 	 */
 	public void addHealthBar(List<Visible> viewObjects) {
-		healthBar = new HealthBar(375, 65, 25, 437);
+		healthBar = new HealthBar(375, columnY - 10, 25, columnY + columnHeight + distanceAAfterGoal);
 		viewObjects.add(healthBar);
 	}
 	
@@ -707,7 +707,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	public void addColumnLanes(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
-			ColumnLane lane = new ColumnLane(arrowX[i] - 3,columnY - 10, columnWidth, columnY + columnHeight + GameScreen.distanceAAfterGoal);
+			ColumnLane lane = new ColumnLane(arrowX[i] - 3,columnY - 10, columnWidth, columnY + columnHeight + GameScreen.distanceAAfterGoal + 5);
 			lane.setAlpha((float)0.3);
 			viewObjects.add(lane);
 		}

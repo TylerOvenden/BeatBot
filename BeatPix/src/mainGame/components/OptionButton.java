@@ -66,7 +66,7 @@ public class OptionButton extends Button implements ResizeClickInterface {
 		int sWidth = (int) (screen.getWidth() * (((double) oX)/screen.getOWidth()));
 		int sHeight = (int) (screen.getHeight() * (((double) oY)/screen.getOHeight()));
 		return x>sWidth && x<sWidth+scaledWidth 
-		&& y > sHeight && y<sHeight+scaledHeight;
+		&& y > sHeight + (getHeight() / 2) && y<sHeight+scaledHeight+(getHeight()/2);
 	}
 	
 	public void drawButton(Graphics2D g, boolean hover) {

@@ -154,17 +154,41 @@ public class ImportScreen extends ResizableScreen {
 						&& artist != null && !(artist.equals("")) && !anySpecialCharacters(artist) && !anySpaceAtEnd(artist)
 						&& importedFile != null) {
 					processInformation(title, artist);
-					status.setText("Success!");
-					status.update();
+					status.setText("Success! -5000 credits!");
+					/*
+					if(MainGUI.shop.getCredits() >= 5000) {
+						processInformation(title, artist);
+						status.setText("Success! -5000 credits!");
+					}
+					else {
+						status.setText("Insufficient credits!");
+						MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
+					}
+					*/
 				}
 				else {
 					status.setText("Input all required fields correctly!");
-					status.update();
 				}
 			}
 		});
 		optBTN.add(btn);
 		viewObjects.add(btn);
+	}
+	
+	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
