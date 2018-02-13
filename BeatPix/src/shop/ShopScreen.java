@@ -24,11 +24,14 @@ import mainGame.MainGUI;
 import mainGame.components.CustomText;
 import mainGame.components.Song;
 import screens.Test;
+import screens.components.ImageButton;
 
 public class ShopScreen extends FullFunctionScreen implements CreditChanger
 {
 	//Daniel Fields~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	private static final long serialVersionUID = 1L;
+
+	private CustomRectangle songArea;
 	
 	private Graphic background;	
 	
@@ -111,12 +114,12 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
-	//	songs = new ArrayList<Song>();
+		songs = new ArrayList<Song>();
 		buttons = new ArrayList<ImageButton>();
 		customText = new ArrayList<CustomText>();
 		multiText = new ArrayList<MultiLineCustomText>();
 		
-	//	songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
+		songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
 
 		//graphics
 			
@@ -135,9 +138,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		
 		String s = "Credits:"+getCredits(); 
 		credit = new CustomText(110,58,200,200, s,true);
-		credit.update();
 		viewObjects.add(credit);
-		
 		
 		
 		textLine1 = new CustomText(370,195,250,280, "Do you want to",true); 			
@@ -441,75 +442,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	//daniel methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public void removeButton()
 	{
-		int filler = 3;
+		
 		idx = buttons.indexOf(clickedButton);
-		
-		System.out.println(buttons.get(idx).getSong());	
-		ArrayList<Integer> a = new ArrayList<Integer>();
-		int temp = 0;
-		String title = "";
-		for (int i = 0; i < MainGUI.test.mySongs.size(); i++)
-		{
-			title = MainGUI.test.mySongs.get(i).getTitle();
-			if (i+1 < MainGUI.test.mySongs.size())
-			{		
-				if (title.equals(MainGUI.test.mySongs.get(i+1).getTitle().toLowerCase()))
-				{
-					temp++;
-				}	
-				else
-				{
-					a.add(temp);
-					temp = 0;
-				}
-			}
-		}
-		
-		for (int i = 0; i<MainGUI.test.mySongs.size(); i++)
-		{
-			if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.mySongs.get(i).getTitle().toLowerCase()))
-			{
-				MainGUI.test.mySongs.get(i+a.get(i)).setUnlock(true);
-			}
-		}
-	/*	
-		if (buttons.get(idx).getSong().equals("Adrenaline"))
-		{
-			for (int i = 0; i < 4; i++)
-			MainGUI.test.mySongs.get(i).setUnlock(true);
-		}
-		
-		if (buttons.get(idx).getSong().equals("Blow Out"))
-		{
-			for (int i = 4; i < 8; i++)
-			MainGUI.test.mySongs.get(i).setUnlock(true);
-		}
-		
-		if (buttons.get(idx).getSong().equals("Carribean"))
-		{
-			MainGUI.test.mySongs.get(9).setUnlock(true);
-		}
-		
-		if (buttons.get(idx).getSong().equals("Summer Vibes"))
-		{
-			MainGUI.test.mySongs.get(10).setUnlock(true);
-		}
-		
-		if (buttons.get(idx).getSong().equals("Waiting for Love"))
-		{
-			MainGUI.test.mySongs.get(10+filler).setUnlock(true);
-		}
-		
-		if (buttons.get(idx).getSong().equals("Fairy Tail"))
-		{
-			MainGUI.test.mySongs.get(11+filler).setUnlock(true);
-		}
-		
-		if (buttons.get(idx).getSong().equals("One Piece"))
-		{
-			MainGUI.test.mySongs.get(12+filler).setUnlock(true);
-		}
-	*/	
+
 		scroll.remove(clickedButton);				
 		buttons.remove(clickedButton);
 		scroll.remove(customText.get(idx));
@@ -529,52 +464,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 			scroll.update();
 		}
 		
-		
-	
-		
-		
-	//	ArrayList<Song> songs = MainGUI.test.mySongs;
-	/*			
-		if (idx == 0 || idx == 1 || idx == 8 || idx == 10)
-		{
-			for (int i = idx*4; i < ((idx*4)+4); i++)
-			{
-				MainGUI.test.mySongs.get(i).setUnlock(true);
-			}
-		}
-	*/
-
-	/*	
-		if (idx == 2)
-		{
-			MainGUI.test.mySongs.get(8).setUnlock(true);
-		}
-		
-		if (idx == 3)
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				MainGUI.test.mySongs.get(9+i).setUnlock(true);
-			}
-		}
-		
-		if (idx == 4)
-		{
-			MainGUI.test.mySongs.get(11).setUnlock(true);
-		}
-		
-		if (idx == 5)
-		{
-			MainGUI.test.mySongs.get(12).setUnlock(true);
-		}
-		
-		if (idx == 6)
-		{
-			MainGUI.test.mySongs.get(13).setUnlock(true);
-		}
-	*/	
-		
-		
+		MainGUI.test.mySongs.get(idx).setUnlock(true);
 	}
 	public void addButtons()
 	{
@@ -593,7 +483,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 					{
 						clickedButton = b;				
 						setInvis(true);	
-				//		buttonList.get(j).setEnabled(false);
+						buttonList.get(j).setEnabled(false);
 					}
 				});
 				
