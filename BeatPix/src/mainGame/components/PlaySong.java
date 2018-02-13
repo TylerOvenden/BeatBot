@@ -2,7 +2,9 @@ package mainGame.components;
 
 import java.io.File;
 import java.io.IOException;
- 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -38,7 +40,7 @@ public class PlaySong implements JustinPlaySongInterface {
      * Tyler
      */
     Long audioPosition;
-    Clip clip;
+    private Clip audioLine;
     
     /**
      * @author Justin Yau
@@ -49,8 +51,7 @@ public class PlaySong implements JustinPlaySongInterface {
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
  
-            Clip audioLine = AudioSystem.getClip();
- 
+            audioLine = AudioSystem.getClip();
            // System.out.println("Playback started.");
             
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
@@ -67,6 +68,7 @@ public class PlaySong implements JustinPlaySongInterface {
 			}
             
             audioLine.open(audioStream);
+            updateVolume();
             audioLine.start();
             
             while(!cancel) {
@@ -128,20 +130,31 @@ public class PlaySong implements JustinPlaySongInterface {
 	}
     
     public static void main(String[] args) {
-        MainGUI.getVolume();
+      
     	String audioFilePath = "resources/maps/DreadnoughtMastermind(xi+nora2r)/DreadnoughtMastermind(xi+nora2r).wav";
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
-    public void volumeChange(int volume) {
-    		
-    	if(volume == 0) {
-    		MainGUI.setVolume(-80);
-    	}
-    	if(volume == 100) {
-    		MainGUI.setVolume(6);
-    	}
-    }  
+    public void updateVolume() {
+    	int index = MainGUI.getVolume();
+    
+	/*	ArrayList <Float> volumeL = new ArrayList<Float>();
+    	volumeL.add(-80f);
+    	volumeL.add(-6f);
+    	volumeL.add(-5f);
+    	volumeL.add(-10f);
+    			 */
+    			 //	Arrays.asList(-80f),-6f ,-5f,-10f));
+    	float[] volumeArr= {-80f,6f,-5f,-10f};
+    	float finalValue = volumeArr[index];  
+    	if(audioLine!=null) {
+    		if(audioLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+    			FloatControl volume = (FloatControl) audioLine.getControl(FloatControl.Type.MASTER_GAIN);
+    			volume.setValue(finalValue);	
+    		}
+    	} 
+    }
+    
 	@Override
 	public void pauseSong() {
 	
@@ -155,7 +168,7 @@ public class PlaySong implements JustinPlaySongInterface {
 		
 	}
 
-	public void stopSong() {
+	public void stopSong() { 
 		
 		cancel = true;
 		
