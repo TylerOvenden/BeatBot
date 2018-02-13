@@ -9,7 +9,7 @@ import gui.GUIApplication;
 import gui.userInterfaces.*;
 import mainGame.components.Song;
 import screens.InformationContainer;
-
+import screens.LevelSelectG;
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
@@ -28,7 +28,7 @@ public class MainGUI extends GUIApplication {
 	
 	private static final long serialVersionUID = 6557376208612089301L;
 	
-	private Screen currentScreen;
+	private Screen currentScreen; 
 	
 	public static MainGUI test;
 	
@@ -36,8 +36,9 @@ public class MainGUI extends GUIApplication {
 	
 	public static StartScreenG start;
 	public static MainMenuScreenG mainMenu;
-	//public static LevelSelectG level;
+	
 	public static ShopScreen shop;
+	public static LevelSelectG level;
 	public static OptionsContainer options;
 	public static InformationContainer information;
 	public static CharacterSelectionScreen character;
@@ -83,8 +84,9 @@ public class MainGUI extends GUIApplication {
 		
 		start = new StartScreenG(getWidth(),getHeight());
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
-		//level = new LevelSelectG(getWidth(),getHeight());
+		
 		shop = new ShopScreen(getWidth(),getHeight());
+		level = new LevelSelectG(getWidth(),getHeight());
 		character = new CharacterSelectionScreen(getWidth(),getHeight());
 		
 		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);

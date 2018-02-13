@@ -1443,4 +1443,14 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		MainGUI.options.readKey(e);
 	}
 	
+	/**
+	 * This method returns the audio player of the game
+	 * @return - The audio player of the game 
+	 * 
+	 * @author Justin Yau
+	 */
+	public PlaySong getPlayer() {
+		return player;
+	}
+	
 }
