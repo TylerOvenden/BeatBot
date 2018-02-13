@@ -176,6 +176,22 @@ public class ImportScreen extends ResizableScreen {
 	}
 	
 	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * This method takes in a string and detects if there is a space at the end
 	 * @param s - The string to check
 	 * @return - Whether or not there is a string at the end
