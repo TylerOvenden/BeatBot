@@ -60,6 +60,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 			
 			@Override
 			public void act() {
+				ShopKevinGUI.s.setScreen(ShopKevinGUI.s.shop2);
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 				
 			}
