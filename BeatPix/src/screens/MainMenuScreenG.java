@@ -440,6 +440,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		
 		Thread run = new Thread(idleCharacter);
 		run.start();
+		this.addObject(idleCharacter);
 	}
 
 
