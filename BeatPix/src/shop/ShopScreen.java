@@ -114,12 +114,12 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
-		songs = new ArrayList<Song>();
+	
 		buttons = new ArrayList<ImageButton>();
 		customText = new ArrayList<CustomText>();
 		multiText = new ArrayList<MultiLineCustomText>();
 		
-		songs.add(new Song("resources//DreadnoughtMastermind(xi+nora2r).csv"));
+		
 
 		//graphics
 			
