@@ -74,7 +74,7 @@ public class HighscoreScreen extends ResizableScreen {
 					idx=i;
 				}
 			}
-			score2.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
+			score2.setText("2.  "+temp+"   "+arrayList.get(idx)+"%");
 			ints.remove(idx);
 			arrayList.remove(idx);
 		}else {
@@ -89,7 +89,7 @@ public class HighscoreScreen extends ResizableScreen {
 					idx=i;
 				}
 			}
-			score3.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
+			score3.setText("3.  "+temp+"   "+arrayList.get(idx)+"%");
 			ints.remove(idx);
 			arrayList.remove(idx);
 		}else {

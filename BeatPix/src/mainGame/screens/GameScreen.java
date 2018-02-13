@@ -1311,7 +1311,11 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {
-			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,(double)accuracy,mainSong,mainSong));
+			if(healthBar.getHealth()>0) {
+				MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,(double)accuracy,mainSong,mainSong));
+			}else {
+				MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),false,(int)score,(double)accuracy,mainSong,mainSong));
+			}
 		}
 	}
 	
@@ -1441,6 +1445,16 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 */
 	public void passKeyCodeIntoOptions(KeyEvent e) {
 		MainGUI.options.readKey(e);
+	}
+	
+	/**
+	 * This method returns the audio player of the game
+	 * @return - The audio player of the game 
+	 * 
+	 * @author Justin Yau
+	 */
+	public PlaySong getPlayer() {
+		return player;
 	}
 	
 }
