@@ -39,23 +39,19 @@ public class PlaySong implements JustinPlaySongInterface {
     Long audioPosition;
     Clip clip;
     
+    /**
+     * @author Justin Yau
+     * @author Tyler Ovenden
+     */
     public void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
  
-            AudioFormat format = audioStream.getFormat();
+            Clip audioLine = AudioSystem.getClip();
  
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
- 
-            SourceDataLine audioLine = (SourceDataLine) AudioSystem.getLine(info);
-            
-            audioLine.open(format);
- 
-            audioLine.start();
-             
            // System.out.println("Playback started.");
-             
+            
             byte[] bytesBuffer = new byte[BUFFER_SIZE];
             int bytesRead = -1;
             try {
@@ -68,14 +64,26 @@ public class PlaySong implements JustinPlaySongInterface {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            while ((bytesRead = audioStream.read(bytesBuffer)) > 0 && !cancel) {
-            	while(pause) {
-            		sleep(0);
+            
+            audioLine.open(audioStream);
+            audioLine.start();
+            
+            while(!cancel) {
+            	sleep(0);
+            	if(pause) {
+            		long clipTime = audioLine.getMicrosecondPosition();
+        			audioLine.stop();
+            		while(pause) {
+            			sleep(0);
+            		}
+            		audioLine.setMicrosecondPosition(clipTime);
+            		if(!cancel) {
+                		audioLine.start();
+            		}
             	}
-                audioLine.write(bytesBuffer, 0, bytesRead);
             }
              
-            audioLine.drain();
+            audioLine.flush();
             audioLine.close();
             audioStream.close();
             
