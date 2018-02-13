@@ -374,7 +374,7 @@ public class OptionsContainer{
 			}else {
 				selectingKeyPhase = 0;
 				
-				createSelectingKeyPopUp("Reselect key for I am an extra long sentence that will be usefeul to test");
+				createSelectingKeyPopUp("Reselect key");
 			}
 		}
 	}
