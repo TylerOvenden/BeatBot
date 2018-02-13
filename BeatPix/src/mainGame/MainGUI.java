@@ -86,7 +86,7 @@ public class MainGUI extends GUIApplication {
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
 		
 		shop = new ShopScreen(getWidth(),getHeight());
-		level = new LevelSelectG(getWidth(),getHeight());
+		//level = new LevelSelectG(getWidth(),getHeight());
 		character = new CharacterSelectionScreen(getWidth(),getHeight());
 		
 		options = new OptionsContainer(getWidth(), getHeight(), (Options) mainMenu);
