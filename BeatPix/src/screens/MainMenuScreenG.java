@@ -18,10 +18,11 @@ import gui.userInterfaces.FullFunctionScreen;
 import highscore.TempSongSelect;
 import mainGame.MainGUI;
 import mainGame.components.Song;
-import mainGame.screens.GameScreen;
+import screens.components.BottleClick;
 import screens.components.CustomText;
 import screens.components.ImageButton;
 import screens.interfaces.Options;
+
 public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 	/**Design:
@@ -64,6 +65,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	private static int OPTIONS_IDX = 3;
 	
 	private static ImageButton information;
+	private static BottleClick bottle;
 	
 	/**Constructor**
 	 * 
@@ -413,6 +415,10 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		toggleButtons(true);
 		
 		screenPhase = 1;
+		
+		bottle = new BottleClick(this);
+		bottle.addObjects();
+		
 	}
 	
 	public void changeIdle() {
@@ -433,6 +439,8 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 
 //--OPTIONS INTERFACE METHODS--//////
 	public void toggleButtons(boolean b) {
+		if(bottle != null)
+			bottle.getBottleOnSill().setEnabled(b);
 		information.setEnabled(b);
 		for(ImageButton button: buttons) {
 			button.setEnabled(b);
