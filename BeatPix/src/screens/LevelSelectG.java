@@ -50,18 +50,18 @@ public class LevelSelectG extends FullFunctionScreen{
 			});
 		
 		}
-		buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
-		buttons.get(2).setAction(new Action() {
-			public void act(){
+	//	buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
+		//buttons.get(2).setAction(new Action() {
+		//	public void act(){
 
 		//		Test.test.setScreen(new GameScreen(getWidth(),getHeight(),audio));
 
 				
-				MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),new Song("resources\\DreadnoughtMastermind(xi+nora2r).csv")));
+			//	MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),new Song("resources\\DreadnoughtMastermind(xi+nora2r).csv")));
 
-			}
-	});
-		buttons.get(2).setEnabled(true);
+			//}
+//	});
+		//buttons.get(2).setEnabled(true);
 		
 		ImageButton left = new ImageButton( getWidth()-900, getHeight()-300, icon.getIconWidth(), 100 ,"resources\\LeftArrow-small.jpg");
 		viewObjects.add(left);
@@ -123,7 +123,7 @@ public class LevelSelectG extends FullFunctionScreen{
 			
 	});
 		
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<buttons.size(); i++) {
 			viewObjects.add(buttons.get(i));
 		}
 	}
@@ -141,4 +141,9 @@ public class LevelSelectG extends FullFunctionScreen{
 		return new Graphic(x,y,w,h,path);
 	}
 	// change to game screen calling with the appropriate songs
+/*	private v oid moveLeft() {
+		try {
+		
+	} catch (IOException e) {}
+	}*/
 }
