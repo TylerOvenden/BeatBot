@@ -870,10 +870,7 @@ public void calcScore(double timing) {
 			//displayScore.setText(""+i);
 			System.out.println(i);
 		} 
-		for (int i : intList) {
-			
-			intList.remove(i);
-		}
+		intList.clear();
 	//	System.out.println(Arrays.toString(scoreA));
 		
 		if(tScore>=1000000) {
