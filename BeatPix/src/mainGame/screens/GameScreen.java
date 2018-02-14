@@ -1086,6 +1086,7 @@ public void calcScore(double timing) {
 				//Exit Action Button will be here
 				stop();
 				exited = true;
+				MainGUI.options.setParentScreen(MainGUI.mainMenu);
 				//Switch to a different screen below
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 			}
@@ -1303,6 +1304,7 @@ public void calcScore(double timing) {
 		visualizer.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
+		MainGUI.options.setParentScreen(MainGUI.mainMenu);
 		if(!exited) {
 			if(healthBar.getHealth()>0) {
 				//System.out.println(accuracy);
