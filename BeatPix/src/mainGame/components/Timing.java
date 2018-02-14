@@ -17,7 +17,7 @@ import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
 import screens.interfaces.robotActionInterface;
 
-public class Timing extends Component implements JustinTimingInterface,robotActionInterface {
+public class Timing extends Component implements JustinTimingInterface{
 	
 	private String img="";
 	private float lastTiming=0;
@@ -167,9 +167,5 @@ public class Timing extends Component implements JustinTimingInterface,robotActi
 		//System.out.println(GameScreen.game.getHealthBar().getHealth());
 	}
 
-	@Override
-	public boolean isHit() {
-		return false;
-	}
 
 }

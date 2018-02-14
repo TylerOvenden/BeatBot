@@ -842,33 +842,7 @@ public void calcScore(double timing) {
 		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
-		String display = String.valueOf(tScore);
-		
-
-		
-		int[] scoreA = {0,0,0,0,0,0,0,0,0};
-
-		for(int i = 0; i<display.length();i++) {
-		
-			ra = Integer.parseInt(display.substring((display.length()-1)-i,(display.length())-i ));
-			
-		//	System.out.println(ra);
-			//System.out.println(scoreA.length-i);
-			scoreA[scoreA.length-i-1] = ra;
-			
-		}
-	//	scoreA[scoreA.length-2] = 2;
-		//scoreA[scoreA.length-2] = display.charAt();
-		//System.out.println(Arrays.toString(scoreA));
-		ArrayList<Integer> intList = new ArrayList<Integer>();
-		for (int i : scoreA)
-		{
-		    intList.add(i);
-		    
-		}
-		intList.clear();
-	//	System.out.println(Arrays.toString(scoreA));
-		
+	
 		if(tScore>=1000000) {
 			displayScore.setText(""+tScore);
 			return ;
