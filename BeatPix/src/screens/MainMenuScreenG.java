@@ -237,7 +237,12 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 					public void act(){
 						System.out.println("Select Unlocks Screen Clicked");
 						buttons.get(UNLOCK_IDX).unhoverAction();
+						MainGUI.test.shop.update();
+						MainGUI.test.shop.updateCredits();
 						MainGUI.test.setScreen(MainGUI.test.shop);
+						MainGUI.test.shop.update();
+						MainGUI.test.shop.updateCredits();
+						
 					}
 				});
 				
