@@ -23,8 +23,6 @@ import mainGame.components.interfaces.SongInterface;
 import mainGame.screens.GameScreen;
 
 public class TempSongSelect extends FullFunctionScreen {
-
-	private int count = 0;
 	
 	public TempSongSelect(int width, int height) throws IOException {
 		super(width, height);
@@ -68,7 +66,6 @@ public class TempSongSelect extends FullFunctionScreen {
 				}
 			}
 		}
-		this.count = count;
 	}
 	
 	public void spawnButtons() {
@@ -86,24 +83,23 @@ public class TempSongSelect extends FullFunctionScreen {
 		            }
 		        });
 				for(int j = 0; j < songList.length; j++) {
-					if(this.count < count) {
-						Song song = new Song(songList[j].getPath());
-						temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
-							@Override
-							public void act() {
-								MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
-								
-							}
-						});
-						addObject(temp);
-					}
-					count++;
+					Song song = new Song(songList[j].getPath());
+					temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
+						@Override
+						public void act() {
+							MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
+							
+						}
+					});
+					addObject(temp);
 				}
 			}
 		}
 	}
 	
 	public void updateList() {
+		getObjects().clear();
+		removeAll();
 		spawnButtons();
 	}
 
