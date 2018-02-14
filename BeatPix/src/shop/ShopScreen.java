@@ -136,7 +136,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		songBanner = new CustomText(123,135,200,150,"Songs",true);
 		viewObjects.add(songBanner);
 		
-		
+		credits = 40000;
 		String s = "Credits:"+getCredits(); 
 		credit = new CustomText(110,58,200,200, s,true);
 		credit.update();
@@ -353,7 +353,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				int j = x;
 				@Override
 				public void act() {
-					
+					MainGUI.character.unlock(j);
 					setThings1Vis(true);
 					setYesButVisExceptThis(j);
 					index = indexList.indexOf(j);
