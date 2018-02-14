@@ -112,7 +112,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	{
 	
 		
-	//	changeCredits(getCredits()+40000);
+		changeCredits(getCredits()+40000);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
@@ -120,7 +120,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		buttons = new ArrayList<ImageButton>();
 		customText = new ArrayList<CustomText>();
 		multiText = new ArrayList<MultiLineCustomText>();
+		songs = new ArrayList<Song>();
 		
+		songs.add(new Song("Dreadnought Mastermind(xi+nora2r)-NM"));
 
 		//graphics
 			
@@ -473,13 +475,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		boolean isLast = false;
 		boolean check = false;
 		// creates ints for the amount of difficulties per song so I know how many to unlock
-		for (int i = 0; i < MainGUI.test.mySongs.size(); i++)
+		for (int i = 0; i < MainGUI.test.songs.size(); i++)
 		{
 			int b = (i+2);
-			title = MainGUI.test.mySongs.get(i).getTitle();
-			if (b < MainGUI.test.mySongs.size())
+			title = MainGUI.test.songs.get(i).getTitle();
+			if (b < MainGUI.test.songs.size())
 			{		
-				if (title.equals(MainGUI.test.mySongs.get(i+1).getTitle().toLowerCase()))
+				if (title.equals(MainGUI.test.songs.get(i+1).getTitle().toLowerCase()))
 				{
 					temp++;
 				}	
@@ -493,22 +495,24 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		}
 		
 		// unlocks the song if the title corresponds
-		for (int i = 0; i<MainGUI.test.mySongs.size(); i++)
+		for (int i = 0; i<MainGUI.test.songs.size(); i++)
 		{
-			int temp1 = MainGUI.test.mySongs.size()-i;
+			int temp1 = MainGUI.test.songs.size()-i;
 			if (temp1 > 3)
 			{
-				if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.mySongs.get(i).getTitle().toLowerCase()))
+				if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.songs.get(i).getTitle().toLowerCase()))
 				{
 						System.out.println((i+a.get(i)));
-						MainGUI.test.mySongs.get(i+a.get(i)).setUnlock(true);
+						MainGUI.test.songs.get(i+a.get(i)).setUnlock(true);
+						MainGUI.select.updateList();
+				//		songs.add(new Song(MainGUI.test.songs.get(i+a.get(i))));
 				}
 			}
 			else
 			{
-				MainGUI.test.mySongs.get(MainGUI.test.mySongs.size()-3).setUnlock(true);
-				MainGUI.test.mySongs.get(MainGUI.test.mySongs.size()-2).setUnlock(true);
-				MainGUI.test.mySongs.get(MainGUI.test.mySongs.size()-1).setUnlock(true);
+				MainGUI.test.songs.get(MainGUI.test.songs.size()-3).setUnlock(true);
+				MainGUI.test.songs.get(MainGUI.test.songs.size()-2).setUnlock(true);
+				MainGUI.test.songs.get(MainGUI.test.songs.size()-1).setUnlock(true);
 			}
 		}
 

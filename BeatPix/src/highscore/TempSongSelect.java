@@ -46,7 +46,7 @@ public class TempSongSelect extends FullFunctionScreen {
 		for(int i=0;i<MainGUI.test.songs.size();i++) {
 			int tempint=i;
 			SongBundle songBundle = MainGUI.test.songs.get(i);
-			if(!(MainGUI.test.songs.get(tempint).isUnlock())) {
+			if((MainGUI.test.songs.get(tempint).isUnlock())) {
 				File[] songList = new File(songBundle.getPath()).listFiles(new FileFilter() {
 		            @Override
 		            public boolean accept(File pathname) {
