@@ -611,7 +611,7 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 	 * @param viewObjects - The list of viewable objects on the screen
 	 */
 	public void addHealthBar(List<Visible> viewObjects) {
-		healthBar = new HealthBar(375, columnY - 10, 25, columnY + columnHeight + distanceAAfterGoal);
+		healthBar = new HealthBar(375, columnY - 10, 25, columnY + columnHeight + distanceAAfterGoal + 5);
 		viewObjects.add(healthBar);
 	}
 	
