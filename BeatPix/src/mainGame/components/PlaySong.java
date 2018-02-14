@@ -43,6 +43,7 @@ public class PlaySong implements JustinPlaySongInterface {
     private Clip audioLine;
     
     /**
+     * @author Justin Yau
      * @author Tyler Ovenden
      */
     public void play(String audioFilePath) {
