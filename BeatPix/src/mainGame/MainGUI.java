@@ -1,12 +1,14 @@
 package mainGame;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import gui.GUIApplication;
 import gui.userInterfaces.*;
+import highscore.TempSongSelect;
 import mainGame.components.Song;
 import mainGame.components.SongBundle;
 import screens.InformationContainer;
@@ -40,6 +42,7 @@ public class MainGUI extends GUIApplication {
 	
 	public static ShopScreen shop;
 	public static LevelSelectG level;
+	public static TempSongSelect select;
 	public static OptionsContainer options;
 	public static InformationContainer information;
 	public static CharacterSelectionScreen character;
@@ -141,6 +144,12 @@ public class MainGUI extends GUIApplication {
 		File[] f = new File("resources/maps").listFiles();
 		for(int i=0;i< f.length;i++) {
 			songs.add(new SongBundle(f[i].getName(), f[i].getPath()));
+		}
+		try {
+			select = new TempSongSelect(getWidth(), getHeight());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

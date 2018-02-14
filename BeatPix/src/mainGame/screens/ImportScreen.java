@@ -155,9 +155,14 @@ public class ImportScreen extends ResizableScreen {
 						&& importedFile != null) {
 					//processInformation(title, artist);
 					//status.setText("Success! -5000 credits!");
+					MainGUI.shop.changeCredits(5000);
 					if(MainGUI.shop.getCredits() >= 5000) {
 						processInformation(title, artist);
 						status.setText("Success! -5000 credits!");
+						SongBundle bundle = new SongBundle(title, "resources/maps/" + title);
+						MainGUI.test.songs.add(bundle);
+						MainGUI.test.songs.get(MainGUI.test.songs.size() - 1).setUnlock(true);
+						MainGUI.select.updateList();
 					}
 					else {
 						status.setText("Insufficient credits!");
