@@ -153,6 +153,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 				setAnimation(enemyHit, 300);
 			}
 		}
+		/*
 		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			int randX = (int) Math.random() * 100 + 200; 
 			int randY = (int) Math.random() * 100 + 200; 
@@ -160,6 +161,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 			enemies.add(new EnemyRobot(randX, randY, 58, 42, enemyFile));
 			updateScreen();
 		}
+		*/
 	}
 	
 	public void updateScreen() {
