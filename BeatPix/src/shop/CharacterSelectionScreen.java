@@ -22,11 +22,12 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 	private Boolean[] unlock;
 	private String[] colorArray;
 	private String  color;
-	private TextLabel notUnlocked;
-	private Button okay;
 	private Graphic backGround;
 	private CustomText back;
 	private Button backButton;
+	private Graphic border;
+	private CustomText lockedText;
+	private CustomText selectText;
 	public CharacterSelectionScreen(int width, int height) {
 		// TODO Auto-generated constructor stub
 		super(width, height);
@@ -37,26 +38,19 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		imagesButton = new ArrayList<ImageButton>();
 		selectImage = new ArrayList<ImageButton>();
 		buttons = new ArrayList<Button>();
-		notUnlocked = new TextLabel(400, 200, 100, 100, "Not Unlocked");
 		imageNames = new String[] {"resources/sprites/defaultGuy.png","resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		unlock = new Boolean[] {true, false, false, false};
 		colorArray = new String[] {"default", "red", "green" , "white"};
 		color = colorArray[0];
 		backGround = new Graphic(0, 0, getWidth(), getHeight(), "resources/charaBG.png");
-		okay = new Button(400, 130, 100, 30, "okay", Color.GRAY, new Action() {
-			
-			@Override
-			public void act() {
-				//able all the buttons
-				notUnlocked.setVisible(false);
-				okay.setVisible(false);
-				
-			}
-		});
+		border = new Graphic(212, 180, 305,305,"resources//shop//TransparentButtonB.png");
+		lockedText = new CustomText(265, 210, 200, 370, "Locked",false);
+		selectText = new CustomText(265, 210, 200, 370, "Selected",true);
 		for(int i = 0; i < imageNames.length; i ++) {
 			final int x = i;	
 			selectImage.add(new ImageButton(700, 180, 200, 300, imageNames[i], ""));
 			imagesButton.add(new ImageButton((125*i)+125, 50, 100, 300, imageNames[i], ""));
+			
 			buttons.add(new Button((125*i)+125, 50, 100, 300, "", new Action() {
 				
 				@Override
@@ -64,14 +58,12 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 					int j = x;
 					//disable all the buttons
 					if(unlock[j] == true) {
+						color = colorArray[j];
 						for(int z = 0; z < numChars; z++) {
 							selectImage.get(z).setVisible(false);
 						}
 						selectImage.get(j).setVisible(true);
-						color = colorArray[j];
 					}else {
-						notUnlocked.setVisible(true);
-						okay.setVisible(true);
 						
 					}
 				}
@@ -92,19 +84,21 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		}
 		selectImage.get(0).setVisible(true);
 		backGround.setVisible(true);
-		notUnlocked.setVisible(false);
-		okay.setVisible(false);
+		border.setVisible(false);
+		lockedText.setVisible(false);
+		selectText.setVisible(false);
 		
 		//viewobjects
 		viewObjects.add(backGround);
 		viewObjects.add(backButton);
+		viewObjects.add(border);
+		viewObjects.add(lockedText);
+		viewObjects.add(selectText);
 		for(int k = 0; k < numChars; k++) {
 			viewObjects.add(buttons.get(k));
 			viewObjects.add(imagesButton.get(k));
 			viewObjects.add(selectImage.get(k));
 		}
-		viewObjects.add(okay);
-		viewObjects.add(notUnlocked);
 		viewObjects.add(back);
 	}
 
