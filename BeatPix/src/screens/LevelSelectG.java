@@ -1,16 +1,35 @@
 package screens;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import gui.components.Action;
+import gui.components.Button;
+import gui.interfaces.Visible;
+import gui.userInterfaces.FullFunctionScreen;
+import mainGame.MainGUI;
+import mainGame.components.Song;
+import mainGame.components.SongBundle;
+import mainGame.components.interfaces.SongInterface;
+import mainGame.screens.GameScreen;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 
 import gui.components.Action;
+import gui.components.Button;
 import gui.components.Graphic;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
+import mainGame.components.CustomText;
 import mainGame.components.Song;
+import mainGame.components.SongBundle;
 import mainGame.screens.GameScreen;
 import screens.components.ImageButton;
 import shop.ShopScreen;
@@ -27,29 +46,74 @@ public class LevelSelectG extends FullFunctionScreen{
 	public ArrayList<ImageButton> buttons;
 	public ArrayList<ImageButton> unseenButtons;
 	private Graphic background;
+	private int count = 0;
+	private CustomText displaysong;
 	
-	public LevelSelectG(int width, int height) {
+	public LevelSelectG(int width, int height) throws IOException{
 		super(width, height);
 		}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
+		Button temp;
 		background = updateBackground("resources\\mop.png");
 		viewObjects.add(background);
+		
+		Button back = new Button(500, 40, 100, 80, "Back", new Action() {
+			
+			@Override
+			public void act() {
+				MainGUI.test.setScreen(MainGUI.mainMenu);
+			}
+		});
+		viewObjects.add(back);
+		
 		unseenButtons= new ArrayList<ImageButton>();
 		ImageIcon icon = new ImageIcon("resources\\tester.jpg");
 		buttons = new ArrayList<ImageButton>();
+	/*
 		for(int i=0; i<MainGUI.shop.getSongs().size(); i++) {
-/*P D*/ 		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
-			//ShopScreen.getSongs();
+ 		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
+			ShopScreen.getSongs();
 			buttons.get(i).setAction(new Action() {
 				public void act(){
 		
-					//Test.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.shop.getSongs().get(i)));
+					Test.test.setScreen(new GameScreen(getWidth(),getHeight(),MainGUI.shop.getSongs().get(i)));
 				}
 			});
 		
 		}
+	*/
+		int count = 0;
+		for(int i=0;i<MainGUI.test.songs.size();i++) {
+			int tempint=i;
+			SongBundle songBundle = MainGUI.test.songs.get(i);
+			if(!(MainGUI.test.songs.get(tempint).isUnlock())) {
+				File[] songList = new File(songBundle.getPath()).listFiles(new FileFilter() {
+		            @Override
+		            public boolean accept(File pathname) {
+		                return pathname.getName().toLowerCase().endsWith(".csv") 
+		                    || pathname.isDirectory();
+		            }
+		        });
+				for(int j = 0; j < songList.length; j++) {
+					Song song = new Song(songList[j].getPath());
+					
+					temp=new Button(250,20*count,300,185, songList[j].getName() ,new Action() {
+						@Override
+						public void act() {
+							MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
+							
+						}
+					});
+					//displaysong = new CustomText(250,20*count,300,185,""+songList[j].getName(),true);
+					count++;
+					viewObjects.add(temp);
+					//viewObjects.add(displaysong);
+				}
+			}
+		}
+		this.count = count;
 	//	buttons.get(2).loadImages("resources\\tester1.jpg", buttons.get(2).getWidth()+25, buttons.get(2).getHeight()+25);
 		//buttons.get(2).setAction(new Action() {
 		//	public void act(){
@@ -141,9 +205,9 @@ public class LevelSelectG extends FullFunctionScreen{
 		return new Graphic(x,y,w,h,path);
 	}
 	// change to game screen calling with the appropriate songs
-/*	private v oid moveLeft() {
+	private void moveLeft() {
 		try {
 		
-	} catch (IOException e) {}
-	}*/
+	} catch (IndexOutOfBoundsException e) {}
+	}
 }
