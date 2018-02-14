@@ -113,52 +113,38 @@ public class WavMusicBeatDetector {
 	 * @file - The actual file of the WAV
 	 * 
 	 * @author Justin Yau
+	 * @throws Exception 
 	 */
-	public WavMusicBeatDetector(String title, String artist, File file) {
-		try {
-			audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
-			fileInputStream = new FileInputStream(file);
-			//dataInputStream = new DataInputStream(fileInputStream);
-			waveInputStream = new WavDecode(fileInputStream);
+	public WavMusicBeatDetector(String title, String artist, File file) throws Exception {
+		audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(new FileInputStream(file)));
+		fileInputStream = new FileInputStream(file);
+		//dataInputStream = new DataInputStream(fileInputStream);
+		waveInputStream = new WavDecode(fileInputStream);
 
-			audioFormat = audioInputStream.getFormat();
-			fft = new FFT(1024, audioFormat.getSampleRate());
-			
-			fluxes = getSample();
-			beats = detectBeats(fluxes, 1.7f);
-			timings = getTimeOfBeats(beats);
-			addBeats();
-			
-			FileP.save(title, 192, artist, 0, processedBeats);
-			
-			/*
-			sampleSize = audioFormat.getSampleSizeInBits()/8;
-		    channelsNum = audioFormat.getChannels();
-		    
-		    framesCount = audioInputStream.getFrameLength();
-		    
-	        long dataLength = framesCount * audioFormat.getSampleSizeInBits() * audioFormat.getChannels() / 8;
+		audioFormat = audioInputStream.getFormat();
+		fft = new FFT(1024, audioFormat.getSampleRate());
+		
+		fluxes = getSample();
+		beats = detectBeats(fluxes, 1.7f);
+		timings = getTimeOfBeats(beats);
+		addBeats();
+		
+		FileP.save(title, 192, artist, 0, processedBeats);
+		
+		/*
+		sampleSize = audioFormat.getSampleSizeInBits()/8;
+	    channelsNum = audioFormat.getChannels();
+	    
+	    framesCount = audioInputStream.getFrameLength();
+	    
+        long dataLength = framesCount * audioFormat.getSampleSizeInBits() * audioFormat.getChannels() / 8;
 
-	        data = new byte[(int) dataLength];
-	        //System.out.println(audioFormat.getFrameRate());
-	        
-	        System.out.println(getSampleNumber(132000));
-	        //addBeats();
-	        */
-	        
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        data = new byte[(int) dataLength];
+        //System.out.println(audioFormat.getFrameRate());
+        
+        System.out.println(getSampleNumber(132000));
+        //addBeats();
+        */
 	}
 
 	public static void main(String[] args) {
