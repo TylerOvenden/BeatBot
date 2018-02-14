@@ -13,8 +13,9 @@ public class Bottle extends ImageButton {
 	
 	private int currentSequence;
 	
-	private int bottleIdx;
+	private Bottle me;
 	private int finalY;
+	private int finalX;
 	
 	public Bottle(int x, int y, int w, int h, String imageLocation) {
 		super(x, y, w, h, imageLocation);
@@ -29,7 +30,6 @@ public class Bottle extends ImageButton {
 	
 	public boolean nextSequence() {
 		if(currentSequence > sequence.size()-1) {
-			System.out.println("Hello");
 			return false;
 		}
 		playSequence();
@@ -37,12 +37,6 @@ public class Bottle extends ImageButton {
 		return true;
 	}
 	
-	public void setBottleIdx(int x) {
-		bottleIdx = x;
-	}
-	public int getBottleIdx() {
-		return bottleIdx;
-	}
 	public void setFinalY(int x) {
 		finalY = x;
 	}
@@ -67,6 +61,14 @@ public class Bottle extends ImageButton {
 				this.setX(this.getX() + speed);
 			}
 		}
+	}
+
+	public int getFinalX() {
+		return finalX;
+	}
+
+	public void setFinalX(int finalX) {
+		this.finalX = finalX;
 	}
 
 }

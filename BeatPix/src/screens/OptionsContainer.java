@@ -213,7 +213,7 @@ public class OptionsContainer{
 		back.setAction(new Action() {
 			public void act() {
 				if(GameScreen.game != null) {
-					GameScreen.game.getPlayer().updateVolume(); //
+					GameScreen.game.getPlayer().updateVolume();
 				}
 				removeObjects();
 			}
@@ -366,10 +366,12 @@ public class OptionsContainer{
 					validKey = false; break;
 				}
 			}
-			if(anySpecialCharacters("" + (char) tempX)) {
-				validKey = false;
-			}
 			
+		if(tempX > 65 && tempX < 90) {
+		}else {
+			validKey = false;
+		}
+		
 			if(validKey) {
 				String tempS = ""+ (char) tempX;
 				String oldKey = MainGUI.getKeys(columnButtonSelected);
@@ -396,7 +398,7 @@ public class OptionsContainer{
 			}else {
 				selectingKeyPhase = 0;
 				
-				createSelectingKeyPopUp("Reselect key for I am an extra long sentence that will be usefeul to test");
+				createSelectingKeyPopUp("Reselect key");
 			}
 		}
 	}
