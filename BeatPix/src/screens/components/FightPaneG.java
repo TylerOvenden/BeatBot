@@ -19,6 +19,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	 * 
 	 */
 	private static final long serialVersionUID = 6669770711157703541L;
+	private ArrayList<EnemyRobot> enemies;
 	private AnimatedComponent robotIdle;
 	private AnimatedComponent robotHit1;
 	private AnimatedComponent robotHit3;
@@ -37,14 +38,16 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	private Thread enemyHitThread;
 	private Thread enemyMissThread;
 	
-	private ArrayList<EnemyRobot> enemies;
 	private boolean animationRunning = false;
 	private boolean miss;
 	private int pastRand;
 	private boolean isPaused;
 	private String rsrcFile;
 	private String enemyFile;
+	private String enemyPicture;
 	private String skin;
+	private int randX;
+	private int randY;
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
@@ -55,6 +58,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	public void initAllObjects(List<Visible> viewObjects){
 		rsrcFile = "resources/sprites/defaultSprite.bmp";
 		enemyFile = "resources/sprites/EnemySprite.png";
+		enemyPicture = "resources/sprites/enemyPic_Transparent.png";
 		changeSkin();
 		robotIdle = new AnimatedComponent(30, 100, 117, 84);
 		robotHit1 = new AnimatedComponent(30, 100, 117, 84);
@@ -152,25 +156,28 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 				setAnimation(robotMiss, 300);
 				setAnimation(enemyHit, 300);
 			}
-		}*/
+		}
 		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			updateScreen();
-		}
+		}*/
 	}
 	
-	public void updateScreen() {
-		int randX = (int) Math.random() * 100 + 200; 
-		int randY = (int) Math.random() * 100 + 200; 
-		EnemyRobot enemyCopy = new EnemyRobot(200, 100, 58, 42, enemyFile);
+	//Adds an enemy robot to the "army" and adds it to the screen as a gimmick
+	public void updateScreen() { 
+		//pane size is 480 x 180
+		randX = (int) (Math.random() * 90 + 250); 
+		randY = (int) (Math.random() * 160 + 10); 
+		EnemyRobot enemyCopy = new EnemyRobot(randX, randY, 58, 42, enemyPicture);
 		enemies.add(enemyCopy);
 		for(int i = 0; i < enemies.size(); i++)
 		{
-			System.out.print(i);
+			System.out.print(randX + ", " + randY);
 			this.addObject(enemies.get(i));
 		}
 		
 	}
-	
+
+	//Changes the visibility of the threads as a way to enable the player to "attack" the enemy robot
 	public void setAnimation(AnimatedComponent a, int s) {
 		a.setVisible(true);
 		Thread show = new Thread(a);
@@ -189,6 +196,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		}, s);
 	}
 	 
+	//corresponds with the pause option used in the main game
 	public void pause() {
 		robotIdle.setVisible(true);
 		robotHit1.setVisible(false);
@@ -203,6 +211,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		isPaused = true;
 	}
 	
+	//corresponds with the resume option used in the main game
 	public void resume()
 	{
 		isPaused = false;
@@ -236,7 +245,6 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 			enemyMiss.setVisible(false);
 			animationRunning = true;
 			
-			
 			int rand = (int) (Math.random()*3);
 			while(rand == pastRand)
 				rand = (int) (Math.random()*3);
@@ -257,6 +265,8 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		}else {
 			setAnimation(robotMiss, 300);
 			setAnimation(enemyHit, 300);
+			if(Math.random() < 0.1)
+				updateScreen();
 		}
 	}
 
@@ -265,6 +275,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		// TODO Auto-generated method stub
 		setAnimation(robotMiss, 300);
 		setAnimation(enemyHit, 300);
+		updateScreen();
 	}
 	
 }
