@@ -351,7 +351,10 @@ public class OptionsContainer{
 					validKey = false; break;
 				}
 			}
-			
+		if(tempX > 65 && tempX < 90) {
+		}else {
+			validKey = false;
+		}
 			if(validKey) {
 				String tempS = ""+ (char) tempX;
 				MainGUI.setKeys(columnButtonSelected, tempS);

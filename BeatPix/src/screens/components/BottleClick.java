@@ -6,6 +6,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import gui.components.Action;
+import gui.components.AnimatedComponent;
+import gui.components.Graphic;
 import gui.userInterfaces.FullFunctionScreen;
 import screens.interfaces.Options;
 
@@ -53,9 +55,31 @@ public class BottleClick {
 				
 				getBottleOnSill().setAction(new Action() {
 					public void act() {
-						
+						//Graphic explosion = new Graphic(Bottle.getBottle().getMyX()-35, Bottle.getBottle().getMyY(), 100, 100, "resources\\backgrounds\\explode.png");
+						//parentScreen.addObject(explosion);
+						parentScreen.remove(Bottle.getBottle());
+						System.out.println(Bottle.getBottle());
+						for(Bottle b: bottleStack) {
+							System.out.println(b);
+						}
+						//Timer timer = new Timer();
+						//AnimatedComponent explosion = new AnimatedComponent(Bottle.getMyX(), Bottle.getMyY(), 50, 50);
+						//explosion.addSequence("resources\\backgrounds\\explode.png", 100, 0, 0, 100, 100, 4);
+						//timer.scheduleAtFixedRate(new TimerTask() {
+						//	int timeC = 100;
+						//	public void run() {
+						//		timeC --;
+						//		if(timeC < 0) {
+						//			this.cancel();
+									//parentScreen.remove(explosion);
+						//		}
+						//	}
+						//}, 0, 1);
+						//parentScreen.addObject(explosion);
+						bottleStack.remove(Bottle.getBottle());
 					}
 				});
+				bottleOnSill.setBottle(getBottleOnSill());
 				bottleStack.add(bottleOnSill);
 				insertionSortBottleStack();
 				redrawBottleStack();
@@ -111,7 +135,7 @@ public class BottleClick {
 			positionY -= velocityY;
 			temp = new ArrayList<Integer>(Arrays.asList(getBottleOnSill().BOTTLE_LEFT));
 			getBottleOnSill().addSequence(temp, velocityX);
-			positionX += velocityX;
+			positionX -= velocityX;
 			velocityY -= 6;
 			if(velocityY < 1) {
 				break;
@@ -125,8 +149,8 @@ public class BottleClick {
 			temp = new ArrayList<Integer>(Arrays.asList(getBottleOnSill().BOTTLE_LEFT));
 			getBottleOnSill().addSequence(temp, velocityX);
 			velocityY -= 6;
-			positionX += velocityX;
-			if(positionY > 400) {
+			positionX -= velocityX;
+			if(positionY > 400) { // <-- this should be the condition for a while and not use the for loop
 				break;
 			}
 		}
@@ -141,11 +165,14 @@ public class BottleClick {
 			getBottleOnSill().addSequence(temp, 5);
 			temp = new ArrayList<Integer>(Arrays.asList(getBottleOnSill().BOTTLE_LEFT));
 			getBottleOnSill().addSequence(temp, randomXVelocity);
+			positionX -= randomXVelocity;
 			temp = new ArrayList<Integer>(Arrays.asList(getBottleOnSill().BOTTLE_DOWN));
 			getBottleOnSill().addSequence(temp, randomYVelocity);
 			positionY -= randomYVelocity;
 		}
 		getBottleOnSill().setFinalY(positionY);
+		getBottleOnSill().setFinalY2(positionY);
+		getBottleOnSill().setFinalX2(positionX);
 	}
 	
 	public void redrawBottleStack() {
