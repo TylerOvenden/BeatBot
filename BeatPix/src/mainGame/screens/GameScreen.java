@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -465,19 +466,23 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 			return firstStroke;
 		}
 		*/
-		for(Visible stroke: strokes) {
-			if(stroke instanceof Keystroke) {
-				Keystroke str = ((Keystroke)stroke);
-				if(str.getColumnLane() == lane) {
-					return stroke;
+		try {
+			for(Visible stroke: strokes) {
+				if(stroke instanceof Keystroke) {
+					Keystroke str = ((Keystroke)stroke);
+					if(str.getColumnLane() == lane) {
+						return stroke;
+					}
+				}
+				if(stroke instanceof Holdstroke) {
+					Holdstroke str = ((Holdstroke)stroke);
+					if(str.getColumnLane() == lane) {
+						return stroke;
+					}
 				}
 			}
-			if(stroke instanceof Holdstroke) {
-				Holdstroke str = ((Holdstroke)stroke);
-				if(str.getColumnLane() == lane) {
-					return stroke;
-				}
-			}
+		} catch (ConcurrentModificationException e) {
+			
 		}
 		return null;
 	}
