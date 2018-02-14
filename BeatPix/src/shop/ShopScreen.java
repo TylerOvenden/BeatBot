@@ -557,13 +557,20 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				buttons.add(b);
 		//		multiText.add(new MultiLineCustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 50,texts[i],scroll, 12));
 				
-				if (texts.get(i).length() < 15)
+				if (texts.get(i).length() < 8)
 				{
-					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 250, texts.get(i),false));
+					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 160, 157, texts.get(i),false));
 				}
 				else
 				{
-					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200, 250, texts.get(i),false));
+					if (texts.get(i).length() < 13)
+					{
+						customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 150, texts.get(i),false));
+					}
+					else
+					{
+						customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 190,190, texts.get(i),false));
+					}
 				}
 			
 				buttons.get(i).setUnhoverAction(new Action()
@@ -709,6 +716,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	public void updateCredits()
 	{
 		credit.update();
+		update();
 	}
 }
 
