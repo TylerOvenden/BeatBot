@@ -45,6 +45,7 @@ import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
+import screens.OptionsContainer;
 import screens.components.FightPaneG;
 import screens.interfaces.Options;
 
@@ -1076,6 +1077,7 @@ public void calcScore(double timing) {
 				//Options Action Button will be here
 				inOptions = true;
 				toggleButtons(false);
+				MainGUI.options.toggleButtons(true);
 				MainGUI.options.setParentScreen(GameScreen.game);
 				MainGUI.options.addObjects();
 			}
@@ -1087,6 +1089,7 @@ public void calcScore(double timing) {
 				stop();
 				exited = true;
 				//Switch to a different screen below
+				MainGUI.options.setParentScreen(MainGUI.mainMenu);
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 			}
 		}};
@@ -1303,6 +1306,7 @@ public void calcScore(double timing) {
 		visualizer.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
+		MainGUI.options.setParentScreen(MainGUI.mainMenu);
 		if(!exited) {
 			if(healthBar.getHealth()>0) {
 				//System.out.println(accuracy);
