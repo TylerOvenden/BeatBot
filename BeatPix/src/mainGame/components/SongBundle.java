@@ -25,7 +25,7 @@ public class SongBundle {
 		path = p;
 		title = name;
 		unlocked = false;
-		if(title.contains("Dreadnought")) {
+		if(title.contains("Dreadnought") || title.contains("Carribean")) {
 			unlocked = true;
 		}else {
 			unlocked = false;
