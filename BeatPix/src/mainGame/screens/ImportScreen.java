@@ -174,10 +174,10 @@ public class ImportScreen extends ResizableScreen {
 	 * @author Justin Yau
 	 */
 	public void handleSubmission(String title, String artist) {
-		MainGUI.shop.changeCredits(5000);
 		if(MainGUI.shop.getCredits() >= 5000) {
 			processInformation(title, artist);
 			status.setText("Success! -5000 credits!");
+			MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
 			SongBundle bundle = new SongBundle(title, "resources/maps/" + title);
 			MainGUI.test.songs.add(bundle);
 			MainGUI.test.songs.get(MainGUI.test.songs.size() - 1).setUnlock(true);
@@ -185,7 +185,6 @@ public class ImportScreen extends ResizableScreen {
 		}
 		else {
 			status.setText("Insufficient credits!");
-			MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
 		}
 	}
 	
