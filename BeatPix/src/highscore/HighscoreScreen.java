@@ -108,7 +108,7 @@ public class HighscoreScreen extends ResizableScreen {
 		viewObjects.add(condition);
 		currentScore=new CustomText(380, 120, 200, 200, "Score "+score,true);
 		viewObjects.add(currentScore);
-		System.out.println(acc);
+		//System.out.println(acc);
 		currentAcc=new CustomText(380, 150, 200, 200, "",true);
 		viewObjects.add(currentAcc);
 		highScore=new CustomText(380, 180, 200, 200, "High Scores",true);
