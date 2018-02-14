@@ -91,6 +91,7 @@ public class TempSongSelect extends FullFunctionScreen {
 							
 						}
 					});
+					count++;
 					addObject(temp);
 				}
 			}
