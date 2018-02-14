@@ -171,7 +171,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 		enemies.add(enemyCopy);
 		for(int i = 0; i < enemies.size(); i++)
 		{
-			System.out.print(randX + ", " + randY);
+			//System.out.print(randX + ", " + randY);
 			this.addObject(enemies.get(i));
 		}
 		

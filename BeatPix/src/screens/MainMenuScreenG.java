@@ -215,7 +215,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	public void setButtonsActions() {
 				buttons.get(LEVEL_IDX).setAction(new Action() {
 					public void act(){
-						System.out.println("Select Level Screen Clicked");
+						//System.out.println("Select Level Screen Clicked");
 						buttons.get(LEVEL_IDX).unhoverAction();
 
 						//MainGUI.setS creen(MainGUI.level);
@@ -228,14 +228,14 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
 					public void act(){
-						System.out.println("Select Character Screen Clicked");
+						//System.out.println("Select Character Screen Clicked");
 						buttons.get(CHARACTER_IDX).unhoverAction();
 						MainGUI.test.setScreen(MainGUI.character);
 					}
 				});
 				buttons.get(UNLOCK_IDX).setAction(new Action() {
 					public void act(){
-						System.out.println("Select Unlocks Screen Clicked");
+						//System.out.println("Select Unlocks Screen Clicked");
 						buttons.get(UNLOCK_IDX).unhoverAction();
 						MainGUI.test.setScreen(MainGUI.test.shop);
 					}
@@ -243,7 +243,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				
 				buttons.get(OPTIONS_IDX).setAction(new Action() {
 					public void act(){
-						System.out.println("Select Options Screen Clicked");
+						//System.out.println("Select Options Screen Clicked");
 						buttons.get(OPTIONS_IDX).unhoverAction();
 						
 						MainGUI.options.addObjects();
