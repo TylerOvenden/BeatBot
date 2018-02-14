@@ -174,6 +174,7 @@ public class ImportScreen extends ResizableScreen {
 	 * @author Justin Yau
 	 */
 	public void handleSubmission(String title, String artist) {
+		//MainGUI.shop.changeCredits(5000);
 		if(MainGUI.shop.getCredits() >= 5000) {
 			processInformation(title, artist);
 			status.setText("Success! -5000 credits!");
