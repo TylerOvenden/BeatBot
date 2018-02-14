@@ -10,7 +10,10 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import gui.components.Action;
 import gui.components.Button;
@@ -25,6 +28,7 @@ import mainGame.screens.GameScreen;
 public class TempSongSelect extends FullFunctionScreen {
 	
 	private Button back;
+	private HashMap<String, Song> currentSongs;
 	
 	public TempSongSelect(int width, int height) throws IOException {
 		super(width, height);
@@ -32,6 +36,7 @@ public class TempSongSelect extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
+		currentSongs = new HashMap<String, Song>();
 		Button temp;
 		back = new Button(500, 40, 100, 80, "Back", new Action() {
 			
@@ -64,10 +69,23 @@ public class TempSongSelect extends FullFunctionScreen {
 						}
 					});
 					count++;
+					currentSongs.put(songList[j].getPath(), song);
 					viewObjects.add(temp);
 				}
 			}
 		}
+	}
+	
+	public boolean isFound(Song song) {
+	    Iterator<Map.Entry<String,Song>> it = currentSongs.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<String, Song> pair = (Map.Entry<String, Song>)it.next();
+	        if(pair.getValue().getTitle().equalsIgnoreCase(song.getTitle())) {
+	        	return true;
+	        }
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
+	    return false;
 	}
 	
 	public void spawnButtons() {
@@ -87,15 +105,30 @@ public class TempSongSelect extends FullFunctionScreen {
 		        });
 				for(int j = 0; j < songList.length; j++) {
 					Song song = new Song(songList[j].getPath());
-					temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
-						@Override
-						public void act() {
-							MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
-							
-						}
-					});
-					count++;
-					addObject(temp);
+					if(!isFound(song)) {
+						temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
+							@Override
+							public void act() {
+								MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
+								
+							}
+						});
+						count++;
+						currentSongs.put(songList[j].getPath(), song);
+						addObject(temp);
+					}
+					else {
+						int t = j;
+						temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
+							@Override
+							public void act() {
+								MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),currentSongs.get(songList[t].getPath()),"resources/sample_bg.gif"));
+								
+							}
+						});
+						count++;
+						addObject(temp);
+					}
 				}
 			}
 		}
