@@ -1,10 +1,12 @@
 package screens.components;
 
+import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import gui.GUIApplication;
 import gui.components.Action;
 import gui.components.AnimatedComponent;
 import gui.components.Graphic;
@@ -55,32 +57,24 @@ public class BottleClick {
 
 				getBottleOnSill().setAction(new Action() {
 					public void act() {
-						//Graphic explosion = new Graphic(Bottle.getBottle().getMyX()-35, Bottle.getBottle().getMyY(), 100, 100, "resources\\backgrounds\\explode.png");
-						//parentScreen.addObject(explosion);
-						//Bottle me = BottleClick.this.getBottleOnSill();
-						//parentScreen.remove(me);
-						//Timer timer = new Timer();
+						GUIApplication.mainFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+						
+						
 						//AnimatedComponent explosion = new AnimatedComponent(Bottle.getMyX(), Bottle.getMyY(), 50, 50);
 						//explosion.addSequence("resources\\backgrounds\\explode.png", 100, 0, 0, 100, 100, 4);
-						//timer.scheduleAtFixedRate(new TimerTask() {
-						//	int timeC = 100;
-						//	public void run() {
-						//		timeC --;
-						//		if(timeC < 0) {
-						//			this.cancel();
-									//parentScreen.remove(explosion);
-						//		}
-						//	}
-						//}, 0, 1);
-						//parentScreen.addObject(explosion);
-						//bottleStack.remove(Bottle.getBottle());
+
+						Explosion explosion = new Explosion(me.getFinalX()-35, me.getFinalY(), 100, 100,parentScreen);
+						explosion.explode(0);
+						
+						parentScreen.remove(me);
+						bottleStack.remove(me);
 					}
+					Bottle me = BottleClick.this.getBottleOnSill();
 				});
-				bottleOnSill.setBottle(getBottleOnSill());
 				
 				bottleStack.add(bottleOnSill);
-				insertionSortBottleStack();
-				redrawBottleStack();
+				insertionSortBottleStack(); //resorts bottles based off y values
+				redrawBottleStack(); //redraws all the bottles so higher y's are in the back
 				
 				time.scheduleAtFixedRate(new TimerTask() {
 					
@@ -169,8 +163,7 @@ public class BottleClick {
 			positionY -= randomYVelocity;
 		}
 		getBottleOnSill().setFinalY(positionY);
-		getBottleOnSill().setFinalY2(positionY);
-		getBottleOnSill().setFinalX2(positionX);
+		getBottleOnSill().setFinalX(positionX);
 	}
 	
 	public void redrawBottleStack() {

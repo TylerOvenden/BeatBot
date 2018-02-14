@@ -265,7 +265,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				});*/
 	}
 	
-	//!!!!NEEDS SOME WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//
 	int x;
 	public void setButtonsHoverAction() {
 		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
