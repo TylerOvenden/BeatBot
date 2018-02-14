@@ -51,6 +51,7 @@ public class ScrollablePane extends ComponentContainer implements Clickable, Scr
 
 
 	protected ArrayList<Clickable> clickables;
+	private boolean clickable;
 	protected BufferedImage contentImage;
 	private boolean active;
 	private boolean visible;
@@ -84,6 +85,7 @@ public class ScrollablePane extends ComponentContainer implements Clickable, Scr
 		_ARROW_Y = h - _ARROW_HEIGHT*2-X_MARGIN*2;
 		drawArrows();
 		visible = true;
+		clickable = true;
 		containingComponent = null;
 		setUpContentImage();
 		update();		
@@ -94,6 +96,7 @@ public class ScrollablePane extends ComponentContainer implements Clickable, Scr
 		this.x = x;
 		this.y = y;
 		this.parentScreen=focusController;
+		clickable = true;
 		containingComponent = null;
 		_ARROW_X = w - _ARROW_WIDTH-X_MARGIN;
 		_ARROW_Y = h - _ARROW_HEIGHT*2-X_MARGIN*2;
@@ -109,6 +112,7 @@ public class ScrollablePane extends ComponentContainer implements Clickable, Scr
 		this.x = x;
 		this.y = y;
 		this.parentScreen=focusController;
+		clickable = true;
 		containingComponent = container;
 		_ARROW_X = w - _ARROW_WIDTH-X_MARGIN;
 		_ARROW_Y = h - _ARROW_HEIGHT*2-X_MARGIN*2;
@@ -170,15 +174,22 @@ public class ScrollablePane extends ComponentContainer implements Clickable, Scr
 
 	}
 
+	public void setClickable(boolean c) {
+		clickable = c;
+	}
+	
 	@Override
 	public boolean isHovered(int x, int y) {
-		boolean hov =x > getX() && y > getY() && x<getX()+getWidth() && y < getY()+getHeight();
-		if(hov){
-			xRelative = x - getX();
-			yRelative = y - getY();
+		if(clickable) {
+			boolean hov =x > getX() && y > getY() && x<getX()+getWidth() && y < getY()+getHeight();
+			if(hov){
+				xRelative = x - getX();
+				yRelative = y - getY();
 
+			}
+			return hov;
 		}
-		return hov;
+		return false;
 	}
 
 	public void addObject(Visible v){
