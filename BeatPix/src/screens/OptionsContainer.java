@@ -12,6 +12,7 @@ import gui.GUIApplication;
 import gui.components.Action;
 import gui.components.Button;
 import gui.components.Component;
+import gui.components.Graphic;
 import mainGame.MainGUI;
 import mainGame.screens.GameScreen;
 import screens.components.CustomText;
@@ -39,7 +40,7 @@ public class OptionsContainer{
 	private ImageButton back; // Back button
 	private CustomText backText; // Text for back button
 	
-	private ArrayList<ImageButton> keySelect; // Letters of key select
+	private ArrayList<Graphic> keySelect; // Letters of key select
 	private ArrayList<Button> hiddenKeyButtons; // Hidden buttons behind keySelect
 	private ArrayList<ScalablePixelBack> keyBackground; //Background for hidden buttons
 	
@@ -231,7 +232,7 @@ public class OptionsContainer{
 	public void createKeySelects() {
 		
 		keyBackground = new ArrayList<ScalablePixelBack>();
-		keySelect = new ArrayList<ImageButton>();
+		keySelect = new ArrayList<Graphic>();
 		hiddenKeyButtons = new ArrayList<Button>();
 		
 		for(int i = 0; i < 4; i ++) {
@@ -247,7 +248,7 @@ public class OptionsContainer{
 														x*100/960, 
 															"", null));
 			
-/**/		keySelect.add(new ImageButton(x*i*130/960 + x*205/960,
+/**/		keySelect.add(new Graphic(x*i*130/960 + x*205/960,
 												y*190/540,
 													x*80/960,
 														x*40/960, 
@@ -351,7 +352,7 @@ public class OptionsContainer{
 					validKey = false; break;
 				}
 			}
-		if(tempX > 65 && tempX < 90) {
+		if(tempX > 64 && tempX < 91) {
 		}else {
 			validKey = false;
 		}
