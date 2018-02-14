@@ -45,6 +45,7 @@ import mainGame.actions.Press;
 import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
+import screens.OptionsContainer;
 import screens.components.FightPaneG;
 import screens.interfaces.Options;
 
@@ -1030,6 +1031,7 @@ public void calcScore(double timing) {
 			addObject(btn);
 		}
 		fightScene.pause();
+		fightScene.setClickable(false);
 	}
 	
 	/**
@@ -1052,6 +1054,7 @@ public void calcScore(double timing) {
 			remove(btn);
 		}
 		fightScene.resume();
+		fightScene.setClickable(true);
 	}
 	
 	/**
@@ -1086,8 +1089,9 @@ public void calcScore(double timing) {
 				//Exit Action Button will be here
 				stop();
 				exited = true;
-				MainGUI.options.setParentScreen(MainGUI.mainMenu);
 				//Switch to a different screen below
+				MainGUI.options.setParentScreen(MainGUI.mainMenu);
+				MainGUI.options.toggleButtons(true);
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 			}
 		}};
