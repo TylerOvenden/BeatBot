@@ -24,6 +24,8 @@ import mainGame.screens.GameScreen;
 
 public class TempSongSelect extends FullFunctionScreen {
 	
+	private Button back;
+	
 	public TempSongSelect(int width, int height) throws IOException {
 		super(width, height);
 	}
@@ -31,7 +33,7 @@ public class TempSongSelect extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		Button temp;
-		Button back = new Button(500, 40, 100, 80, "Back", new Action() {
+		back = new Button(500, 40, 100, 80, "Back", new Action() {
 			
 			@Override
 			public void act() {
@@ -69,6 +71,7 @@ public class TempSongSelect extends FullFunctionScreen {
 	}
 	
 	public void spawnButtons() {
+		addObject(back);
 		Button temp;
 		int count = 0;
 		for(int i=0;i<MainGUI.test.songs.size();i++) {

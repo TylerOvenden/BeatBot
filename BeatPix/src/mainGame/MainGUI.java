@@ -88,8 +88,7 @@ public class MainGUI extends GUIApplication {
 		
 		start = new StartScreenG(getWidth(),getHeight());
 		mainMenu = new MainMenuScreenG(getWidth(),getHeight());
-		
-		shop = new ShopScreen(getWidth(),getHeight());
+
 		//level = new LevelSelectG(getWidth(),getHeight());
 		character = new CharacterSelectionScreen(getWidth(),getHeight());
 		
@@ -145,6 +144,7 @@ public class MainGUI extends GUIApplication {
 		for(int i=0;i< f.length;i++) {
 			songs.add(new SongBundle(f[i].getName(), f[i].getPath()));
 		}
+		shop = new ShopScreen(getWidth(),getHeight());
 		try {
 			select = new TempSongSelect(getWidth(), getHeight());
 		} catch (IOException e) {

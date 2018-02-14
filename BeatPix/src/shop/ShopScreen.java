@@ -497,22 +497,12 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		// unlocks the song if the title corresponds
 		for (int i = 0; i<MainGUI.test.songs.size(); i++)
 		{
-			int temp1 = MainGUI.test.songs.size()-i;
-			if (temp1 > 3)
+			if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.songs.get(i).getTitle().toLowerCase()))
 			{
-				if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.songs.get(i).getTitle().toLowerCase()))
-				{
-						System.out.println((i+a.get(i)));
-						MainGUI.test.songs.get(i+a.get(i)).setUnlock(true);
-						MainGUI.select.updateList();
-				//		songs.add(new Song(MainGUI.test.songs.get(i+a.get(i))));
-				}
-			}
-			else
-			{
-				MainGUI.test.songs.get(MainGUI.test.songs.size()-3).setUnlock(true);
-				MainGUI.test.songs.get(MainGUI.test.songs.size()-2).setUnlock(true);
-				MainGUI.test.songs.get(MainGUI.test.songs.size()-1).setUnlock(true);
+					System.out.println(MainGUI.test.songs.get(i).getTitle());
+					MainGUI.test.songs.get(i).setUnlock(true);
+					MainGUI.select.updateList();
+			//		songs.add(new Song(MainGUI.test.songs.get(i+a.get(i))));
 			}
 		}
 
@@ -539,13 +529,18 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	}
 	public void addButtons()
 	{
-		String[] texts = {"Adrenaline","Blow Out","Carribean","Summer Vibes","Waiting for Love","Fairy Tail","One Piece","Kyogin","Hitorigoto","I Love You","Hime Hime","Neptune"};
+		ArrayList<String> texts = new ArrayList<String>();
+		for(int i = 0; i < MainGUI.test.songs.size(); i++) {
+			if(!(MainGUI.test.songs.get(i).isUnlock())) {
+				texts.add(MainGUI.test.songs.get(i).getTitle());
+			}
+		}
 		
-		for(int i = 0; i < texts.length; i++)
+		for(int i = 0; i < texts.size(); i++)
 		{ 
 
 			final int j = i;
-				ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png",texts[i]);
+				ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png",texts.get(i));
 				b.setAction(new Action() 
 				{
 					
@@ -562,13 +557,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				buttons.add(b);
 		//		multiText.add(new MultiLineCustomText(-20 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 50,texts[i],scroll, 12));
 				
-				if (texts[i].length() < 15)
+				if (texts.get(i).length() < 15)
 				{
-					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 250, texts[i],false));
+					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 150, 250, texts.get(i),false));
 				}
 				else
 				{
-					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200, 250, texts[i],false));
+					customText.add(new CustomText(-25 + getWidth()*55/960, (i*52) + getHeight()*17/540, 200, 250, texts.get(i),false));
 				}
 			
 				buttons.get(i).setUnhoverAction(new Action()
