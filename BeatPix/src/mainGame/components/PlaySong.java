@@ -44,7 +44,7 @@ public class PlaySong implements JustinPlaySongInterface {
      * @author Tyler Ovenden
      * @param audioFilePath Path of the audio file.
      * queues up the audiofile from the define path
-     * sleep used to have it not play until gamescreen calls it
+     * sleep used to have it not play until the game starts
      * setMicrosecondPosition used to determine how far the song is for pauses and when playback resumes
      * flush and close used to stop and get rid of the audiofile once the game is closed
      */
