@@ -50,7 +50,7 @@ public class TempSongSelect extends FullFunctionScreen {
 		
 		currentSongs = new HashMap<String, Song>();
 		Button temp;
-		back = new Button(500, 40, 100, 80, "Back", new Action() {
+		back = new Button(getWidth() - 100, 0, 100, 80, "Back", new Action() {
 			
 			@Override
 			public void act() {
