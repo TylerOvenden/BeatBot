@@ -51,8 +51,7 @@ public class InformationContainer {
 			}
 		});
 		
-		createInformation("Play the maps to earn credits and use those credit to unlock skins/more maps!"
-				+ " Hit the strokes at the right time to win maps!");
+		createInformation("Play the maps to earn credits and use those credit to unlock skins/more maps!");
 	}
 	
 	
