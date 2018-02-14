@@ -161,6 +161,8 @@ public class Timing extends Component implements JustinTimingInterface,robotActi
 		update();
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
+		GameScreen.game.calcScore(0);
+		GameScreen.game.fightScene.hit(0);
 		GameScreen.game.getHealthBar().applyHealth(-3);
 		//System.out.println(GameScreen.game.getHealthBar().getHealth());
 	}
