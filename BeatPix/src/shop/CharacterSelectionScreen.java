@@ -38,6 +38,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		imageNames = new String[] {"resources/sprites/defaultGuy.png","resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		unlock = new Boolean[] {true, false, false, false};
 		colorArray = new String[] {"default", "red", "green" , "white"};
+		color = colorArray[0];
 		backGround = new Graphic(0, 0, getWidth(), getHeight(), "resources/charaBG.png");
 		okay = new Button(400, 130, 100, 30, "okay", Color.GRAY, new Action() {
 			
@@ -69,6 +70,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 						
 						notUnlocked.setVisible(true);
 						okay.setVisible(true);
+						
 					}
 				}
 			}));
