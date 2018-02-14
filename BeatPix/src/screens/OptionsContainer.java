@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gui.GUIApplication;
 import gui.components.Action;
@@ -324,6 +326,19 @@ public class OptionsContainer{
 		
 	}
 	
+	/**
+	 * This method looks at the string an detects if there are any special characters in the string
+	 * @param s - The string to check
+	 * @return - Whether or not there are any special characters in the string
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean anySpecialCharacters(String s) {
+		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+		Matcher m = p.matcher(s);
+		return m.find();
+	}
+	
 	/**Method Called by Other Screens**
 	 * 
 	 * Method called by other screens whenever
@@ -350,6 +365,9 @@ public class OptionsContainer{
 				if((char) tempX == s.charAt(0)) {
 					validKey = false; break;
 				}
+			}
+			if(anySpecialCharacters("" + (char) tempX)) {
+				validKey = false;
 			}
 			
 			if(validKey) {
