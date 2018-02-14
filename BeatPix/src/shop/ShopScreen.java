@@ -499,7 +499,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		{
 			if (buttons.get(idx).getSong().toLowerCase().equals(MainGUI.test.songs.get(i).getTitle().toLowerCase()))
 			{
-					System.out.println(MainGUI.test.songs.get(i).getTitle());
+					//System.out.println(MainGUI.test.songs.get(i).getTitle());
 					MainGUI.test.songs.get(i).setUnlock(true);
 					MainGUI.select.updateList();
 			//		songs.add(new Song(MainGUI.test.songs.get(i+a.get(i))));
