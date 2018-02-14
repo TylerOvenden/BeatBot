@@ -22,7 +22,7 @@ import mainGame.components.interfaces.SongInterface;
 import mainGame.screens.GameScreen;
 
 /**
- * My quick implementation of a temp song select screen 
+ * My quick implementation of a temp song select screen in case Yonathon doesn't finish his songs up 
  * @author Justin Yau
  *
  */
