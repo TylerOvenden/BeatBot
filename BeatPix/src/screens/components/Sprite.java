@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import gui.components.AnimatedComponent;
 import gui.interfaces.Visible;
+import mainGame.MainGUI;
 
 public class Sprite implements Visible {
 
@@ -15,17 +16,50 @@ public class Sprite implements Visible {
 	private AnimatedComponent currentMove;
 	private boolean visible;
 	private float alpha;
+	private String rsrcFile;
+	private String skin;
+	private AnimatedComponent robotIdle;
+	private AnimatedComponent robotHit1;
+	private AnimatedComponent robotHit2;
+	private AnimatedComponent robotHit3;
+	private AnimatedComponent robotMiss;
+	private Thread run;
 	
 	public Sprite() {
 		// TODO Auto-generated constructor stub
-		AnimatedComponent[] move = {new AnimatedComponent(30, 100, 117, 84),
-		new AnimatedComponent(30, 100, 117, 84),
-		new AnimatedComponent(30, 100, 117, 84),
-		new AnimatedComponent(30, 100, 117, 84),
-		new AnimatedComponent(30, 100, 117, 84)};
+		AnimatedComponent[] move = {robotHit1, robotHit2, robotHit3};
+		robotIdle.addSequence(rsrcFile, 200, 0, 0, 39, 28, 2);
+		robotMiss.addSequence(rsrcFile, 200, 0, 146, 39, 27, 2);
 		this.moves = move;
 	}
+	
+	public void startThread()
+	{
+		this.setVisible(true);
+		run.start();
+	}
+	public void initThread()
+	{
+		for(int i = 0; i < moves.length; i++)
+		{
+			moves[i] = new AnimatedComponent(30, 100, 117, 84);
+			moves[i].setVisible(false);
+		}
+	}
 
+	public void changeSkin()
+	{
+		skin = MainGUI.test.character.getSkin();
+		if(skin == "default")
+			rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
+		if(skin == "red")
+			rsrcFile = "resources/sprites/redSprite_Transparent.png";
+		if(skin == "white")
+			rsrcFile = "resources/sprites/whiteSprite_Transparent.png";
+		if(skin == "green")
+			rsrcFile = "resources/sprites/greenSprite_Transparent.png";
+	}
+	
 	@Override
 	public BufferedImage getImage() {
 		// TODO Auto-generated method stub

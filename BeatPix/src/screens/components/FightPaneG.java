@@ -146,31 +146,30 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 					setAnimation(robotHit3, 500);
 					setAnimation(enemyMiss, 900);
 				}
-			} //End if miss statement
+			}
 			else
 			{
 				setAnimation(robotMiss, 300);
 				setAnimation(enemyHit, 300);
 			}
 		}
-		/*
-		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
-			int randX = (int) Math.random() * 100 + 200; 
-			int randY = (int) Math.random() * 100 + 200; 
-
-			enemies.add(new EnemyRobot(randX, randY, 58, 42, enemyFile));
+		/*if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			updateScreen();
-		}
-		*/
+		}*/
 	}
 	
-	public void updateScreen() {
+	/*public void updateScreen() {
+		int randX = (int) Math.random() * 100 + 200; 
+		int randY = (int) Math.random() * 100 + 200; 
+		EnemyRobot enemyCopy = new EnemyRobot(randX, randY, 58, 42, enemyFile);
+		enemies.add(enemyCopy);
 		for(int i = 0; i < enemies.size(); i++)
 		{
-			this.remove(enemies.get(i));
+			this.setVisible(true);
 			this.addObject(enemies.get(i));
 		}
-	}
+		
+	}*/
 	
 	public void setAnimation(AnimatedComponent a, int s) {
 		a.setVisible(true);
