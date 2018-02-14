@@ -51,8 +51,8 @@ public class InformationContainer {
 			}
 		});
 		
-		createInformation("I am a long line of instructions, I don't know how well this will appear, but it doesn't matter cus how much instruction"
-				+ " you need anyways?");
+		createInformation("Play the maps to earn credits and use those credit to unlock skins/more maps!"
+				+ " Hit the strokes at the right time to win maps!");
 	}
 	
 	
