@@ -12,13 +12,13 @@ import highscore.TempSongSelect;
 import mainGame.components.Song;
 import mainGame.components.SongBundle;
 import screens.InformationContainer;
-import screens.LevelSelectG;
+
 import screens.MainMenuScreenG;
 import screens.OptionsContainer;
 import screens.StartScreenG;
 import shop.CharacterSelectionScreen;
 import shop.ShopScreen;
-
+import screens.LevelSelectG;
 import screens.interfaces.Options;
 
 public class MainGUI extends GUIApplication {
@@ -42,7 +42,7 @@ public class MainGUI extends GUIApplication {
 	
 	public static ShopScreen shop;
 	public static LevelSelectG level;
-	public static TempSongSelect select;
+	public static LevelSelectG select;
 	public static OptionsContainer options;
 	public static InformationContainer information;
 	public static CharacterSelectionScreen character;
@@ -146,7 +146,7 @@ public class MainGUI extends GUIApplication {
 			songs.add(new SongBundle(f[i].getName(), f[i].getPath()));
 		}
 		try {
-			select = new TempSongSelect(getWidth(), getHeight());
+			select = new LevelSelectG(getWidth(), getHeight());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
