@@ -402,7 +402,14 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 					charScroll.update();
 					indexList.remove(index);
 					enableButton(true);
-					
+					if(credits - 1000 < 0 ) {
+						credits = credits -1000;
+						credit.setText("Credits: "+ credits);
+						credit.update();						
+					}
+					else {
+						//
+					}
 				}
 			}));
 		}
@@ -681,6 +688,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int z = 0; z < buttonList.size(); z++) {
 			buttonList.get(z).setEnabled(b);
 		}
+		importButton.setEnabled(b);
 	}
 	
 	
