@@ -468,7 +468,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		int filler = 3;
 		idx = buttons.indexOf(clickedButton);
 		
-		System.out.println(buttons.get(idx).getSong());	
+		//System.out.println(buttons.get(idx).getSong());	
 		ArrayList<Integer> a = new ArrayList<Integer>();
 		int temp = 0;
 		String title = "";
