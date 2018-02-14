@@ -8,6 +8,7 @@ import gui.components.*;
 import gui.interfaces.Visible;
 import gui.userInterfaces.FullFunctionScreen;
 import mainGame.MainGUI;
+import mainGame.components.CustomText;
 public class CharacterSelectionScreen extends FullFunctionScreen implements unlocker{
 	/**
 	 * 
@@ -24,6 +25,8 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 	private TextLabel notUnlocked;
 	private Button okay;
 	private Graphic backGround;
+	private CustomText back;
+	private Button backButton;
 	public CharacterSelectionScreen(int width, int height) {
 		// TODO Auto-generated constructor stub
 		super(width, height);
@@ -53,8 +56,8 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		for(int i = 0; i < imageNames.length; i ++) {
 			final int x = i;	
 			selectImage.add(new ImageButton(700, 180, 200, 300, imageNames[i], ""));
-			imagesButton.add(new ImageButton((125*i), 50, 100, 300, imageNames[i], ""));
-			buttons.add(new Button(125*i, 50, 100, 300, "", new Action() {
+			imagesButton.add(new ImageButton((125*i)+125, 50, 100, 300, imageNames[i], ""));
+			buttons.add(new Button((125*i)+125, 50, 100, 300, "", new Action() {
 				
 				@Override
 				public void act() {
@@ -67,7 +70,6 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 						selectImage.get(j).setVisible(true);
 						color = colorArray[j];
 					}else {
-						
 						notUnlocked.setVisible(true);
 						okay.setVisible(true);
 						
@@ -75,7 +77,8 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 				}
 			}));
 		}
-		Button backButton = new Button(800, 50, 100, 30, "Back", Color.GRAY, new Action() {
+		 back = new CustomText(805, 60, 95, 50, "Back", true);
+		 backButton = new Button(800, 50, 100, 30, "", Color.GRAY, new Action() {
 			
 			@Override
 			public void act() {
@@ -102,6 +105,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		}
 		viewObjects.add(okay);
 		viewObjects.add(notUnlocked);
+		viewObjects.add(back);
 	}
 
 

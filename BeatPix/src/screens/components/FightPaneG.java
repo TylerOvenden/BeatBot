@@ -48,6 +48,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 
 	public FightPaneG(FocusController focusController, int x, int y) {
 		super(focusController, x, y, 400, 200);
+		enemies = new ArrayList<EnemyRobot>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -114,8 +115,7 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	
 	public void keyPressed(KeyEvent e)
 	{	
-		miss = false;
-		String pressedKey = "" + (char) e.getKeyCode(); 
+		/*String pressedKey = "" + (char) e.getKeyCode(); 
 		if((pressedKey.equalsIgnoreCase(MainGUI.getKeys(0)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(1)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(2)) || pressedKey.equalsIgnoreCase(MainGUI.getKeys(3))) && (animationRunning == false) && (isPaused == false)) {
 			if(!miss) {
 				robotIdle.setVisible(false);
@@ -152,24 +152,24 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 				setAnimation(robotMiss, 300);
 				setAnimation(enemyHit, 300);
 			}
-		}
-		/*if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
-			updateScreen();
 		}*/
+		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			updateScreen();
+		}
 	}
 	
-	/*public void updateScreen() {
+	public void updateScreen() {
 		int randX = (int) Math.random() * 100 + 200; 
 		int randY = (int) Math.random() * 100 + 200; 
-		EnemyRobot enemyCopy = new EnemyRobot(randX, randY, 58, 42, enemyFile);
+		EnemyRobot enemyCopy = new EnemyRobot(200, 100, 58, 42, enemyFile);
 		enemies.add(enemyCopy);
 		for(int i = 0; i < enemies.size(); i++)
 		{
-			this.setVisible(true);
+			System.out.print(i);
 			this.addObject(enemies.get(i));
 		}
 		
-	}*/
+	}
 	
 	public void setAnimation(AnimatedComponent a, int s) {
 		a.setVisible(true);
@@ -225,14 +225,46 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 
 	@Override
 	public void hit(double score) {
-		// TODO Auto-generated method stub
-		
+		if(score!=0) {
+			robotIdle.setVisible(false);
+			robotHit1.setVisible(false);
+			robotHit2.setVisible(false);
+			robotHit3.setVisible(false);
+			robotMiss.setVisible(false);
+			enemyIdle.setVisible(false);
+			enemyHit.setVisible(false);
+			enemyMiss.setVisible(false);
+			animationRunning = true;
+			
+			
+			int rand = (int) (Math.random()*3);
+			while(rand == pastRand)
+				rand = (int) (Math.random()*3);
+			pastRand = rand;
+			
+			if(rand == 0) {
+				setAnimation(robotHit1, 700);
+				setAnimation(enemyMiss, 700);
+			} 
+			else if(rand == 1) {
+				setAnimation(robotHit2, 900);
+				setAnimation(enemyMiss, 900);
+			} 
+			else if(rand == 2) {
+				setAnimation(robotHit3, 500);
+				setAnimation(enemyMiss, 900);
+			}
+		}else {
+			setAnimation(robotMiss, 300);
+			setAnimation(enemyHit, 300);
+		}
 	}
 
 	@Override
 	public void miss(double score) {
 		// TODO Auto-generated method stub
-		
+		setAnimation(robotMiss, 300);
+		setAnimation(enemyHit, 300);
 	}
 	
 }
