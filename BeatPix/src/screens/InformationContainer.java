@@ -51,7 +51,9 @@ public class InformationContainer {
 			}
 		});
 		
-		createInformation("Play the maps to earn credits and use those credit to unlock skins/more maps!");
+		createInformation("Welcome to BeatBot! "
+				+ "This is a rythm based game so hit the arrows when they reach the bottom."
+				+ "You can set the keys in the options menu if you don't know the controls.");
 	}
 	
 	
@@ -92,6 +94,6 @@ public class InformationContainer {
 	}
 	
 	public void createInformation(String s) {
-		information = new MultiLineCustomText(50, 50, 900, 500, s, (FullFunctionScreen) parentScreen, 30);
+		information = new MultiLineCustomText(100, 50, 800, 400, s, (FullFunctionScreen) parentScreen, 40, 10);
 	}
 }

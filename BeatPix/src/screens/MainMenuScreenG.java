@@ -440,7 +440,6 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 		this.addObject(idleCharacter);
 	}
 
-
 //--OPTIONS INTERFACE METHODS--//
 	public void toggleButtons(boolean b) {
 		if(bottle != null) {
