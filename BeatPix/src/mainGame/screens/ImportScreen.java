@@ -178,8 +178,8 @@ public class ImportScreen extends ResizableScreen {
 	public void handleSubmission(String title, String artist) {
 		//MainGUI.shop.changeCredits(5000);
 		if(MainGUI.shop.getCredits() >= 5000) {
-			if(Files.isDirectory(Paths.get("resources/maps/" + title))) {
-				status.setText("Title + Artist already exists!");
+			if(Files.isRegularFile(Paths.get("resources/maps/" + title + "/" + title + " " + artist + ".csv"))) {
+				status.setText("Map already exists!");
 			}
 			else {
 				try {
