@@ -214,13 +214,13 @@ public class FightPaneG extends FullFunctionPane implements robotAct{
 	{
 		skin = MainGUI.test.character.getSkin();
 		if(skin == "default")
-			rsrcFile = "resources/sprites/defaultSprite_Transparent.png";
+			rsrcFile = "resources/sprites/defaultSprite.bmp";
 		if(skin == "red")
-			rsrcFile = "resources/sprites/redSprite_Transparent.png";
+			rsrcFile = "resources/sprites/redSprite.png";
 		if(skin == "white")
-			rsrcFile = "resources/sprites/whiteSprite_Transparent.png";
+			rsrcFile = "resources/sprites/whiteSprite.png";
 		if(skin == "green")
-			rsrcFile = "resources/sprites/greenSprite_Transparent.png";
+			rsrcFile = "resources/sprites/greenSprite.png";
 	}
 
 	@Override
