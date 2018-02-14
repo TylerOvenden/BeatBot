@@ -35,8 +35,6 @@ public class PlaySong implements JustinPlaySongInterface {
     }
     
     /**
-     * Play a given audio file.
-     * @param audioFilePath Path of the audio file.
      * Tyler
      */
     Long audioPosition;
@@ -44,6 +42,11 @@ public class PlaySong implements JustinPlaySongInterface {
     
     /**
      * @author Tyler Ovenden
+     * @param audioFilePath Path of the audio file.
+     * queues up the audiofile from the define path
+     * sleep used to have it not play until gamescreen calls it
+     * setMicrosecondPosition used to determine how far the song is for pauses and when playback resumes
+     * flush and close used to stop and get rid of the audiofile once the game is closed
      */
     public void play(String audioFilePath) {
         File audioFile = new File(audioFilePath);
@@ -52,9 +55,7 @@ public class PlaySong implements JustinPlaySongInterface {
  
             audioLine = AudioSystem.getClip();
            // System.out.println("Playback started.");
-            
-            byte[] bytesBuffer = new byte[BUFFER_SIZE];
-            int bytesRead = -1;
+         
             try {
             
             	while(GameScreen.game.timePass() <= GameScreen.game.calculateTotalFallTime()) {
@@ -103,14 +104,7 @@ public class PlaySong implements JustinPlaySongInterface {
         }      
     }
 
-    /*
-     *      // Adjust the volume on the output line.
-            if (audioLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            	System.out.println(true);
-                FloatControl volume = (FloatControl) audioLine.getControl(FloatControl.Type.MASTER_GAIN);
-                volume.setValue(-15.0F);
-            }
-     */
+
     
 	/**
 	 * This method makes the program sleep for the given amount of time
@@ -134,6 +128,13 @@ public class PlaySong implements JustinPlaySongInterface {
         PlaySong player = new PlaySong();
         player.play(audioFilePath);
     }
+    /**
+     * @author Tyler Ovenden
+     * gets the volume from MainGUI and sets the song's volume
+     * the four volumes are in the arraylist
+     * Andrew's options class calls this method and uses the volume chosen in that method
+     */
+    
     public void updateVolume() {
     	int index = MainGUI.getVolume();
     
