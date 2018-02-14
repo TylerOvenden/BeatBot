@@ -111,7 +111,7 @@ public class MainGUI extends GUIApplication {
 		setTitle(s);
 	}
 	
-	public static String[] getKeys() {
+	public static String[] getKeys() { 
 		return keys;
 	}
 	
