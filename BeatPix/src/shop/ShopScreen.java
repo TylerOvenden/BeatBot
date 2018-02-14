@@ -112,7 +112,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	{
 	
 		//sets starting amount of credits
-		changeCredits(getCredits()+1500);
+		changeCredits(getCredits()+10000);
 		credits = getCredits();
 		//Daniel components~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
