@@ -33,11 +33,20 @@ public class TempSongSelect extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		Button temp;
+		Button back = new Button(500, 40, 100, 80, "Back", new Action() {
+			
+			@Override
+			public void act() {
+				MainGUI.test.setScreen(MainGUI.mainMenu);
+			}
+		});
+		viewObjects.add(back);
+		
 		int count = 0;
 		for(int i=0;i<MainGUI.test.songs.size();i++) {
 			int tempint=i;
 			SongBundle songBundle = MainGUI.test.songs.get(i);
-			if((MainGUI.test.songs.get(tempint).isUnlock())) {
+			if(!(MainGUI.test.songs.get(tempint).isUnlock())) {
 				File[] songList = new File(songBundle.getPath()).listFiles(new FileFilter() {
 		            @Override
 		            public boolean accept(File pathname) {
@@ -47,7 +56,7 @@ public class TempSongSelect extends FullFunctionScreen {
 		        });
 				for(int j = 0; j < songList.length; j++) {
 					Song song = new Song(songList[j].getPath());
-					temp=new Button(0,20*count+40,300,50, songList[j].getName() ,new Action() {
+					temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
 						@Override
 						public void act() {
 							MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
@@ -79,7 +88,7 @@ public class TempSongSelect extends FullFunctionScreen {
 				for(int j = 0; j < songList.length; j++) {
 					if(this.count < count) {
 						Song song = new Song(songList[j].getPath());
-						temp=new Button(0,20*count+40,300,50, songList[j].getName() ,new Action() {
+						temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
 							@Override
 							public void act() {
 								MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
