@@ -139,7 +139,7 @@ public class ScrollablePane extends ComponentContainer implements Clickable, Scr
 		contentY=0;
 		int[] maxXAndY = calculateMaxXY();
 		maxY = maxXAndY[1];
-		System.out.println("ScrollablePane has changed and maxY is now "+maxY);
+		//System.out.println("ScrollablePane has changed and maxY is now "+maxY);
 		setContentImage(maxXAndY[0],maxXAndY[1]);
 
 	}
