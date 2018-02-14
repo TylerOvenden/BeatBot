@@ -140,8 +140,8 @@ public class PlaySong implements JustinPlaySongInterface {
     
 		ArrayList <Float> volumeL = new ArrayList<Float>();
     	volumeL.add(-80f);
-    	volumeL.add(-6f);
-    	volumeL.add(-5f);
+    	volumeL.add(6f);
+    	volumeL.add(-3f);
     	volumeL.add(-10f);
     	float finalValue = volumeL.get(index);		 
  
