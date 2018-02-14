@@ -185,7 +185,6 @@ public class ImportScreen extends ResizableScreen {
 				MainGUI.test.songs.get(MainGUI.test.songs.size() - 1).setUnlock(true);
 				MainGUI.select.updateList();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				status.setText("WAV format is incorrect!");
 			}
 		}
