@@ -1031,6 +1031,7 @@ public void calcScore(double timing) {
 			addObject(btn);
 		}
 		fightScene.pause();
+		fightScene.setClickable(false);
 	}
 	
 	/**
@@ -1053,6 +1054,7 @@ public void calcScore(double timing) {
 			remove(btn);
 		}
 		fightScene.resume();
+		fightScene.setClickable(true);
 	}
 	
 	/**
@@ -1077,7 +1079,6 @@ public void calcScore(double timing) {
 				//Options Action Button will be here
 				inOptions = true;
 				toggleButtons(false);
-				MainGUI.options.toggleButtons(true);
 				MainGUI.options.setParentScreen(GameScreen.game);
 				MainGUI.options.addObjects();
 			}
@@ -1090,6 +1091,7 @@ public void calcScore(double timing) {
 				exited = true;
 				//Switch to a different screen below
 				MainGUI.options.setParentScreen(MainGUI.mainMenu);
+				MainGUI.options.toggleButtons(true);
 				MainGUI.test.setScreen(MainGUI.mainMenu);
 			}
 		}};
