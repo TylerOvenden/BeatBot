@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -176,17 +178,22 @@ public class ImportScreen extends ResizableScreen {
 	public void handleSubmission(String title, String artist) {
 		//MainGUI.shop.changeCredits(5000);
 		if(MainGUI.shop.getCredits() >= 5000) {
-			try {
-				processInformation(title, artist);
-				status.setText("Success! -5000 credits!");
-				MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
-				MainGUI.shop.updateCredits();
-				SongBundle bundle = new SongBundle(title, "resources/maps/" + title);
-				MainGUI.test.songs.add(bundle);
-				MainGUI.test.songs.get(MainGUI.test.songs.size() - 1).setUnlock(true);
-				MainGUI.select.updateList();
-			} catch (Exception e) {
-				status.setText("WAV format is incorrect!");
+			if(Files.isDirectory(Paths.get("resources/maps/" + title))) {
+				status.setText("Title + Artist already exists!");
+			}
+			else {
+				try {
+					processInformation(title, artist);
+					status.setText("Success! -5000 credits!");
+					MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
+					MainGUI.shop.updateCredits();
+					SongBundle bundle = new SongBundle(title, "resources/maps/" + title);
+					MainGUI.test.songs.add(bundle);
+					MainGUI.test.songs.get(MainGUI.test.songs.size() - 1).setUnlock(true);
+					MainGUI.select.updateList();
+				} catch (Exception e) {
+					status.setText("WAV format is incorrect!");
+				}
 			}
 		}
 		else {
