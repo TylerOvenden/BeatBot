@@ -94,16 +94,13 @@ public class TempSongSelect extends FullFunctionScreen {
 	 * 
 	 * @author Justin Yau
 	 */
-	public boolean isFound(Song song) {
-	    Iterator<Map.Entry<String,Song>> it = currentSongs.entrySet().iterator();
-	    while (it.hasNext()) {
-	        Map.Entry<String, Song> pair = (Map.Entry<String, Song>)it.next();
-	        if(pair.getValue().getTitle().equalsIgnoreCase(song.getTitle())) {
-	        	return true;
-	        }
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
-	    return false;
+	public boolean isFound(String songPath) {
+		for(String s: currentSongs.keySet()) {
+			if(s.equalsIgnoreCase(songPath)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/**
@@ -128,8 +125,8 @@ public class TempSongSelect extends FullFunctionScreen {
 		        });
 				for(int j = 0; j < songList.length; j++) {
 					Song song = new Song(songList[j].getPath());
-					if(!isFound(song)) {
-						temp=new Button(0,20*count,300,50, songList[j].getName() ,new Action() {
+					if(!isFound(songList[j].getPath())) {
+						temp=new Button(0,20*count,300,50, songList[j].getName(),new Action() {
 							@Override
 							public void act() {
 								MainGUI.test.setScreen(new GameScreen(getWidth(),getHeight(),song,"resources/sample_bg.gif"));
