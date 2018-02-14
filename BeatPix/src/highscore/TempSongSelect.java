@@ -25,11 +25,22 @@ import mainGame.components.SongBundle;
 import mainGame.components.interfaces.SongInterface;
 import mainGame.screens.GameScreen;
 
+/**
+ * My quick implementation of a temp song select screen
+ * @author Justin Yau
+ *
+ */
 public class TempSongSelect extends FullFunctionScreen {
 	
-	private Button back;
-	private HashMap<String, Song> currentSongs;
+	private Button back; //The back button will be stored here
+	private HashMap<String, Song> currentSongs; //The list of all the displayed songs will be stored here
 	
+	/**
+	 * Constructor creates a new screen which will load all the unlocked songs currently on the screen
+	 * @param width
+	 * @param height
+	 * @throws IOException
+	 */
 	public TempSongSelect(int width, int height) throws IOException {
 		super(width, height);
 	}
@@ -76,6 +87,13 @@ public class TempSongSelect extends FullFunctionScreen {
 		}
 	}
 	
+	/**
+	 * This method searches through the hashmap and returns whether or not the song's title was found among the entries
+	 * @param song - The song to search for
+	 * @return - Whether or not the song's title was found among the entries
+	 * 
+	 * @author Justin Yau
+	 */
 	public boolean isFound(Song song) {
 	    Iterator<Map.Entry<String,Song>> it = currentSongs.entrySet().iterator();
 	    while (it.hasNext()) {
@@ -88,6 +106,11 @@ public class TempSongSelect extends FullFunctionScreen {
 	    return false;
 	}
 	
+	/**
+	 * This method searches through all the songs and displays the unlocked ones
+	 * 
+	 * @author Justin Yau
+	 */
 	public void spawnButtons() {
 		addObject(back);
 		Button temp;
@@ -134,6 +157,11 @@ public class TempSongSelect extends FullFunctionScreen {
 		}
 	}
 	
+	/**
+	 * Call this method to update the list of songs currently unlocked
+	 * 
+	 * @author Justin Yau
+	 */
 	public void updateList() {
 		getObjects().clear();
 		removeAll();
