@@ -29,7 +29,7 @@ public class Bottle extends ImageButton {
 	
 	public boolean nextSequence() {
 		if(currentSequence > sequence.size()-1) {
-			System.out.println("Hello");
+			//System.out.println("Hello");
 			return false;
 		}
 		playSequence();
