@@ -38,6 +38,7 @@ public class CharacterSelectionScreen extends FullFunctionScreen implements unlo
 		selectImage = new ArrayList<ImageButton>();
 		buttons = new ArrayList<Button>();
 		notUnlocked = new TextLabel(400, 200, 100, 100, "Not Unlocked");
+		notUnlocked.setCustomTextColor(Color.WHITE);
 		imageNames = new String[] {"resources/sprites/defaultGuy.png","resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		unlock = new Boolean[] {true, false, false, false};
 		colorArray = new String[] {"default", "red", "green" , "white"};
