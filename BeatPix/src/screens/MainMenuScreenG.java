@@ -261,7 +261,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 				});*/
 	}
 	
-	//!!!!NEEDS SOME WORKING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	//
 	int x;
 	public void setButtonsHoverAction() {
 		//Just for aesthetics so when a user hovers over a button the button will change to a depressed version
@@ -441,10 +441,11 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 	}
 
 
-//--OPTIONS INTERFACE METHODS--//////
+//--OPTIONS INTERFACE METHODS--//
 	public void toggleButtons(boolean b) {
-		if(bottle != null)
+		if(bottle != null) {
 			bottle.getBottleOnSill().setEnabled(b);
+		}
 		information.setEnabled(b);
 		for(ImageButton button: buttons) {
 			button.setEnabled(b);
