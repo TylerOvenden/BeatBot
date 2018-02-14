@@ -46,14 +46,15 @@ public class LevelSelectG extends FullFunctionScreen{
 	public ArrayList<ImageButton> buttons;
 	public ArrayList<ImageButton> unseenButtons;
 	private Graphic background;
-	private int count = 0;
+
 	private CustomText displaysong;
+	private int count=0;
 	
 	public LevelSelectG(int width, int height) throws IOException{
 		super(width, height);
 		}
 
-	@Override
+	
 	public void initAllObjects(List<Visible> viewObjects) {
 		Button temp;
 		background = updateBackground("resources\\mop.png");
@@ -73,8 +74,14 @@ public class LevelSelectG extends FullFunctionScreen{
 		buttons = new ArrayList<ImageButton>();
 	/*
 		for(int i=0; i<MainGUI.shop.getSongs().size(); i++) {
+
  		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
-			ShopScreen.getSongs();
+
+			
+ 		buttons.add(new ImageButton( 180*(-i-1)+getWidth()-10, 80*(i+1) + getHeight()-580, icon.getIconWidth(), 100 ,"resources\\tester.jpg"));
+
+			//ShopScreen.getSongs();
+
 			buttons.get(i).setAction(new Action() {
 				public void act(){
 		
@@ -106,7 +113,7 @@ public class LevelSelectG extends FullFunctionScreen{
 							
 						}
 					});
-					//displaysong = new CustomText(250,20*count,300,185,""+songList[j].getName(),true);
+					//displaysong = new CustomText(250,20*count,300,185,""+songList[j].getName(),true); 
 					count++;
 					viewObjects.add(temp);
 					//viewObjects.add(displaysong);
