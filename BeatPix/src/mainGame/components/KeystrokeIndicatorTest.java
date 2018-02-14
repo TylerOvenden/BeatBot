@@ -14,10 +14,16 @@ public class KeystrokeIndicatorTest extends Component {
 	private boolean isHit;
 	
 
+	public void setHit(boolean isHit) {
+		this.isHit = isHit;
+		update();
+	}
+
 	public KeystrokeIndicatorTest(int x, int y,int w,int h, String p) {
 		super(x, y, w, h);
 		this.path=p;
 		isHit=false;
+		update();
 	}
 
 	@Override
