@@ -147,7 +147,6 @@ public abstract class ComponentContainer extends JPanel{
 		viewObjects.add(v);
 	}
 
-
 	public void paint(Graphics g){
 		//		g.drawImage(image, 0, -22, null);
 		int offset = -20;

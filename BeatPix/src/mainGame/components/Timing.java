@@ -15,12 +15,14 @@ import gui.interfaces.Visible;
 import mainGame.components.interfaces.JustinTimingInterface;
 import mainGame.components.interfaces.Stroke;
 import mainGame.screens.GameScreen;
+import screens.interfaces.robotActionInterface;
 
-public class Timing extends Component implements JustinTimingInterface {
+public class Timing extends Component implements JustinTimingInterface,robotActionInterface {
 	
 	private String img="";
 	private float lastTiming=0;
-
+	public static final String[] tim= {"resources/perfect.png","resources/great.png","resources/good.png","resources/ok.png","resources/bad.png","resources/miss.png"};
+	public static final double[] times= {1,.95,.66,.5,.33,0};
 	public Timing(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
@@ -63,87 +65,70 @@ public class Timing extends Component implements JustinTimingInterface {
 		checkAcc((Stroke) stroke,false);
 		
 	}
+	
+	/**
+	 * @author Justin Yau
+	 * @author Steven Li
+	 */
 	public void checkAcc(Stroke stroke, boolean start) {
-		if(start) {
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())< GameScreen.game.getFallTime() * 5) {
-				changeImg("resources/perfect.png");
-				update();
-				GameScreen.game.calcAcc(1);
-				GameScreen.game.calcScore(1);
-				GameScreen.game.calcCombo(false);
-				//GameScreen.game.getTimings().add(new Timing2(1,1,100,100,"resources/perfect.png"));
-				return ;
+		int goal = GameScreen.columnY + GameScreen.columnHeight;
+		int difference = goal - stroke.getBottomPosition();
+		if(!start) {
+			difference = goal - stroke.getY();
+		}
+		for(int i=0;i<6;i++) {
+			if(i==5) {
+				calculations(0,"resources/miss.png");
+				break;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 10) {
-				changeImg("resources/great.png");
-				update();
-				GameScreen.game.calcAcc(.95);
-				GameScreen.game.calcScore(.95);
-				GameScreen.game.calcCombo(false);
-				return ;
+			if(Math.abs(difference)<i*5+5) {
+				calculations(times[i],tim[i]);
+				break;
 			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 15) {
-				changeImg("resources/good.png");
-				update();
-				GameScreen.game.calcAcc(.66);
-				GameScreen.game.calcScore(.66);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 20) {
-				changeImg("resources/ok.png");
-				update();
-				GameScreen.game.calcAcc(.5);
-				GameScreen.game.calcScore(.5);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getFirstClickTime())<  GameScreen.game.getFallTime() * 27) {
-				changeImg("resources/bad.png");
-				update();
-				GameScreen.game.calcAcc(.33);
-				GameScreen.game.calcScore(.33);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			calculations(0,"resources/miss.png");
-			return ;
-		}else {
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 5) {
-				changeImg("resources/perfect.png");
-				update();
-				GameScreen.game.calcAcc(1);
-				GameScreen.game.calcScore(1);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 10) {
-				changeImg("resources/great.png");
-				update();
-				GameScreen.game.calcAcc(.95);
-				GameScreen.game.calcScore(.95);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 15) {
-				changeImg("resources/good.png");
-				update();
-				GameScreen.game.calcAcc(.66);
-				GameScreen.game.calcScore(.66);
-				GameScreen.game.calcCombo(false);
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())<  GameScreen.game.getFallTime() * 20) {
-				calculations(.5,"resources/ok.png");
-				return ;
-			}
-			if(Math.abs(GameScreen.game.timePass()-stroke.getEndClickTime())< GameScreen.game.getFallTime() * 27) {
-				calculations(.33,"resources/bad.png");
-				return ;
-			}
-			calculations(0,"resources/miss.png");
+		}
+		
+		/*if(Math.abs(difference)< 5) {
+			changeImg("resources/perfect.png");
+			update();
+			GameScreen.game.calcAcc(1);
+			GameScreen.game.calcScore(1);
+			GameScreen.game.calcCombo(false);
 			return ;
 		}
+		if(Math.abs(difference)< 10) {
+			changeImg("resources/great.png");
+			update();
+			GameScreen.game.calcAcc(.95);
+			GameScreen.game.calcScore(.95);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		if(Math.abs(difference)< 20) {
+			changeImg("resources/good.png");
+			update();
+			GameScreen.game.calcAcc(.66);
+			GameScreen.game.calcScore(.66);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		if(Math.abs(difference)< 27) {
+			changeImg("resources/ok.png");
+			update();
+			GameScreen.game.calcAcc(.5);
+			GameScreen.game.calcScore(.5);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		if(Math.abs(difference)< 40) {
+			changeImg("resources/bad.png");
+			update();
+			GameScreen.game.calcAcc(.33);
+			GameScreen.game.calcScore(.33);
+			GameScreen.game.calcCombo(false);
+			return ;
+		}
+		calculations(0,"resources/miss.png");
+		return ;*/
 	}
 	
 	public void calculations(double score,String image) {
@@ -151,11 +136,23 @@ public class Timing extends Component implements JustinTimingInterface {
 		update();
 		GameScreen.game.calcAcc(score);
 		GameScreen.game.calcScore(score);
-		if(score>0) {
+		GameScreen.game.fightScene.hit(score);
+		if(score == 1) {
+			GameScreen.game.getHealthBar().applyHealth(6);
+		}
+		else if(score > .33) {
+			GameScreen.game.getHealthBar().applyHealth(3);
+		}
+		if(score == .33) {
+			GameScreen.game.getHealthBar().applyHealth(-1);
+		}
+		if(score > 0) {
 			GameScreen.game.calcCombo(false);
 		}else {
 			GameScreen.game.calcCombo(true);
+			GameScreen.game.getHealthBar().applyHealth(-3);
 		}
+		//System.out.println(GameScreen.game.getHealthBar().getHealth());
 	}
 	
 	@Override
@@ -164,7 +161,15 @@ public class Timing extends Component implements JustinTimingInterface {
 		update();
 		GameScreen.game.calcAcc(0);
 		GameScreen.game.calcCombo(true);
-		//System.out.println("b");
+		GameScreen.game.calcScore(0);
+		GameScreen.game.fightScene.hit(0);
+		GameScreen.game.getHealthBar().applyHealth(-3);
+		//System.out.println(GameScreen.game.getHealthBar().getHealth());
+	}
+
+	@Override
+	public boolean isHit() {
+		return false;
 	}
 
 }

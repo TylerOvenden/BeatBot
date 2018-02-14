@@ -10,6 +10,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -44,17 +46,18 @@ import mainGame.actions.ReleasePress;
 import mainGame.components.*;
 import mainGame.screens.interfaces.ResizableScreen;
 import screens.components.FightPaneG;
+import screens.interfaces.Options;
 
 
 /**
  * This screen is for the actual game play of the map for a song
- * 
+ *
  * @author Justin Yau
  * @author Steven Li
  * @author Tyler Ovenden
  *
  */
-public class GameScreen extends ResizableScreen implements Runnable {
+public class GameScreen extends ResizableScreen implements Runnable, Options {
 
 	/**
 	 * 
@@ -74,8 +77,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	
 	private long startTime; //The starting time in ms
 	private boolean playing; //This will be used to determine whether there are more beats to display or not
+	private boolean inOptions; //This boolean will track whether or not the screen has an option pane up or not
 	
 	private PlaySong player; //The current player will be stored here
+	private AudioVisualizer visualizer; //The current audio visualizer will be stored here
+	private HealthBar healthBar; //The current health bar will be stored here
 	
 	private ArrayList<Visible> strokes ; //All the keystrokes currently on the screen will appear here
 	private ArrayList<Holdstroke> holds; //All the holdstrokes currently being held down will appear here
@@ -91,11 +97,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	
 	public static GameScreen game; //This will be used to make instance calls from other classes
 	
-	public static final int columnY = 75; //This is the set Y coordinate of the top of the columnLanes
+	public static final int columnY = 65; //This is the set Y coordinate of the top of the columnLanes
 	public static final int columnWidth = 70; //This is the width of the lanes
 	public static final int columnHeight = 350; //This is the height of the lanes
 	public static final int distanceG = 100; //Distance from the goal before the user can make a press for a stroke
-	public static final int distanceAAfterGoal = 12; //Distance after goal the keystrokes will stay on the screen
+	public static final int distanceAAfterGoal = 26; //Distance after goal the keystrokes will stay on the screen
 	
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW; //Register input when the user is in the window
     private InputMap imap; //This input map enables us to do bindings 
@@ -111,7 +117,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public static final int[] arrowX = {100, 170, 240, 310}; //X coordinates of the indicators
 	//Justin Yau
 	
-	FightPaneG fightScene;
+	public FightPaneG fightScene;
 	
 	//Steven
 	private Timing timing;
@@ -130,6 +136,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	private float score =0;
 	private float health = 100;
 	private int bScore;
+	private int ra;
 	private CustomText displayScore;
 	//tyler
 	
@@ -145,13 +152,14 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public GameScreen(int width, int height, Song song) {
 		super(MainGUI.screenWidth, MainGUI.screenHeight);
-		
+	
 		startResize(width, height);
 		update();
 		
 		game = this;
 		player = new PlaySong();
 		exited = false;
+		inOptions = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -160,8 +168,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
+		MainGUI.test.setFrameTitle("BeatBot - Now playing: " + title);
 		
-		originalBeats = beats;
+		originalBeats = new ArrayList<int[]>(beats);
 		setUpBindings();
 		
 		totalAcc=new float[beats.size()];
@@ -197,6 +206,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		backgroundPath = backPath;
 		player = new PlaySong();
 		exited = false;
+		inOptions = false;
 		
 		//Retrieve metadata and beats from the song
 		mainSong = song;
@@ -205,8 +215,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		artist = song.getArtist();
 		offSet = song.getOffSet();
 		beats = song.getBeats();
-		originalBeats = beats;
+		MainGUI.test.setFrameTitle("BeatBot - Now playing: " + title);
 		
+		originalBeats = new ArrayList<int[]>(beats);
 		setUpBindings();
 		
 		totalAcc=new float[beats.size()];
@@ -242,6 +253,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		gameRunning = false;
 		playing = false;
 		player.stopSong();
+		visualizer.stopSong();
 		resumeGame();
 		cancelAllFalls();
 	}
@@ -315,8 +327,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 * @author Justin Yau
 	 */
 	public void setUpBindings() {
-		bindings = MainGUI.bindings;
-		updateKeyStrokes("D", "F", "J", "K");
+		bindings = MainGUI.getKeys();
+		//updateKeyStrokes("D", "F", "J", "K");
 		imap = getInputMap(IFW);
 		amap = getActionMap();
 		for(int i = 0; i < bindings.length; i++) {
@@ -556,6 +568,8 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		setUpGearButton(viewObjects);
 		spawnOptionButtons();
 		spawnRobot(viewObjects);
+		addVisualizer(viewObjects);
+		addHealthBar(viewObjects);
 		
 		/*
 		Keystroke leftKey = new Keystroke(100, 75, "resources/arrows/darrow.png");
@@ -593,12 +607,32 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	}
 	
 	/**
+	 * This method adds the health bar to the screen
+	 * @param viewObjects - The list of viewable objects on the screen
+	 */
+	public void addHealthBar(List<Visible> viewObjects) {
+		healthBar = new HealthBar(375, columnY - 10, 25, columnY + columnHeight + distanceAAfterGoal + 5);
+		viewObjects.add(healthBar);
+	}
+	
+	/**
+	 * This method adds the audio visualizer to the screen
+	 * @param viewObjects - The list of viewable objects on the screen
+	 * 
+	 * @author Justin Yau
+	 */
+	public void addVisualizer(List<Visible> viewObjects) { 
+		visualizer = new AudioVisualizer(480,350,400,100);
+		viewObjects.add(visualizer);
+	}
+	
+	/**
 	 * This method spawns the animated robot that'll attack according to the keys
 	 * 
 	 * @author Justin Yau
 	 */
 	public void spawnRobot(List<Visible> viewObjects) {
-		fightScene = new FightPaneG(this, 500,200);
+		fightScene = new FightPaneG(this, 480,150);
 		fightScene.update();
 		fightScene.setVisible(true);
 		viewObjects.add(fightScene);
@@ -627,7 +661,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public double determineScale(String path) {
 		double scale = 1;
 		try {
-			BufferedImage img = ImageIO.read(new File(backgroundPath));
+			BufferedImage img = ImageIO.read(new File(path));
 			scale = ((double)MainGUI.screenWidth)/img.getWidth();
 		} catch (IOException e) {
 		}
@@ -673,7 +707,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void addColumnLanes(List<Visible> viewObjects) {
 		
 		for(int i = 0; i < arrowX.length; i++) {
-			ColumnLane lane = new ColumnLane(arrowX[i] - 3,columnY - 10, columnWidth, columnY + columnHeight + GameScreen.distanceAAfterGoal);
+			ColumnLane lane = new ColumnLane(arrowX[i] - 3,columnY - 10, columnWidth, columnY + columnHeight + GameScreen.distanceAAfterGoal + 5);
 			lane.setAlpha((float)0.3);
 			viewObjects.add(lane);
 		}
@@ -780,7 +814,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		}
 	}*/
 
-	public void calcScore(double timing) {
+public void calcScore(double timing) {
 		
 		if(beats.size() == 0) {
 			return;
@@ -808,18 +842,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		//	System.out.println(health);	
 		}
 		int tScore = (int)Math.round(score);
-		/*String display = String.valueOf(tScore);
-		
-		int[] scoreA = {0,0,0,0,0,0};
-		for(int i = 0; i<display.length();i++) {
-		
-			scoreA[scoreA.length-i-1] = display.charAt(i);
-			
-		} 
-	//	scoreA[scoreA.length-2] = 2;
-		//scoreA[scoreA.length-2] = display.charAt();
-	//	System.out.println(Arrays.toString(scoreA));
-		//System.out.println(display.charAt(0));*/
+	
 		if(tScore>=1000000) {
 			displayScore.setText(""+tScore);
 			return ;
@@ -851,6 +874,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		
 		//displayScore.setText(tScore+"");
 	} 
+
 
 	public void calcAcc(double timing) {
 		int totalHit=0;
@@ -995,6 +1019,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void pauseGame() {
 		pause = true;
 		player.pauseSong();
+		visualizer.pauseSong();
 		ColoredRectangle rect = new ColoredRectangle(0,0, getOWidth(), getOHeight(), ((float)0.3), Color.GRAY);
 		pauseRect = rect;
 		addObject(pauseRect);
@@ -1015,6 +1040,7 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void resumeGame() {
 		pause = false;
 		player.resumeSong();
+		visualizer.resumeSong();
 		if(pauseRect != null) {
 			remove(pauseRect);
 			pauseRect = null;
@@ -1048,7 +1074,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 			@Override
 			public void act() {
 				//Options Action Button will be here
-				System.out.println("Options");
+				inOptions = true;
+				toggleButtons(false);
+				MainGUI.options.setParentScreen(GameScreen.game);
+				MainGUI.options.addObjects();
 			}
 		}, new Action() {
 			
@@ -1058,11 +1087,11 @@ public class GameScreen extends ResizableScreen implements Runnable {
 				stop();
 				exited = true;
 				//Switch to a different screen below
-				MainGUI.test.setScreen(MainGUI.test.mainMenu);
+				MainGUI.test.setScreen(MainGUI.mainMenu);
 			}
 		}};
 		for(int i = 0; i < btnTypes.length; i++) {
-			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i]);
+			OptionButton bt = new OptionButton(350, 150 + (75*i), 200,50,btnTypes[i], this);
 			bt.setAction(act[i]);
 			optBTN.add(bt);
 		}
@@ -1164,6 +1193,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void handleKeystroke(Keystroke s) {
 		strokes.add(s);
 		addObject(s);
+		if(pause) {
+			handlePause();
+		}
 		Thread tr = new Thread(new Runnable() {
 			
 			@Override
@@ -1188,6 +1220,9 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void handleHoldstroke(Holdstroke s) {
 		strokes.add(s);
 		addObject(s);
+		if(pause) {
+			handlePause();
+		}
 		Thread tr = new Thread(new Runnable() {
 			
 			@Override
@@ -1208,16 +1243,25 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void playSong() {
 
-		String fileName = title + artist;
+		String fileName = title + " " + artist;
+		String path = "resources/maps/" + title + "/" + fileName + ".wav";
 		bScore = beats.size();
 		Thread play = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				player.play("resources/maps/" + fileName + "/" + fileName + ".wav");
+				player.play(path);
 			}
 			
 		});
+		Thread visual = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				visualizer.loadSong(path);
+			}
+		});
+		visual.start();
 		play.start();
 		
 	}
@@ -1230,10 +1274,10 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void spawnBeat() {
 		int[] beat = beats.remove(0);
 		int lane = beat[0] - 1;
-		if(beat[2] != 0) {
+		if(beat[2] != 0 && beat[2] - beat[1] >= 0) {
 			int height = Holdstroke.determineHeight(beat[2] - beat[1], fallTime);
-			if(height + 35 >= columnHeight) {
-				height = columnHeight - 60;
+			if(height + 64 >= columnHeight) {
+				height = columnHeight - 64;
 			}
 			Holdstroke str = new Holdstroke(arrowX[lane], columnY, height, beat[1], 
 					"resources/arrows/"+ arrowPaths[lane] + "h.png");
@@ -1256,10 +1300,33 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	 */
 	public void handleEnd() {
 		player.stopSong();
+		visualizer.stopSong();
 		mainSong.addScoreAndAccuracy((int) score, accuracy);
 		mainSong.setBeats(originalBeats);
 		if(!exited) {
-			MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,accuracy,mainSong,mainSong.getScores(),mainSong.getAccuracies()));
+			if(healthBar.getHealth()>0) {
+				//System.out.println(accuracy);
+				MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),true,(int)score,(double)accuracy,mainSong,mainSong));
+			}else {
+				//System.out.println(accuracy);
+				MainGUI.test.setScreen(new HighscoreScreen(getWidth(),getHeight(),false,(int)score,(double)accuracy,mainSong,mainSong));
+			}
+		}
+	}
+	
+	/**
+	 * This method makes the program sleep for the given amount of time
+	 * 
+	 * @param time - Time in ms that you would like to make the program sleep for
+	 * 
+	 * @author Justin Yau
+	 */
+	public void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -1271,19 +1338,33 @@ public class GameScreen extends ResizableScreen implements Runnable {
 	public void playMap() {
 		playSong();
 		while(playing) {
-			if(pause) {
+			sleep(0);
+			if(!pause) {
+				if(beats.size() == 0) {
+					while(strokes.size() != 0 || holds.size() != 0) {
+						sleep(0);
+					}
+					playing = false;
+				}
+				else if(healthBar.getHealth() <= 0) {
+					playing = false;
+				}
+				else if(timePass() >= beats.get(0)[1]) {
+					spawnBeat();
+				}
+			}
+			else {
 				handlePause();
 			}
-			if(beats.size() == 0) {
-				playing = false;
-			}
-			else if(timePass() >= beats.get(0)[1] && !pause) {
-				spawnBeat();
-			}
 		}
+		MainGUI.test.setTitle("BeatBot");
 		handleEnd();
 	}
 
+	public HealthBar getHealthBar()  {
+		return healthBar;
+	}
+	
 	public Timing getTiming() {
 		// TODO Auto-generated method stub
 		return timing;
@@ -1308,6 +1389,67 @@ public class GameScreen extends ResizableScreen implements Runnable {
 		for(int i=0;i<timings.size();i++) {
 			addObject(timings.get(i));
 		}
+	}
+
+	/**
+	 * This method toggles the button according to the given boolean value
+	 * 
+	 * @param b - A boolean to enable buttons or disable them
+	 * 
+	 * @author Justin Yau
+	 */
+	public void toggleButtons(boolean b) {
+		escapeGear.setEnabled(b);
+		for(OptionButton btn: optBTN) {
+			btn.setEnabled(b);
+		}
+	}
+
+	/**
+	 * This method returns whether or not the option pane is up
+	 * 
+	 * @author Justin Yau
+	 */
+	public boolean inOptions() {
+		// TODO Auto-generated method stub
+		return inOptions;
+	}
+	
+	/**
+	 * This method updates the status of the in options boolean that tracks whether or not the option pane is on the screen
+	 * 
+	 * @param b - The status of the options pane
+	 * 
+	 * @author Justin Yau
+	 */
+	public void setInOptions(boolean b) {
+		inOptions = b;
+	}
+
+	public void keyPressed(KeyEvent e) {
+		fightScene.keyPressed(e);
+		if(inOptions) {
+			passKeyCodeIntoOptions(e);
+		}
+	}
+	
+	/**
+	 * This method will pass the key event when the option menu is open and key is pressed
+	 * 
+	 * @author Justin Yau
+	 */
+	public void passKeyCodeIntoOptions(KeyEvent e) {
+		MainGUI.options.readKey(e);
+	}
+	
+	/**
+	 * This method returns the audio player of the game
+	 * @return - The audio player of the game 
+	 * 
+	 * @author Justin Yau
+	 */
+	public PlaySong getPlayer() {
+		return player;
 	}
 	
 }

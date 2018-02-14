@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import gui.components.Button;
 import mainGame.components.interfaces.ResizeClickInterface;
 import mainGame.screens.GameScreen;
+import mainGame.screens.interfaces.ResizableScreen;
 
 /**
  * This button is for the ones that appear in the options menu when the user is esacped/paused
@@ -26,6 +27,7 @@ public class OptionButton extends Button implements ResizeClickInterface {
 	private int oY; //The original y value of the button
 	private int scaledWidth; //The scaled width of the button (FOR RESIZING)
 	private int scaledHeight; //The scaled height of the button (FOR RESIZING)
+	private ResizableScreen screen; //The resizeable screen the button is on will be here
 	
 	/**
 	 * Constructor creates an "option" button where the user can click the custom button to do what the button says
@@ -37,12 +39,13 @@ public class OptionButton extends Button implements ResizeClickInterface {
 	 * 
 	 * @author Justin Yau
 	 */
-	public OptionButton(int x, int y, int w, int h, String text) {
+	public OptionButton(int x, int y, int w, int h, String text, ResizableScreen s) {
 		super(x, y, w, h, text, null, null);
 		oX = x;
 		oY = y;
 		scaledWidth = w;
 		scaledHeight = h;
+		screen = s;
 		field = text;
 		update();
 	}
@@ -60,10 +63,10 @@ public class OptionButton extends Button implements ResizeClickInterface {
 	}
 	
 	public boolean isOnButton(int x, int y) {
-		int sWidth = (int) (GameScreen.game.getWidth() * (((double) oX)/GameScreen.game.getOWidth()));
-		int sHeight = (int) (GameScreen.game.getHeight() * (((double) oY)/GameScreen.game.getOHeight()));
-		return x>sWidth && x<sWidth+scaledWidth 
-		&& y > sHeight && y<sHeight+scaledHeight;
+		int sWidth = (int) (screen.getWidth() * (((double) oX)/screen.getOWidth()));
+		int sHeight = (int) (screen.getHeight() * (((double) oY)/screen.getOHeight()));
+		return x>sWidth && x<sWidth+scaledWidth
+		&& y > sHeight + (getHeight()/3) && y<sHeight+scaledHeight + (getHeight()/3);
 	}
 	
 	public void drawButton(Graphics2D g, boolean hover) {

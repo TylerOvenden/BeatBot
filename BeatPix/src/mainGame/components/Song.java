@@ -18,13 +18,13 @@ import mainGame.saving.FileP;
  */
 public class Song implements SongInterface, Highscore {
 
-	private String title;
-	private int BPM;
-	private String artist;
-	private int offSet;
-	private ArrayList<int[]> beats;
-	private ArrayList<Integer> scores;
-	private ArrayList<Float> accuracy;
+	private String title; //The title of the song will be stored here
+	private int BPM; //The BPM of the song will be stored here
+	private String artist; //The artist of the song will be stored here
+	private int offSet; //The offSet of the song will be stored here
+	private ArrayList<int[]> beats; //The beats of the song will be stored here
+	private ArrayList<Integer> scores; //The scores the player got will be stored here
+	private ArrayList<Float> accuracy; //The accuracies the player got will be stored here 
 	
 	/**
 	 * This constructor will load the file utilizing a file loader and then update the metadata and beats in fields. <br>

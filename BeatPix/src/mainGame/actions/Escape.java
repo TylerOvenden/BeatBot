@@ -25,6 +25,9 @@ public class Escape extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(GameScreen.game.inOptions()) {
+			return;
+		}
 		if(!GameScreen.game.getPause()) {
 			GameScreen.game.pauseGame();
 		}

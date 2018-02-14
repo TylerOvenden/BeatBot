@@ -18,7 +18,9 @@ import screens.components.ImageButton;
 public class HighscoreScreen extends ResizableScreen {
 
 	/**
+	 * Highscore Display Screen
 	 * 
+	 * @author Steven
 	 */
 	private static final long serialVersionUID = 1L;
 	private boolean isWin;
@@ -35,21 +37,28 @@ public class HighscoreScreen extends ResizableScreen {
 	private CustomText score3;
 	private ImageButton retry;
 	private ImageButton menu;
+	private Highscore hs;
 	private Song song;
 
-	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Song song, ArrayList<Integer> ints,ArrayList<Float> arrayList) {
+	public HighscoreScreen(int width, int height,boolean isWin,int score,double acc,Highscore hs,Song song) {
 		super(width, height);
 		this.isWin=isWin;
 		this.score=score;
 		this.acc=acc;
 		this.song=song;
-		currentAcc.setText("Accuracy "+acc+"%");
+		this.hs=hs;
+		//System.out.println(Math.round(this.acc*100.0)/100.0);
+		currentAcc.setText("Accuracy "+Math.round(this.acc*100.0)/100.0+"%");
 		currentScore.setText("Score "+score);
 		if(isWin) {
 			condition.setText("You Win");
+			MainGUI.test.shop.changeCredits(MainGUI.test.shop.getCredits()+score/1000);
+			MainGUI.test.shop.updateCredits();
 		}
 		int temp;
 		int idx=0;
+		ArrayList<Integer> ints= new ArrayList<Integer>(song.getScores());
+		ArrayList<Float> arrayList= new ArrayList<Float>(song.getAccuracies());
 		temp=ints.get(0);
 		for(int i=0;i<ints.size();i++) {
 			if(ints.get(i)>temp) {
@@ -69,7 +78,7 @@ public class HighscoreScreen extends ResizableScreen {
 					idx=i;
 				}
 			}
-			score2.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
+			score2.setText("2.  "+temp+"   "+arrayList.get(idx)+"%");
 			ints.remove(idx);
 			arrayList.remove(idx);
 		}else {
@@ -84,7 +93,7 @@ public class HighscoreScreen extends ResizableScreen {
 					idx=i;
 				}
 			}
-			score3.setText("1.  "+temp+"   "+arrayList.get(idx)+"%");
+			score3.setText("3.  "+temp+"   "+arrayList.get(idx)+"%");
 			ints.remove(idx);
 			arrayList.remove(idx);
 		}else {
@@ -100,7 +109,7 @@ public class HighscoreScreen extends ResizableScreen {
 		currentScore=new CustomText(380, 120, 200, 200, "Score "+score,true);
 		viewObjects.add(currentScore);
 		System.out.println(acc);
-		currentAcc=new CustomText(380, 140, 200, 200, "",true);
+		currentAcc=new CustomText(380, 150, 200, 200, "",true);
 		viewObjects.add(currentAcc);
 		highScore=new CustomText(380, 180, 200, 200, "High Scores",true);
 		viewObjects.add(highScore);
@@ -117,7 +126,7 @@ public class HighscoreScreen extends ResizableScreen {
 			
 			@Override
 			public void act() {
-				MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(),song));
+				MainGUI.test.setScreen(new GameScreen(getWidth(), getHeight(),song, "resources/sample_bg.gif"));
 				
 			}
 		});
@@ -128,7 +137,7 @@ public class HighscoreScreen extends ResizableScreen {
 			
 			@Override
 			public void act() {
-				MainGUI.test.setScreen(MainGUI.test.mainMenu);
+				MainGUI.test.setScreen(MainGUI.mainMenu);
 				
 			}
 		});
