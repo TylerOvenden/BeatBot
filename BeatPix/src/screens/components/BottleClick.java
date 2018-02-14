@@ -52,16 +52,13 @@ public class BottleClick {
 				parentScreen.toggleButtons(false);
 				bottleShake();
 				bottleFlyOff();
-				
+
 				getBottleOnSill().setAction(new Action() {
 					public void act() {
 						//Graphic explosion = new Graphic(Bottle.getBottle().getMyX()-35, Bottle.getBottle().getMyY(), 100, 100, "resources\\backgrounds\\explode.png");
 						//parentScreen.addObject(explosion);
-						parentScreen.remove(Bottle.getBottle());
-						System.out.println(Bottle.getBottle());
-						for(Bottle b: bottleStack) {
-							System.out.println(b);
-						}
+						//Bottle me = BottleClick.this.getBottleOnSill();
+						//parentScreen.remove(me);
 						//Timer timer = new Timer();
 						//AnimatedComponent explosion = new AnimatedComponent(Bottle.getMyX(), Bottle.getMyY(), 50, 50);
 						//explosion.addSequence("resources\\backgrounds\\explode.png", 100, 0, 0, 100, 100, 4);
@@ -76,10 +73,11 @@ public class BottleClick {
 						//	}
 						//}, 0, 1);
 						//parentScreen.addObject(explosion);
-						bottleStack.remove(Bottle.getBottle());
+						//bottleStack.remove(Bottle.getBottle());
 					}
 				});
 				bottleOnSill.setBottle(getBottleOnSill());
+				
 				bottleStack.add(bottleOnSill);
 				insertionSortBottleStack();
 				redrawBottleStack();

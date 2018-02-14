@@ -13,7 +13,7 @@ public class Bottle extends ImageButton {
 	
 	private int currentSequence;
 	
-	private static Bottle me;
+	private Bottle me;
 	private int finalY;
 	private int finalX;
 	private int finalY2;
@@ -43,7 +43,7 @@ public class Bottle extends ImageButton {
 	public void setBottle(Bottle x) {
 		me = x;
 	}
-	public static Bottle getBottle() {
+	public Bottle getBottle() {
 		return me;
 	}
 	public void setFinalY(int x) {
