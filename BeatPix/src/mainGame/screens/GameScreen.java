@@ -813,7 +813,16 @@ public class GameScreen extends ResizableScreen implements Runnable, Options {
 			return ;
 		}
 	}*/
-
+    /**
+     * @author Tyler Ovenden
+     * bScore is a constant of the amount of beats in the song called in the playsong method
+     * score per hit depends on both the timing and the amount of beats in a song
+     * ex: if someone has perfect timing with a song with 600 beats, each hit would be about 1667 points
+     * if the song has 700 beats, each hit would be about 1428 points
+     * highest score you can get is 1 million
+     * score is display through calling Steven's setText method in CustomText
+     */
+    
 public void calcScore(double timing) {
 		
 		if(beats.size() == 0) {
