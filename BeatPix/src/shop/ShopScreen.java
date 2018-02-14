@@ -350,7 +350,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int i=0; i < numChars; i++){ 
 			//got the index number
 			final int x = i;
-			buttonList.add(new Button(5,30*i,100,25,"Skin "+i, new Action() {
+			buttonList.add(new Button(5,30*i,100,25,"Skin "+ (i + 1), new Action() {
 				int j = x;
 				@Override
 				public void act() {
