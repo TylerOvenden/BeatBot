@@ -180,6 +180,7 @@ public class ImportScreen extends ResizableScreen {
 				processInformation(title, artist);
 				status.setText("Success! -5000 credits!");
 				MainGUI.shop.changeCredits(MainGUI.shop.getCredits() - 5000);
+				MainGUI.shop.updateCredits();
 				SongBundle bundle = new SongBundle(title, "resources/maps/" + title);
 				MainGUI.test.songs.add(bundle);
 				MainGUI.test.songs.get(MainGUI.test.songs.size() - 1).setUnlock(true);

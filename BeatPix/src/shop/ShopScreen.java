@@ -715,6 +715,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 
 	public void updateCredits()
 	{
+		credit.setText("Credits: " + credits);
 		credit.update();
 		update();
 	}
