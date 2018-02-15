@@ -399,7 +399,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 					// i guess to have the images, and set the a boolean to true and a textfield says unlock
 					if(credits - 1000 > 0 ) {
 						for (int i = index; i < buttonList.size(); i++){
-							if (buttonList.get(i).getY() != 0){
+							if ((buttonList.get(i).getY() >= 50)){
 								buttonList.get(i).move(buttonList.get(i).getX(), (buttonList.get(i).getY()-50), 10);
 								charScroll.update();
 								skinText.get(i).move(skinText.get(i).getX(), (skinText.get(i).getY()-50), 10);
