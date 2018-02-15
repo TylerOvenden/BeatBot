@@ -165,7 +165,7 @@ public class LevelSelectG extends FullFunctionScreen {
 	 * @param song - The song to search for
 	 * @return - Whether or not the song's title was found among the entries
 	 * 
-	 * @author Justin Yau
+	 * 
 	 */
 	public boolean isFound(String songPath) {
 		for(String s: currentSongs.keySet()) {
@@ -179,7 +179,7 @@ public class LevelSelectG extends FullFunctionScreen {
 	/**
 	 * This method searches through all the songs and displays the unlocked ones
 	 * 
-	 * @author Justin Yau
+	 * 
 	 */
 	public void spawnButtons() {
 		addObject(background);
