@@ -101,7 +101,7 @@ public class ShipRumble
         if (status.equals("play")) 
         {
             //System.out.println("Audio is already "+
-            "being played");
+            //"being played");
             return;
         }
         clip.close();
