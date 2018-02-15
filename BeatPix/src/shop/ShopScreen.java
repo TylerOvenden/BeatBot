@@ -94,6 +94,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText okayK;
 	private CustomText textKev;
 	private CustomText unlockedText;
+	private CustomText notEnough;
+	private CustomText pesos;
 	
 	private Graphic backBorder;
 	
@@ -255,9 +257,6 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		yes.setVisible(false);		
 		yesText.setVisible(false);
 		
-		
-		
-		
 		viewObjects.add(textLine1);
 		viewObjects.add(textLine2);
 		
@@ -323,10 +322,13 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		confirmButton = new ArrayList<Button>();
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
+		
 		back = new CustomText(750, 60, 95, 50, "Back", true);
 		okayK = new CustomText(463, 277, 50, 30,"Ok",true);
 		yesK = new CustomText(405,405,50,75,"Yes", true);
 		noK = new CustomText(507,405,45,50,"No", false);
+		notEnough = new CustomText(363,200,260,260, "Not Enough",true);
+		pesos  = new CustomText(372,240,246,246, "Credits",true);
 		
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		for(int i = 0; i < imageNames.length; i ++) {
@@ -413,13 +415,14 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 					charScroll.update();
 					indexList.remove(index);
 					enableButton(true);
-					if(credits - 1000 < 0 ) {
-						credits = credits -1000;
+					if(credits - 1000 > 0 ) {
+						credits = credits - 1000;
 						credit.setText("Credits: "+ credits);
 						credit.update();						
 					}
 					else {
-						//
+						setThings3Vis(false);
+						
 					}
 				}
 			}));
@@ -449,7 +452,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		 setAllYesButVisFalse();
 		 setThings2Vis(false);
 		 setAllConfButVisFalse();
-		 
+		 setThings3Vis(false);
 		 
 		
 		//add the objects
@@ -471,6 +474,9 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		viewObjects.add(yesK);
 		viewObjects.add(noK);
 		viewObjects.add(okayK);
+		viewObjects.add(notEnough);
+		viewObjects.add(pesos);
+		
 	}	
 	//daniel methods~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	public void removeButton()
@@ -638,6 +644,12 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		 border2.setVisible(b);
 		 unlockedText.setVisible(b);
 		 okayK.setVisible(b);
+	}
+	public void setThings3Vis(boolean b) {
+		textBorder.setVisible(b);
+		notEnough.setVisible(b);
+		pesos.setVisible(b);
+		
 	}
 	
 	 //turn all yesButtons, visibility = false;
