@@ -131,6 +131,13 @@ public class MainGUI extends GUIApplication {
 		MainGUI.volume = volume;
 	}
 	
+	public void setScreen(Screen s) {
+		super.setScreen(s);
+		if(s instanceof MainMenuScreenG) {
+			
+		}
+	}
+	
 	
 	/**
 	 * DO NOT REMOVE!
