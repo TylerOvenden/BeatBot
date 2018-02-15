@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 
 import gui.GUIApplication;
@@ -228,6 +230,12 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}*/
+						try {
+							MainGUI.start.getMs().getMenuSound().stop();
+						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {

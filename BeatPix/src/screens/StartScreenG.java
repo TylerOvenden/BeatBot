@@ -144,7 +144,7 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 	
 	private ShipCrash ms;
 	public void start() {
-		ms = new ShipCrash(this); screenPhase = -1;
+		setMs(new ShipCrash(this)); screenPhase = -1;
 		//scrollIn(); screenPhase = 0;
 	}
 	
@@ -286,5 +286,13 @@ public class StartScreenG extends FullFunctionScreen implements MouseListener{
 						
 /*Screen switch*/		MainGUI.test.setScreen(MainGUI.test.mainMenu);
 						MainGUI.mainMenu.scrollDown();
+	}
+
+	public ShipCrash getMs() {
+		return ms;
+	}
+
+	public void setMs(ShipCrash ms) {
+		this.ms = ms;
 	}
 }

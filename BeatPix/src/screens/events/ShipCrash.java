@@ -19,13 +19,13 @@ import mainGame.screens.MainScreen;
 import screens.MainMenuScreenG;
 import screens.StartScreenG;
 
-public class ShipCrash {
+public class ShipCrash{
 
 	Timer time;
 	StartScreenG s;
 	
 	ShipRumble sound;
-	ShipRumble menuSound;
+	private ShipRumble menuSound;
 
 	int timeCount = 0;
 	public ShipCrash(StartScreenG screen) {
@@ -72,18 +72,18 @@ public class ShipCrash {
 				}
 				if(timeCount == 4700) {
 					try {
-						menuSound = new ShipRumble("resources\\backgrounds\\test.wav", true);
+						setMenuSound(new ShipRumble("resources\\backgrounds\\test.wav", true));
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-			        if(menuSound!=null) {
-			            if(menuSound.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-			                FloatControl volume = (FloatControl) menuSound.getControl(FloatControl.Type.MASTER_GAIN);
+			        if(getMenuSound()!=null) {
+			            if(getMenuSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			                FloatControl volume = (FloatControl) getMenuSound().getControl(FloatControl.Type.MASTER_GAIN);
 			                volume.setValue(-20);
 			            }
 			        }
-					menuSound.play();
+					getMenuSound().play();
 				}
 				if(timeCount == 5000) {
 					time.cancel();
@@ -210,6 +210,12 @@ public class ShipCrash {
 				
 			}
 		}, 0, 16);
+	}
+	public ShipRumble getMenuSound() {
+		return menuSound;
+	}
+	public void setMenuSound(ShipRumble menuSound) {
+		this.menuSound = menuSound;
 	}
 	
 
