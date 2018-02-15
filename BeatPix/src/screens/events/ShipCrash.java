@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
@@ -76,6 +77,12 @@ public class ShipCrash {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+			        if(menuSound!=null) {
+			            if(menuSound.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+			                FloatControl volume = (FloatControl) menuSound.getControl(FloatControl.Type.MASTER_GAIN);
+			                volume.setValue(-20);
+			            }
+			        }
 					menuSound.play();
 				}
 				if(timeCount == 5000) {
