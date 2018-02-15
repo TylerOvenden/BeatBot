@@ -216,8 +216,6 @@ public class OptionsContainer{
 				if(GameScreen.game != null) {
 					GameScreen.game.getPlayer().updateVolume();
 				}
-				int[] i = {};
-				MainGUI.start.getMs().getMenuSound().updateVolume();
 				removeObjects();
 			}
 		});
@@ -556,6 +554,8 @@ public class OptionsContainer{
 				parentScreen.remove(toggleVolume);
 				updateVolumeToggle(); // When clicked it recreates toggleVolume
 				parentScreen.addObject(toggleVolume);
+
+				MainGUI.start.getMs().getMenuSound().updateVolume();
 			}
 		});
 	}
