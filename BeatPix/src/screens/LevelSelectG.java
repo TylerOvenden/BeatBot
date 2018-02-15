@@ -37,7 +37,7 @@ public class LevelSelectG extends FullFunctionScreen {
 	private ArrayList<Button> buttons;
 	private ArrayList<Button> unseenbuttons;
 	private ImageButton up;
-	private ImageButton down;
+	
 	
 	/**
 	 * Constructor creates a new screen which will load all the unlocked songs currently on the screen
@@ -116,10 +116,8 @@ public class LevelSelectG extends FullFunctionScreen {
 		up.setEnabled(true);
 		up.setAction(new Action() {
 			public void act(){				
-				System.out.println(unseenbuttons.size());
-				 for(int i =0; i<unseenbuttons.size();i++) {
-					 System.out.println(unseenbuttons.get(i).getText());
-				 }
+			
+				
 				// System.out.println(buttons.get(0).getText());
 				unseenbuttons.add(buttons.get(0));
 				unseenbuttons.get(0).setY(buttons.get(0).getY());
@@ -134,28 +132,12 @@ public class LevelSelectG extends FullFunctionScreen {
 					
 				unseenbuttons.remove(0);
 				
-				System.out.println(unseenbuttons.size());
-				 
-				 for(int i =0; i<unseenbuttons.size();i++) {
-					 System.out.println(unseenbuttons.get(i).getText());
-				 }
+				
 				updateDisplay();
 			}			
 	});
 
-		down = new ImageButton(810,255,125,50, "resources\\\\down.png");
-		  viewObjects.add(down);
-		down.setEnabled(true);
-		down.setAction(new Action() {
-			public void act(){				
-				System.out.println(buttons.size());
-				 for(int i =0; i<buttons.size();i++) {
-					 System.out.println(buttons.get(i).getText());
-				 }
-				 System.out.println(buttons.size());
-				System.out.println(buttons.toString());
-			}			
-	});
+		
 	}
 	
 
@@ -230,12 +212,8 @@ public class LevelSelectG extends FullFunctionScreen {
 					temp.setForeground(Color.WHITE);
 					count++;
 					unseenbuttons.add(temp);
-					for(int u =0; u<unseenbuttons.size();u++) {
-						 System.out.println(unseenbuttons.get(u).getText());
-					 }
-					System.out.println(" ");
-					System.out.println(" ");
-					System.out.println(" ");
+					
+					
 					//addObject(temp);
 					//addObject(displaybutton);
 					//addObject(displaysong);
@@ -250,7 +228,7 @@ public class LevelSelectG extends FullFunctionScreen {
 		removeAll();
 		spawnButtons();
 		 addObject(up);
-		 addObject(down);
+		 
 		 for(int i =0; i<buttons.size();i++) {
 			 addObject(buttons.get(i));
 			 flairButton(buttons.get(i));
@@ -262,7 +240,7 @@ public class LevelSelectG extends FullFunctionScreen {
 		addObject(background);
 		addObject(back);
 		 addObject(up);
-		 addObject(down);
+		 
 		 for(int i =0; i<buttons.size();i++) {
 			 addObject(buttons.get(i));
 			 flairButton(buttons.get(i));
