@@ -27,11 +27,23 @@ import screens.components.ImageButton;
 import screens.interfaces.LevelSelectInterface;
 
 
+/**
+ * 
+ * @see highscore.TempSongSelect
+ */
 public class LevelSelectG extends FullFunctionScreen {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5861604689835346010L;
+	//Justin's Quick Implementation of the level select was used here to retrieve songs
+	
+	//Justin Yau
 	private Button back; //The back button will be stored here
 	private HashMap<String, Song> currentSongs; //The list of all the displayed songs will be stored here
 	private Graphic background; //The graphic for the background will be stored here
+	//Justin Yau
 	private ImageButton displaybutton;
 	private CustomText displaysong;
 	private ArrayList<Button> buttons;
@@ -147,7 +159,7 @@ public class LevelSelectG extends FullFunctionScreen {
 	 * @param song - The song to search for
 	 * @return - Whether or not the song's title was found among the entries
 	 * 
-	 * 
+	 * @author Justin Yau
 	 */
 	public boolean isFound(String songPath) {
 		for(String s: currentSongs.keySet()) {
