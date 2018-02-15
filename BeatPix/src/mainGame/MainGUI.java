@@ -137,7 +137,18 @@ public class MainGUI extends GUIApplication {
 	public void setScreen(Screen s) {
 		super.setScreen(s);
 		if(s instanceof MainMenuScreenG) {
-			MainGUI.start.getMs().getMenuSound().play();
+			try {
+				MainGUI.start.getMs().getMenuSound().resumeAudio();
+			} catch (UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -232,12 +232,7 @@ public class MainMenuScreenG extends FullFunctionScreen implements Options{
 											// TODO Auto-generated catch block
 											e.printStackTrace();
 										}*/
-						try {
-							MainGUI.start.getMs().getMenuSound().stop();
-						} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						MainGUI.start.getMs().getMenuSound().pause();
 					}
 				});
 				buttons.get(CHARACTER_IDX).setAction(new Action() {
