@@ -100,7 +100,7 @@ public class ShipRumble
     {
         if (status.equals("play")) 
         {
-            System.out.println("Audio is already "+
+            //System.out.println("Audio is already "+
             "being played");
             return;
         }
