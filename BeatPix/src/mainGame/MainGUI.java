@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import gui.GUIApplication;
 import gui.userInterfaces.*;
 import highscore.TempSongSelect;
@@ -134,7 +137,7 @@ public class MainGUI extends GUIApplication {
 	public void setScreen(Screen s) {
 		super.setScreen(s);
 		if(s instanceof MainMenuScreenG) {
-			
+			MainGUI.start.getMs().getMenuSound().play();
 		}
 	}
 	
