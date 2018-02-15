@@ -96,6 +96,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private CustomText unlockedText;
 	private CustomText notEnough;
 	private CustomText pesos;
+	private CustomText skinBanner;
 	
 	private Graphic backBorder;
 	private Graphic textBorderK;
@@ -329,6 +330,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		noK = new CustomText(507,405,45,50,"No", false);
 		notEnough = new CustomText(363,190,260,260, "Not Enough",true);
 		pesos  = new CustomText(372,230,246,246, "Credits",false);
+		skinBanner = new CustomText(655,135,200,150,"Skins",true);
 		
 		imageNames = new String[] {"resources/sprites/redGuy.png", "resources/sprites/greenGuy.png", "resources/sprites/whiteGuy.png"};
 		for(int i = 0; i < imageNames.length; i ++) {
@@ -364,17 +366,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int i=0; i < numChars; i++){ 
 			//got the index number
 			final int x = i;
-			/*buttonList.add(new ImageButton(5,30*i,100,25,"Skin "+ (i + 1), new Action() {
-				int j = x;
-				@Override
-				public void act() {
-					setThings1Vis(true);
-					setYesButVisExceptThis(j);
-					index = indexList.indexOf(j);
-					enableButton(false);
-				}
-			}));*/
-			ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png","");
+			ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png","Skins "+1);
 			b.setAction(new Action() 
 			{
 				
@@ -472,6 +464,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		 
 		
 		//add the objects
+		viewObjects.add(skinBanner);
 		viewObjects.add(backButton);
 		viewObjects.add(backBorder);
 		viewObjects.add(border);
