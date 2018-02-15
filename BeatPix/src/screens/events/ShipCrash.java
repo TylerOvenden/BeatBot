@@ -76,12 +76,7 @@ public class ShipCrash{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-			        if(getMenuSound()!=null) {
-			            if(getMenuSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-			                FloatControl volume = (FloatControl) getMenuSound().getControl(FloatControl.Type.MASTER_GAIN);
-			                volume.setValue(-20);
-			            }
-			        }
+					getMenuSound().updateVolume();
 					getMenuSound().play();
 				}
 				if(timeCount == 5000) {

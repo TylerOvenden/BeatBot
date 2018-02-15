@@ -2,6 +2,7 @@ package screens.events;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
  
 import javax.sound.sampled.AudioInputStream;
@@ -11,6 +12,8 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.FloatControl.Type;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+
+import mainGame.MainGUI;
  
 public class ShipRumble 
 {
@@ -47,7 +50,23 @@ public class ShipRumble
         }
          
     }
+    public void updateVolume() {
+        int index = MainGUI.getVolume();
+
+        ArrayList <Float> volumeL = new ArrayList<Float>();
+        volumeL.add(-80f);
+        volumeL.add(6f);
+        volumeL.add(-3f);
+        volumeL.add(-10f);
+        float finalValue = volumeL.get(index);
  
+        if(clip!=null) {
+            if(clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                volume.setValue(finalValue);
+            }
+        } 
+    }
     
      
     // Work as the user enters his choice
@@ -143,18 +162,5 @@ public class ShipRumble
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
-
-
-	public FloatControl getControl(Type masterGain) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	public boolean isControlSupported(Type masterGain) {
-		// TODO Auto-generated method stub
-		return false;
-	}
  
 }

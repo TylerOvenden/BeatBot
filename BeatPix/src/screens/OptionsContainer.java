@@ -216,6 +216,8 @@ public class OptionsContainer{
 				if(GameScreen.game != null) {
 					GameScreen.game.getPlayer().updateVolume();
 				}
+				int[] i = {};
+				MainGUI.start.getMs().getMenuSound().updateVolume();
 				removeObjects();
 			}
 		});
