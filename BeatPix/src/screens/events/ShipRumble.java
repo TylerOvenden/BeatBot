@@ -85,7 +85,7 @@ public class ShipRumble
     {
         if (status.equals("paused")) 
         {
-            System.out.println("audio is already paused");
+            //System.out.println("audio is already paused");
             return;
         }
         this.currentFrame = 
