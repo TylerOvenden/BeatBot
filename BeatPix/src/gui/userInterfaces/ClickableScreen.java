@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import gui.interfaces.Clickable;
@@ -123,10 +124,14 @@ public abstract class ClickableScreen extends Screen implements MouseListener, M
 
 	@Override
 	public void mouseMoved(MouseEvent m) {
-		for(Clickable c: clickables){
-			if(c.isVisible() && c.isHovered(m.getX(), m.getY())){
-				c.hoverAction();
+		try {
+			for(Clickable c: clickables){
+				if(c.isVisible() && c.isHovered(m.getX(), m.getY())){
+					c.hoverAction();
+				}
 			}
+		} catch (ConcurrentModificationException c) {
+			
 		}
 	}
 
