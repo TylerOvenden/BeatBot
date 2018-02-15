@@ -77,6 +77,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 	private ArrayList<Integer> indexList;
 	private String[] imageNames;
 	private ArrayList<ImageButton> images;
+	private ArrayList<CustomText> skinText;
 	
 	private Graphic border; //for the text
 	private Graphic border2; //for the unlock
@@ -323,6 +324,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		yesButton = new ArrayList<Button>();
 		indexList = new ArrayList<Integer>();
 		images = new ArrayList<ImageButton>();
+		skinText = new ArrayList<CustomText>();
 		
 		back = new CustomText(750, 60, 95, 50, "Back", true);
 		okayK = new CustomText(463, 277, 50, 30,"Ok",true);
@@ -366,7 +368,8 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int i=0; i < numChars; i++){ 
 			//got the index number
 			final int x = i;
-			ImageButton b = new ImageButton(0,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png","Skins "+1);
+			skinText.add(new CustomText(680, (52*i)+205, 190, 200, "Skin "+(i+1), false));
+			ImageButton b = new ImageButton(5,(i*52)+5,220,70,"resources\\ui\\buttons\\buttonwithrivet.png","");
 			b.setAction(new Action() 
 			{
 				
@@ -395,24 +398,26 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 				public void act() {
 					// i guess to have the images, and set the a boolean to true and a textfield says unlock
 					if(credits - 1000 > 0 ) {
-						for (int i = index; i < buttonList.size(); i++){
+						for (int i = 0; i < buttonList.size(); i++){
 							if (buttonList.get(i).getY() != 0){
 								buttonList.get(i).move(buttonList.get(i).getX(), (buttonList.get(i).getY()-50), 10);
+								skinText.get(i).move(skinText.get(i).getX(), (skinText.get(i).getY()-50), 10);
 								charScroll.update();
 							}
-
+								charScroll.update();
 						}
 						setThings2Vis(true);
 						setThings1Vis(false);
 						setAllYesButVisFalse();
 						setConfirmVis(true);
 						charScroll.remove(buttonList.get(j));
+						viewObjects.remove(skinText.get(j));
 						charScroll.update();
 						indexList.remove(index);
 						MainGUI.character.unlock(j);
 						credits = credits - 1000;
 						credit.setText("Credits: "+ credits);
-						credit.update();						
+						credit.update();
 					}
 					else {
 						setThings1Vis(false);
@@ -477,6 +482,7 @@ public class ShopScreen extends FullFunctionScreen implements CreditChanger
 		for(int a = 0; a < numChars; a++) {
 			viewObjects.add(images.get(a));
 			viewObjects.add(yesButton.get(a));
+			viewObjects.add(skinText.get(a));
 		}
 		viewObjects.add(unlockedText);
 		viewObjects.add(back);
