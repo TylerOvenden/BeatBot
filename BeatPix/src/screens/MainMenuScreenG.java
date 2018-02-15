@@ -26,9 +26,9 @@ import screens.components.ImageButton;
 import screens.interfaces.Options;
 
 public class MainMenuScreenG extends FullFunctionScreen implements Options{
-
+//
 	/**Design:
-	 * 
+	 *
 	 * 	-Background - based off where StartScreen left its background
 	 * 				- scroll down similarly to in StartScreen
 	 * 	-Idle Character - will be at the left side of screen
