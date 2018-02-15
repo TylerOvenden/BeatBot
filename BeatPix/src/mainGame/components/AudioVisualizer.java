@@ -122,7 +122,7 @@ public class AudioVisualizer extends Component implements JustinPlaySongInterfac
 	    	}
 	    	
 	    	float[] samples = new float[1024];
-    		float percentageOfASecond = 1024 / af.getSampleRate();
+    		float percentageOfASecond = 1024f / af.getSampleRate();
     		long sleepTime = (long) (percentageOfASecond * 1000);
 	    	while(waveInputStream.readSamples(samples) > 0 && !cancel) {
 	    		while(pause) {
