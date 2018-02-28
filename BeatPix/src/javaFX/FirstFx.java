@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class FirstFx extends Application implements EventHandler {
+public class FirstFx extends Application {
 
 	Button button;
 	
@@ -16,6 +16,10 @@ public class FirstFx extends Application implements EventHandler {
 		launch(args);
 
 	}
+	/**
+	 * lambda used to simplify events
+	 * 
+	 */
 
 	@Override
 	public void start(Stage arg0) throws Exception {
@@ -24,7 +28,7 @@ public class FirstFx extends Application implements EventHandler {
 		button = new Button();
 		button.setText("click");
 		
-		button.setOnAction(this);
+		button.setOnAction(e -> {button.setText("clicked");});
 		
 		StackPane layout = new StackPane();
 		layout.getChildren().add(button);
@@ -34,12 +38,8 @@ public class FirstFx extends Application implements EventHandler {
 		arg0.show();
 	}
 
-	@Override
-	public void handle(Event event) {
-		if(event.getSource()==button) {
-			button.setText("ok");
-		}
+
+	
 		
 	}
 
-}
