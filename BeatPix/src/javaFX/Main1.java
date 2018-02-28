@@ -24,7 +24,13 @@ public class Main1 extends Application{
 		window.setTitle("title");
 		
 		button = new Button("click");
-		button.setOnAction(e -> AlertBox.display("jeff", "clicked"));
+		
+		button.setOnAction(e ->{ 
+		
+		boolean result = ConfirmBox.display("jeff", "test");
+		System.out.println(result);;
+		});
+		
 		StackPane layout = new StackPane();
 		layout.getChildren().add(button);
 		Scene scene = new Scene(layout,300,350);
