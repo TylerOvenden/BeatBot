@@ -13,7 +13,6 @@ public class ConfirmBox {
 	
 	public static boolean display(String title, String message) {
 		Stage window = new Stage();
-		
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
 		window.setMinWidth(250);
@@ -34,7 +33,7 @@ public class ConfirmBox {
 		});
 		
 		VBox layout = new VBox(10);
-		layout.getChildren().addAll(label);
+		layout.getChildren().addAll(label,yeaButton,noButton);
 		layout.setAlignment(Pos.CENTER);
 		
 		Scene scene = new Scene(layout);
