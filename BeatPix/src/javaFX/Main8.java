@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -20,6 +21,7 @@ public class Main8 extends Application {
 	Stage window;
 	Scene scene;
 	Button button;
+	ComboBox<String> comboBox;
 
 	
 	public static void main(String[] args) {
@@ -32,22 +34,19 @@ public class Main8 extends Application {
 		window.setTitle("title");
 		button = new Button("click me");
 		
-		ChoiceBox<String> choiceBox = new ChoiceBox<>();
+		comboBox = new ComboBox<>();
+		comboBox.getItems().addAll(
+				"hello",
+				"wqdwe",
+				"okay"
+				);
+		comboBox.setPromptText("test");
+		comboBox.setEditable(true);
 		
-		choiceBox.getItems().add("Apples");
-		choiceBox.getItems().add("Bananas");
-		choiceBox.getItems().addAll("bacon","ham","meatballs");
-		choiceBox.setValue("Apples");
-	/*
-	 * both of these methods would display the same thing
-	 * 
-	 * 	
-	 */
-	//	choiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->System.out.println(oldValue) );
-		choiceBox.setOnAction(e -> System.out.println(choiceBox.getValue()));
+		comboBox.setOnAction(e -> System.out.println("user put in: " + comboBox.getValue()));
 		VBox layout = new VBox(10);
 		layout.setPadding(new Insets(20,20,20,20));
-		layout.getChildren().addAll(choiceBox,button);
+		layout.getChildren().addAll(comboBox,button);
 		
 		scene = new Scene(layout, 300, 250);
 		window.setScene(scene);
@@ -56,6 +55,8 @@ public class Main8 extends Application {
 	
 
 	}
+
+
 
 
 
