@@ -14,7 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Main6 extends Application {
+public class Main7 extends Application {
 
 
 	Stage window;
@@ -37,11 +37,14 @@ public class Main6 extends Application {
 		choiceBox.getItems().add("Apples");
 		choiceBox.getItems().add("Bananas");
 		choiceBox.getItems().addAll("bacon","ham","meatballs");
-		
 		choiceBox.setValue("Apples");
-		
-		button.setOnAction(e -> getChoice(choiceBox));
-		
+	/*
+	 * both of these methods would display the same thing
+	 * 
+	 * 	
+	 */
+	//	choiceBox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->System.out.println(oldValue) );
+		choiceBox.setOnAction(e -> System.out.println(choiceBox.getValue()));
 		VBox layout = new VBox(10);
 		layout.setPadding(new Insets(20,20,20,20));
 		layout.getChildren().addAll(choiceBox,button);
@@ -54,10 +57,6 @@ public class Main6 extends Application {
 
 	}
 
-	private void getChoice(ChoiceBox<String> choiceBox) {
-		String s = choiceBox.getValue();
-		System.out.println(s);
-	}
 
 
 }
