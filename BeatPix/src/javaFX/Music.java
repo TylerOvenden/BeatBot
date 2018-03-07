@@ -42,7 +42,7 @@ public class Music extends Application {
 		this.height = height;
 		this.width = width;
 		//Add your own path of the vidio that you want to play
-		String path = "resources/music/keroacoustic.wav";
+		String path = "keroacoustic.wav";
 
 		media = new Media(new File(path).toURI().toString());
 
