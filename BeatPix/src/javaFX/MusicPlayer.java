@@ -27,7 +27,7 @@ public class MusicPlayer extends Application
 	public void init() 
 	{
 		// Create an AudioClip, which loads the audio data synchronously
-		final URL resource = getClass().getResource("kerodistort.mp3");
+		final URL resource = getClass().getResource("keroacoustic.mp3");
 		audioClip = new AudioClip(resource.toExternalForm());
 	}
 	
