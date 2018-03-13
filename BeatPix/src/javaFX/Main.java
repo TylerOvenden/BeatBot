@@ -8,7 +8,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Main extends Application{
+
+public class Main extends  Application{
 
 	Stage window;
 	Scene scene1,scene2;
@@ -43,3 +44,4 @@ public class Main extends Application{
 	}
 
 }
+
