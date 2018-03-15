@@ -27,7 +27,7 @@ public class SoundUtils1 {
     for (int j=0; j < repeat; j++) {
       step = 10;
       for(int i=0; i < 2000; i++) {
-        buf[0] = ((i%step > 0) ? 32 : (byte)0);
+        buf[0] = ((i%step > 0) ? 50 : (byte)0);
 
         if(i%250 == 0) step += 2;
         sdl.write(buf,0,1);
@@ -97,8 +97,8 @@ public class SoundUtils1 {
           buf[0] =
             silence ? 0 :
               (byte)Math.abs(r.nextInt() %
-                  (int)(1. + 63. * (1. + Math.cos(((double)i)
-                      * Math.PI / 8000.))));
+                  (int)(56. + 63. * (1. + Math.cos(((double)i)
+                      * Math.PI / 10000.))));
           i++;
           sdl.write(buf,0,1);
       }
@@ -110,11 +110,12 @@ public class SoundUtils1 {
   }
 
   public static void main(String[] args) throws Exception {
-	  SoundUtils1.warp(10);	  
-	// SoundUtils1.laser(100);
+	//  SoundUtils1.warp(10);	  
+	 SoundUtils1.laser(100);
    /* Thread.sleep(1000);
     SoundUtils1.warp(10);
     Thread.sleep(1000);
     SoundUtils1.bang(); */
+	  //SoundUtils1.bang();
   }
 }
