@@ -22,7 +22,21 @@ for (int i = 0; i < duration; i++)
                                 (1.0 - exp(-sample));   
     samples[i] = z * max * gain_post;
 }
+
+	flangereffect: 
+	need to calculate the index of this delay:
+	
+	delayPos = (Math.sin(sPos)*(depth) + constantDelay;
+	sPosn += deltaSound;
+	
+   	
+
+
+
+
+
  * 
  * 
  */
+	
 }
