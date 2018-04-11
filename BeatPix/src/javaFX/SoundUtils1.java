@@ -7,6 +7,7 @@ public class SoundUtils1 {
 
   public static float SAMPLE_RATE = 8000f;
 
+
   public static void laser(int repeat)
     throws LineUnavailableException, InterruptedException
   {
@@ -27,12 +28,12 @@ public class SoundUtils1 {
     for (int j=0; j < repeat; j++) {
       step = 10;
       for(int i=0; i < 2000; i++) {
-        buf[0] = ((i%step > 0) ? 50 : (byte)0);
+        buf[0] = ((i%step > 0) ? 32 : (byte)0);
 
         if(i%250 == 0) step += 2;
         sdl.write(buf,0,1);
       }
-      Thread.sleep(200);
+      Thread.sleep(100);
     }
     sdl.drain();
     sdl.stop();
@@ -40,82 +41,85 @@ public class SoundUtils1 {
   }
 
   public static void warp(int repeat)
-    throws LineUnavailableException, InterruptedException
-  {
-    AudioFormat af =
-      new AudioFormat(
-          SAMPLE_RATE, // sampleRate
-          8,           // sampleSizeInBits
-          1,           // channels
-          true,        // signed
-          false);      // bigEndian
-    SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
-    sdl.open(af);
-    sdl.start();
+		    throws LineUnavailableException, InterruptedException
+		  {
+		    AudioFormat af =
+		      new AudioFormat(
+		          SAMPLE_RATE, // sampleRate
+		          8,           // sampleSizeInBits
+		          1,           // channels
+		          true,        // signed
+		          false);      // bigEndian
+		    SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
+		    sdl.open(af);
+		    sdl.start();
 
-    byte[] buf = new byte[1];
-    int step;
+		    byte[] buf = new byte[1];
+		    int step;
 
-    for (int j=0; j < repeat; j++) {
-      step = 25;
-      for(int i=0; i < 2000; i++) {
-        if(i < 500) {
-          buf[0] = ((i%step > 0) ? 32 : (byte)0);
-          if(i%25 == 0) step--;
-        }
-        else {
-          buf[0] = ((i%step > 0) ? 16 : (byte)0);
-          if(i%50 == 0) step++;
-        }
-        sdl.write(buf,0,1);
-      }
-    }
-    sdl.drain();
-    sdl.stop();
-    sdl.close();
-  }
+		    for (int j=0; j < repeat; j++) {
+		      step = 25;
+		      for(int i=0; i < 2000; i++) {
+		        if(i < 1) {
+		          buf[0] = ((i%step > 0) ? 32 : (byte)0);
+		          if(i%25 == 0) step--;
+		        }
+		        else {
+		          buf[0] = ((i%step > 0) ? 32 : (byte)0);
+		          if(i%50 == 0) step++;
+		        }
+		        sdl.write(buf,0,1);
+		      }
+		    }
+		    sdl.drain();
+		    sdl.stop();
+		    sdl.close();
+		  }
 
-  public static void bang()
-    throws LineUnavailableException, InterruptedException
-  {
-    AudioFormat af =
-      new AudioFormat(
-          SAMPLE_RATE, // sampleRate
-          8,           // sampleSizeInBits
-          1,           // channels
-          true,        // signed
-          false);      // bigEndian
-    SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
-    sdl.open(af);
-    sdl.start();
+		  public static void bang()
+		    throws LineUnavailableException, InterruptedException
+		  {
+		    AudioFormat af =
+		      new AudioFormat(
+		          SAMPLE_RATE, // sampleRate
+		          8,           // sampleSizeInBits
+		          1,           // channels
+		          true,        // signed
+		          false);      // bigEndian
+		    SourceDataLine sdl = AudioSystem.getSourceDataLine(af);
+		    sdl.open(af);
+		    sdl.start();
 
-    byte[] buf = new byte[1];
-    Random r = new Random();
-    boolean silence = true;
-    for (int i=0 ; i < 8000 ; i++) {
-      while(r.nextInt() % 10 != 0) {
-          buf[0] =
-            silence ? 0 :
-              (byte)Math.abs(r.nextInt() %
-                  (int)(56. + 63. * (1. + Math.cos(((double)i)
-                      * Math.PI / 10000.))));
-          i++;
-          sdl.write(buf,0,1);
-      }
-      silence = !silence;
-  }
-    sdl.drain();
-    sdl.stop();
-    sdl.close();
-  }
+		    byte[] buf = new byte[1];
+		    Random r = new Random(4);
+		    boolean silence = true;
+		    for (int i=0 ; i < 8122 ; i++) {
+		    //for (int i=0 ; i < 8000 ; i++) {
+		      while(r.nextInt() % 10 != 0) {
+		          buf[0] =
+		            silence ? 0 :
+		              (byte)Math.abs(r.nextInt() %
+		                  (int)(1. + 50. * (8. + Math.cos(((double)i)
+		                      * Math.PI / 10000.))));
+		          i++;
+		          sdl.write(buf,0,1);
+		      }
+		      silence = !silence;
+		  }
+		    sdl.drain();
+		    sdl.stop();
+		    sdl.close();
+		  }
 
   public static void main(String[] args) throws Exception {
 	//  SoundUtils1.warp(10);	  
-	 SoundUtils1.laser(100);
-   /* Thread.sleep(1000);
+	// SoundUtils1.laser(10);
+
+	  
+	  /* Thread.sleep(1000);
     SoundUtils1.warp(10);
     Thread.sleep(1000);
     SoundUtils1.bang(); */
-	  //SoundUtils1.bang();
+	  SoundUtils1.bang();
   }
 }

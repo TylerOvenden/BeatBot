@@ -37,7 +37,7 @@ public class SoundUtils {
   }
 
   public static void main(String[] args) throws Exception {
-	 SoundUtils.tone(19990,1000);
+	 SoundUtils.tone(19999,1000);
     Thread.sleep(1000);
     /*SoundUtils.tone(100,1000);
     Thread.sleep(1000);
